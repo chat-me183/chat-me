@@ -578,64 +578,149 @@
     </div>
 
     <div class="page" id="gamesPage" style="padding:20px;overflow-y:auto;">
-      <h2 style="color:#2b3a8f;margin-bottom:4px;">Word Cross</h2>
-      <div style="color:#888;font-size:13px;margin-bottom:16px;">Unscramble the word before your opponent does.</div>
 
-      <div id="gameModePicker" style="display:flex;gap:14px;flex-wrap:wrap;">
-        <button onclick="showGameMode('ai')" style="background:#2b6ee0;color:#fff;border:none;padding:16px 24px;border-radius:8px;cursor:pointer;font-size:15px;font-weight:600;">🤖 Challenge AI</button>
-        <button onclick="showGameMode('friends')" style="background:#e8622d;color:#fff;border:none;padding:16px 24px;border-radius:8px;cursor:pointer;font-size:15px;font-weight:600;">⚔️ Challenge Friends</button>
-      </div>
-
-      <div id="gamePicker" style="display:none;gap:14px;flex-wrap:wrap;margin-top:16px;">
-        <div class="profile-card" style="max-width:220px;">
-          <div style="font-weight:600;color:#2b3a8f;margin-bottom:6px;">Bot 1 — Normal</div>
-          <div style="font-size:13px;color:#666;margin-bottom:12px;">A fair, average bot. Win 2 Leos.</div>
-          <button onclick="startWordGame('normal')" style="background:#25a244;color:#fff;border:none;padding:9px 16px;border-radius:6px;cursor:pointer;font-size:14px;">Play Bot 1</button>
-        </div>
-        <div class="profile-card" style="max-width:220px;">
-          <div style="font-weight:600;color:#9c1c1c;margin-bottom:6px;">Bot 2 — Hard</div>
-          <div style="font-size:13px;color:#666;margin-bottom:12px;">Lightning fast and sharp. Win 4 Leos.</div>
-          <button onclick="startWordGame('hard')" style="background:#d32f2f;color:#fff;border:none;padding:9px 16px;border-radius:6px;cursor:pointer;font-size:14px;">Play Bot 2</button>
+      <div id="gameSelector">
+        <h2 style="color:#2b3a8f;margin-bottom:4px;">Games</h2>
+        <div style="color:#888;font-size:13px;margin-bottom:16px;">Pick a game to play.</div>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;">
+          <div class="profile-card" style="max-width:220px;cursor:pointer;" onclick="selectGame('wordcross')">
+            <div style="font-size:32px;margin-bottom:6px;">🔤</div>
+            <div style="font-weight:700;color:#2b3a8f;margin-bottom:4px;">Game 1: Word Cross</div>
+            <div style="font-size:12.5px;color:#666;">Unscramble the word before your opponent does.</div>
+          </div>
+          <div class="profile-card" style="max-width:220px;cursor:pointer;" onclick="selectGame('dice')">
+            <div style="font-size:32px;margin-bottom:6px;">🎲</div>
+            <div style="font-weight:700;color:#2b3a8f;margin-bottom:4px;">Game 2: Dice Duel</div>
+            <div style="font-size:12.5px;color:#666;">Roll the dice - highest number wins.</div>
+          </div>
         </div>
       </div>
 
-      <div id="friendChallengePicker" style="display:none;margin-top:16px;max-width:420px;">
-        <div class="profile-card" style="margin-bottom:14px;">
-          <div style="font-weight:700;color:#2b3a8f;margin-bottom:8px;">Create a Challenge</div>
-          <div style="font-size:12.5px;color:#666;margin-bottom:8px;">Bet 3-15 Leos. Winner takes both bets. If nobody joins within 5 minutes, you're refunded automatically.</div>
-          <input type="number" id="challengeBetInput" min="3" max="15" placeholder="Leos to bet (3-15)" style="width:100%;padding:9px 10px;border:1px solid #ccc;border-radius:6px;font-size:14px;margin-bottom:8px;outline:none;">
-          <div class="field-msg" id="challengeCreateError"></div>
-          <button onclick="createChallenge()" style="background:#25a244;color:#fff;border:none;padding:9px 18px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:600;">Bet &amp; Get Code</button>
+      <div id="wordCrossGame" style="display:none;">
+        <a onclick="backToGames()" style="cursor:pointer;color:#2b6ee0;font-size:13px;display:inline-block;margin-bottom:12px;">⬅ Back to Games</a>
+        <h2 style="color:#2b3a8f;margin-bottom:4px;">Word Cross</h2>
+        <div style="color:#888;font-size:13px;margin-bottom:16px;">Unscramble the word before your opponent does.</div>
+
+        <div id="gameModePicker" style="display:flex;gap:14px;flex-wrap:wrap;">
+          <button onclick="showGameMode('ai')" style="background:#2b6ee0;color:#fff;border:none;padding:16px 24px;border-radius:8px;cursor:pointer;font-size:15px;font-weight:600;">🤖 Challenge AI</button>
+          <button onclick="showGameMode('friends')" style="background:#e8622d;color:#fff;border:none;padding:16px 24px;border-radius:8px;cursor:pointer;font-size:15px;font-weight:600;">⚔️ Challenge Friends</button>
         </div>
-        <div class="profile-card">
-          <div style="font-weight:700;color:#2b3a8f;margin-bottom:8px;">Join a Challenge</div>
-          <input type="text" id="challengeCodeInput" placeholder="Enter code" style="width:100%;padding:9px 10px;border:1px solid #ccc;border-radius:6px;font-size:14px;margin-bottom:8px;outline:none;text-transform:uppercase;">
-          <div class="field-msg" id="challengeJoinError"></div>
-          <button onclick="joinChallenge()" style="background:#2b6ee0;color:#fff;border:none;padding:9px 18px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:600;">Join</button>
+
+        <div id="gamePicker" style="display:none;gap:14px;flex-wrap:wrap;margin-top:16px;">
+          <div class="profile-card" style="max-width:220px;">
+            <div style="font-weight:600;color:#2b3a8f;margin-bottom:6px;">Bot 1 — Normal</div>
+            <div style="font-size:13px;color:#666;margin-bottom:12px;">A fair, average bot. Win 2 Leos.</div>
+            <button onclick="startWordGame('normal')" style="background:#25a244;color:#fff;border:none;padding:9px 16px;border-radius:6px;cursor:pointer;font-size:14px;">Play Bot 1</button>
+          </div>
+          <div class="profile-card" style="max-width:220px;">
+            <div style="font-weight:600;color:#9c1c1c;margin-bottom:6px;">Bot 2 — Hard</div>
+            <div style="font-size:13px;color:#666;margin-bottom:12px;">Lightning fast and sharp. Win 4 Leos.</div>
+            <button onclick="startWordGame('hard')" style="background:#d32f2f;color:#fff;border:none;padding:9px 16px;border-radius:6px;cursor:pointer;font-size:14px;">Play Bot 2</button>
+          </div>
+        </div>
+
+        <div id="friendChallengePicker" style="display:none;margin-top:16px;max-width:420px;">
+          <div class="profile-card" style="margin-bottom:14px;">
+            <div style="font-weight:700;color:#2b3a8f;margin-bottom:8px;">Create a Challenge</div>
+            <div style="font-size:12.5px;color:#666;margin-bottom:8px;">Bet 3-15 Leos. Winner takes both bets. If nobody joins within 5 minutes, you're refunded automatically.</div>
+            <input type="number" id="challengeBetInput" min="3" max="15" placeholder="Leos to bet (3-15)" style="width:100%;padding:9px 10px;border:1px solid #ccc;border-radius:6px;font-size:14px;margin-bottom:8px;outline:none;">
+            <div class="field-msg" id="challengeCreateError"></div>
+            <button onclick="createChallenge()" style="background:#25a244;color:#fff;border:none;padding:9px 18px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:600;">Bet &amp; Get Code</button>
+          </div>
+          <div class="profile-card">
+            <div style="font-weight:700;color:#2b3a8f;margin-bottom:8px;">Join a Challenge</div>
+            <input type="text" id="challengeCodeInput" placeholder="Enter code" style="width:100%;padding:9px 10px;border:1px solid #ccc;border-radius:6px;font-size:14px;margin-bottom:8px;outline:none;text-transform:uppercase;">
+            <div class="field-msg" id="challengeJoinError"></div>
+            <button onclick="joinChallenge()" style="background:#2b6ee0;color:#fff;border:none;padding:9px 18px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:600;">Join</button>
+          </div>
+        </div>
+
+        <div id="challengeWaitingArea" style="display:none;margin-top:16px;max-width:420px;">
+          <div class="profile-card">
+            <div style="font-weight:700;color:#2b3a8f;margin-bottom:8px;">Waiting for an opponent...</div>
+            <div style="font-size:13px;color:#666;margin-bottom:10px;">Share this code with a friend:</div>
+            <div style="font-size:30px;font-weight:700;letter-spacing:4px;color:#e8622d;margin-bottom:10px;" id="challengeCodeDisplay"></div>
+            <div style="font-size:12.5px;color:#999;margin-bottom:12px;" id="challengeExpiryDisplay"></div>
+            <button onclick="cancelChallenge()" style="background:#eee;border:none;padding:9px 18px;border-radius:6px;cursor:pointer;font-size:14px;">Cancel &amp; Refund Me</button>
+          </div>
+        </div>
+
+        <div id="gameArena" style="display:none;max-width:420px;margin-top:18px;">
+          <div class="profile-card">
+            <div style="font-size:13px;color:#888;" id="gameBotLabel"></div>
+            <div style="font-size:34px;font-weight:700;letter-spacing:4px;color:#2b3a8f;margin:10px 0;" id="gameScrambled"></div>
+            <div style="font-size:12.5px;color:#999;margin-bottom:12px;" id="gameTimer"></div>
+            <input type="text" id="gameGuessInput" placeholder="Type the unscrambled word" style="width:100%;padding:10px 12px;border:1px solid #ccc;border-radius:6px;font-size:15px;margin-bottom:10px;" onkeydown="if(event.key==='Enter') submitWordGuess()">
+            <button onclick="submitWordGuess()" style="background:#2b6ee0;color:#fff;border:none;padding:9px 18px;border-radius:6px;cursor:pointer;font-size:14px;margin-right:8px;">Submit</button>
+            <button onclick="endWordGame(false)" style="background:#eee;border:none;padding:9px 18px;border-radius:6px;cursor:pointer;font-size:14px;">Quit</button>
+            <div id="gameResult" style="margin-top:10px;font-size:14px;font-weight:600;"></div>
+          </div>
         </div>
       </div>
 
-      <div id="challengeWaitingArea" style="display:none;margin-top:16px;max-width:420px;">
-        <div class="profile-card">
-          <div style="font-weight:700;color:#2b3a8f;margin-bottom:8px;">Waiting for an opponent...</div>
-          <div style="font-size:13px;color:#666;margin-bottom:10px;">Share this code with a friend:</div>
-          <div style="font-size:30px;font-weight:700;letter-spacing:4px;color:#e8622d;margin-bottom:10px;" id="challengeCodeDisplay"></div>
-          <div style="font-size:12.5px;color:#999;margin-bottom:12px;" id="challengeExpiryDisplay"></div>
-          <button onclick="cancelChallenge()" style="background:#eee;border:none;padding:9px 18px;border-radius:6px;cursor:pointer;font-size:14px;">Cancel &amp; Refund Me</button>
+      <div id="diceGame" style="display:none;">
+        <a onclick="backToGames()" style="cursor:pointer;color:#2b6ee0;font-size:13px;display:inline-block;margin-bottom:12px;">⬅ Back to Games</a>
+        <h2 style="color:#2b3a8f;margin-bottom:4px;">🎲 Dice Duel</h2>
+        <div style="color:#888;font-size:13px;margin-bottom:16px;">Roll the dice - whoever gets the higher number wins.</div>
+
+        <div id="diceModePicker" style="display:flex;gap:14px;flex-wrap:wrap;">
+          <button onclick="showDiceMode('ai')" style="background:#2b6ee0;color:#fff;border:none;padding:16px 24px;border-radius:8px;cursor:pointer;font-size:15px;font-weight:600;">🤖 Challenge AI</button>
+          <button onclick="showDiceMode('friends')" style="background:#e8622d;color:#fff;border:none;padding:16px 24px;border-radius:8px;cursor:pointer;font-size:15px;font-weight:600;">⚔️ Challenge Friends</button>
+        </div>
+
+        <div id="diceAiPicker" style="display:none;margin-top:16px;max-width:260px;">
+          <div class="profile-card">
+            <div style="font-weight:600;color:#2b3a8f;margin-bottom:6px;">🤖 Dice Bot</div>
+            <div style="font-size:13px;color:#666;margin-bottom:12px;">Roll against the AI. Win: double your bet. Lose: bet is gone. Tie: refunded.</div>
+            <button onclick="playDiceAI()" style="background:#25a244;color:#fff;border:none;padding:9px 16px;border-radius:6px;cursor:pointer;font-size:14px;">Play vs AI</button>
+          </div>
+        </div>
+
+        <div id="diceFriendPicker" style="display:none;margin-top:16px;max-width:420px;">
+          <div class="profile-card" style="margin-bottom:14px;">
+            <div style="font-weight:700;color:#2b3a8f;margin-bottom:8px;">Create a Challenge</div>
+            <div style="font-size:12.5px;color:#666;margin-bottom:8px;">Bet 3-10 Leos. Winner takes both bets. If nobody joins within 5 minutes, you're refunded automatically.</div>
+            <input type="number" id="diceBetInput" min="3" max="10" placeholder="Leos to bet (3-10)" style="width:100%;padding:9px 10px;border:1px solid #ccc;border-radius:6px;font-size:14px;margin-bottom:8px;outline:none;">
+            <div class="field-msg" id="diceCreateError"></div>
+            <button onclick="createDiceChallenge()" style="background:#25a244;color:#fff;border:none;padding:9px 18px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:600;">Bet &amp; Get Code</button>
+          </div>
+          <div class="profile-card">
+            <div style="font-weight:700;color:#2b3a8f;margin-bottom:8px;">Join a Challenge</div>
+            <input type="text" id="diceCodeInput" placeholder="Enter code" style="width:100%;padding:9px 10px;border:1px solid #ccc;border-radius:6px;font-size:14px;margin-bottom:8px;outline:none;text-transform:uppercase;">
+            <div class="field-msg" id="diceJoinError"></div>
+            <button onclick="joinDiceChallenge()" style="background:#2b6ee0;color:#fff;border:none;padding:9px 18px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:600;">Join</button>
+          </div>
+        </div>
+
+        <div id="diceWaitingArea" style="display:none;margin-top:16px;max-width:420px;">
+          <div class="profile-card">
+            <div style="font-weight:700;color:#2b3a8f;margin-bottom:8px;">Waiting for an opponent...</div>
+            <div style="font-size:13px;color:#666;margin-bottom:10px;">Share this code with a friend:</div>
+            <div style="font-size:30px;font-weight:700;letter-spacing:4px;color:#e8622d;margin-bottom:10px;" id="diceCodeDisplay"></div>
+            <div style="font-size:12.5px;color:#999;margin-bottom:12px;" id="diceExpiryDisplay"></div>
+            <button onclick="cancelDiceChallenge()" style="background:#eee;border:none;padding:9px 18px;border-radius:6px;cursor:pointer;font-size:14px;">Cancel &amp; Refund Me</button>
+          </div>
+        </div>
+
+        <div id="diceArena" style="display:none;max-width:420px;margin-top:18px;">
+          <div class="profile-card">
+            <div style="font-size:13px;color:#888;" id="diceOpponentLabel"></div>
+            <div style="display:flex;justify-content:center;gap:24px;margin:16px 0;">
+              <div style="text-align:center;">
+                <div style="font-size:12px;color:#999;margin-bottom:4px;">You</div>
+                <div style="font-size:48px;" id="diceYouFace">🎲</div>
+              </div>
+              <div style="text-align:center;">
+                <div style="font-size:12px;color:#999;margin-bottom:4px;" id="diceOpponentName">Opponent</div>
+                <div style="font-size:48px;" id="diceOppFace">🎲</div>
+              </div>
+            </div>
+            <button id="diceRollBtn" onclick="rollDice()" style="background:#2b6ee0;color:#fff;border:none;padding:10px 22px;border-radius:6px;cursor:pointer;font-size:15px;font-weight:600;">🎲 Roll the Dice</button>
+            <div id="diceResult" style="margin-top:12px;font-size:14px;font-weight:600;"></div>
+          </div>
         </div>
       </div>
 
-      <div id="gameArena" style="display:none;max-width:420px;margin-top:18px;">
-        <div class="profile-card">
-          <div style="font-size:13px;color:#888;" id="gameBotLabel"></div>
-          <div style="font-size:34px;font-weight:700;letter-spacing:4px;color:#2b3a8f;margin:10px 0;" id="gameScrambled"></div>
-          <div style="font-size:12.5px;color:#999;margin-bottom:12px;" id="gameTimer"></div>
-          <input type="text" id="gameGuessInput" placeholder="Type the unscrambled word" style="width:100%;padding:10px 12px;border:1px solid #ccc;border-radius:6px;font-size:15px;margin-bottom:10px;" onkeydown="if(event.key==='Enter') submitWordGuess()">
-          <button onclick="submitWordGuess()" style="background:#2b6ee0;color:#fff;border:none;padding:9px 18px;border-radius:6px;cursor:pointer;font-size:14px;margin-right:8px;">Submit</button>
-          <button onclick="endWordGame(false)" style="background:#eee;border:none;padding:9px 18px;border-radius:6px;cursor:pointer;font-size:14px;">Quit</button>
-          <div id="gameResult" style="margin-top:10px;font-size:14px;font-weight:600;"></div>
-        </div>
-      </div>
     </div>
 
     <div class="page" id="leosPage" style="padding:20px;">
@@ -2547,6 +2632,30 @@ function scrambleWord(word){
   return scrambled.toUpperCase();
 }
 
+function selectGame(which){
+  document.getElementById('gameSelector').style.display = 'none';
+  document.getElementById('wordCrossGame').style.display = which === 'wordcross' ? 'block' : 'none';
+  document.getElementById('diceGame').style.display = which === 'dice' ? 'block' : 'none';
+}
+function backToGames(){
+  // Reset both games back to their starting screens so re-entering is always clean
+  document.getElementById('gameModePicker').style.display = 'flex';
+  document.getElementById('gamePicker').style.display = 'none';
+  document.getElementById('friendChallengePicker').style.display = 'none';
+  document.getElementById('challengeWaitingArea').style.display = 'none';
+  document.getElementById('gameArena').style.display = 'none';
+
+  document.getElementById('diceModePicker').style.display = 'flex';
+  document.getElementById('diceAiPicker').style.display = 'none';
+  document.getElementById('diceFriendPicker').style.display = 'none';
+  document.getElementById('diceWaitingArea').style.display = 'none';
+  document.getElementById('diceArena').style.display = 'none';
+
+  document.getElementById('wordCrossGame').style.display = 'none';
+  document.getElementById('diceGame').style.display = 'none';
+  document.getElementById('gameSelector').style.display = 'block';
+}
+
 function showGameMode(mode){
   document.getElementById('gameModePicker').style.display = 'none';
   document.getElementById('gamePicker').style.display = mode === 'ai' ? 'flex' : 'none';
@@ -2906,6 +3015,283 @@ function finishPvpLocally(c){
     activeChallengeCode = null;
   }, 2600);
 }
+
+/* ================= DICE DUEL (Game 2) ================= */
+function showDiceMode(mode){
+  document.getElementById('diceModePicker').style.display = 'none';
+  document.getElementById('diceAiPicker').style.display = mode === 'ai' ? 'block' : 'none';
+  document.getElementById('diceFriendPicker').style.display = mode === 'friends' ? 'block' : 'none';
+}
+
+function rollDieValue(){ return 1 + Math.floor(Math.random() * 6); }
+const DIE_FACES = ['⚀','⚁','⚂','⚃','⚄','⚅'];
+function dieFace(n){ return DIE_FACES[n - 1] || '🎲'; }
+
+/* ---- AI mode: simple double-or-nothing dice roll against the bot ---- */
+async function playDiceAI(){
+  const betInput = prompt('Bet how many Leos on this roll? (1-10)\nWin: double your bet. Lose: bet is gone. Tie: refunded.', '1');
+  if (betInput === null) return;
+  const bet = parseFloat(betInput);
+  if (!bet || bet < 1 || bet > 10) { alert('Bet must be between 1 and 10 Leos.'); return; }
+
+  const raw = await storageGet(userKey(currentUser.email), true);
+  if (!raw) { alert('Could not load your account. Please try again.'); return; }
+  let u; try { u = JSON.parse(raw); } catch(e) { alert('Something went wrong.'); return; }
+  const balance = typeof u.leos === 'number' ? u.leos : 20;
+  if (balance < bet) { alert('You need ' + bet + ' Leos to place that bet.'); return; }
+  u.leos = balance - bet;
+  await storageSet(userKey(currentUser.email), JSON.stringify(u), true);
+  currentUser.leos = u.leos;
+  updateLeosDisplay();
+
+  document.getElementById('diceAiPicker').style.display = 'none';
+  document.getElementById('diceArena').style.display = 'block';
+  document.getElementById('diceOpponentLabel').textContent = 'vs 🤖 Dice Bot — bet ' + bet + ' Leos';
+  document.getElementById('diceOpponentName').textContent = '🤖 Bot';
+  document.getElementById('diceYouFace').textContent = '🎲';
+  document.getElementById('diceOppFace').textContent = '🎲';
+  document.getElementById('diceResult').textContent = '';
+  const btn = document.getElementById('diceRollBtn');
+  btn.disabled = false;
+  btn.style.display = 'inline-block';
+
+  diceGameState = { mode: 'ai', bet, isPvp: false, over: false };
+}
+
+async function rollDice(){
+  if (!diceGameState || diceGameState.over) return;
+  diceGameState.over = true;
+  const btn = document.getElementById('diceRollBtn');
+  btn.disabled = true;
+
+  const youFaceEl = document.getElementById('diceYouFace');
+  const oppFaceEl = document.getElementById('diceOppFace');
+
+  const myRoll = diceGameState.isPvp
+    ? (diceGameState.isJoiner ? diceGameState.joinerRoll : diceGameState.creatorRoll)
+    : rollDieValue();
+  const oppRoll = diceGameState.isPvp
+    ? (diceGameState.isJoiner ? diceGameState.creatorRoll : diceGameState.joinerRoll)
+    : rollDieValue();
+
+  // Quick rolling animation before settling on the real values
+  let ticks = 0;
+  const anim = setInterval(() => {
+    youFaceEl.textContent = dieFace(1 + Math.floor(Math.random() * 6));
+    oppFaceEl.textContent = dieFace(1 + Math.floor(Math.random() * 6));
+    ticks++;
+    if (ticks >= 8) {
+      clearInterval(anim);
+      youFaceEl.textContent = dieFace(myRoll);
+      oppFaceEl.textContent = dieFace(oppRoll);
+      finishDiceRoll(myRoll, oppRoll);
+    }
+  }, 100);
+}
+
+async function finishDiceRoll(myRoll, oppRoll){
+  const resultEl = document.getElementById('diceResult');
+  const bet = diceGameState.bet;
+
+  if (myRoll === oppRoll) {
+    const raw = await storageGet(userKey(currentUser.email), true);
+    if (raw) {
+      try { const u = JSON.parse(raw); u.leos = (typeof u.leos === 'number' ? u.leos : 0) + bet; await storageSet(userKey(currentUser.email), JSON.stringify(u), true); currentUser.leos = u.leos; updateLeosDisplay(); } catch(e){}
+    }
+    resultEl.style.color = '#888';
+    resultEl.textContent = 'Tie! You both rolled ' + myRoll + '. Your ' + bet + ' Leos bet has been refunded.';
+  } else if (myRoll > oppRoll) {
+    const payout = bet * 2;
+    const raw = await storageGet(userKey(currentUser.email), true);
+    if (raw) {
+      try { const u = JSON.parse(raw); u.leos = (typeof u.leos === 'number' ? u.leos : 0) + payout; await storageSet(userKey(currentUser.email), JSON.stringify(u), true); currentUser.leos = u.leos; updateLeosDisplay(); } catch(e){}
+    }
+    resultEl.style.color = '#25a244';
+    resultEl.textContent = 'You rolled ' + myRoll + ' vs ' + oppRoll + ' — you win! +' + payout + ' Leos.';
+  } else {
+    if (!diceGameState.isPvp) await addToAiVault(bet);
+    resultEl.style.color = '#d32f2f';
+    resultEl.textContent = 'You rolled ' + myRoll + ' vs ' + oppRoll + ' — you lose. Your ' + bet + ' Leos bet is gone.';
+  }
+
+  setTimeout(() => {
+    document.getElementById('diceArena').style.display = 'none';
+    document.getElementById('diceModePicker').style.display = 'flex';
+    diceGameState = null;
+    activeDiceChallengeCode = null;
+  }, 2600);
+}
+
+/* ---- Friends mode: bet-based dice PvP, mirrors the Word Cross challenge system ---- */
+const DICE_CHALLENGE_MIN_BET = 3;
+const DICE_CHALLENGE_MAX_BET = 10;
+const DICE_CHALLENGE_EXPIRE_MS = 5 * 60 * 1000;
+function diceChallengeKey(code){ return 'dicechallenge:' + code; }
+function generateDiceChallengeCode(){
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let code = '';
+  for (let i = 0; i < 6; i++) code += chars[Math.floor(Math.random() * chars.length)];
+  return code;
+}
+
+let diceChallengePollTimer = null;
+let activeDiceChallengeCode = null;
+let diceGameState = null;
+
+async function createDiceChallenge(){
+  const input = document.getElementById('diceBetInput');
+  const errEl = document.getElementById('diceCreateError');
+  const bet = parseFloat(input.value);
+  errEl.textContent = '';
+  if (!bet || bet < DICE_CHALLENGE_MIN_BET || bet > DICE_CHALLENGE_MAX_BET) {
+    errEl.textContent = `Bet must be between ${DICE_CHALLENGE_MIN_BET} and ${DICE_CHALLENGE_MAX_BET} Leos.`;
+    return;
+  }
+  const raw = await storageGet(userKey(currentUser.email), true);
+  if (!raw) { errEl.textContent = 'Could not load your account. Try again.'; return; }
+  let u; try { u = JSON.parse(raw); } catch(e) { errEl.textContent = 'Something went wrong.'; return; }
+  const balance = typeof u.leos === 'number' ? u.leos : 20;
+  if (balance < bet) { errEl.textContent = 'You do not have enough Leos for that bet.'; return; }
+
+  u.leos = balance - bet;
+  await storageSet(userKey(currentUser.email), JSON.stringify(u), true);
+  currentUser.leos = u.leos;
+  updateLeosDisplay();
+
+  const code = generateDiceChallengeCode();
+  const challenge = {
+    code, creator: currentUser.username, creatorName: currentUser.firstName + ' ' + currentUser.lastName,
+    bet, opponent: null, opponentName: null, status: 'waiting', createdAt: Date.now(),
+    creatorRoll: null, joinerRoll: null
+  };
+  await storageSet(diceChallengeKey(code), JSON.stringify(challenge), true);
+  input.value = '';
+
+  activeDiceChallengeCode = code;
+  document.getElementById('diceFriendPicker').style.display = 'none';
+  document.getElementById('diceWaitingArea').style.display = 'block';
+  document.getElementById('diceCodeDisplay').textContent = code;
+
+  if (diceChallengePollTimer) clearInterval(diceChallengePollTimer);
+  diceChallengePollTimer = setInterval(() => pollWaitingDiceChallenge(code), 3000);
+  pollWaitingDiceChallenge(code);
+}
+
+async function pollWaitingDiceChallenge(code){
+  const raw = await storageGet(diceChallengeKey(code), true);
+  if (!raw) { clearInterval(diceChallengePollTimer); return; }
+  let c; try { c = JSON.parse(raw); } catch(e) { return; }
+
+  const msLeft = DICE_CHALLENGE_EXPIRE_MS - (Date.now() - c.createdAt);
+  const expiryEl = document.getElementById('diceExpiryDisplay');
+  if (expiryEl && c.status === 'waiting' && msLeft > 0) {
+    const m = Math.floor(msLeft / 60000), s = Math.floor((msLeft % 60000) / 1000);
+    expiryEl.textContent = 'Expires and refunds in ' + m + ':' + String(s).padStart(2, '0');
+  }
+
+  if (c.status === 'active') {
+    clearInterval(diceChallengePollTimer);
+    startDiceArena(c, false);
+    return;
+  }
+  if (c.status === 'waiting' && msLeft <= 0) {
+    clearInterval(diceChallengePollTimer);
+    c.status = 'expired';
+    await storageSet(diceChallengeKey(code), JSON.stringify(c), true);
+    const uraw = await storageGet(userKey(currentUser.email), true);
+    if (uraw) {
+      try { const u = JSON.parse(uraw); u.leos = (typeof u.leos === 'number' ? u.leos : 0) + c.bet; await storageSet(userKey(currentUser.email), JSON.stringify(u), true); currentUser.leos = u.leos; updateLeosDisplay(); } catch(e){}
+    }
+    alert('Nobody joined in time - your ' + c.bet + ' Leos have been refunded.');
+    document.getElementById('diceWaitingArea').style.display = 'none';
+    document.getElementById('diceFriendPicker').style.display = 'block';
+  }
+}
+
+async function cancelDiceChallenge(){
+  if (!activeDiceChallengeCode) return;
+  const raw = await storageGet(diceChallengeKey(activeDiceChallengeCode), true);
+  if (raw) {
+    let c; try { c = JSON.parse(raw); } catch(e) { c = null; }
+    if (c && c.status === 'waiting') {
+      c.status = 'expired';
+      await storageSet(diceChallengeKey(activeDiceChallengeCode), JSON.stringify(c), true);
+      const uraw = await storageGet(userKey(currentUser.email), true);
+      if (uraw) {
+        try { const u = JSON.parse(uraw); u.leos = (typeof u.leos === 'number' ? u.leos : 0) + c.bet; await storageSet(userKey(currentUser.email), JSON.stringify(u), true); currentUser.leos = u.leos; updateLeosDisplay(); } catch(e){}
+      }
+    }
+  }
+  if (diceChallengePollTimer) clearInterval(diceChallengePollTimer);
+  activeDiceChallengeCode = null;
+  document.getElementById('diceWaitingArea').style.display = 'none';
+  document.getElementById('diceFriendPicker').style.display = 'block';
+}
+
+async function joinDiceChallenge(){
+  const input = document.getElementById('diceCodeInput');
+  const errEl = document.getElementById('diceJoinError');
+  const code = input.value.trim().toUpperCase();
+  errEl.textContent = '';
+  if (!code) { errEl.textContent = 'Enter a code first.'; return; }
+  const raw = await storageGet(diceChallengeKey(code), true);
+  if (!raw) { errEl.textContent = 'No challenge found with that code.'; return; }
+  let c; try { c = JSON.parse(raw); } catch(e) { errEl.textContent = 'Something went wrong.'; return; }
+  if (c.status !== 'waiting') { errEl.textContent = 'That challenge is no longer available.'; return; }
+  if (c.creator.toLowerCase() === currentUser.username.toLowerCase()) { errEl.textContent = 'You cannot join your own challenge.'; return; }
+  if (Date.now() - c.createdAt > DICE_CHALLENGE_EXPIRE_MS) { errEl.textContent = 'That challenge has expired.'; return; }
+
+  const uraw = await storageGet(userKey(currentUser.email), true);
+  if (!uraw) { errEl.textContent = 'Could not load your account.'; return; }
+  let u; try { u = JSON.parse(uraw); } catch(e) { errEl.textContent = 'Something went wrong.'; return; }
+  const balance = typeof u.leos === 'number' ? u.leos : 20;
+  if (balance < c.bet) { errEl.textContent = 'You need ' + c.bet + ' Leos to match this bet.'; return; }
+
+  u.leos = balance - c.bet;
+  await storageSet(userKey(currentUser.email), JSON.stringify(u), true);
+  currentUser.leos = u.leos;
+  updateLeosDisplay();
+
+  // Both dice values are decided right now, once, by whoever joins - this
+  // avoids any "who clicked first" race later; the roll button just reveals
+  // an outcome that's already fixed, like a sealed envelope.
+  c.opponent = currentUser.username;
+  c.opponentName = currentUser.firstName + ' ' + currentUser.lastName;
+  c.status = 'active';
+  c.creatorRoll = rollDieValue();
+  c.joinerRoll = rollDieValue();
+  c.startedAt = Date.now();
+  const res = await storageSet(diceChallengeKey(code), JSON.stringify(c), true);
+  if (!res) { errEl.textContent = 'Could not join. Please try again.'; return; }
+
+  input.value = '';
+  startDiceArena(c, true);
+}
+
+function startDiceArena(challenge, isJoiner){
+  if (diceChallengePollTimer) clearInterval(diceChallengePollTimer);
+  document.getElementById('diceModePicker').style.display = 'none';
+  document.getElementById('diceFriendPicker').style.display = 'none';
+  document.getElementById('diceWaitingArea').style.display = 'none';
+  document.getElementById('diceArena').style.display = 'block';
+
+  const opponentName = isJoiner ? challenge.creator : challenge.opponent;
+  document.getElementById('diceOpponentLabel').textContent = 'vs @' + opponentName + ' — winner takes ' + (challenge.bet * 2) + ' Leos';
+  document.getElementById('diceOpponentName').textContent = '@' + opponentName;
+  document.getElementById('diceYouFace').textContent = '🎲';
+  document.getElementById('diceOppFace').textContent = '🎲';
+  document.getElementById('diceResult').textContent = '';
+  const btn = document.getElementById('diceRollBtn');
+  btn.disabled = false;
+  btn.style.display = 'inline-block';
+
+  diceGameState = {
+    mode: 'pvp', isPvp: true, isJoiner, bet: challenge.bet,
+    creatorRoll: challenge.creatorRoll, joinerRoll: challenge.joinerRoll,
+    over: false
+  };
+}
+/* ================= END DICE DUEL ================= */
 
 let comingSoonEl = null;
 function renderComingSoon(label){
