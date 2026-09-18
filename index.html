@@ -2258,7 +2258,7 @@ async function loadAdminPage(){
 
   /* ---- User reports (admin/owner only) ---- */
   let reportsSection = '';
-  if (iAmAdmin) {
+  if (iAmAdmin || iAmModerator) {
     const reportKeys = await storageListKeys('report:', true);
     const reports = [];
     for (const k of reportKeys) {
@@ -2367,8 +2367,8 @@ async function loadAdminPage(){
     </div>
   ` : '';
 
-  document.getElementById('adminUserList').innerHTML = verifySection + unverifySection + leaderboardSection + banSection
-    + (iAmAdmin ? (reportsSection + adminSection + moderatorsSection + purchaseSection + giveLeosSection + deleteSection + aiVaultSection + dangerSection) : '');
+  document.getElementById('adminUserList').innerHTML = verifySection + unverifySection + leaderboardSection + banSection + reportsSection
+    + (iAmAdmin ? (adminSection + moderatorsSection + purchaseSection + giveLeosSection + deleteSection + aiVaultSection + dangerSection) : '');
 }
 
 async function withdrawAiVault(){
@@ -6184,7 +6184,7 @@ async function submitReport(){
 }
 
 async function replyToReport(reportId){
-  if (!currentUser || !isAdminUser(currentUser)) { alert('Only admins can respond to reports.'); return; }
+  if (!currentUser || !(isAdminUser(currentUser) || isModeratorUser(currentUser))) { alert('Only staff can respond to reports.'); return; }
   const raw = await storageGet('report:' + reportId, true);
   if (!raw) return;
   let report; try { report = JSON.parse(raw); } catch(e) { return; }
