@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="light">
 <title>Chat Me</title>
+<meta name="description" content="Chat Me is a free social chat app - message friends, join group chatrooms, share posts, and play fun games like Word Cross and Dice Duel against friends or AI.">
+<meta name="keywords" content="Chat Me, chat app, chat with friends, group chat, online chatroom, free chat app, chat games">
+<meta property="og:title" content="Chat Me">
+<meta property="og:description" content="Message friends, join group chats, share posts, and play games - all in one free chat app.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://chat-me183.github.io/chat-me/">
+<meta name="robots" content="index, follow">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Ccircle cx='22' cy='30' r='16' fill='%232b3a8f'/%3E%3Ccircle cx='38' cy='30' r='16' fill='%23e8622d'/%3E%3Ccircle cx='30' cy='30' r='8' fill='%236a4fb8'/%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Crect width='60' height='60' rx='12' fill='%23fff'/%3E%3Ccircle cx='22' cy='30' r='16' fill='%232b3a8f'/%3E%3Ccircle cx='38' cy='30' r='16' fill='%23e8622d'/%3E%3Ccircle cx='30' cy='30' r='8' fill='%236a4fb8'/%3E%3C/svg%3E">
 <meta name="apple-mobile-web-app-title" content="Chat Me">
@@ -745,6 +752,22 @@
       <div id="buyPackages" style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px;"></div>
       <div id="buyCooldownNote" style="font-size:12.5px;color:#d32f2f;margin-bottom:10px;"></div>
       <div id="buyConfirmArea"></div>
+    </div>
+
+    <div class="page" id="reportPage" style="padding:16px;overflow-y:auto;">
+      <h2 style="color:#2b3a8f;margin-bottom:6px;">🚩 Report Something</h2>
+      <div style="font-size:13px;color:#666;margin-bottom:14px;max-width:520px;">
+        See something breaking the rules - a user, a post, a message, a chatroom? Let staff know below. You can send one report every 2 days.
+      </div>
+      <div class="profile-card" style="max-width:520px;">
+        <div style="font-size:13px;color:#888;margin-bottom:4px;">Your name</div>
+        <div id="reportYourName" style="font-weight:600;color:#2b3a8f;margin-bottom:12px;"></div>
+        <div style="font-size:13px;color:#888;margin-bottom:4px;">What are you reporting?</div>
+        <textarea id="reportDescInput" maxlength="500" placeholder="Describe what happened - who or what it involves, and why it breaks the rules." style="width:100%;min-height:100px;padding:9px 10px;border:1px solid #ccc;border-radius:6px;font-size:13.5px;resize:vertical;margin-bottom:10px;"></textarea>
+        <div class="auth-error" id="reportError"></div>
+        <div class="auth-status" id="reportStatus"></div>
+        <button id="reportSubmitBtn" onclick="submitReport()" style="background:#e8622d;color:#fff;border:none;padding:9px 18px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:600;">Submit Report</button>
+      </div>
     </div>
 
     <div class="page" id="viewProfilePage">
@@ -2092,6 +2115,7 @@ function switchTab(pageId){
   if (pageId === 'statusbookPage') loadStatusbookPage();
   if (pageId === 'aiPage') loadAIPage();
   if (pageId === 'menuPage') loadMenuPage();
+  if (pageId === 'reportPage') loadReportPage();
   if (pageId === 'groupsPage') loadGroupListPage();
   if (pageId === 'chatroomsPage') loadRoomListPage();
   if (pageId === 'adminPage') loadAdminPage();
@@ -2232,6 +2256,32 @@ async function loadAdminPage(){
       </div>` : ''}
   ` : '';
 
+  /* ---- User reports (admin/owner only) ---- */
+  let reportsSection = '';
+  if (iAmAdmin) {
+    const reportKeys = await storageListKeys('report:', true);
+    const reports = [];
+    for (const k of reportKeys) {
+      const raw = await storageGet(k, true);
+      if (!raw) continue;
+      try { reports.push(JSON.parse(raw)); } catch(e){}
+    }
+    reports.sort((a,b) => b.time - a.time);
+    const openReports = reports.filter(r => r.status === 'open');
+    reportsSection = `
+      <div class="section-divider"><strong>Reports (${openReports.length} open)</strong><span>Sent by users through the Report button. Replying marks it resolved and notifies them.</span></div>
+      ${openReports.length ? openReports.map(r => `
+        <div class="user-result" style="max-width:560px;align-items:flex-start;">
+          <div class="info">
+            <div class="name">From ${escapeHtml(r.reporterName)} <span style="color:#aaa;font-weight:400;">@${escapeHtml(r.reporterUsername)}</span></div>
+            <div style="font-size:13px;color:#444;margin:4px 0;">${escapeHtml(r.description)}</div>
+            <div style="font-size:11px;color:#999;">${new Date(r.time).toLocaleString()}</div>
+          </div>
+          <button onclick="replyToReport('${r.id}')">Reply &amp; Resolve</button>
+        </div>`).join('') : '<div class="empty-feed">No open reports.</div>'}
+    `;
+  }
+
   /* ---- Pending Leos purchases (any admin can approve/reject) ---- */
   const purchaseKeys = await storageListKeys('purchase:', true);
   const pendingPurchases = [];
@@ -2267,6 +2317,20 @@ async function loadAdminPage(){
   `;
 
   /* ---- Delete / edit account (any admin can act, owner protected) ---- */
+  const banSection = iAmModerator ? `
+    <div class="section-divider"><strong>Ban / Unban Users</strong><span>You can restrict accounts that break the rules. You cannot edit or delete accounts.</span></div>
+    ${rows.filter(u => !u.isOwner && !isAdminUser(u)).map(u => `
+      <div class="user-result" style="max-width:560px;">
+        <div class="avatar">${((u.firstName||'?')[0]+(u.lastName||'?')[0]).toUpperCase()}</div>
+        <div class="info">
+          <div class="name">${escapeHtml(u.firstName)} ${escapeHtml(u.lastName)} ${roleBadgeHtml(u)} ${u.banned ? '<span style="color:#d32f2f;font-size:11px;font-weight:700;border:1px solid #d32f2f;padding:1px 6px;border-radius:10px;">BANNED</span>' : ''}</div>
+          <div class="uname">@${escapeHtml(u.username)}</div>
+          ${u.banned ? `<div style="font-size:11.5px;color:#d32f2f;margin-top:2px;">Reason: ${escapeHtml(u.banReason || 'No reason given')} &middot; ${u.banUntil ? 'until ' + new Date(u.banUntil).toLocaleDateString() : 'no expiry'}</div>` : ''}
+        </div>
+        <button style="background:${u.banned ? '#25a244' : '#e8622d'};" onclick="${u.banned ? `unbanUser('${u.username.replace(/'/g,"\\'")}')` : `banUser('${u.username.replace(/'/g,"\\'")}')`}">${u.banned ? 'Unban' : 'Ban'}</button>
+      </div>`).join('')}
+  ` : '';
+
   const deleteSection = `
     <div class="section-divider"><strong>Accounts</strong><span>Admins can edit or permanently delete any account except the owner's.</span></div>
     ${rows.map(u => `
@@ -2303,8 +2367,8 @@ async function loadAdminPage(){
     </div>
   ` : '';
 
-  document.getElementById('adminUserList').innerHTML = verifySection + unverifySection + leaderboardSection
-    + (iAmAdmin ? (adminSection + moderatorsSection + purchaseSection + giveLeosSection + deleteSection + aiVaultSection + dangerSection) : '');
+  document.getElementById('adminUserList').innerHTML = verifySection + unverifySection + leaderboardSection + banSection
+    + (iAmAdmin ? (reportsSection + adminSection + moderatorsSection + purchaseSection + giveLeosSection + deleteSection + aiVaultSection + dangerSection) : '');
 }
 
 async function withdrawAiVault(){
@@ -2762,7 +2826,7 @@ function isCurrentlyBanned(u){
 }
 
 async function banUser(username){
-  if (!currentUser || !isAdminUser(currentUser)) { alert('Only admins can ban users.'); return; }
+  if (!currentUser || !(isAdminUser(currentUser) || isModeratorUser(currentUser))) { alert('Only staff can ban users.'); return; }
   const email = await storageGet(usernameKey(username), true);
   if (!email) return;
   const raw = await storageGet(userKey(email), true);
@@ -2770,6 +2834,7 @@ async function banUser(username){
   let target;
   try { target = JSON.parse(raw); } catch(e) { return; }
   if (target.isOwner) { alert("The owner's account can't be banned."); return; }
+  if (isAdminUser(target) && !isAdminUser(currentUser)) { alert('Moderators cannot ban admins.'); return; }
 
   const reason = prompt('Why are you banning @' + username + '? (what rule did they break)');
   if (reason === null) return;
@@ -2801,7 +2866,7 @@ async function banUser(username){
 }
 
 async function unbanUser(username){
-  if (!currentUser || !isAdminUser(currentUser)) { alert('Only admins can unban users.'); return; }
+  if (!currentUser || !(isAdminUser(currentUser) || isModeratorUser(currentUser))) { alert('Only staff can unban users.'); return; }
   const email = await storageGet(usernameKey(username), true);
   if (!email) return;
   const raw = await storageGet(userKey(email), true);
@@ -6061,6 +6126,91 @@ async function deleteCircle(kind, id){
    no API key behind it and the call will fail - you'd need to point it at
    your own backend/key to use this outside of a Claude artifact preview. */
 let aiChatHistory = [];
+/* ---------------- REPORTS ---------------- */
+const REPORT_COOLDOWN_MS = 2 * 24 * 60 * 60 * 1000;
+function lastReportKey(username){ return 'lastreport:' + username.toLowerCase(); }
+
+async function loadReportPage(){
+  document.getElementById('reportYourName').textContent = currentUser.firstName + ' ' + currentUser.lastName + ' (@' + currentUser.username + ')';
+  document.getElementById('reportError').textContent = '';
+  document.getElementById('reportStatus').textContent = '';
+  document.getElementById('reportDescInput').value = '';
+
+  const lastRaw = await storageGet(lastReportKey(currentUser.username), true);
+  const last = lastRaw ? parseInt(lastRaw, 10) : 0;
+  const msLeft = REPORT_COOLDOWN_MS - (Date.now() - last);
+  const btn = document.getElementById('reportSubmitBtn');
+  const textarea = document.getElementById('reportDescInput');
+  if (msLeft > 0) {
+    const hoursLeft = Math.ceil(msLeft / (60 * 60 * 1000));
+    document.getElementById('reportStatus').textContent = `You can send another report in about ${hoursLeft} hour${hoursLeft === 1 ? '' : 's'}.`;
+    btn.disabled = true;
+    textarea.disabled = true;
+  } else {
+    btn.disabled = false;
+    textarea.disabled = false;
+  }
+}
+
+async function submitReport(){
+  const errEl = document.getElementById('reportError');
+  const statusEl = document.getElementById('reportStatus');
+  errEl.textContent = '';
+  statusEl.textContent = '';
+  const desc = document.getElementById('reportDescInput').value.trim();
+  if (!desc) { errEl.textContent = 'Please describe what you are reporting.'; return; }
+
+  const lastRaw = await storageGet(lastReportKey(currentUser.username), true);
+  const last = lastRaw ? parseInt(lastRaw, 10) : 0;
+  if (Date.now() - last < REPORT_COOLDOWN_MS) { errEl.textContent = 'You can only send one report every 2 days.'; return; }
+
+  const report = {
+    id: Date.now() + '-' + Math.random().toString(36).slice(2, 8),
+    reporterUsername: currentUser.username,
+    reporterName: currentUser.firstName + ' ' + currentUser.lastName,
+    description: desc,
+    time: Date.now(),
+    status: 'open',
+    adminReply: null
+  };
+  const res = await storageSet('report:' + report.id, JSON.stringify(report), true);
+  if (!res) { errEl.textContent = 'Could not send your report right now. Please try again.'; return; }
+  await storageSet(lastReportKey(currentUser.username), String(Date.now()), true);
+
+  document.getElementById('reportDescInput').value = '';
+  statusEl.textContent = 'Report sent. Staff will review it and may reply to you.';
+  document.getElementById('reportSubmitBtn').disabled = true;
+  document.getElementById('reportDescInput').disabled = true;
+}
+
+async function replyToReport(reportId){
+  if (!currentUser || !isAdminUser(currentUser)) { alert('Only admins can respond to reports.'); return; }
+  const raw = await storageGet('report:' + reportId, true);
+  if (!raw) return;
+  let report; try { report = JSON.parse(raw); } catch(e) { return; }
+
+  const reply = prompt('Reply to @' + report.reporterUsername + ' about this report:', '');
+  if (reply === null) return;
+  if (!reply.trim()) { alert('Please write a reply.'); return; }
+
+  report.status = 'resolved';
+  report.adminReply = reply.trim();
+  report.repliedBy = currentUser.username;
+  report.repliedAt = Date.now();
+  await storageSet('report:' + reportId, JSON.stringify(report), true);
+
+  const notifRaw = await storageGet(notifsKey(report.reporterUsername), true);
+  const notifs = notifRaw ? JSON.parse(notifRaw) : [];
+  notifs.push({
+    id: Date.now() + '-' + Math.random().toString(36).slice(2, 8),
+    type: 'welcome', time: Date.now(), read: false, handled: true,
+    text: `Reply to your report: "${reply.trim()}"`
+  });
+  await storageSet(notifsKey(report.reporterUsername), JSON.stringify(notifs), true);
+
+  loadAdminPage();
+}
+
 function loadMenuPage(){
   const items = [
     { label: 'Home', page: 'homePage' },
@@ -6075,7 +6225,8 @@ function loadMenuPage(){
     { label: 'Groups', page: 'groupsPage' },
     { label: 'Leos', page: 'leosPage' },
     { label: 'Games', page: 'gamesPage' },
-    { label: '💰 Buy$', page: 'buyLeosPage' }
+    { label: '💰 Buy$', page: 'buyLeosPage' },
+    { label: '🚩 Report', page: 'reportPage' }
   ];
   if (currentUser && (isAdminUser(currentUser) || isModeratorUser(currentUser))) items.push({ label: '⚙ Admin', page: 'adminPage' });
   items.push({ label: 'Log Out', page: null, action: 'logout' });
