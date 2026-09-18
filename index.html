@@ -1453,6 +1453,56 @@ function loadLeosPage(){
 }
 
 /* ---------------- VIEW SOMEONE ELSE'S PROFILE ---------------- */
+/* ---------------- BLOCKING ---------------- */
+// Each person's own "blockedUsers" list lives on their own account record.
+// Someone is unreachable to chat with if EITHER side has blocked the other.
+async function isBlockedEitherWay(myUsername, otherUsername){
+  const myEmail = await storageGet(usernameKey(myUsername), true);
+  const myRaw = myEmail ? await storageGet(userKey(myEmail), true) : null;
+  const my = myRaw ? JSON.parse(myRaw) : null;
+  if (my && Array.isArray(my.blockedUsers) && my.blockedUsers.some(u => u.toLowerCase() === otherUsername.toLowerCase())) return true;
+
+  const theirEmail = await storageGet(usernameKey(otherUsername), true);
+  const theirRaw = theirEmail ? await storageGet(userKey(theirEmail), true) : null;
+  const their = theirRaw ? JSON.parse(theirRaw) : null;
+  if (their && Array.isArray(their.blockedUsers) && their.blockedUsers.some(u => u.toLowerCase() === myUsername.toLowerCase())) return true;
+
+  return false;
+}
+
+async function toggleBlockUser(username){
+  const email = await storageGet(usernameKey(currentUser.username), true);
+  if (!email) return;
+  const raw = await storageGet(userKey(email), true);
+  if (!raw) return;
+  let me; try { me = JSON.parse(raw); } catch(e) { return; }
+  me.blockedUsers = Array.isArray(me.blockedUsers) ? me.blockedUsers : [];
+  const idx = me.blockedUsers.findIndex(u => u.toLowerCase() === username.toLowerCase());
+  const willBlock = idx === -1;
+
+  if (!confirm(willBlock
+    ? `Block @${username}? They won't be able to message you, and you won't be able to message them.`
+    : `Unblock @${username}?`)) return;
+
+  if (willBlock) {
+    me.blockedUsers.push(username);
+    // Blocking implies unfriending too, so they disappear from your friends list.
+    const myFriendsRaw = await storageGet(friendsKey(currentUser.username), true);
+    let myFriends = myFriendsRaw ? JSON.parse(myFriendsRaw) : [];
+    myFriends = myFriends.filter(u => u.toLowerCase() !== username.toLowerCase());
+    await storageSet(friendsKey(currentUser.username), JSON.stringify(myFriends), true);
+    const theirFriendsRaw = await storageGet(friendsKey(username), true);
+    let theirFriends = theirFriendsRaw ? JSON.parse(theirFriendsRaw) : [];
+    theirFriends = theirFriends.filter(u => u.toLowerCase() !== currentUser.username.toLowerCase());
+    await storageSet(friendsKey(username), JSON.stringify(theirFriends), true);
+  } else {
+    me.blockedUsers.splice(idx, 1);
+  }
+  await storageSet(userKey(email), JSON.stringify(me), true);
+  currentUser.blockedUsers = me.blockedUsers;
+  viewProfile(username);
+}
+
 async function viewProfile(username){
   if (!currentUser) return;
   if (username.toLowerCase() === currentUser.username.toLowerCase()) { switchTab('profilePage'); return; }
@@ -1486,8 +1536,15 @@ async function viewProfile(username){
   const uname = u.username.replace(/'/g,"\\'");
   const theirFriendsRaw = await storageGet(friendsKey(u.username), true);
   const theirFriendsCount = theirFriendsRaw ? JSON.parse(theirFriendsRaw).length : 0;
+  const iBlockedThem = Array.isArray(currentUser.blockedUsers) && currentUser.blockedUsers.some(x => x.toLowerCase() === u.username.toLowerCase());
+  const theyBlockedMe = Array.isArray(rawUser.blockedUsers) && rawUser.blockedUsers.some(x => x.toLowerCase() === currentUser.username.toLowerCase());
+  const blockedEitherWay = iBlockedThem || theyBlockedMe;
   let actionBtn;
-  if (isFriend) {
+  if (blockedEitherWay) {
+    actionBtn = iBlockedThem
+      ? `<span style="color:#d32f2f;font-size:13px;">You have blocked this person.</span>`
+      : `<span style="color:#d32f2f;font-size:13px;">You can't interact with this person.</span>`;
+  } else if (isFriend) {
     actionBtn = `<button class="logout-btn" style="background:#2b6ee0;" onclick="switchTab('chatsPage');setTimeout(()=>openChat('${uname}','${(u.firstName+' '+u.lastName).replace(/'/g,"\\'")}'),50)">Message</button>
       <button class="logout-btn" style="background:#888;margin-left:8px;" onclick="unfriendUser('${uname}')">Unfriend</button>`;
   }
@@ -1521,6 +1578,7 @@ async function viewProfile(username){
     <div class="profile-row"><span>Member since</span><span>${new Date(u.createdAt).toLocaleDateString()}</span></div>
     ${theyAreLocked ? '<div style="font-size:12px;color:#888;margin-top:6px;">🔒 This profile is locked to verified users — you can see it because you\'re verified or an admin.</div>' : ''}
     ${actionBtn}
+    ${!theyBlockedMe ? `<div style="margin-top:8px;"><a style="color:${iBlockedThem ? '#25a244' : '#d32f2f'};cursor:pointer;font-size:12.5px;" onclick="toggleBlockUser('${uname}')">${iBlockedThem ? 'Unblock this person' : '🚫 Block this person'}</a></div>` : ''}
     <div style="margin-top:10px;"><a style="color:#2b6ee0;cursor:pointer;font-size:13px;" onclick="switchTab('homePage')">&larr; Back to Home</a></div>
   `;
   loadWallPosts(u.username, 'viewProfileCard', false);
@@ -4850,6 +4908,10 @@ async function searchPeople(){
 }
 
 async function sendFriendRequest(otherUsername, btnEl){
+  if (await isBlockedEitherWay(currentUser.username, otherUsername)) {
+    alert("You can't send a friend request to this person.");
+    return;
+  }
   if (btnEl) { btnEl.disabled = true; btnEl.textContent = 'Sending...'; }
   showLoading(true);
   try {
@@ -5145,6 +5207,8 @@ async function openChat(username, display){
     }
   } catch(e){}
 
+  const blocked = await isBlockedEitherWay(currentUser.username, username);
+
   chatEl.innerHTML = `
     <div class="chat-header" style="align-items:center;">
       <span onclick="closeChat()" style="cursor:pointer;text-decoration:underline;font-size:13px;color:#2b6ee0;font-weight:600;">&larr; Back</span>
@@ -5158,10 +5222,12 @@ async function openChat(username, display){
       <span style="font-size:11.5px;color:#888;margin-left:auto;">0.20 Leos / message</span>
     </div>
     <div class="messages" id="messagesArea"></div>
-    <div class="input-bar">
+    ${blocked
+      ? `<div style="padding:14px;text-align:center;color:#d32f2f;font-size:13px;border-top:1px solid #ddd;">You can't message this person.</div>`
+      : `<div class="input-bar">
       <input type="text" id="chatInput" placeholder="Type a message" onkeydown="if(event.key==='Enter') sendMessage()">
       <button class="send-btn" onclick="sendMessage()">&#10148;</button>
-    </div>
+    </div>`}
   `;
   loadMessages();
   updateChatPresence();
@@ -5243,6 +5309,7 @@ async function deletePrivateMessage(index){
 const MESSAGE_COST_LEOS = 0.20;
 async function sendMessage(){
   if (isCurrentlyBanned(currentUser)) { alert(banBlockMessage(currentUser)); return; }
+  if (await isBlockedEitherWay(currentUser.username, activeChatFriend)) { alert("You can't message this person."); return; }
   const input = document.getElementById('chatInput');
   const text = input.value.trim();
   if (!text || !activeChatFriend) return;
