@@ -165,7 +165,8 @@
   .private-chat { flex: 1; display: none; flex-direction: column; }
   .private-chat.active { display: flex; }
   .chat-header { background: #f7f7f7; padding: 14px 20px; border-bottom: 1px solid #ddd; font-weight: 600; display: flex; align-items: center; gap: 10px; }
-  .messages { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; }
+  .messages { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; background: #e5ddd5; background-image: radial-gradient(rgba(0,0,0,0.03) 1px, transparent 1px); background-size: 18px 18px; }
+  body.dark-mode .messages { background: #0b141a; background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px); }
   .msg-row { display: flex; flex-direction: column; max-width: 60%; }
   .msg-row.sent { align-self: flex-end; align-items: flex-end; }
   .msg-row.received { align-self: flex-start; align-items: flex-start; }
@@ -537,6 +538,11 @@
           <div style="font-weight:700;color:#2b3a8f;margin-bottom:6px;font-size:13px;">Create a Chatroom</div>
           <input type="text" id="roomNameInput" placeholder="Chatroom name" maxlength="60" style="width:100%;padding:9px 10px;border-radius:6px;border:1px solid #ccc;font-size:13.5px;margin-bottom:6px;outline:none;">
           <textarea id="roomDescInput" placeholder="Rules or description (optional)" maxlength="300" style="width:100%;padding:9px 10px;border-radius:6px;border:1px solid #ccc;font-size:13px;margin-bottom:6px;outline:none;min-height:50px;resize:vertical;"></textarea>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+            <input type="file" id="roomPicInput" accept="image/*" style="display:none;" onchange="onRoomPicChosen()">
+            <button onclick="document.getElementById('roomPicInput').click()" style="background:#eee;border:none;padding:7px 10px;border-radius:6px;cursor:pointer;font-size:12.5px;">Choose picture (optional)</button>
+            <span id="roomPicFileName" style="font-size:12px;color:#888;">No file chosen</span>
+          </div>
           <div class="field-msg" id="roomCreateError" style="min-height:14px;"></div>
           <button onclick="createCircle('room')" style="width:100%;background:#25a244;color:#fff;border:none;padding:9px;border-radius:6px;cursor:pointer;font-size:13.5px;font-weight:600;">Create Chatroom (needs 300 Leos)</button>
         </div>
@@ -1317,7 +1323,7 @@ async function doSignup(){
       username, email, firstName: first, lastName: last, phone,
       dob: `${year}-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`,
       country, gender, salt, passwordHash,
-      leos: isOwner ? 70000.00 : 20.00, isOwner, isAdmin: isOwner,
+      leos: isOwner ? 70000.00 : 20.00, isOwner, isAdmin: isOwner, isModerator: false,
       verified: isOwner, profileLocked: false,
       createdAt: Date.now()
     };
@@ -1325,6 +1331,11 @@ async function doSignup(){
     if (!setUserRes) { errEl.textContent = 'Could not create your account right now. Please try again.'; return; }
     await storageSet(usernameKey(username), email, true);
     await storageSet(friendsKey(username), JSON.stringify([]), true);
+    await storageSet(notifsKey(username), JSON.stringify([{
+      id: Date.now() + '-' + Math.random().toString(36).slice(2, 8),
+      type: 'welcome', time: Date.now(), read: false, handled: true,
+      text: "Welcome to Chat Me! We are excited to have you join our growing community of friends, chatters, and gamers. Here you can message people, join group chats, share posts, play fun games with friends or the AI, and earn Leos along the way. Please be kind and respectful, and follow the rules. Enjoy your time here, and let's chat!"
+    }]), true);
 
     // Referral tracking: ?ref=someusername in the URL that brought them here.
     // Rewards are milestone-based and claimable (not auto-added) - see showReferralInfo.
@@ -1466,7 +1477,7 @@ async function viewProfile(username){
   if (!canSeeFull) {
     document.getElementById('viewProfileCard').innerHTML = `
       ${avatarHtml(u.firstName, u.lastName, u.profilePic, 'avatar-lg')}
-      <div class="profile-row"><span>Name</span><span>${displayNameWithNickname(u.firstName + ' ' + u.lastName, u.nickname)} ${ownerBadgeHtml(theyAreOwner)}</span></div>
+      <div class="profile-row"><span>Name</span><span>${displayNameWithNickname(u.firstName + ' ' + u.lastName, u.nickname)} ${roleBadgeHtml(rawUser)}</span></div>
       <div class="profile-row"><span>Username</span><span>@${escapeHtml(u.username)}</span></div>
       <div class="empty-feed" style="padding:20px 0;">🔒 This profile is locked. Only verified users can view it.</div>
       <div style="margin-top:10px;"><a style="color:#2b6ee0;cursor:pointer;font-size:13px;" onclick="switchTab('homePage')">&larr; Back to Home</a></div>
@@ -1476,7 +1487,7 @@ async function viewProfile(username){
 
   document.getElementById('viewProfileCard').innerHTML = `
     ${avatarHtml(u.firstName, u.lastName, u.profilePic, 'avatar-lg')}
-    <div class="profile-row"><span>Name</span><span>${displayNameWithNickname(u.firstName + ' ' + u.lastName, u.nickname)} ${verifiedBadgeHtml(theirVerified)} ${ownerBadgeHtml(theyAreOwner)}</span></div>
+    <div class="profile-row"><span>Name</span><span>${displayNameWithNickname(u.firstName + ' ' + u.lastName, u.nickname)} ${roleBadgeHtml(rawUser)}</span></div>
     <div class="profile-row"><span>Username</span><span>@${escapeHtml(u.username)}</span></div>
     <div class="profile-row"><span>Followers</span><span>${theirFriendsCount}</span></div>
     <div class="profile-row"><span>Following</span><span>${theirFriendsCount}</span></div>
@@ -1803,7 +1814,7 @@ async function loginSuccess(user){
   document.getElementById('suYear').value = '';
   document.getElementById('footerUserLabel').textContent = (user.firstName || '') + ' ' + (user.lastName || '') + ' (@' + user.username + ')';
   updateLeosDisplay();
-  document.getElementById('adminNavItem').style.display = isAdminUser(user) ? 'block' : 'none';
+  document.getElementById('adminNavItem').style.display = (isAdminUser(user) || isModeratorUser(user)) ? 'block' : 'none';
   document.getElementById('homeColorPicker').innerHTML = postColorPickerHtml('home');
 
   if (badgePollTimer) clearInterval(badgePollTimer);
@@ -1908,13 +1919,34 @@ function showRules(){
 }
 
 /* ---------------- ANNOUNCEMENTS (admin only can post; everyone can read) ---------------- */
+function announceDatesKey(username){ return 'announcedates:' + username.toLowerCase(); }
+
 async function postAnnouncement(){
   const errEl = document.getElementById('announceError');
   const textEl = document.getElementById('announceInput');
   errEl.textContent = '';
-  if (!isAdminUser(currentUser)) { errEl.textContent = 'Only admins can post announcements.'; return; }
+  if (!(isAdminUser(currentUser) || isModeratorUser(currentUser))) { errEl.textContent = 'Only staff can post announcements.'; return; }
   const text = textEl.value.trim();
   if (!text) { errEl.textContent = 'Write something first.'; return; }
+
+  // Moderators (not admins/owner) are limited to 3 distinct calendar days
+  // of announcements within any trailing 7-day window.
+  const isPureModerator = isModeratorUser(currentUser) && !isAdminUser(currentUser);
+  let todayStr = null;
+  let announceDates = [];
+  if (isPureModerator) {
+    todayStr = new Date().toISOString().slice(0, 10);
+    const raw = await storageGet(announceDatesKey(currentUser.username), true);
+    announceDates = raw ? JSON.parse(raw) : [];
+    const weekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
+    announceDates = announceDates.filter(d => new Date(d).getTime() >= weekAgo);
+    const distinctDays = new Set(announceDates);
+    if (!distinctDays.has(todayStr) && distinctDays.size >= 3) {
+      errEl.textContent = 'Moderators can only announce on 3 different days per week. Try again later this week.';
+      return;
+    }
+  }
+
   showLoading(true);
   try {
     const post = {
@@ -1926,6 +1958,10 @@ async function postAnnouncement(){
     };
     await storageSet('post:' + post.id, JSON.stringify(post), true);
     textEl.value = '';
+    if (isPureModerator) {
+      if (!announceDates.includes(todayStr)) announceDates.push(todayStr);
+      await storageSet(announceDatesKey(currentUser.username), JSON.stringify(announceDates), true);
+    }
     await broadcastAnnouncementNotification(text);
     await loadAnnouncementsPage();
   } catch (e) {
@@ -1956,7 +1992,7 @@ async function broadcastAnnouncementNotification(text){
 
 async function loadAnnouncementsPage(){
   const composerEl = document.getElementById('announceComposer');
-  if (composerEl) composerEl.style.display = isAdminUser(currentUser) ? 'block' : 'none';
+  if (composerEl) composerEl.style.display = (isAdminUser(currentUser) || isModeratorUser(currentUser)) ? 'block' : 'none';
   const listEl = document.getElementById('announceList');
   listEl.innerHTML = '<div class="empty-feed">Loading...</div>';
   const keys = await storageListKeys('post:', true);
@@ -2065,12 +2101,14 @@ function switchTab(pageId){
 
 /* ---------------- ADMIN (owner only) ---------------- */
 async function loadAdminPage(){
-  if (!currentUser || !isAdminUser(currentUser)) {
-    // Not an admin - kick back to Home even if they somehow reach this tab.
+  if (!currentUser || !(isAdminUser(currentUser) || isModeratorUser(currentUser))) {
+    // Not staff - kick back to Home even if they somehow reach this tab.
     switchTab('homePage');
     return;
   }
   const iAmOwner = !!currentUser.isOwner;
+  const iAmAdmin = isAdminUser(currentUser); // owner or admin
+  const iAmModerator = isModeratorUser(currentUser) && !iAmAdmin; // pure moderator, not also admin/owner
   const userKeys = await storageListKeys('user:', true);
   const postKeys = await storageListKeys('post:', true);
   let verifiedCount = 0;
@@ -2090,10 +2128,11 @@ async function loadAdminPage(){
 
   rows.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
 
-  /* ---- Verification requests (owner only can act, everyone with admin access can see) ---- */
+  /* ---- Verification requests (admin or moderator can act) ---- */
   const eligible = rows.filter(u => !u.verified && typeof u.leos === 'number' && u.leos >= VERIFIED_LEOS_THRESHOLD);
+  const canVerify = iAmAdmin || iAmModerator;
   const verifySection = `
-    <div class="section-divider"><strong>Verification requests</strong><span>Accounts that reached ${VERIFIED_LEOS_THRESHOLD} Leos and are eligible for the 💎 badge.</span></div>
+    <div class="section-divider"><strong>Verification requests</strong><span>Accounts that reached ${VERIFIED_LEOS_THRESHOLD} Leos and are eligible for the 🌐 badge.</span></div>
     ${eligible.length ? eligible.map(u => `
       <div class="user-result" style="max-width:560px;">
         <div class="avatar">${((u.firstName||'?')[0]+(u.lastName||'?')[0]).toUpperCase()}</div>
@@ -2101,8 +2140,38 @@ async function loadAdminPage(){
           <div class="name">${escapeHtml(u.firstName)} ${escapeHtml(u.lastName)}</div>
           <div class="uname">@${escapeHtml(u.username)} &middot; Leos: ${u.leos.toFixed(2)}</div>
         </div>
-        ${iAmOwner ? `<button onclick="verifyUser('${u.username.replace(/'/g,"\\'")}')">Verify</button>` : `<span style="color:#aaa;font-size:12.5px;">Only the owner can verify</span>`}
+        ${canVerify ? `<button onclick="verifyUser('${u.username.replace(/'/g,"\\'")}')">Verify</button>` : `<span style="color:#aaa;font-size:12.5px;">Only staff can verify</span>`}
       </div>`).join('') : '<div class="empty-feed">No one is currently eligible.</div>'}
+  `;
+
+  /* ---- Verified accounts that fell back below the threshold - staff can remove the badge ---- */
+  const droppedBelow = rows.filter(u => u.verified && !(typeof u.leos === 'number' && u.leos >= VERIFIED_LEOS_THRESHOLD));
+  const unverifySection = droppedBelow.length ? `
+    <div class="section-divider"><strong>Verified but below ${VERIFIED_LEOS_THRESHOLD} Leos</strong><span>Their balance dropped back down - staff can remove their 🌐 badge.</span></div>
+    ${droppedBelow.map(u => `
+      <div class="user-result" style="max-width:560px;">
+        <div class="avatar">${((u.firstName||'?')[0]+(u.lastName||'?')[0]).toUpperCase()}</div>
+        <div class="info">
+          <div class="name">${escapeHtml(u.firstName)} ${escapeHtml(u.lastName)}</div>
+          <div class="uname">@${escapeHtml(u.username)} &middot; Leos: ${(u.leos||0).toFixed(2)}</div>
+        </div>
+        ${canVerify ? `<button style="background:#e8622d;" onclick="unverifyUser('${u.username.replace(/'/g,"\\'")}')">Remove Verification</button>` : ''}
+      </div>`).join('')}
+  ` : '';
+
+  /* ---- Leos leaderboard - top 20, visible to admins and moderators ---- */
+  const top20 = rows.slice().sort((a,b) => (b.leos||0) - (a.leos||0)).slice(0, 20);
+  const leaderboardSection = `
+    <div class="section-divider"><strong>Leos Leaderboard</strong><span>The top 20 accounts by Leos balance.</span></div>
+    ${top20.map((u, i) => `
+      <div class="user-result" style="max-width:560px;">
+        <div class="avatar">${((u.firstName||'?')[0]+(u.lastName||'?')[0]).toUpperCase()}</div>
+        <div class="info">
+          <div class="name">#${i+1} ${escapeHtml(u.firstName)} ${escapeHtml(u.lastName)} ${roleBadgeHtml(u)}</div>
+          <div class="uname">@${escapeHtml(u.username)}</div>
+        </div>
+        <span style="font-weight:700;color:#2b3a8f;">${(u.leos||0).toFixed(2)}</span>
+      </div>`).join('')}
   `;
 
   /* ---- Admin management (owner only can promote/demote) ---- */
@@ -2141,6 +2210,27 @@ async function loadAdminPage(){
         <button onclick="sendAdminVerification(document.getElementById('promoteUsername').value.trim(), document.getElementById('promoteEmail').value.trim())">Send verification email</button>
       </div>` : ''}
   `;
+
+  /* ---- Moderators (owner or admin can promote/demote; max MAX_MODERATORS) ---- */
+  const moderatorCount = rows.filter(u => u.isModerator).length;
+  const moderatorsSection = iAmAdmin ? `
+    <div class="section-divider"><strong>Moderators (${moderatorCount}/${MAX_MODERATORS})</strong><span>Moderators can post announcements (up to 3 days a week), verify accounts at ${VERIFIED_LEOS_THRESHOLD}+ Leos, and view the Leos leaderboard. They cannot give Leos, ban, or delete accounts.</span></div>
+    ${rows.filter(u => u.isModerator).map(u => `
+      <div class="user-result" style="max-width:560px;">
+        <div class="avatar">${((u.firstName||'?')[0]+(u.lastName||'?')[0]).toUpperCase()}</div>
+        <div class="info">
+          <div class="name">${escapeHtml(u.firstName)} ${escapeHtml(u.lastName)} ${roleBadgeHtml(u)}</div>
+          <div class="uname">@${escapeHtml(u.username)}</div>
+        </div>
+        <button style="background:#d32f2f;" onclick="demoteModerator('${u.username.replace(/'/g,"\\'")}')">Remove Moderator</button>
+      </div>`).join('')}
+    ${moderatorCount < MAX_MODERATORS ? `
+      <div style="margin-top:10px;">
+        <div style="font-size:12px;color:#888;margin-bottom:6px;">Promote someone to moderator:</div>
+        <input type="text" id="promoteModUsername" placeholder="Username" style="padding:8px 10px;border:1px solid #ccc;border-radius:6px;font-size:13px;margin-right:6px;margin-bottom:6px;">
+        <button onclick="promoteModerator(document.getElementById('promoteModUsername').value.trim())">Make Moderator</button>
+      </div>` : ''}
+  ` : '';
 
   /* ---- Pending Leos purchases (any admin can approve/reject) ---- */
   const purchaseKeys = await storageListKeys('purchase:', true);
@@ -2183,11 +2273,13 @@ async function loadAdminPage(){
       <div class="user-result" style="max-width:560px;">
         <div class="avatar">${((u.firstName||'?')[0]+(u.lastName||'?')[0]).toUpperCase()}</div>
         <div class="info">
-          <div class="name">${escapeHtml(u.firstName)} ${escapeHtml(u.lastName)} ${verifiedBadgeHtml(u.verified)} ${ownerBadgeHtml(u.isOwner)}</div>
+          <div class="name">${escapeHtml(u.firstName)} ${escapeHtml(u.lastName)} ${roleBadgeHtml(u)} ${u.banned ? '<span style="color:#d32f2f;font-size:11px;font-weight:700;border:1px solid #d32f2f;padding:1px 6px;border-radius:10px;">BANNED</span>' : ''}</div>
           <div class="uname">@${escapeHtml(u.username)} &middot; ${escapeHtml(u.email)} &middot; Leos: ${(typeof u.leos==='number'?u.leos:0).toFixed(2)}</div>
+          ${u.banned ? `<div style="font-size:11.5px;color:#d32f2f;margin-top:2px;">Reason: ${escapeHtml(u.banReason || 'No reason given')} &middot; ${u.banUntil ? 'until ' + new Date(u.banUntil).toLocaleDateString() : 'no expiry'}</div>` : ''}
         </div>
         ${u.isOwner ? '<span style="color:#aaa;font-size:12.5px;">Protected</span>' : `
           <button onclick="showAdminEditForm('${u.username.replace(/'/g,"\\'")}')">Edit</button>
+          <button style="background:${u.banned ? '#25a244' : '#e8622d'};" onclick="${u.banned ? `unbanUser('${u.username.replace(/'/g,"\\'")}')` : `banUser('${u.username.replace(/'/g,"\\'")}')`}">${u.banned ? 'Unban' : 'Ban'}</button>
           <button style="background:#d32f2f;" onclick="deleteAccount('${u.username.replace(/'/g,"\\'")}')">Delete Account</button>`}
       </div>`).join('')}
     <div id="adminEditArea"></div>
@@ -2211,7 +2303,8 @@ async function loadAdminPage(){
     </div>
   ` : '';
 
-  document.getElementById('adminUserList').innerHTML = verifySection + adminSection + purchaseSection + giveLeosSection + deleteSection + aiVaultSection + dangerSection;
+  document.getElementById('adminUserList').innerHTML = verifySection + unverifySection + leaderboardSection
+    + (iAmAdmin ? (adminSection + moderatorsSection + purchaseSection + giveLeosSection + deleteSection + aiVaultSection + dangerSection) : '');
 }
 
 async function withdrawAiVault(){
@@ -2489,14 +2582,60 @@ async function saveAdminEdit(username){
 }
 
 async function verifyUser(username){
-  if (!currentUser || !currentUser.isOwner) { alert('Only the owner can verify users.'); return; }
+  if (!currentUser || !(isAdminUser(currentUser) || isModeratorUser(currentUser))) { alert('Only staff can verify users.'); return; }
   const email = await storageGet(usernameKey(username), true);
   if (!email) return;
   const raw = await storageGet(userKey(email), true);
   if (!raw) return;
   try {
     const u = JSON.parse(raw);
+    if (!(typeof u.leos === 'number' && u.leos >= VERIFIED_LEOS_THRESHOLD)) { alert('This account has not reached ' + VERIFIED_LEOS_THRESHOLD + ' Leos yet.'); return; }
     u.verified = true;
+    await storageSet(userKey(email), JSON.stringify(u), true);
+  } catch(e){}
+  loadAdminPage();
+}
+
+async function unverifyUser(username){
+  if (!currentUser || !(isAdminUser(currentUser) || isModeratorUser(currentUser))) { alert('Only staff can remove verification.'); return; }
+  const email = await storageGet(usernameKey(username), true);
+  if (!email) return;
+  const raw = await storageGet(userKey(email), true);
+  if (!raw) return;
+  try {
+    const u = JSON.parse(raw);
+    u.verified = false;
+    await storageSet(userKey(email), JSON.stringify(u), true);
+  } catch(e){}
+  loadAdminPage();
+}
+
+async function promoteModerator(username){
+  if (!currentUser || !isAdminUser(currentUser)) { alert('Only admins can choose moderators.'); return; }
+  if (!username) { alert('Enter a username.'); return; }
+  const email = await storageGet(usernameKey(username), true);
+  if (!email) { alert('No user found with that username.'); return; }
+  const raw = await storageGet(userKey(email), true);
+  if (!raw) return;
+  let u; try { u = JSON.parse(raw); } catch(e) { return; }
+  if (isAdminUser(u) || u.isModerator) { alert('This account already has a staff role.'); return; }
+  const currentCount = (await Promise.all((await storageListKeys('user:', true)).map(k => storageGet(k, true))))
+    .filter(Boolean).map(r => { try { return JSON.parse(r); } catch(e) { return null; } }).filter(x => x && x.isModerator).length;
+  if (currentCount >= MAX_MODERATORS) { alert('Moderator limit reached (' + MAX_MODERATORS + ').'); return; }
+  u.isModerator = true;
+  await storageSet(userKey(email), JSON.stringify(u), true);
+  loadAdminPage();
+}
+
+async function demoteModerator(username){
+  if (!currentUser || !isAdminUser(currentUser)) { alert('Only admins can remove moderators.'); return; }
+  const email = await storageGet(usernameKey(username), true);
+  if (!email) return;
+  const raw = await storageGet(userKey(email), true);
+  if (!raw) return;
+  try {
+    const u = JSON.parse(raw);
+    u.isModerator = false;
     await storageSet(userKey(email), JSON.stringify(u), true);
   } catch(e){}
   loadAdminPage();
@@ -2616,7 +2755,87 @@ async function deleteAccount(username){
   loadAdminPage();
 }
 
-/* ---------------- WORD CROSS GAME ---------------- */
+function isCurrentlyBanned(u){
+  if (!u || !u.banned) return false;
+  if (u.banUntil && Date.now() >= u.banUntil) return false; // ban has expired
+  return true;
+}
+
+async function banUser(username){
+  if (!currentUser || !isAdminUser(currentUser)) { alert('Only admins can ban users.'); return; }
+  const email = await storageGet(usernameKey(username), true);
+  if (!email) return;
+  const raw = await storageGet(userKey(email), true);
+  if (!raw) return;
+  let target;
+  try { target = JSON.parse(raw); } catch(e) { return; }
+  if (target.isOwner) { alert("The owner's account can't be banned."); return; }
+
+  const reason = prompt('Why are you banning @' + username + '? (what rule did they break)');
+  if (reason === null) return;
+  if (!reason.trim()) { alert('Please give a reason.'); return; }
+
+  const daysInput = prompt('Ban for how many days? (enter a number)', '7');
+  if (daysInput === null) return;
+  const days = parseFloat(daysInput);
+  if (!days || days <= 0) { alert('Enter a valid number of days.'); return; }
+
+  target.banned = true;
+  target.banReason = reason.trim();
+  target.bannedAt = Date.now();
+  target.banUntil = Date.now() + days * 24 * 60 * 60 * 1000;
+  target.bannedBy = currentUser.username;
+  const res = await storageSet(userKey(email), JSON.stringify(target), true);
+  if (!res) { alert('Could not ban this account right now. Please try again.'); return; }
+
+  const notifRaw = await storageGet(notifsKey(username), true);
+  const notifs = notifRaw ? JSON.parse(notifRaw) : [];
+  notifs.push({
+    id: Date.now() + '-' + Math.random().toString(36).slice(2, 8),
+    type: 'welcome', time: Date.now(), read: false, handled: true,
+    text: `You have been banned for ${days} day${days === 1 ? '' : 's'} (until ${new Date(target.banUntil).toLocaleDateString()}) for: ${reason.trim()}. You can still log in and view Chat Me, but you cannot post, chat, or comment while banned. Contact an admin if you believe this is a mistake.`
+  });
+  await storageSet(notifsKey(username), JSON.stringify(notifs), true);
+
+  loadAdminPage();
+}
+
+async function unbanUser(username){
+  if (!currentUser || !isAdminUser(currentUser)) { alert('Only admins can unban users.'); return; }
+  const email = await storageGet(usernameKey(username), true);
+  if (!email) return;
+  const raw = await storageGet(userKey(email), true);
+  if (!raw) return;
+  let target;
+  try { target = JSON.parse(raw); } catch(e) { return; }
+  if (!confirm('Unban @' + username + '?')) return;
+
+  target.banned = false;
+  delete target.banReason;
+  delete target.banUntil;
+  delete target.bannedAt;
+  delete target.bannedBy;
+  const res = await storageSet(userKey(email), JSON.stringify(target), true);
+  if (!res) { alert('Could not update this account right now. Please try again.'); return; }
+
+  const notifRaw = await storageGet(notifsKey(username), true);
+  const notifs = notifRaw ? JSON.parse(notifRaw) : [];
+  notifs.push({
+    id: Date.now() + '-' + Math.random().toString(36).slice(2, 8),
+    type: 'welcome', time: Date.now(), read: false, handled: true,
+    text: 'Your ban has been lifted. You can post, chat, and comment again. Please follow the rules going forward.'
+  });
+  await storageSet(notifsKey(username), JSON.stringify(notifs), true);
+
+  loadAdminPage();
+}
+
+function banBlockMessage(u){
+  if (!isCurrentlyBanned(u)) return null;
+  const until = u.banUntil ? ' until ' + new Date(u.banUntil).toLocaleDateString() : '';
+  return `You are banned${until} for: ${u.banReason || 'breaking the rules'}. You can browse Chat Me, but you cannot post, chat, or comment right now.`;
+}
+
 const WORD_GAME_LIST = ['friend','chat','profile','picture','planet','garden','window','pencil','forest','island','bridge','castle','rocket','guitar','coffee','yellow','purple','silver','engine','pillow','wallet','basket','ladder','shadow','tunnel'];
 let gameState = null; // { mode, word, botTimer, secondsLeft, tickTimer, isPvp, code }
 
@@ -3346,6 +3565,7 @@ function insertEmoji(targetId){
 }
 
 async function createPost(){
+  if (isCurrentlyBanned(currentUser)) { document.getElementById('postError').textContent = banBlockMessage(currentUser); return; }
   const text = document.getElementById('postInput').value.trim();
   const errEl = document.getElementById('postError');
   errEl.textContent = '';
@@ -3393,8 +3613,10 @@ function timeAgo(ts){
   return Math.floor(diff/86400) + ' day' + (Math.floor(diff/86400)===1?'':'s') + ' ago';
 }
 
-const VERIFIED_LEOS_THRESHOLD = 2000;
+const VERIFIED_LEOS_THRESHOLD = 5000;
 const MAX_ADMINS = 2;
+const MAX_MODERATORS = 3;
+function isModeratorUser(u){ return !!(u && u.isModerator); }
 
 /* ====== LEOS PURCHASE SETUP ======
    Fill in YOUR real payment details below (bank transfer, or a mobile money /
@@ -3418,10 +3640,20 @@ const LEOS_PACKAGES = [
 const PURCHASE_COOLDOWN_MS = 10 * 60 * 1000; // once every 10 minutes
 function lastPurchaseKey(username){ return 'lastpurchase:' + username.toLowerCase(); }
 function verifiedBadgeHtml(verified){
-  return verified ? '<span title="Verified by admin">\uD83D\uDC8E</span>' : '';
+  return verified ? '<span title="Verified">\uD83C\uDF10</span>' : '';
 }
 function ownerBadgeHtml(isOwner){
-  return isOwner ? '<span title="App owner">\uD83C\uDF0F</span>' : '';
+  return isOwner ? '<span title="Owner">\uD83D\uDC8E\uD83C\uDFC5\uD83C\uDF10\uD83D\uDC8D</span>' : '';
+}
+// The single source of truth for role badges - owner > admin > moderator > verified.
+// Pass any object with isOwner / isAdmin / isModerator / verified fields.
+function roleBadgeHtml(u){
+  if (!u) return '';
+  if (u.isOwner) return '<span title="Owner">\uD83D\uDC8E\uD83C\uDFC5\uD83C\uDF10\uD83D\uDC8D</span>';
+  if (u.isAdmin) return '<span title="Admin">\uD83D\uDC8D\uD83C\uDF10\uD83C\uDFC5</span>';
+  if (u.isModerator) return '<span title="Moderator">\uD83C\uDFC5\uD83C\uDF10</span>';
+  if (u.verified) return '<span title="Verified">\uD83C\uDF10</span>';
+  return '';
 }
 function isAdminUser(u){ return !!(u && (u.isOwner || u.isAdmin)); }
 const POST_COLORS = {
@@ -3488,7 +3720,7 @@ async function buildUserInfoMap(usernames){
       const u = JSON.parse(raw);
       const friendsRaw = await storageGet(friendsKey(uname), true);
       const followerCount = friendsRaw ? JSON.parse(friendsRaw).length : 0;
-      map[uname] = { leos: typeof u.leos === 'number' ? u.leos : 0, nickname: u.nickname || '', isOwner: !!u.isOwner, verified: !!u.verified, isAdmin: isAdminUser(u), followerCount };
+      map[uname] = { leos: typeof u.leos === 'number' ? u.leos : 0, nickname: u.nickname || '', isOwner: !!u.isOwner, verified: !!u.verified, isAdmin: isAdminUser(u), isModerator: !!u.isModerator, followerCount };
     } catch (e) { map[uname] = { leos: 0, nickname: '', followerCount: 0 }; }
   }));
   return map;
@@ -3514,7 +3746,11 @@ async function loadHome(){
   const rawPosts = await Promise.all(keys.map(k => storageGet(k, true)));
   const posts = [];
   for (const raw of rawPosts) {
-    if (raw) { try { posts.push(JSON.parse(raw)); } catch(e){} }
+    if (!raw) continue;
+    try {
+      const p = JSON.parse(raw);
+      if (p.type !== 'Announcement') posts.push(p);
+    } catch(e){}
   }
   if (!posts.length) { listEl.innerHTML = '<div class="empty-feed">No posts yet. Be the first to share something!</div>'; return; }
 
@@ -3576,7 +3812,7 @@ function renderPostCard(p, infoMap){
     const sInfo = infoMap[p.sharedFrom.author] || {};
     return `
     <div style="border:1px solid #eee;border-radius:8px;padding:10px;margin-top:6px;background:#fafafa;">
-      <div class="post-author" style="cursor:pointer;" onclick="viewProfile('${(p.sharedFrom.author||'').replace(/'/g,"\\'")}')">${displayNameWithNickname(p.sharedFrom.authorName || p.sharedFrom.author, sInfo.nickname)} ${verifiedBadgeHtml(sInfo.verified)} ${ownerBadgeHtml(sInfo.isOwner)}</div>
+      <div class="post-author" style="cursor:pointer;" onclick="viewProfile('${(p.sharedFrom.author||'').replace(/'/g,"\\'")}')">${displayNameWithNickname(p.sharedFrom.authorName || p.sharedFrom.author, sInfo.nickname)} ${roleBadgeHtml(sInfo)}</div>
       ${p.sharedFrom.text ? `<div class="post-text">${escapeHtml(p.sharedFrom.text)}</div>` : ''}
       ${p.sharedFrom.image ? `<img class="post-img" src="${p.sharedFrom.image}">` : ''}
     </div>`;
@@ -3586,7 +3822,7 @@ function renderPostCard(p, infoMap){
     const cInfo = infoMap[c.author] || {};
     return `
     <div style="padding:6px 0;border-top:1px solid #f2f2f2;font-size:13.5px;">
-      <span style="font-weight:600;color:#2b3a8f;cursor:pointer;" onclick="viewProfile('${(c.author||'').replace(/'/g,"\\'")}')">${displayNameWithNickname(c.authorName || c.author, cInfo.nickname)} ${verifiedBadgeHtml(cInfo.verified)} ${ownerBadgeHtml(cInfo.isOwner)}</span>
+      <span style="font-weight:600;color:#2b3a8f;cursor:pointer;" onclick="viewProfile('${(c.author||'').replace(/'/g,"\\'")}')">${displayNameWithNickname(c.authorName || c.author, cInfo.nickname)} ${roleBadgeHtml(cInfo)}</span>
       <span style="color:#333;"> ${escapeHtml(c.text)}</span>
       <div style="color:#aaa;font-size:11px;">${timeAgo(c.time)}</div>
     </div>
@@ -3614,7 +3850,7 @@ function renderPostCard(p, infoMap){
   return `
     <div class="post-card" style="${p.color ? `border-left:4px solid ${p.color};` : ''}">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-        <div class="post-author" style="cursor:pointer;${p.color ? `color:${p.color};` : ''}" onclick="viewProfile('${authorUname}')">${displayNameWithNickname(p.authorName || p.author, authorInfo.nickname)} ${verifiedBadgeHtml(authorInfo.verified)} ${ownerBadgeHtml(authorInfo.isOwner)} <span style="color:#aaa;font-weight:400;">@${escapeHtml(p.author)}</span><br>${levelBadgeHtml(authorInfo.followerCount)}</div>
+        <div class="post-author" style="cursor:pointer;${p.color ? `color:${p.color};` : ''}" onclick="viewProfile('${authorUname}')">${displayNameWithNickname(p.authorName || p.author, authorInfo.nickname)} ${roleBadgeHtml(authorInfo)} <span style="color:#aaa;font-weight:400;">@${escapeHtml(p.author)}</span><br>${levelBadgeHtml(authorInfo.followerCount)}</div>
         ${canDelete ? `<span title="Delete post" style="cursor:pointer;color:#d32f2f;font-size:16px;" onclick="deletePost('${p.id}')">🗑</span>` : ''}
       </div>
       ${p.type === 'Shared Post' ? '<div style="font-size:12.5px;color:#888;margin-bottom:4px;">shared a post</div>' : ''}
@@ -3741,6 +3977,7 @@ async function toggleLike(postId){
 }
 
 async function addComment(postId){
+  if (isCurrentlyBanned(currentUser)) { alert(banBlockMessage(currentUser)); return; }
   const input = document.getElementById('commentInput_' + postId);
   if (!input) return;
   const text = input.value.trim();
@@ -3829,7 +4066,7 @@ async function loadProfile(){
       </div>
       <div class="field-msg" id="profilePicError"></div>
     </div>
-    <div class="profile-row"><span>Name</span><span>${displayNameWithNickname(u.firstName + ' ' + u.lastName, u.nickname)} ${verifiedBadgeHtml(u.verified)} ${ownerBadgeHtml(u.isOwner)}</span></div>
+    <div class="profile-row"><span>Name</span><span>${displayNameWithNickname(u.firstName + ' ' + u.lastName, u.nickname)} ${roleBadgeHtml(u)}</span></div>
     <div class="profile-row"><span>Username</span><span>@${escapeHtml(u.username)}</span></div>
     <div class="profile-row" style="cursor:pointer;" onclick="switchTab('friendsPage')"><span>Followers</span><span>${friendsCount}</span></div>
     <div class="profile-row" style="cursor:pointer;" onclick="switchTab('friendsPage')"><span>Following</span><span>${friendsCount}</span></div>
@@ -3982,7 +4219,7 @@ async function loadStatusbookPage(){
       <div style="display:flex;justify-content:space-between;align-items:flex-start;">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
           <div class="avatar" style="cursor:pointer;margin-right:0;" onclick="viewProfile('${uname}')">${initials}</div>
-          <div class="post-author" style="cursor:pointer;margin-bottom:0;" onclick="viewProfile('${uname}')">${displayNameWithNickname(u.firstName + ' ' + u.lastName, u.nickname)} ${verifiedBadgeHtml(u.verified)} ${ownerBadgeHtml(u.isOwner)}</div>
+          <div class="post-author" style="cursor:pointer;margin-bottom:0;" onclick="viewProfile('${uname}')">${displayNameWithNickname(u.firstName + ' ' + u.lastName, u.nickname)} ${roleBadgeHtml(u)}</div>
         </div>
         ${canDelete ? `<span title="Delete status" style="cursor:pointer;color:#d32f2f;font-size:16px;" onclick="deleteStatus('${uname}')">🗑</span>` : ''}
       </div>
@@ -4474,7 +4711,7 @@ async function loadMyFriendsList(){
     return `<div class="user-result">
       <div class="avatar" style="cursor:pointer;" onclick="viewProfile('${safeUname}')">${initials}</div>
       <div class="info">
-        <div class="name" style="cursor:pointer;" onclick="viewProfile('${safeUname}')">${displayNameWithNickname(u.firstName + ' ' + u.lastName, u.nickname)} ${verifiedBadgeHtml(u.verified)} ${ownerBadgeHtml(u.isOwner)}</div>
+        <div class="name" style="cursor:pointer;" onclick="viewProfile('${safeUname}')">${displayNameWithNickname(u.firstName + ' ' + u.lastName, u.nickname)} ${roleBadgeHtml(u)}</div>
         <div class="uname">@${escapeHtml(u.username)}</div>
       </div>
       <button onclick="viewProfile('${safeUname}')">View</button>
@@ -4538,7 +4775,7 @@ async function searchPeople(){
       <div class="user-result">
         <div class="avatar">${initials}</div>
         <div class="info">
-          <div class="name" style="cursor:pointer;" onclick="viewProfile('${uname}')">${displayNameWithNickname(u.firstName + ' ' + u.lastName, u.nickname)} ${verifiedBadgeHtml(u.verified)} ${ownerBadgeHtml(u.isOwner)}</div>
+          <div class="name" style="cursor:pointer;" onclick="viewProfile('${uname}')">${displayNameWithNickname(u.firstName + ' ' + u.lastName, u.nickname)} ${roleBadgeHtml(u)}</div>
           <div class="uname">@${escapeHtml(u.username)}</div>
         </div>
         ${btnHtml}
@@ -4706,6 +4943,8 @@ async function loadNotifications(){
       actions = `<div class="notif-actions"><button class="open-btn" onclick="switchTab('adminPage')">Review in Admin</button></div>`;
     } else if (n.type === 'purchase_rejected') {
       text = `Your request to buy ${n.leos} Leos for ₦${(n.priceNaira||0).toLocaleString()} was declined. Contact an admin if you believe this is a mistake.`;
+    } else if (n.type === 'welcome') {
+      text = `👋 ${escapeHtml(n.text || '')}`;
     } else if (n.type === 'mention') {
       text = `${escapeHtml(n.fromName)} mentioned you in a post.`;
       actions = `<div class="notif-actions"><button class="open-btn" onclick="switchTab('homePage')">View post</button></div>`;
@@ -4938,6 +5177,7 @@ async function deletePrivateMessage(index){
 
 const MESSAGE_COST_LEOS = 0.20;
 async function sendMessage(){
+  if (isCurrentlyBanned(currentUser)) { alert(banBlockMessage(currentUser)); return; }
   const input = document.getElementById('chatInput');
   const text = input.value.trim();
   if (!text || !activeChatFriend) return;
@@ -5009,6 +5249,28 @@ async function loadAllCircles(kind){
   return list;
 }
 
+let chosenRoomPicDataUrl = null;
+function onRoomPicChosen(){
+  const input = document.getElementById('roomPicInput');
+  const fileNameEl = document.getElementById('roomPicFileName');
+  chosenRoomPicDataUrl = null;
+  if (!input.files || !input.files[0]) { fileNameEl.textContent = 'No file chosen'; return; }
+  const file = input.files[0];
+  fileNameEl.textContent = file.name;
+  if (file.size > 8 * 1024 * 1024) {
+    fileNameEl.textContent = 'Image too big (max 8MB)';
+    input.value = '';
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = async () => {
+    try { chosenRoomPicDataUrl = await resizeImageDataUrl(reader.result, 300); }
+    catch (e) { fileNameEl.textContent = 'Could not read that image.'; }
+  };
+  reader.onerror = () => { fileNameEl.textContent = 'Could not read that file.'; };
+  reader.readAsDataURL(file);
+}
+
 async function createCircle(kind){
   const inputId = kind === 'group' ? 'groupNameInput' : 'roomNameInput';
   const errId = kind === 'group' ? 'groupCreateError' : 'roomCreateError';
@@ -5044,6 +5306,12 @@ async function createCircle(kind){
     const descInput = document.getElementById('roomDescInput');
     circle.description = descInput ? descInput.value.trim().slice(0, 300) : '';
     if (descInput) descInput.value = '';
+    circle.picture = chosenRoomPicDataUrl || null;
+    chosenRoomPicDataUrl = null;
+    const picInput = document.getElementById('roomPicInput');
+    if (picInput) picInput.value = '';
+    const picNameEl = document.getElementById('roomPicFileName');
+    if (picNameEl) picNameEl.textContent = 'No file chosen';
   }
   await storageSet(circleKey(kind, id), JSON.stringify(circle), true);
   input.value = '';
@@ -5061,6 +5329,11 @@ function setRoomTab(tab){
   loadRoomListPage();
 }
 
+function circleAvatarHtml(c){
+  if (c.picture) return `<div class="avatar" style="background-image:url('${c.picture}');background-size:cover;background-position:center;"></div>`;
+  return `<div class="avatar">${escapeHtml((c.name || '?')[0].toUpperCase())}</div>`;
+}
+
 async function loadRoomListPage(){
   const listEl = document.getElementById('roomListItems');
   if (!listEl) return;
@@ -5075,7 +5348,7 @@ async function loadRoomListPage(){
       const cid = c.id.replace(/'/g, "\\'");
       const inv = (c.pendingInvites || []).find(i => i.username.toLowerCase() === myLower);
       return `<div class="friend-item" style="cursor:default;">
-        <div class="avatar">${escapeHtml((c.name || '?')[0].toUpperCase())}</div>
+        ${circleAvatarHtml(c)}
         <div style="flex:1;"><div class="friend-name">${escapeHtml(c.name)}</div><div class="friend-status">Invited by @${escapeHtml(inv ? inv.invitedBy : '')}</div></div>
         <button onclick="acceptRoomInvite('${cid}')" style="background:#25a244;color:#fff;border:none;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:12.5px;margin-right:4px;">Accept</button>
         <button onclick="declineRoomInvite('${cid}')" style="background:#eee;border:none;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:12.5px;">Decline</button>
@@ -5109,7 +5382,7 @@ async function loadRoomListPage(){
 
     if (!isMember) {
       return `<div class="friend-item" style="cursor:default;">
-        <div class="avatar">${escapeHtml((c.name || '?')[0].toUpperCase())}</div>
+        ${circleAvatarHtml(c)}
         <div style="flex:1;"><div class="friend-name">${escapeHtml(c.name)}</div><div class="friend-status">${count} member${count === 1 ? '' : 's'} &middot; by @${escapeHtml(c.creator)}</div></div>
         <button onclick="joinCircle('room','${cid}')" style="background:#2b6ee0;color:#fff;border:none;padding:7px 14px;border-radius:6px;cursor:pointer;font-size:13px;flex-shrink:0;">Join</button>
       </div>`;
@@ -5118,7 +5391,7 @@ async function loadRoomListPage(){
     const seen = await storageGet(seenCountKey(currentUser.username, circleChatKey('room', c.id)), true).then(r => r ? parseInt(r, 10) : 0);
     const unread = Math.max(0, total - seen);
     return `<div class="friend-item ${active ? 'active' : ''}" onclick="openCircle('room','${cid}')">
-      <div class="avatar">${escapeHtml((c.name || '?')[0].toUpperCase())}</div>
+      ${circleAvatarHtml(c)}
       <div style="flex:1;"><div class="friend-name">${escapeHtml(c.name)}</div><div class="friend-status">${ago || (count + ' member' + (count === 1 ? '' : 's'))}</div></div>
       ${unread > 0 ? `<span style="background:#2b6ee0;color:#fff;border-radius:12px;padding:2px 8px;font-size:11.5px;font-weight:700;">${unread}</span>` : ''}
     </div>`;
@@ -5369,6 +5642,7 @@ async function deleteCircleMessage(index){
 }
 
 async function sendCircleMessage(){
+  if (isCurrentlyBanned(currentUser)) { alert(banBlockMessage(currentUser)); return; }
   if (!activeCircle) return;
   const { kind, id } = activeCircle;
   const input = document.getElementById('circleChatInput');
@@ -5407,12 +5681,12 @@ async function loadGroupListPage(){
     const active = activeGroupId === c.id;
     if (isMember) {
       return `<div class="friend-item ${active ? 'active' : ''}" onclick="openGroup('${cid}')">
-        <div class="avatar">${escapeHtml((c.name || '?')[0].toUpperCase())}</div>
+        ${circleAvatarHtml(c)}
         <div><div class="friend-name">${escapeHtml(c.name)}</div><div class="friend-status">${count} member${count === 1 ? '' : 's'}</div></div>
       </div>`;
     }
     return `<div class="friend-item" style="cursor:default;">
-      <div class="avatar">${escapeHtml((c.name || '?')[0].toUpperCase())}</div>
+      ${circleAvatarHtml(c)}
       <div style="flex:1;"><div class="friend-name">${escapeHtml(c.name)}</div><div class="friend-status">${count} member${count === 1 ? '' : 's'} &middot; by @${escapeHtml(c.creator)}</div></div>
       <button onclick="joinCircle('group','${cid}')" style="background:#2b6ee0;color:#fff;border:none;padding:7px 14px;border-radius:6px;cursor:pointer;font-size:13px;flex-shrink:0;">Join</button>
     </div>`;
@@ -5631,7 +5905,7 @@ function renderGroupPostCard(p, infoMap, groupId){
   }).join('');
   return `<div class="post-card">
     <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-      <div style="font-weight:600;color:#2b3a8f;font-size:14px;cursor:pointer;" onclick="viewProfile('${p.author.replace(/'/g,"\\'")}')">@${escapeHtml(p.author)} ${verifiedBadgeHtml(info.verified)} ${ownerBadgeHtml(info.isOwner)}<br>${levelBadgeHtml(info.followerCount, true)}</div>
+      <div style="font-weight:600;color:#2b3a8f;font-size:14px;cursor:pointer;" onclick="viewProfile('${p.author.replace(/'/g,"\\'")}')">@${escapeHtml(p.author)} ${roleBadgeHtml(info)}<br>${levelBadgeHtml(info.followerCount, true)}</div>
       <div style="display:flex;gap:10px;">
         ${isMine ? `<span title="Edit post" style="cursor:pointer;color:#2b6ee0;font-size:15px;" onclick="editGroupPost('${gid}','${pid}')">✏️</span>` : ''}
         ${canDelete ? `<span title="Delete post" style="cursor:pointer;color:#d32f2f;font-size:16px;" onclick="deleteGroupPost('${gid}','${pid}')">🗑</span>` : ''}
@@ -5803,7 +6077,7 @@ function loadMenuPage(){
     { label: 'Games', page: 'gamesPage' },
     { label: '💰 Buy$', page: 'buyLeosPage' }
   ];
-  if (currentUser && isAdminUser(currentUser)) items.push({ label: '⚙ Admin', page: 'adminPage' });
+  if (currentUser && (isAdminUser(currentUser) || isModeratorUser(currentUser))) items.push({ label: '⚙ Admin', page: 'adminPage' });
   items.push({ label: 'Log Out', page: null, action: 'logout' });
 
   document.getElementById('menuButtonGrid').innerHTML = items.map(i => `
