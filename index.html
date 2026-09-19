@@ -257,6 +257,7 @@
   .back-btn { display: none; cursor: pointer; font-size: 18px; }
   .loading-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.35); display: none; align-items: center; justify-content: center; z-index: 100; color: #fff; font-size: 15px; }
 </style>
+<script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
 </head>
 <body>
 
@@ -300,13 +301,8 @@
       <label class="auth-label">Password:</label>
       <div class="field-block"><input type="password" id="loginPassword" placeholder="Enter password" onkeydown="if(event.key==='Enter') doLogin()"></div>
 
-      <label class="auth-label">CAPTCHA:</label>
-      <div class="captcha-row">
-        <canvas class="captcha-canvas" id="captchaCanvasLogin" width="180" height="60" onclick="refreshCaptcha('login')"></canvas>
-        <span class="captcha-refresh" onclick="refreshCaptcha('login')" title="Refresh CAPTCHA">&#8635;</span>
-      </div>
-      <div class="field-block"><input type="text" id="captchaInputLogin" placeholder="ENTER THE LETTERS" onkeydown="if(event.key==='Enter') doLogin()"></div>
-      <div class="auth-hint-small">Type the letters shown above.</div>
+      <label class="auth-label">Verify you're not a robot:</label>
+      <div id="recaptchaLogin" style="margin-bottom:10px;"></div>
 
       <button class="primary-btn" id="loginBtn" onclick="doLogin()">Login</button>
       <div class="auth-error" id="loginError"></div>
@@ -416,13 +412,8 @@
       <div class="field-block"><input type="password" id="suPasswordConfirm" placeholder="Enter the same password again" oninput="clearFieldError('suPasswordConfirm')"></div>
       <div class="field-msg" id="msgPwConfirm"></div>
 
-      <label class="auth-label">CAPTCHA:</label>
-      <div class="captcha-row">
-        <canvas class="captcha-canvas" id="captchaCanvasSignup" width="180" height="60" onclick="refreshCaptcha('signup')"></canvas>
-        <span class="captcha-refresh" onclick="refreshCaptcha('signup')" title="Refresh CAPTCHA">&#8635;</span>
-      </div>
-      <div class="field-block"><input type="text" id="captchaInputSignup" placeholder="Rewrite letters from the image"></div>
-      <div class="auth-hint-small">Rewrite letters from the image.</div>
+      <label class="auth-label">Verify you're not a robot:</label>
+      <div id="recaptchaSignup" style="margin-bottom:10px;"></div>
 
       <button class="primary-btn" id="signupBtn" onclick="doSignup()">Sign Up</button>
       <div class="auth-error" id="signupError"></div>
@@ -919,8 +910,6 @@ if (firebaseConfigLooksReal) {
    ============================================================ */
 
 let currentUser = null;     // { username, email, firstName, lastName, ... } (no password fields)
-let captchaLogin = "";
-let captchaSignup = "";
 let activeChatFriend = null;
 let chatPollTimer = null;
 
@@ -970,58 +959,28 @@ function showAuth(type){
   if (type === 'signup') refreshCaptcha('signup');
 }
 
-/* ---------------- CAPTCHA ---------------- */
-function randCaptchaText(){
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-  let s = '';
-  for (let i = 0; i < 5; i++) s += chars[Math.floor(Math.random() * chars.length)];
-  return s;
+/* ---------------- reCAPTCHA (real, Google-verified bot protection) ---------------- */
+const RECAPTCHA_SITE_KEY = '6LcF9sItAAAAAPrQmuCeO6DhYrMiB7e7Ubi7Mbja';
+let recaptchaLoginId = null;
+let recaptchaSignupId = null;
+let recaptchaReady = false;
+function onRecaptchaLoad(){
+  recaptchaReady = true;
+  try { recaptchaLoginId = grecaptcha.render('recaptchaLogin', { sitekey: RECAPTCHA_SITE_KEY }); } catch(e){}
+  try { recaptchaSignupId = grecaptcha.render('recaptchaSignup', { sitekey: RECAPTCHA_SITE_KEY }); } catch(e){}
 }
-function drawCaptcha(canvasId, text){
-  const canvas = document.getElementById(canvasId);
-  const ctx = canvas.getContext('2d');
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = '#f4f4f4';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  // noise lines
-  for (let i = 0; i < 6; i++) {
-    ctx.strokeStyle = 'rgba(0,0,0,0.15)';
-    ctx.beginPath();
-    ctx.moveTo(Math.random() * canvas.width, Math.random() * canvas.height);
-    ctx.lineTo(Math.random() * canvas.width, Math.random() * canvas.height);
-    ctx.stroke();
-  }
-  // noise dots
-  for (let i = 0; i < 40; i++) {
-    ctx.fillStyle = 'rgba(0,0,0,0.2)';
-    ctx.fillRect(Math.random() * canvas.width, Math.random() * canvas.height, 2, 2);
-  }
-  ctx.font = 'bold 28px Arial';
-  ctx.fillStyle = '#222';
-  ctx.textBaseline = 'middle';
-  const spacing = canvas.width / (text.length + 1);
-  for (let i = 0; i < text.length; i++) {
-    ctx.save();
-    const x = spacing * (i + 0.7);
-    const y = canvas.height / 2 + (Math.random() * 10 - 5);
-    ctx.translate(x, y);
-    ctx.rotate((Math.random() * 0.5 - 0.25));
-    ctx.fillText(text[i], 0, 0);
-    ctx.restore();
-  }
+function recaptchaPassed(which){
+  if (!recaptchaReady || typeof grecaptcha === 'undefined') return false;
+  const id = which === 'login' ? recaptchaLoginId : recaptchaSignupId;
+  if (id === null) return false;
+  return !!grecaptcha.getResponse(id);
 }
-function refreshCaptcha(which){
-  const text = randCaptchaText();
-  if (which === 'login') {
-    captchaLogin = text;
-    drawCaptcha('captchaCanvasLogin', text);
-    document.getElementById('captchaInputLogin').value = '';
-  } else {
-    captchaSignup = text;
-    drawCaptcha('captchaCanvasSignup', text);
-    document.getElementById('captchaInputSignup').value = '';
-  }
+function resetRecaptcha(which){
+  if (!recaptchaReady || typeof grecaptcha === 'undefined') return;
+  const id = which === 'login' ? recaptchaLoginId : recaptchaSignupId;
+  if (id !== null) { try { grecaptcha.reset(id); } catch(e){} }
 }
+function refreshCaptcha(which){ resetRecaptcha(which); }
 
 /* ---------------- hashing (client-side, salted) ---------------- */
 /* Owner account: tied to ONE specific email - never to a name, since a name is
@@ -1255,7 +1214,6 @@ async function doSignup(){
   const gender = document.getElementById('suGender').value;
   const password = document.getElementById('suPassword').value;
   const passwordConfirm = document.getElementById('suPasswordConfirm').value;
-  const captchaInput = document.getElementById('captchaInputSignup').value.trim();
 
   let firstErrorField = null;
 
@@ -1303,9 +1261,8 @@ async function doSignup(){
     markFieldError('suPasswordConfirm', 'msgPwConfirm', 'Passwords do not match.');
     firstErrorField = firstErrorField || 'suPasswordConfirm';
   }
-  if (!captchaInput || captchaInput.toUpperCase() !== captchaSignup.toUpperCase()) {
-    errEl.textContent = 'The CAPTCHA letters did not match. Please try again.';
-    refreshCaptcha('signup');
+  if (!recaptchaPassed('signup')) {
+    errEl.textContent = 'Please check the "I\'m not a robot" box first.';
     return;
   }
   if (age === null && month && day && year) {
@@ -1717,15 +1674,13 @@ async function doLogin(){
 
   const email = document.getElementById('loginEmail').value.trim();
   const password = document.getElementById('loginPassword').value;
-  const captchaInput = document.getElementById('captchaInputLogin').value.trim();
 
   if (!email || !password) {
     errEl.textContent = 'Please enter your email and password.';
     return;
   }
-  if (!captchaInput || captchaInput.toUpperCase() !== captchaLogin.toUpperCase()) {
-    errEl.textContent = 'The CAPTCHA letters did not match. Please try again.';
-    refreshCaptcha('login');
+  if (!recaptchaPassed('login')) {
+    errEl.textContent = 'Please check the "I\'m not a robot" box first.';
     return;
   }
 
@@ -1886,9 +1841,11 @@ async function loginSuccess(user){
   document.getElementById('signupScreen').style.display = 'none';
   document.getElementById('app').style.display = 'flex';
   // reset auth forms
-  ['loginEmail','loginPassword','captchaInputLogin','suUsername','suEmail','suFirst','suLast','suPhone','suCountry','suPassword','suPasswordConfirm','captchaInputSignup'].forEach(id=>{
+  ['loginEmail','loginPassword','suUsername','suEmail','suFirst','suLast','suPhone','suCountry','suPassword','suPasswordConfirm'].forEach(id=>{
     const el = document.getElementById(id); if (el) el.value = '';
   });
+  resetRecaptcha('login');
+  resetRecaptcha('signup');
   document.getElementById('suGender').value = '';
   document.getElementById('suMonth').value = '';
   document.getElementById('suDay').value = '';
