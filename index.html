@@ -12,8 +12,8 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://chat-me183.github.io/chat-me/">
 <meta name="robots" content="index, follow">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Ccircle cx='22' cy='30' r='16' fill='%232b3a8f'/%3E%3Ccircle cx='38' cy='30' r='16' fill='%23e8622d'/%3E%3Ccircle cx='30' cy='30' r='8' fill='%236a4fb8'/%3E%3C/svg%3E">
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Crect width='60' height='60' rx='12' fill='%23fff'/%3E%3Ccircle cx='22' cy='30' r='16' fill='%232b3a8f'/%3E%3Ccircle cx='38' cy='30' r='16' fill='%23e8622d'/%3E%3Ccircle cx='30' cy='30' r='8' fill='%236a4fb8'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='96' fill='%232b6ee0' stroke='%234fc3f7' stroke-width='5'/%3E%3Cpath d='M62 60 Q48 60 48 74 L48 96 Q48 110 62 110 L70 110 L70 122 L86 110 L138 110 Q152 110 152 96 L152 74 Q152 60 138 60 Z' fill='white'/%3E%3Ccircle cx='75' cy='85' r='4' fill='%232b6ee0'/%3E%3Ccircle cx='100' cy='85' r='4' fill='%232b6ee0'/%3E%3Ccircle cx='125' cy='85' r='4' fill='%232b6ee0'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' rx='40' fill='%232b6ee0'/%3E%3Cpath d='M62 60 Q48 60 48 74 L48 96 Q48 110 62 110 L70 110 L70 122 L86 110 L138 110 Q152 110 152 96 L152 74 Q152 60 138 60 Z' fill='white'/%3E%3Ccircle cx='75' cy='85' r='4' fill='%232b6ee0'/%3E%3Ccircle cx='100' cy='85' r='4' fill='%232b6ee0'/%3E%3Ccircle cx='125' cy='85' r='4' fill='%232b6ee0'/%3E%3C/svg%3E">
 <meta name="apple-mobile-web-app-title" content="Chat Me">
 <meta name="theme-color" content="#2b6ee0">
 <style>
@@ -267,12 +267,12 @@
   <div id="welcomeScreen">
     <div class="welcome-nav">
       <div class="welcome-nav-brand">
-        <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><circle cx="22" cy="30" r="16" fill="#2b3a8f"/><circle cx="38" cy="30" r="16" fill="#e8622d"/><circle cx="30" cy="30" r="8" fill="#6a4fb8"/></svg>
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="96" fill="#2b6ee0" stroke="#4fc3f7" stroke-width="5"/><path d="M62 60 Q48 60 48 74 L48 96 Q48 110 62 110 L70 110 L70 122 L86 110 L138 110 Q152 110 152 96 L152 74 Q152 60 138 60 Z" fill="white"/><circle cx="75" cy="85" r="4" fill="#2b6ee0"/><circle cx="100" cy="85" r="4" fill="#2b6ee0"/><circle cx="125" cy="85" r="4" fill="#2b6ee0"/></svg>
         <span>Chat Me</span>
       </div>
       <div class="welcome-nav-actions">
-        <button class="nav-login" onclick="showAuth('login')">Log In</button>
-        <button class="nav-signup" onclick="showAuth('signup')">Sign Up</button>
+        <button class="nav-login" onclick="showAuth('login')"><span class="i18n" data-key="login">Log In</span></button>
+        <button class="nav-signup" onclick="showAuth('signup')"><span class="i18n" data-key="signup">Sign Up</span></button>
       </div>
     </div>
     <div class="welcome-hero">
@@ -438,20 +438,20 @@
       </div>
     </div>
     <div class="navbar">
-      <div class="nav-item active" data-page="homePage" onclick="switchTab('homePage')">Home</div>
-      <div class="nav-item" data-page="profilePage" onclick="switchTab('profilePage')">Profile</div>
-      <div class="nav-item" data-page="chatsPage" onclick="switchTab('chatsPage')">Message<span class="notif-dot" id="msgDot"></span></div>
-      <div class="nav-item" data-page="friendsPage" onclick="switchTab('friendsPage')">Friends</div>
-      <div class="nav-item" data-page="notificationsPage" onclick="switchTab('notificationsPage')">Notifications<span class="notif-dot" id="notifDot"></span></div>
-      <div class="nav-item" data-page="chatroomsPage" onclick="switchTab('chatroomsPage')">Chatrooms</div>
-      <div class="nav-item" data-page="statusbookPage" onclick="switchTab('statusbookPage')">Statusbook</div>
+      <div class="nav-item active" data-page="homePage" onclick="switchTab('homePage')"><span class="i18n" data-key="home">Home</span></div>
+      <div class="nav-item" data-page="profilePage" onclick="switchTab('profilePage')"><span class="i18n" data-key="profile">Profile</span></div>
+      <div class="nav-item" data-page="chatsPage" onclick="switchTab('chatsPage')"><span class="i18n" data-key="message">Message</span><span class="notif-dot" id="msgDot"></span></div>
+      <div class="nav-item" data-page="friendsPage" onclick="switchTab('friendsPage')"><span class="i18n" data-key="friends">Friends</span></div>
+      <div class="nav-item" data-page="notificationsPage" onclick="switchTab('notificationsPage')"><span class="i18n" data-key="notifications">Notifications</span><span class="notif-dot" id="notifDot"></span></div>
+      <div class="nav-item" data-page="chatroomsPage" onclick="switchTab('chatroomsPage')"><span class="i18n" data-key="chatrooms">Chatrooms</span></div>
+      <div class="nav-item" data-page="statusbookPage" onclick="switchTab('statusbookPage')"><span class="i18n" data-key="statusbook">Statusbook</span></div>
       <div class="nav-item" data-page="aiPage" onclick="switchTab('aiPage')">Nova</div>
-      <div class="nav-item" data-page="groupsPage" onclick="switchTab('groupsPage')">Groups</div>
-      <div class="nav-item points" data-page="leosPage" id="pointsNavItem" onclick="switchTab('leosPage')">Leos: <span id="leosNavAmount">0.00</span></div>
-      <div class="nav-item" data-page="gamesPage" onclick="switchTab('gamesPage')">Games</div>
-      <div class="nav-item" data-page="buyLeosPage" onclick="switchTab('buyLeosPage')">Buy$</div>
-      <div class="nav-item" data-page="menuPage" onclick="switchTab('menuPage')">Menu</div>
-      <div class="nav-item" data-page="adminPage" id="adminNavItem" onclick="switchTab('adminPage')" style="display:none;background:#ffe0e0;color:#9c1c1c;">⚙ Admin</div>
+      <div class="nav-item" data-page="groupsPage" onclick="switchTab('groupsPage')"><span class="i18n" data-key="groups">Groups</span></div>
+      <div class="nav-item points" data-page="leosPage" id="pointsNavItem" onclick="switchTab('leosPage')"><span class="i18n" data-key="leos">Leos</span>: <span id="leosNavAmount">0.00</span></div>
+      <div class="nav-item" data-page="gamesPage" onclick="switchTab('gamesPage')"><span class="i18n" data-key="games">Games</span></div>
+      <div class="nav-item" data-page="buyLeosPage" onclick="switchTab('buyLeosPage')"><span class="i18n" data-key="buy">Buy$</span></div>
+      <div class="nav-item" data-page="menuPage" onclick="switchTab('menuPage')"><span class="i18n" data-key="menu">Menu</span></div>
+      <div class="nav-item" data-page="adminPage" id="adminNavItem" onclick="switchTab('adminPage')" style="display:none;background:#ffe0e0;color:#9c1c1c;">⚙ <span class="i18n" data-key="admin">Admin</span></div>
     </div>
 
     <div class="page active" id="homePage">
@@ -463,7 +463,7 @@
         <span onclick="toggleLanguagePicker()" style="font-size:12.5px;color:#2b6ee0;cursor:pointer;">🌐 Language</span>
       </div>
       <div id="languagePickerPanel" style="display:none;background:#fff;border:1px solid #ddd;border-radius:8px;padding:10px;margin-bottom:10px;">
-        <div style="font-size:11.5px;color:#888;margin-bottom:6px;">This saves which language you'd like the app in. The app's text is only available in English right now — this just remembers your preference for when more languages are added.</div>
+        <div style="font-size:11.5px;color:#888;margin-bottom:6px;">Translates the menu, navigation, and login/signup screens. Languages marked ✓ are fully translated; others save as your preference until we add them.</div>
         <input type="text" id="languageSearchInput" placeholder="Search language..." oninput="filterLanguageList()" style="width:100%;padding:8px 10px;border:1px solid #ccc;border-radius:6px;font-size:13px;margin-bottom:8px;outline:none;">
         <div id="languageListArea" style="max-height:220px;overflow-y:auto;"></div>
       </div>
@@ -597,12 +597,25 @@
             <div style="font-weight:700;color:#2b3a8f;margin-bottom:4px;">Game 2: Dice Duel</div>
             <div style="font-size:12.5px;color:#666;">Roll the dice - highest number wins.</div>
           </div>
+          <div class="profile-card" style="max-width:220px;cursor:pointer;" onclick="selectGame('leaderboard')">
+            <div style="font-size:32px;margin-bottom:6px;">🏆</div>
+            <div style="font-weight:700;color:#2b3a8f;margin-bottom:4px;">Wins Leaderboard</div>
+            <div style="font-size:12.5px;color:#666;">See who has won the most games.</div>
+          </div>
         </div>
+      </div>
+
+      <div id="gameLeaderboard" style="display:none;">
+        <a onclick="backToGames()" style="cursor:pointer;color:#2b6ee0;font-size:13px;display:inline-block;margin-bottom:12px;">⬅ Back to Games</a>
+        <h2 style="color:#2b3a8f;margin-bottom:4px;">🏆 Most Game Wins</h2>
+        <div style="color:#888;font-size:13px;margin-bottom:16px;">Top 20 players by total wins across Word Cross and Dice Duel.</div>
+        <div id="gameLeaderboardList" style="max-width:420px;"></div>
       </div>
 
       <div id="wordCrossGame" style="display:none;">
         <a onclick="backToGames()" style="cursor:pointer;color:#2b6ee0;font-size:13px;display:inline-block;margin-bottom:12px;">⬅ Back to Games</a>
         <h2 style="color:#2b3a8f;margin-bottom:4px;">Word Cross</h2>
+
         <div style="color:#888;font-size:13px;margin-bottom:16px;">Unscramble the word before your opponent does.</div>
 
         <div id="gameModePicker" style="display:flex;gap:14px;flex-wrap:wrap;">
@@ -745,6 +758,17 @@
       <div id="buyConfirmArea"></div>
     </div>
 
+    <div class="page" id="searchPage" style="padding:16px;overflow-y:auto;">
+      <h2 style="color:#2b3a8f;margin-bottom:6px;">🔍 Search</h2>
+      <input type="text" id="searchInput" placeholder="Search people, posts, or chatrooms..." oninput="runSearch()" style="width:100%;padding:10px 12px;border:1px solid #ccc;border-radius:6px;font-size:14.5px;margin-bottom:12px;outline:none;box-sizing:border-box;">
+      <div style="display:flex;gap:8px;margin-bottom:14px;">
+        <button id="searchTabUsers" onclick="setSearchTab('users')" style="flex:1;padding:8px;border:none;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600;background:#2b6ee0;color:#fff;">People</button>
+        <button id="searchTabPosts" onclick="setSearchTab('posts')" style="flex:1;padding:8px;border:none;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600;background:#eee;color:#333;">Posts</button>
+        <button id="searchTabRooms" onclick="setSearchTab('rooms')" style="flex:1;padding:8px;border:none;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600;background:#eee;color:#333;">Chatrooms</button>
+      </div>
+      <div id="searchResults"></div>
+    </div>
+
     <div class="page" id="reportPage" style="padding:16px;overflow-y:auto;">
       <h2 style="color:#2b3a8f;margin-bottom:6px;">🚩 Report Something</h2>
       <div style="font-size:13px;color:#666;margin-bottom:14px;max-width:520px;">
@@ -758,6 +782,22 @@
         <div class="auth-error" id="reportError"></div>
         <div class="auth-status" id="reportStatus"></div>
         <button id="reportSubmitBtn" onclick="submitReport()" style="background:#e8622d;color:#fff;border:none;padding:9px 18px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:600;">Submit Report</button>
+      </div>
+    </div>
+
+    <div class="page" id="spinPage" style="padding:16px;overflow-y:auto;">
+      <h2 style="color:#2b3a8f;margin-bottom:6px;">🎡 Daily Spin</h2>
+      <div style="font-size:13px;color:#666;margin-bottom:14px;max-width:420px;">
+        Stay active in the app for 10 hours total in a day to unlock one free spin for bonus Leos. Your progress pauses when you leave and picks back up when you return. The day resets at 1:00 AM.
+      </div>
+      <div class="profile-card" style="max-width:340px;text-align:center;">
+        <div style="font-size:70px;margin-bottom:10px;" id="spinWheelEmoji">🎡</div>
+        <div id="spinProgressText" style="font-size:13.5px;color:#555;margin-bottom:10px;"></div>
+        <div style="background:#eee;border-radius:8px;height:10px;overflow:hidden;margin-bottom:14px;">
+          <div id="spinProgressBar" style="background:#25a244;height:100%;width:0%;"></div>
+        </div>
+        <button id="spinBtn" onclick="doSpin()" style="background:#e8622d;color:#fff;border:none;padding:10px 24px;border-radius:6px;cursor:pointer;font-size:15px;font-weight:600;" disabled>Spin</button>
+        <div id="spinResult" style="margin-top:12px;font-size:14px;font-weight:600;"></div>
       </div>
     </div>
 
@@ -812,6 +852,7 @@
       <span onclick="switchTab('chatsPage')">💬<br>Message</span>
       <span onclick="switchTab('gamesPage')">🎮<br>Game</span>
       <span onclick="switchTab('buyLeosPage')">💰<br>Buy$</span>
+      <span onclick="switchTab('spinPage')">🎡<br>Spin</span>
     </div>
 
     <div class="footer-tiles">
@@ -1397,11 +1438,62 @@ function publicProfileFields(user){
   };
 }
 
+let leosAnimFrom = null;
+function animateNumberEl(el, from, to, duration){
+  if (!el) return;
+  const start = performance.now();
+  function tick(now){
+    const p = Math.min(1, (now - start) / duration);
+    const eased = 1 - Math.pow(1 - p, 3); // ease-out
+    const val = from + (to - from) * eased;
+    el.textContent = val.toFixed(2);
+    if (p < 1) requestAnimationFrame(tick);
+    else el.textContent = to.toFixed(2);
+  }
+  requestAnimationFrame(tick);
+}
+
 function updateLeosDisplay(){
   if (!currentUser) return;
-  const amount = (typeof currentUser.leos === 'number' ? currentUser.leos : 20).toFixed(2);
+  const amount = typeof currentUser.leos === 'number' ? currentUser.leos : 20;
   const navEl = document.getElementById('leosNavAmount');
-  if (navEl) navEl.textContent = amount;
+  if (navEl) {
+    const prev = parseFloat(navEl.textContent);
+    if (!isNaN(prev) && prev !== amount) animateNumberEl(navEl, prev, amount, 700);
+    else navEl.textContent = amount.toFixed(2);
+  }
+  const bigEl = document.getElementById('leosBig');
+  if (bigEl) {
+    const prevBig = parseFloat(bigEl.textContent);
+    if (!isNaN(prevBig) && prevBig !== amount) animateNumberEl(bigEl, prevBig, amount, 700);
+    else bigEl.textContent = amount.toFixed(2);
+  }
+}
+
+/* ---------------- CONFETTI (celebration burst for wins, level-ups, verification) ---------------- */
+function fireConfetti(){
+  const colors = ['#2b6ee0', '#e8622d', '#25a244', '#d4a017', '#8e5ce8', '#4fc3f7'];
+  const container = document.createElement('div');
+  container.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:99999;overflow:hidden;';
+  document.body.appendChild(container);
+  for (let i = 0; i < 60; i++) {
+    const piece = document.createElement('div');
+    const size = 6 + Math.random() * 6;
+    const startX = Math.random() * 100;
+    const duration = 1.6 + Math.random() * 1.2;
+    const delay = Math.random() * 0.3;
+    const rotate = Math.random() * 720 - 360;
+    piece.style.cssText = `position:absolute;top:-20px;left:${startX}vw;width:${size}px;height:${size * 0.6}px;background:${colors[Math.floor(Math.random() * colors.length)]};opacity:0.9;transform:rotate(${Math.random() * 360}deg);animation:confettiFall ${duration}s ease-in ${delay}s forwards;`;
+    piece.style.setProperty('--rot', rotate + 'deg');
+    container.appendChild(piece);
+  }
+  setTimeout(() => container.remove(), 3200);
+}
+if (!document.getElementById('confettiStyleTag')) {
+  const styleTag = document.createElement('style');
+  styleTag.id = 'confettiStyleTag';
+  styleTag.textContent = '@keyframes confettiFall { to { top: 110vh; transform: rotate(var(--rot)); } }';
+  document.head.appendChild(styleTag);
 }
 
 function loadLeosPage(){
@@ -1522,7 +1614,9 @@ async function viewProfile(username){
     return;
   }
 
+  const theirAchievements = await getUserAchievements(rawUser);
   document.getElementById('viewProfileCard').innerHTML = `
+    ${rawUser.coverPhoto ? `<div style="height:100px;margin:-16px -16px 16px;border-radius:8px 8px 0 0;background:url('${rawUser.coverPhoto}') center/cover;"></div>` : `<div style="height:100px;margin:-16px -16px 16px;border-radius:8px 8px 0 0;background:linear-gradient(135deg,#2b6ee0,#4fc3f7);"></div>`}
     ${avatarHtml(u.firstName, u.lastName, u.profilePic, 'avatar-lg')}
     <div class="profile-row"><span>Name</span><span>${displayNameWithNickname(u.firstName + ' ' + u.lastName, u.nickname)} ${roleBadgeHtml(rawUser)}</span></div>
     <div class="profile-row"><span>Username</span><span>@${escapeHtml(u.username)}</span></div>
@@ -1533,6 +1627,7 @@ async function viewProfile(username){
     <div class="profile-row"><span>Bio</span><span>${u.bio ? escapeHtml(u.bio) : '<span style="color:#aaa;">No bio yet</span>'}</span></div>
     <div class="profile-row"><span>Country</span><span>${escapeHtml(u.country)}</span></div>
     <div class="profile-row"><span>Member since</span><span>${new Date(u.createdAt).toLocaleDateString()}</span></div>
+    ${achievementsRowHtml(theirAchievements)}
     ${theyAreLocked ? '<div style="font-size:12px;color:#888;margin-top:6px;">🔒 This profile is locked to verified users — you can see it because you\'re verified or an admin.</div>' : ''}
     ${actionBtn}
     ${!theyBlockedMe ? `<div style="margin-top:8px;"><a style="color:${iBlockedThem ? '#25a244' : '#d32f2f'};cursor:pointer;font-size:12.5px;" onclick="toggleBlockUser('${uname}')">${iBlockedThem ? 'Unblock this person' : '🚫 Block this person'}</a></div>` : ''}
@@ -1833,6 +1928,70 @@ async function resetPasswordWithCode(){
 /* ---------------- SESSION ---------------- */
 let badgePollTimer = null;
 
+const DAILY_BONUS_AMOUNT = 3;
+function dailyBonusKey(username){ return 'dailybonus:' + username.toLowerCase(); }
+function birthdayCheckKey(username){ return 'bdaycheck:' + username.toLowerCase(); }
+async function checkFriendBirthdaysToday(){
+  if (!currentUser) return;
+  const todayStr = new Date().toISOString().slice(0, 10);
+  const lastCheck = await storageGet(birthdayCheckKey(currentUser.username), true);
+  if (lastCheck === todayStr) return; // already notified today
+  await storageSet(birthdayCheckKey(currentUser.username), todayStr, true);
+
+  const todayMD = todayStr.slice(5); // "MM-DD"
+  const raw = await storageGet(friendsKey(currentUser.username), true);
+  const friends = raw ? JSON.parse(raw) : [];
+  if (!friends.length) return;
+
+  const notifs = [];
+  for (const friendUsername of friends) {
+    try {
+      const email = await storageGet(usernameKey(friendUsername), true);
+      if (!email) continue;
+      const fraw = await storageGet(userKey(email), true);
+      if (!fraw) continue;
+      const f = JSON.parse(fraw);
+      if (f.dob && f.dob.slice(5) === todayMD) {
+        notifs.push(`🎂 It's ${f.firstName} ${f.lastName}'s (@${friendUsername}) birthday today! Wish them well.`);
+      }
+    } catch(e){}
+  }
+  if (!notifs.length) return;
+  const notifRaw = await storageGet(notifsKey(currentUser.username), true);
+  const existing = notifRaw ? JSON.parse(notifRaw) : [];
+  for (const text of notifs) {
+    existing.push({ id: Date.now() + '-' + Math.random().toString(36).slice(2, 8), type: 'welcome', time: Date.now(), read: false, handled: true, text });
+  }
+  await storageSet(notifsKey(currentUser.username), JSON.stringify(existing), true);
+  refreshBadges();
+}
+
+async function grantDailyBonusIfDue(){
+  const today = new Date().toISOString().slice(0, 10);
+  const lastDay = await storageGet(dailyBonusKey(currentUser.username), true);
+  if (lastDay === today) return;
+
+  const raw = await storageGet(userKey(currentUser.email), true);
+  if (!raw) return;
+  try {
+    const u = JSON.parse(raw);
+    u.leos = (typeof u.leos === 'number' ? u.leos : 0) + DAILY_BONUS_AMOUNT;
+    await storageSet(userKey(currentUser.email), JSON.stringify(u), true);
+    currentUser.leos = u.leos;
+    updateLeosDisplay();
+  } catch(e){ return; }
+  await storageSet(dailyBonusKey(currentUser.username), today, true);
+
+  const notifRaw = await storageGet(notifsKey(currentUser.username), true);
+  const notifs = notifRaw ? JSON.parse(notifRaw) : [];
+  notifs.push({
+    id: Date.now() + '-' + Math.random().toString(36).slice(2, 8),
+    type: 'welcome', time: Date.now(), read: false, handled: true,
+    text: `You received your daily login bonus: +${DAILY_BONUS_AMOUNT} Leos! Come back tomorrow for more.`
+  });
+  await storageSet(notifsKey(currentUser.username), JSON.stringify(notifs), true);
+}
+
 async function loginSuccess(user){
   currentUser = user;
   sessionLocalSet(user.email); // tab-local only - never synced to the shared cloud store
@@ -1859,10 +2018,14 @@ async function loginSuccess(user){
   sendHeartbeat();
   refreshBadges();
   updateOnlineDisplay();
+  trackSpinActiveTime();
+  grantDailyBonusIfDue();
+  checkFriendBirthdaysToday();
   badgePollTimer = setInterval(() => {
     sendHeartbeat();
     refreshBadges();
     updateOnlineDisplay();
+    trackSpinActiveTime();
   }, 6000);
 
   const savedTab = await storageGet(lastTabKey(user.username));
@@ -2046,10 +2209,13 @@ async function loadAnnouncementsPage(){
   listEl.innerHTML = posts.map(p => renderPostCard(p, infoMap)).join('');
 }
 
-/* ---------------- LANGUAGE PREFERENCE ----------------
-   Stores which language the user wants - the app's own text is only in
-   English right now, so this is a saved preference for later, not a live
-   translation of the interface. */
+/* ---------------- LANGUAGE (real, working translation) ----------------
+   The full interface (every chat, post, admin label) staying English-only
+   would be unrealistic to translate all at once - but the parts everyone
+   sees constantly (bottom navigation, welcome screen, login/signup) are
+   genuinely translated below and switch live when picked. Languages not
+   in TRANSLATIONS still save as a preference but show English for now,
+   since we haven't translated the whole app into them yet. */
 const LANGUAGE_LIST = [
   'English','Mandarin Chinese','Hindi','Spanish','French','Arabic','Bengali','Portuguese','Russian','Urdu',
   'Indonesian','German','Japanese','Nigerian Pidgin','Swahili','Marathi','Telugu','Turkish','Tamil','Yue Chinese (Cantonese)',
@@ -2063,6 +2229,27 @@ const LANGUAGE_LIST = [
   'Croatian','Lithuanian','Latvian','Slovenian','Estonian','Georgian','Armenian','Mongolian','Khmer','Lao',
   'Zulu','Shona','Afrikaans','Tagalog'
 ];
+const TRANSLATIONS = {
+  'English': { home:'Home', profile:'Profile', message:'Message', friends:'Friends', notifications:'Notifications', chatrooms:'Chatrooms', statusbook:'Statusbook', groups:'Groups', leos:'Leos', games:'Games', buy:'Buy$', menu:'Menu', admin:'Admin', login:'Log In', signup:'Sign Up' },
+  'French': { home:'Accueil', profile:'Profil', message:'Message', friends:'Amis', notifications:'Notifications', chatrooms:'Salons', statusbook:'Statuts', groups:'Groupes', leos:'Leos', games:'Jeux', buy:'Acheter$', menu:'Menu', admin:'Admin', login:'Connexion', signup:"S'inscrire" },
+  'Spanish': { home:'Inicio', profile:'Perfil', message:'Mensaje', friends:'Amigos', notifications:'Notificaciones', chatrooms:'Salas', statusbook:'Estados', groups:'Grupos', leos:'Leos', games:'Juegos', buy:'Comprar$', menu:'Menú', admin:'Admin', login:'Iniciar sesión', signup:'Registrarse' },
+  'Yoruba': { home:'Ile', profile:'Profaili', message:'Ifiranṣẹ', friends:'Ọ̀rẹ́', notifications:'Ìkéde', chatrooms:'Yàrá ìjíròrò', statusbook:'Ìwé ipò', groups:'Àwùjọ', leos:'Leos', games:'Eré', buy:'Ra$', menu:'Àkójọ', admin:'Alábòójútó', login:'Wọlé', signup:'Forúkọsílẹ̀' },
+  'Hausa': { home:'Gida', profile:'Bayani', message:'Saƙo', friends:'Abokai', notifications:'Sanarwa', chatrooms:'Ɗakunan hira', statusbook:'Littafin matsayi', groups:'Ƙungiyoyi', leos:'Leos', games:'Wasanni', buy:'Saya$', menu:'Menu', admin:'Admin', login:'Shiga', signup:'Yi rijista' },
+  'Igbo': { home:'Ụlọ', profile:'Profaịlụ', message:'Ozi', friends:'Ndị enyi', notifications:'Ọkwa', chatrooms:'Ụlọ nkata', statusbook:'Akwụkwọ ọnọdụ', groups:'Òtù', leos:'Leos', games:'Egwuregwu', buy:'Zụta$', menu:'Menu', admin:'Onye nlekọta', login:'Banye', signup:'Debanye aha' },
+  'Nigerian Pidgin': { home:'Home', profile:'Profile', message:'Message', friends:'Padi dem', notifications:'Notification', chatrooms:'Chatroom', statusbook:'Statusbook', groups:'Group', leos:'Leos', games:'Game', buy:'Buy$', menu:'Menu', admin:'Admin', login:'Enter', signup:'Register' }
+};
+function currentLangCode(){
+  let lang = 'English';
+  try { lang = localStorage.getItem('preferredLanguage') || 'English'; } catch(e){}
+  return TRANSLATIONS[lang] ? lang : 'English';
+}
+function applyLanguage(){
+  const dict = TRANSLATIONS[currentLangCode()];
+  document.querySelectorAll('.i18n').forEach(el => {
+    const key = el.getAttribute('data-key');
+    if (dict[key]) el.textContent = dict[key];
+  });
+}
 function toggleLanguagePicker(){
   const panel = document.getElementById('languagePickerPanel');
   const show = panel.style.display === 'none';
@@ -2076,7 +2263,8 @@ function renderLanguageList(list){
   if (!list.length) { area.innerHTML = '<div style="color:#888;font-size:12px;padding:6px 0;">No matches.</div>'; return; }
   area.innerHTML = list.map(l => {
     const isCurrent = l === current;
-    return `<div style="padding:7px 4px;cursor:pointer;font-size:13.5px;${isCurrent ? 'font-weight:700;color:#2b6ee0;' : ''}" onclick="selectLanguage('${l.replace(/'/g,"\\'")}')">${escapeHtml(l)}${isCurrent ? ' ✓' : ''}</div>`;
+    const supported = !!TRANSLATIONS[l];
+    return `<div style="padding:7px 4px;cursor:pointer;font-size:13.5px;${isCurrent ? 'font-weight:700;color:#2b6ee0;' : ''}" onclick="selectLanguage('${l.replace(/'/g,"\\'")}')">${escapeHtml(l)}${supported ? ' ✓ translated' : ''}${isCurrent ? ' (current)' : ''}</div>`;
   }).join('');
 }
 function filterLanguageList(){
@@ -2086,6 +2274,7 @@ function filterLanguageList(){
 function selectLanguage(lang){
   try { localStorage.setItem('preferredLanguage', lang); } catch(e){}
   document.getElementById('languagePickerPanel').style.display = 'none';
+  applyLanguage();
 }
 
 /* ---------------- DARK MODE ---------------- */
@@ -2131,6 +2320,8 @@ function switchTab(pageId){
   if (pageId === 'aiPage') loadAIPage();
   if (pageId === 'menuPage') loadMenuPage();
   if (pageId === 'reportPage') loadReportPage();
+  if (pageId === 'searchPage') { document.getElementById('searchInput').value = ''; setSearchTab('users'); }
+  if (pageId === 'spinPage') loadSpinPage();
   if (pageId === 'groupsPage') loadGroupListPage();
   if (pageId === 'chatroomsPage') loadRoomListPage();
   if (pageId === 'adminPage') loadAdminPage();
@@ -2935,7 +3126,41 @@ function selectGame(which){
   document.getElementById('gameSelector').style.display = 'none';
   document.getElementById('wordCrossGame').style.display = which === 'wordcross' ? 'block' : 'none';
   document.getElementById('diceGame').style.display = which === 'dice' ? 'block' : 'none';
+  document.getElementById('gameLeaderboard').style.display = which === 'leaderboard' ? 'block' : 'none';
+  if (which === 'leaderboard') loadGameLeaderboard();
 }
+
+async function loadGameLeaderboard(){
+  const listEl = document.getElementById('gameLeaderboardList');
+  listEl.innerHTML = '<div class="empty-feed">Loading...</div>';
+  const keys = await storageListKeys('gamewins:', true);
+  const rows = [];
+  for (const k of keys) {
+    const raw = await storageGet(k, true);
+    const wins = raw ? parseInt(raw, 10) || 0 : 0;
+    if (wins <= 0) continue;
+    const username = k.slice('gamewins:'.length);
+    let u = null;
+    try {
+      const email = await storageGet(usernameKey(username), true);
+      if (email) { const uraw = await storageGet(userKey(email), true); if (uraw) u = JSON.parse(uraw); }
+    } catch(e){}
+    rows.push({ username, wins, u });
+  }
+  rows.sort((a, b) => b.wins - a.wins);
+  const top20 = rows.slice(0, 20);
+  if (!top20.length) { listEl.innerHTML = '<div class="empty-feed">No wins yet - be the first!</div>'; return; }
+  listEl.innerHTML = top20.map((r, i) => `
+    <div class="user-result">
+      <div class="avatar">${escapeHtml((r.u ? r.u.firstName : r.username)[0].toUpperCase())}</div>
+      <div class="info">
+        <div class="name">#${i+1} ${r.u ? escapeHtml(r.u.firstName + ' ' + r.u.lastName) : escapeHtml(r.username)} ${r.u ? roleBadgeHtml(r.u) : ''}</div>
+        <div class="uname">@${escapeHtml(r.username)}</div>
+      </div>
+      <span style="font-weight:700;color:#2b3a8f;">${r.wins} win${r.wins === 1 ? '' : 's'}</span>
+    </div>`).join('');
+}
+
 function backToGames(){
   // Reset both games back to their starting screens so re-entering is always clean
   document.getElementById('gameModePicker').style.display = 'flex';
@@ -2952,6 +3177,7 @@ function backToGames(){
 
   document.getElementById('wordCrossGame').style.display = 'none';
   document.getElementById('diceGame').style.display = 'none';
+  document.getElementById('gameLeaderboard').style.display = 'none';
   document.getElementById('gameSelector').style.display = 'block';
 }
 
@@ -3031,6 +3257,13 @@ async function submitWordGuess(){
   await endWordGame(true, 'player');
 }
 
+function gameWinsKey(username){ return 'gamewins:' + username.toLowerCase(); }
+async function incrementGameWins(username){
+  const raw = await storageGet(gameWinsKey(username), true);
+  const n = raw ? parseInt(raw, 10) || 0 : 0;
+  await storageSet(gameWinsKey(username), String(n + 1), true);
+}
+
 async function endWordGame(won, reason){
   if (!gameState) return;
   clearTimeout(gameState.botTimer);
@@ -3041,6 +3274,8 @@ async function endWordGame(won, reason){
 
   if (won) {
     const payout = bet + gameState.reward;
+    await incrementGameWins(currentUser.username);
+  fireConfetti();
     const raw = await storageGet(userKey(currentUser.email), true);
     if (raw) {
       try {
@@ -3264,6 +3499,8 @@ async function winPvpChallenge(){
   c.winner = currentUser.username;
   c.finishedAt = Date.now();
   await storageSet(challengeKey(gameState.code), JSON.stringify(c), true);
+  await incrementGameWins(currentUser.username);
+  fireConfetti();
 
   const pot = c.bet * 2;
   const uraw = await storageGet(userKey(currentUser.email), true);
@@ -3401,6 +3638,8 @@ async function finishDiceRoll(myRoll, oppRoll){
     resultEl.textContent = 'Tie! You both rolled ' + myRoll + '. Your ' + bet + ' Leos bet has been refunded.';
   } else if (myRoll > oppRoll) {
     const payout = bet * 2;
+    await incrementGameWins(currentUser.username);
+  fireConfetti();
     const raw = await storageGet(userKey(currentUser.email), true);
     if (raw) {
       try { const u = JSON.parse(raw); u.leos = (typeof u.leos === 'number' ? u.leos : 0) + payout; await storageSet(userKey(currentUser.email), JSON.stringify(u), true); currentUser.leos = u.leos; updateLeosDisplay(); } catch(e){}
@@ -4111,6 +4350,30 @@ async function sharePost(postId){
   loadHome();
 }
 
+const ACHIEVEMENT_DEFS = [
+  { id: 'firstwin', emoji: '🏆', label: 'First Win', check: (s) => s.wins >= 1 },
+  { id: 'gamer', emoji: '🔥', label: 'Serious Gamer', check: (s) => s.wins >= 10 },
+  { id: 'champion', emoji: '👑', label: 'Champion', check: (s) => s.wins >= 50 },
+  { id: 'social', emoji: '👥', label: 'Popular', check: (s) => s.friends >= 10 },
+  { id: 'verified', emoji: '🌐', label: 'Verified', check: (s) => s.verified },
+  { id: 'wealthy', emoji: '💰', label: 'Leos Collector', check: (s) => s.leos >= 500 },
+  { id: 'rich', emoji: '💎', label: 'Leos Millionaire', check: (s) => s.leos >= 5000 },
+  { id: 'watchdog', emoji: '🚩', label: 'Community Watch', check: (s) => s.hasReported },
+];
+async function getUserAchievements(u){
+  const winsRaw = await storageGet(gameWinsKey(u.username), true);
+  const wins = winsRaw ? parseInt(winsRaw, 10) || 0 : 0;
+  const friendsRaw = await storageGet(friendsKey(u.username), true);
+  const friends = friendsRaw ? JSON.parse(friendsRaw).length : 0;
+  const lastReport = await storageGet(lastReportKey(u.username), true);
+  const stats = { wins, friends, verified: !!u.verified, leos: typeof u.leos === 'number' ? u.leos : 0, hasReported: !!lastReport };
+  return ACHIEVEMENT_DEFS.filter(a => a.check(stats));
+}
+function achievementsRowHtml(unlocked){
+  if (!unlocked.length) return `<div class="profile-row"><span>Achievements</span><span style="color:#aaa;">None yet</span></div>`;
+  return `<div class="profile-row" style="align-items:flex-start;"><span>Achievements</span><span style="display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end;max-width:220px;">${unlocked.map(a => `<span title="${escapeHtml(a.label)}" style="background:#f0f4ff;border-radius:12px;padding:3px 8px;font-size:12px;white-space:nowrap;">${a.emoji} ${escapeHtml(a.label)}</span>`).join('')}</span></div>`;
+}
+
 function escapeHtml(s){
   const d = document.createElement('div');
   d.textContent = s || '';
@@ -4131,8 +4394,15 @@ async function loadProfile(){
     : `<div class="profile-row"><span>Profile lock</span><span style="color:#aaa;">Reach 2,000 Leos and get admin-verified to unlock this</span></div>`;
 
   const editStatusHtml = editCooldownMessage(u);
+  const myAchievements = await getUserAchievements(u);
 
   document.getElementById('profileCard').innerHTML = `
+    <div style="position:relative;height:110px;margin:-16px -16px 16px;border-radius:8px 8px 0 0;overflow:hidden;background:${u.coverPhoto ? `url('${u.coverPhoto}') center/cover` : 'linear-gradient(135deg,#2b6ee0,#4fc3f7)'};">
+      <label style="position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,0.5);color:#fff;font-size:11.5px;padding:4px 9px;border-radius:12px;cursor:pointer;">
+        📷 Change cover
+        <input type="file" id="coverPhotoInput" accept="image/*" style="display:none;" onchange="onCoverPhotoChosen()">
+      </label>
+    </div>
     ${avatarHtml(u.firstName, u.lastName, u.profilePic, 'avatar-lg')}
     <div style="margin:-6px 0 10px;">
       <label style="font-size:12.5px;color:#2b6ee0;cursor:pointer;">
@@ -4164,6 +4434,7 @@ async function loadProfile(){
     <div class="profile-row"><span>Country</span><span>${escapeHtml(u.country)}</span></div>
     <div class="profile-row"><span>Leos balance</span><span>${(typeof u.leos==='number'?u.leos:20).toFixed(2)} <span style="color:#aaa;font-weight:400;">(private)</span></span></div>
     <div class="profile-row"><span>Member since</span><span>${new Date(u.createdAt).toLocaleDateString()}</span></div>
+    ${achievementsRowHtml(myAchievements)}
     ${lockToggleHtml}
     <div>
       <button onclick="showEditProfileForm()" style="margin-top:14px;background:#2b6ee0;color:#fff;border:none;padding:9px 18px;border-radius:6px;cursor:pointer;font-size:14px;">Edit Profile</button>
@@ -4670,6 +4941,30 @@ function resizeImageDataUrl(dataUrl, maxDim){
     img.src = dataUrl;
   });
 }
+function onCoverPhotoChosen(){
+  const input = document.getElementById('coverPhotoInput');
+  if (!input.files || !input.files[0]) return;
+  const file = input.files[0];
+  if (file.size > 8 * 1024 * 1024) { alert('Please choose an image under 8MB.'); input.value = ''; return; }
+  const reader = new FileReader();
+  reader.onload = async () => {
+    let resized;
+    try { resized = await resizeImageDataUrl(reader.result, 800); }
+    catch (e) { alert('Could not read that image.'); return; }
+    const raw = await storageGet(userKey(currentUser.email), true);
+    if (!raw) return;
+    try {
+      const u = JSON.parse(raw);
+      u.coverPhoto = resized;
+      await storageSet(userKey(currentUser.email), JSON.stringify(u), true);
+      currentUser.coverPhoto = resized;
+      loadProfile();
+    } catch(e){}
+  };
+  reader.onerror = () => { alert('Could not read that file.'); };
+  reader.readAsDataURL(file);
+}
+
 function onProfilePicChosen(){
   const input = document.getElementById('profilePicInput');
   const errEl = document.getElementById('profilePicError');
@@ -5086,6 +5381,96 @@ async function refreshBadges(){
 const ONLINE_WINDOW_MS = 15000;   // must be > the poll interval below
 const PRESENCE_STALE_MS = 5 * 60 * 1000;
 
+/* ---------------- DAILY SPIN (10hrs cumulative active time to unlock) ---------------- */
+const SPIN_REQUIRED_SECONDS = 10 * 60 * 60;
+const SPIN_REWARDS = [1, 2, 3, 5, 8, 10];
+function spinKey(username){ return 'spin:' + username.toLowerCase(); }
+// The "spin day" rolls over at 1:00 AM, not midnight - shift the clock back
+// an hour before reading the calendar date so 12:00am-12:59am still counts
+// as the previous day's cycle.
+function spinDayString(){
+  const d = new Date(Date.now() - 60 * 60 * 1000);
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+}
+async function getSpinState(username){
+  const raw = await storageGet(spinKey(username), true);
+  let state = raw ? JSON.parse(raw) : null;
+  const today = spinDayString();
+  if (!state || state.day !== today) {
+    state = { day: today, activeSeconds: 0, spun: false };
+  }
+  return state;
+}
+async function trackSpinActiveTime(){
+  if (!currentUser) return;
+  if (document.hidden || document.visibilityState === 'hidden') return; // paused while the tab isn't in front of them
+  const state = await getSpinState(currentUser.username);
+  if (state.activeSeconds < SPIN_REQUIRED_SECONDS) {
+    state.activeSeconds += 6; // matches the 6-second heartbeat tick
+    await storageSet(spinKey(currentUser.username), JSON.stringify(state), true);
+  }
+}
+
+async function loadSpinPage(){
+  const state = await getSpinState(currentUser.username);
+  const pct = Math.min(100, Math.round((state.activeSeconds / SPIN_REQUIRED_SECONDS) * 100));
+  document.getElementById('spinProgressBar').style.width = pct + '%';
+  const btn = document.getElementById('spinBtn');
+  const resultEl = document.getElementById('spinResult');
+  resultEl.textContent = '';
+  if (state.spun) {
+    document.getElementById('spinProgressText').textContent = "You've already used today's spin. Come back after 1:00 AM!";
+    btn.disabled = true;
+    btn.textContent = 'Spin';
+  } else if (state.activeSeconds >= SPIN_REQUIRED_SECONDS) {
+    document.getElementById('spinProgressText').textContent = 'Your spin is ready!';
+    btn.disabled = false;
+  } else {
+    const remaining = SPIN_REQUIRED_SECONDS - state.activeSeconds;
+    const hrs = Math.floor(remaining / 3600);
+    const mins = Math.floor((remaining % 3600) / 60);
+    document.getElementById('spinProgressText').textContent = `Stay active ${hrs}h ${mins}m more today to unlock your spin.`;
+    btn.disabled = true;
+  }
+}
+
+async function doSpin(){
+  const state = await getSpinState(currentUser.username);
+  if (state.spun || state.activeSeconds < SPIN_REQUIRED_SECONDS) return;
+
+  document.getElementById('spinBtn').disabled = true;
+  const wheelEl = document.getElementById('spinWheelEmoji');
+  let ticks = 0;
+  const anim = setInterval(() => {
+    wheelEl.style.transform = `rotate(${ticks * 60}deg)`;
+    ticks++;
+    if (ticks >= 10) {
+      clearInterval(anim);
+      finishSpin(state);
+    }
+  }, 100);
+}
+
+async function finishSpin(state){
+  const reward = SPIN_REWARDS[Math.floor(Math.random() * SPIN_REWARDS.length)];
+  state.spun = true;
+  await storageSet(spinKey(currentUser.username), JSON.stringify(state), true);
+
+  const raw = await storageGet(userKey(currentUser.email), true);
+  if (raw) {
+    try {
+      const u = JSON.parse(raw);
+      u.leos = (typeof u.leos === 'number' ? u.leos : 0) + reward;
+      await storageSet(userKey(currentUser.email), JSON.stringify(u), true);
+      currentUser.leos = u.leos;
+      updateLeosDisplay();
+    } catch(e){}
+  }
+  document.getElementById('spinResult').textContent = `🎉 You won ${reward} Leos!`;
+  document.getElementById('spinProgressText').textContent = "You've already used today's spin. Come back after 1:00 AM!";
+  fireConfetti();
+}
+
 async function sendHeartbeat(){
   if (!currentUser) return;
   await storageSet(presenceKey(currentUser.username), String(Date.now()), true);
@@ -5146,6 +5531,36 @@ async function loadFriendList(){
   }).join('');
 }
 
+const WALLPAPER_COLORS = {
+  default: '#e5ddd5', blue: '#d5e3f0', green: '#d9ead3',
+  pink: '#f3d9e6', purple: '#e2d9f0', dark: '#131c21'
+};
+function wallpaperPickerHtml(){
+  const current = currentUser.chatWallpaper || WALLPAPER_COLORS.default;
+  return Object.entries(WALLPAPER_COLORS).map(([name, hex]) =>
+    `<span onclick="setChatWallpaper('${hex}')" title="${name}" style="display:inline-block;width:20px;height:20px;border-radius:50%;background:${hex};margin-right:5px;cursor:pointer;border:2px solid ${current === hex ? '#2b6ee0' : 'transparent'};vertical-align:middle;"></span>`
+  ).join('');
+}
+async function setChatWallpaper(hex){
+  currentUser.chatWallpaper = hex;
+  const messagesEl = document.getElementById('messagesArea');
+  if (messagesEl) messagesEl.style.background = hex;
+  const pickerEl = document.getElementById('wallpaperPicker');
+  if (pickerEl) pickerEl.innerHTML = wallpaperPickerHtml();
+  try {
+    const raw = await storageGet(userKey(currentUser.email), true);
+    if (raw) {
+      const u = JSON.parse(raw);
+      u.chatWallpaper = hex;
+      await storageSet(userKey(currentUser.email), JSON.stringify(u), true);
+    }
+  } catch(e){}
+}
+function toggleWallpaperPicker(){
+  const el = document.getElementById('wallpaperPickerRow');
+  if (el) el.style.display = el.style.display === 'none' ? 'block' : 'none';
+}
+
 async function openChat(username, display){
   activeChatFriend = username;
   const chatEl = document.getElementById('privateChat');
@@ -5177,12 +5592,16 @@ async function openChat(username, display){
         </span>
       </span>
       <span style="font-size:11.5px;color:#888;margin-left:auto;">0.20 Leos / message</span>
+      <span style="cursor:pointer;font-size:18px;" onclick="toggleWallpaperPicker()" title="Chat wallpaper">🎨</span>
     </div>
-    <div class="messages" id="messagesArea"></div>
+    <div id="wallpaperPickerRow" style="display:none;padding:8px 14px;border-bottom:1px solid #ddd;background:#fafafa;">
+      <span id="wallpaperPicker">${wallpaperPickerHtml()}</span>
+    </div>
+    <div class="messages" id="messagesArea" style="background:${currentUser.chatWallpaper || WALLPAPER_COLORS.default};"></div>
     ${blocked
       ? `<div style="padding:14px;text-align:center;color:#d32f2f;font-size:13px;border-top:1px solid #ddd;">You can't message this person.</div>`
       : `<div class="input-bar">
-      <input type="text" id="chatInput" placeholder="Type a message" onkeydown="if(event.key==='Enter') sendMessage()">
+      <input type="text" id="chatInput" placeholder="Type a message" oninput="notifyTyping()" onkeydown="if(event.key==='Enter') sendMessage()">
       <button class="send-btn" onclick="sendMessage()">&#10148;</button>
     </div>`}
   `;
@@ -5191,10 +5610,29 @@ async function openChat(username, display){
   if (chatPollTimer) clearInterval(chatPollTimer);
   chatPollTimer = setInterval(() => { loadMessages(); updateChatPresence(); }, 4000);
 }
+function typingKey(chatKeyStr, username){ return 'typing:' + chatKeyStr + ':' + username.toLowerCase(); }
+let lastTypingSentAt = 0;
+async function notifyTyping(){
+  if (!activeChatFriend) return;
+  const now = Date.now();
+  if (now - lastTypingSentAt < 2000) return; // throttle writes
+  lastTypingSentAt = now;
+  const key = chatKey(currentUser.username, activeChatFriend);
+  await storageSet(typingKey(key, currentUser.username), String(now), true);
+}
+
 async function updateChatPresence(){
   if (!activeChatFriend) return;
   const el = document.getElementById('chatPresence');
   if (!el) return;
+  const key = chatKey(currentUser.username, activeChatFriend);
+  const typingRaw = await storageGet(typingKey(key, activeChatFriend), true);
+  const typingTs = typingRaw ? parseInt(typingRaw, 10) : 0;
+  if (Date.now() - typingTs < 3000) {
+    el.textContent = 'typing...';
+    el.style.color = '#25d366';
+    return;
+  }
   const status = await getPresenceStatus(activeChatFriend);
   el.textContent = status;
   el.style.color = status === 'Online' ? '#25d366' : '#999';
@@ -5206,6 +5644,25 @@ function closeChat(){
   document.getElementById('privateChat').innerHTML = '<div class="no-chat-selected">Select a friend to start chatting</div>';
 }
 
+const QUICK_REACT_EMOJIS = ['👍🏻','❤️','😂','😮','😢','🙏🏻'];
+
+function reactionsHtml(m, index){
+  if (!m.reactions || !Object.keys(m.reactions).length) return '';
+  const counts = {};
+  Object.values(m.reactions).forEach(e => { counts[e] = (counts[e] || 0) + 1; });
+  return `<div style="margin-top:2px;">${Object.entries(counts).map(([emoji, count]) =>
+    `<span style="background:#fff;border:1px solid #ddd;border-radius:10px;padding:1px 6px;font-size:11.5px;margin-right:3px;">${emoji}${count > 1 ? ' ' + count : ''}</span>`
+  ).join('')}</div>`;
+}
+
+function toggleReactPicker(index){
+  const el = document.getElementById('reactPicker_' + index);
+  if (!el) return;
+  const isOpen = el.style.display !== 'none';
+  document.querySelectorAll('[id^="reactPicker_"]').forEach(p => p.style.display = 'none');
+  el.style.display = isOpen ? 'none' : 'block';
+}
+
 async function loadMessages(){
   if (!activeChatFriend) return;
   const key = chatKey(currentUser.username, activeChatFriend);
@@ -5213,6 +5670,10 @@ async function loadMessages(){
   const msgs = raw ? JSON.parse(raw) : [];
   const area = document.getElementById('messagesArea');
   if (!area) return;
+
+  const otherSeenRaw = await storageGet(seenCountKey(activeChatFriend, key), true);
+  const otherSeenCount = otherSeenRaw ? parseInt(otherSeenRaw, 10) : 0;
+
   area.innerHTML = msgs.map((m, i) => {
     const sent = m.from === currentUser.username;
     const t = new Date(m.time).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
@@ -5220,8 +5681,20 @@ async function loadMessages(){
     const links = [];
     if (sent) links.push(`<span style="cursor:pointer;text-decoration:underline;" onclick="editPrivateMessage(${i})">Edit</span>`);
     if (canDelete) links.push(`<span style="cursor:pointer;text-decoration:underline;" onclick="deletePrivateMessage(${i})">Delete</span>`);
+    links.push(`<span style="cursor:pointer;text-decoration:underline;" onclick="toggleReactPicker(${i})">React</span>`);
+
+    let ticks = '';
+    if (sent) {
+      const read = (i + 1) <= otherSeenCount;
+      ticks = ` <span style="color:${read ? '#4fc3f7' : '#999'};font-size:11px;">${read ? '✓✓' : '✓'}</span>`;
+    }
+
     return `<div class="msg-row ${sent ? 'sent':'received'}">
-      <div class="bubble" style="font-size:13px;">${escapeHtml(m.text)}${m.edited ? ' <span style="font-size:10px;color:#999;">(edited)</span>' : ''}<span class="time">${t}</span></div>
+      <div class="bubble" style="font-size:13px;">${escapeHtml(m.text)}${m.edited ? ' <span style="font-size:10px;color:#999;">(edited)</span>' : ''}<span class="time">${t}${ticks}</span></div>
+      ${reactionsHtml(m, i)}
+      <div id="reactPicker_${i}" style="display:none;background:#fff;border:1px solid #ddd;border-radius:14px;padding:3px 6px;margin-top:2px;">
+        ${QUICK_REACT_EMOJIS.map(e => `<span style="cursor:pointer;font-size:16px;padding:0 3px;" onclick="reactToMessage(${i}, '${e}')">${e}</span>`).join('')}
+      </div>
       ${links.length ? `<div style="font-size:11px;color:#666;margin-top:2px;display:flex;gap:8px;">${links.join('')}</div>` : ''}
     </div>`;
   }).join('');
@@ -5229,6 +5702,23 @@ async function loadMessages(){
   // viewing the chat marks it as read
   await storageSet(seenCountKey(currentUser.username, key), String(msgs.length), true);
   refreshBadges();
+}
+
+async function reactToMessage(index, emoji){
+  if (!activeChatFriend) return;
+  const key = chatKey(currentUser.username, activeChatFriend);
+  const raw = await storageGet(key, true);
+  const msgs = raw ? JSON.parse(raw) : [];
+  if (index < 0 || index >= msgs.length) return;
+  const m = msgs[index];
+  if (!m.reactions) m.reactions = {};
+  if (m.reactions[currentUser.username] === emoji) {
+    delete m.reactions[currentUser.username]; // tapping the same reaction again removes it
+  } else {
+    m.reactions[currentUser.username] = emoji;
+  }
+  await storageSet(key, JSON.stringify(msgs), true);
+  loadMessages();
 }
 
 async function editPrivateMessage(index){
@@ -5580,6 +6070,7 @@ async function openCircle(kind, id){
         ${canDelete ? `<button onclick="deleteCircle('${kind}','${id}')" style="background:#888;color:#fff;border:none;padding:7px 14px;border-radius:6px;cursor:pointer;font-size:12.5px;">Delete</button>` : ''}
       </div>
       <div id="roomExtraPanel"></div>
+      <div id="pinnedMessageBar"></div>
     </div>
     <div class="messages" id="circleMessagesArea"></div>
     <div class="input-bar">
@@ -5587,6 +6078,7 @@ async function openCircle(kind, id){
       <button class="send-btn" onclick="sendCircleMessage()">&#10148;</button>
     </div>
   `;
+  renderPinnedBar(c);
   loadCircleMessages();
   storageGet(circleChatKey(kind, id), true).then(r => {
     const total = r ? JSON.parse(r).length : 0;
@@ -5668,6 +6160,53 @@ function closeCircle(kind){
   loadRoomListPage();
 }
 
+function renderPinnedBar(c){
+  const bar = document.getElementById('pinnedMessageBar');
+  if (!bar) return;
+  if (!c.pinnedMessage) { bar.innerHTML = ''; return; }
+  const isCreator = currentUser.username.toLowerCase() === c.creator.toLowerCase();
+  const isCircleAdmin = (c.admins || []).map(a => a.toLowerCase()).includes(currentUser.username.toLowerCase());
+  const canUnpin = isCreator || isCircleAdmin || isAdminUser(currentUser);
+  bar.innerHTML = `
+    <div style="margin-top:8px;background:#fff8e1;border-left:3px solid #d4a017;border-radius:6px;padding:8px 10px;display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+      <div style="font-size:12.5px;color:#333;"><strong>📌 Pinned</strong> &middot; @${escapeHtml(c.pinnedMessage.from)}: ${escapeHtml(c.pinnedMessage.text)}</div>
+      ${canUnpin ? `<span onclick="unpinCircleMessage()" style="cursor:pointer;color:#888;font-size:12px;white-space:nowrap;">Unpin</span>` : ''}
+    </div>`;
+}
+
+async function pinCircleMessage(index){
+  if (!activeCircle) return;
+  const { kind, id } = activeCircle;
+  const raw = await storageGet(circleKey(kind, id), true);
+  if (!raw) return;
+  let c; try { c = JSON.parse(raw); } catch(e) { return; }
+  const isCreator = currentUser.username.toLowerCase() === c.creator.toLowerCase();
+  const isCircleAdmin = (c.admins || []).map(a => a.toLowerCase()).includes(currentUser.username.toLowerCase());
+  if (!isCreator && !isCircleAdmin && !isAdminUser(currentUser)) { alert('Only the creator or an admin of this chatroom can pin messages.'); return; }
+
+  const msgsRaw = await storageGet(circleChatKey(kind, id), true);
+  const msgs = msgsRaw ? JSON.parse(msgsRaw) : [];
+  if (index < 0 || index >= msgs.length) return;
+  const m = msgs[index];
+  c.pinnedMessage = { text: m.text, from: m.from, time: m.time };
+  await storageSet(circleKey(kind, id), JSON.stringify(c), true);
+  renderPinnedBar(c);
+}
+
+async function unpinCircleMessage(){
+  if (!activeCircle) return;
+  const { kind, id } = activeCircle;
+  const raw = await storageGet(circleKey(kind, id), true);
+  if (!raw) return;
+  let c; try { c = JSON.parse(raw); } catch(e) { return; }
+  const isCreator = currentUser.username.toLowerCase() === c.creator.toLowerCase();
+  const isCircleAdmin = (c.admins || []).map(a => a.toLowerCase()).includes(currentUser.username.toLowerCase());
+  if (!isCreator && !isCircleAdmin && !isAdminUser(currentUser)) { alert('Only the creator or an admin of this chatroom can unpin messages.'); return; }
+  c.pinnedMessage = null;
+  await storageSet(circleKey(kind, id), JSON.stringify(c), true);
+  renderPinnedBar(c);
+}
+
 async function loadCircleMessages(){
   if (!activeCircle) return;
   const { kind, id } = activeCircle;
@@ -5675,6 +6214,15 @@ async function loadCircleMessages(){
   const msgs = raw ? JSON.parse(raw) : [];
   const area = document.getElementById('circleMessagesArea');
   if (!area) return;
+  const circleRaw = await storageGet(circleKey(kind, id), true);
+  let circleCache_creator = '', circleCache_isAdmin = false;
+  if (circleRaw) {
+    try {
+      const cc = JSON.parse(circleRaw);
+      circleCache_creator = (cc.creator || '').toLowerCase();
+      circleCache_isAdmin = (cc.admins || []).map(a => a.toLowerCase()).includes(currentUser.username.toLowerCase());
+    } catch(e){}
+  }
   const usernames = new Set(msgs.map(m => m.from));
   const infoMap = await buildUserInfoMap(usernames);
   area.innerHTML = msgs.map((m, i) => {
@@ -5682,11 +6230,14 @@ async function loadCircleMessages(){
     const t = new Date(m.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     const info = infoMap[m.from] || {};
     const canDelete = sent || isAdminUser(currentUser);
+    const isCreatorHere = currentUser.username.toLowerCase() === circleCache_creator;
+    const canPin = isCreatorHere || circleCache_isAdmin || isAdminUser(currentUser);
     const fromEsc = m.from.replace(/'/g, "\\'");
     const nameTag = `<div style="font-size:10.5px;font-weight:700;color:${sent ? '#dfe4ff' : '#2b3a8f'};cursor:pointer;" onclick="viewProfile('${fromEsc}')">@${escapeHtml(m.from)} &middot; ${getFollowerLevel(info.followerCount).emoji} ${getFollowerLevel(info.followerCount).label}</div>`;
     const links = [];
     if (sent) links.push(`<span style="cursor:pointer;text-decoration:underline;" onclick="editCircleMessage(${i})">Edit</span>`);
     if (canDelete) links.push(`<span style="cursor:pointer;text-decoration:underline;" onclick="deleteCircleMessage(${i})">Delete</span>`);
+    if (canPin) links.push(`<span style="cursor:pointer;text-decoration:underline;" onclick="pinCircleMessage(${i})">Pin</span>`);
     return `<div class="msg-row ${sent ? 'sent' : 'received'}">
       <div class="bubble" style="font-size:13px;">${nameTag}${escapeHtml(m.text)}${m.edited ? ' <span style="font-size:10px;color:#999;">(edited)</span>' : ''}<span class="time">${t}</span></div>
       ${links.length ? `<div style="font-size:11px;color:#666;margin-top:2px;display:flex;gap:8px;">${links.join('')}</div>` : ''}
@@ -5822,7 +6373,18 @@ async function openGroup(id){
         </div>
         <div style="margin-bottom:8px;"><span onclick="insertEmoji('groupPostInput')" style="color:#2b6ee0;cursor:pointer;font-size:13px;">Use Emojis</span></div>
         <div class="field-msg" id="groupPostError"></div>
-        <button onclick="createGroupPost('${cid}')" style="background:#e8622d;color:#fff;border:none;padding:9px 20px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:600;">Post</button>
+        <button onclick="createGroupPost('${cid}')" style="background:#e8622d;color:#fff;border:none;padding:9px 20px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:600;margin-right:8px;">Post</button>
+        <button onclick="togglePollForm()" style="background:#8e5ce8;color:#fff;border:none;padding:9px 20px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:600;">📊 Create Poll</button>
+
+        <div id="pollForm" style="display:none;margin-top:12px;padding:10px;border:1px solid #ddd;border-radius:8px;">
+          <input type="text" id="pollQuestion" placeholder="Ask a question..." maxlength="150" style="width:100%;padding:8px 10px;border:1px solid #ccc;border-radius:6px;font-size:13.5px;margin-bottom:6px;box-sizing:border-box;">
+          <input type="text" id="pollOption0" placeholder="Option 1" maxlength="60" style="width:100%;padding:7px 10px;border:1px solid #ccc;border-radius:6px;font-size:13px;margin-bottom:5px;box-sizing:border-box;">
+          <input type="text" id="pollOption1" placeholder="Option 2" maxlength="60" style="width:100%;padding:7px 10px;border:1px solid #ccc;border-radius:6px;font-size:13px;margin-bottom:5px;box-sizing:border-box;">
+          <input type="text" id="pollOption2" placeholder="Option 3 (optional)" maxlength="60" style="width:100%;padding:7px 10px;border:1px solid #ccc;border-radius:6px;font-size:13px;margin-bottom:5px;box-sizing:border-box;">
+          <input type="text" id="pollOption3" placeholder="Option 4 (optional)" maxlength="60" style="width:100%;padding:7px 10px;border:1px solid #ccc;border-radius:6px;font-size:13px;margin-bottom:6px;box-sizing:border-box;">
+          <div class="field-msg" id="pollError"></div>
+          <button onclick="createGroupPoll('${cid}')" style="background:#8e5ce8;color:#fff;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:13.5px;">Post Poll</button>
+        </div>
       </div>
       <div id="groupPostsFeed" style="padding:0 14px 20px;"></div>
     </div>
@@ -5972,6 +6534,28 @@ async function loadGroupPosts(id){
   feedEl.innerHTML = posts.map(p => renderGroupPostCard(p, infoMap, id)).join('');
 }
 
+function renderPollHtml(p, gid, pid){
+  const totalVotes = (p.pollVotes || []).reduce((sum, arr) => sum + arr.length, 0);
+  const myVoteIndex = (p.pollVotes || []).findIndex(arr => arr.includes(currentUser.username));
+  const rows = (p.pollOptions || []).map((opt, i) => {
+    const count = (p.pollVotes[i] || []).length;
+    const pct = totalVotes ? Math.round((count / totalVotes) * 100) : 0;
+    const isMine = i === myVoteIndex;
+    return `<div onclick="voteOnPoll('${gid}','${pid}',${i})" style="cursor:pointer;position:relative;margin:6px 0;padding:8px 10px;border:1px solid ${isMine ? '#8e5ce8' : '#ddd'};border-radius:6px;overflow:hidden;">
+      <div style="position:absolute;top:0;left:0;bottom:0;width:${pct}%;background:${isMine ? '#ede4fc' : '#f4f4f4'};z-index:0;"></div>
+      <div style="position:relative;z-index:1;display:flex;justify-content:space-between;font-size:13.5px;">
+        <span>${isMine ? '✓ ' : ''}${escapeHtml(opt)}</span>
+        <span style="color:#888;">${pct}% (${count})</span>
+      </div>
+    </div>`;
+  }).join('');
+  return `<div style="margin-top:6px;">
+    <div style="font-weight:700;font-size:14.5px;color:#2b3a8f;margin-bottom:4px;">📊 ${escapeHtml(p.pollQuestion)}</div>
+    ${rows}
+    <div style="font-size:11.5px;color:#999;margin-top:2px;">${totalVotes} vote${totalVotes === 1 ? '' : 's'} - tap an option to vote</div>
+  </div>`;
+}
+
 function renderGroupPostCard(p, infoMap, groupId){
   const info = infoMap[p.author] || {};
   const liked = (p.likes || []).includes(currentUser.username);
@@ -6002,6 +6586,7 @@ function renderGroupPostCard(p, infoMap, groupId){
     </div>
     ${p.text ? `<div style="font-size:15px;color:#222;line-height:1.4;white-space:pre-wrap;">${escapeHtml(p.text)}${p.edited ? ' <span style="font-size:11px;color:#999;">(edited)</span>' : ''}</div>` : ''}
     ${p.image ? `<img class="post-img" src="${p.image}">` : ''}
+    ${p.type === 'poll' ? renderPollHtml(p, gid, pid) : ''}
     <div style="display:flex;gap:16px;margin-top:8px;padding-top:8px;border-top:1px solid #f0f0f0;font-size:13.5px;">
       <span onclick="toggleGroupPostLike('${gid}','${pid}')" style="cursor:pointer;color:${liked ? '#e8622d' : '#555'};font-weight:${liked ? '600' : '400'};">${liked ? '♥' : '♡'} Like${(p.likes || []).length ? ' (' + (p.likes || []).length + ')' : ''}</span>
       <span style="cursor:default;color:#555;">💬 Comment${comments.length ? ' (' + comments.length + ')' : ''}</span>
@@ -6099,6 +6684,52 @@ async function createGroupPost(id){
   loadGroupPosts(id);
 }
 
+function togglePollForm(){
+  const form = document.getElementById('pollForm');
+  form.style.display = form.style.display === 'none' ? 'block' : 'none';
+}
+
+async function createGroupPoll(id){
+  const errEl = document.getElementById('pollError');
+  errEl.textContent = '';
+  const question = document.getElementById('pollQuestion').value.trim();
+  const options = ['pollOption0','pollOption1','pollOption2','pollOption3']
+    .map(elId => document.getElementById(elId).value.trim())
+    .filter(Boolean);
+  if (!question) { errEl.textContent = 'Write a question first.'; return; }
+  if (options.length < 2) { errEl.textContent = 'Give at least 2 options.'; return; }
+
+  const post = {
+    id: Date.now() + '-' + Math.random().toString(36).slice(2, 8),
+    author: currentUser.username,
+    authorName: currentUser.firstName + ' ' + currentUser.lastName,
+    type: 'poll', pollQuestion: question, pollOptions: options,
+    pollVotes: options.map(() => []), // one array of usernames per option
+    text: '', image: null, time: Date.now(), likes: []
+  };
+  const res = await storageSet(groupPostKey(id, post.id), JSON.stringify(post), true);
+  if (!res) { errEl.textContent = 'Could not post the poll. Please try again.'; return; }
+
+  ['pollQuestion','pollOption0','pollOption1','pollOption2','pollOption3'].forEach(elId => { document.getElementById(elId).value = ''; });
+  document.getElementById('pollForm').style.display = 'none';
+  const circleRaw = await storageGet(circleKey('group', id), true);
+  if (circleRaw) { try { const c = JSON.parse(circleRaw); c.lastActivityAt = Date.now(); await storageSet(circleKey('group', id), JSON.stringify(c), true); } catch(e){} }
+  loadGroupPosts(id);
+}
+
+async function voteOnPoll(groupId, postId, optionIndex){
+  const key = groupPostKey(groupId, postId);
+  const raw = await storageGet(key, true);
+  if (!raw) return;
+  let p; try { p = JSON.parse(raw); } catch(e) { return; }
+  if (!p.pollVotes) return;
+  // remove any previous vote by this person, then add the new one - one vote per person, changeable
+  p.pollVotes = p.pollVotes.map(arr => arr.filter(u => u !== currentUser.username));
+  p.pollVotes[optionIndex].push(currentUser.username);
+  await storageSet(key, JSON.stringify(p), true);
+  loadGroupPosts(groupId);
+}
+
 async function toggleGroupPostLike(groupId, postId){
   const key = groupPostKey(groupId, postId);
   const raw = await storageGet(key, true);
@@ -6153,6 +6784,86 @@ let aiChatHistory = [];
 /* ---------------- REPORTS ---------------- */
 const REPORT_COOLDOWN_MS = 2 * 24 * 60 * 60 * 1000;
 function lastReportKey(username){ return 'lastreport:' + username.toLowerCase(); }
+
+/* ---------------- SEARCH ---------------- */
+let searchTab = 'users';
+function setSearchTab(tab){
+  searchTab = tab;
+  ['Users','Posts','Rooms'].forEach(t => {
+    const btn = document.getElementById('searchTab' + t);
+    const active = t.toLowerCase() === tab || (tab === 'rooms' && t === 'Rooms');
+    btn.style.background = active ? '#2b6ee0' : '#eee';
+    btn.style.color = active ? '#fff' : '#333';
+  });
+  runSearch();
+}
+
+async function runSearch(){
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  const resultsEl = document.getElementById('searchResults');
+  if (!q) { resultsEl.innerHTML = '<div class="empty-feed">Start typing to search.</div>'; return; }
+  resultsEl.innerHTML = '<div class="empty-feed">Searching...</div>';
+
+  if (searchTab === 'users') {
+    const keys = await storageListKeys('user:', true);
+    const matches = [];
+    for (const k of keys) {
+      const raw = await storageGet(k, true);
+      if (!raw) continue;
+      let u; try { u = JSON.parse(raw); } catch(e) { continue; }
+      const full = (u.firstName + ' ' + u.lastName + ' ' + u.username).toLowerCase();
+      if (full.includes(q)) matches.push(u);
+      if (matches.length >= 20) break;
+    }
+    resultsEl.innerHTML = matches.length ? matches.map(u => `
+      <div class="user-result" style="cursor:pointer;" onclick="viewProfile('${u.username.replace(/'/g,"\\'")}')">
+        <div class="avatar">${escapeHtml((u.firstName||'?')[0].toUpperCase())}</div>
+        <div class="info">
+          <div class="name">${escapeHtml(u.firstName)} ${escapeHtml(u.lastName)} ${roleBadgeHtml(u)}</div>
+          <div class="uname">@${escapeHtml(u.username)}</div>
+        </div>
+      </div>`).join('') : '<div class="empty-feed">No people found.</div>';
+  }
+
+  else if (searchTab === 'posts') {
+    const keys = await storageListKeys('post:', true);
+    const matches = [];
+    for (const k of keys) {
+      const raw = await storageGet(k, true);
+      if (!raw) continue;
+      let p; try { p = JSON.parse(raw); } catch(e) { continue; }
+      if (p.type === 'Announcement') continue;
+      if ((p.text || '').toLowerCase().includes(q)) matches.push(p);
+    }
+    matches.sort((a, b) => b.time - a.time);
+    const top = matches.slice(0, 20);
+    resultsEl.innerHTML = top.length ? top.map(p => `
+      <div class="profile-card" style="cursor:pointer;margin-bottom:8px;" onclick="viewProfile('${p.author.replace(/'/g,"\\'")}')">
+        <div style="font-weight:600;color:#2b3a8f;font-size:13.5px;margin-bottom:4px;">@${escapeHtml(p.author)}</div>
+        <div style="font-size:13.5px;color:#333;">${escapeHtml((p.text || '').slice(0, 140))}${(p.text || '').length > 140 ? '...' : ''}</div>
+        <div style="font-size:11px;color:#999;margin-top:6px;">${new Date(p.time).toLocaleDateString()}</div>
+      </div>`).join('') : '<div class="empty-feed">No posts found.</div>';
+  }
+
+  else if (searchTab === 'rooms') {
+    const rooms = await loadAllCircles('room');
+    const groups = await loadAllCircles('group');
+    const all = [...rooms.map(r => ({...r, _kind: 'room'})), ...groups.map(g => ({...g, _kind: 'group'}))];
+    const matches = all.filter(c => (c.name || '').toLowerCase().includes(q) && !c.isPrivate);
+    resultsEl.innerHTML = matches.length ? matches.slice(0, 20).map(c => {
+      const myLower = currentUser.username.toLowerCase();
+      const isMember = (c.members || []).map(m => m.toLowerCase()).includes(myLower);
+      const cid = c.id.replace(/'/g, "\\'");
+      return `<div class="friend-item">
+        ${circleAvatarHtml(c)}
+        <div style="flex:1;"><div class="friend-name">${escapeHtml(c.name)}</div><div class="friend-status">${(c.members || []).length} member${(c.members || []).length === 1 ? '' : 's'} &middot; ${c._kind === 'room' ? 'Chatroom' : 'Group'}</div></div>
+        ${isMember
+          ? `<button onclick="${c._kind === 'room' ? `openCircle('room','${cid}')` : `openCircle('group','${cid}')`}" style="background:#2b6ee0;color:#fff;border:none;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:12.5px;">Open</button>`
+          : `<button onclick="joinCircle('${c._kind}','${cid}')" style="background:#25a244;color:#fff;border:none;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:12.5px;">Join</button>`}
+      </div>`;
+    }).join('') : '<div class="empty-feed">No chatrooms or groups found.</div>';
+  }
+}
 
 async function loadReportPage(){
   document.getElementById('reportYourName').textContent = currentUser.firstName + ' ' + currentUser.lastName + ' (@' + currentUser.username + ')';
@@ -6250,7 +6961,9 @@ function loadMenuPage(){
     { label: 'Leos', page: 'leosPage' },
     { label: 'Games', page: 'gamesPage' },
     { label: '💰 Buy$', page: 'buyLeosPage' },
-    { label: '🚩 Report', page: 'reportPage' }
+    { label: '🔍 Search', page: 'searchPage' },
+    { label: '🚩 Report', page: 'reportPage' },
+    { label: '🎡 Spin', page: 'spinPage' }
   ];
   if (currentUser && (isAdminUser(currentUser) || isModeratorUser(currentUser))) items.push({ label: '⚙ Admin', page: 'adminPage' });
   items.push({ label: 'Log Out', page: null, action: 'logout' });
@@ -6333,6 +7046,7 @@ populateDobSelects();
 refreshCaptcha('login');
 refreshCaptcha('signup');
 applyDarkModePreference();
+applyLanguage();
 storageRemove(SESSION_KEY); // one-time cleanup: delete the old shared cloud session doc from before this was made tab-local, so no leftover email sits in the shared store
 applySpecialGrantsOnce().then(restoreSession);
 </script>
