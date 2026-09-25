@@ -758,6 +758,12 @@
       <div id="buyConfirmArea"></div>
     </div>
 
+    <div class="page" id="shopPage" style="padding:16px;overflow-y:auto;">
+      <h2 style="color:#2b3a8f;margin-bottom:2px;">🛍️ Leos Shop</h2>
+      <div style="font-size:13px;color:#888;margin-bottom:10px;">Your balance: <strong id="shopBalance">0.00 Leos</strong></div>
+      <div id="shopContent"></div>
+    </div>
+
     <div class="page" id="searchPage" style="padding:16px;overflow-y:auto;">
       <h2 style="color:#2b3a8f;margin-bottom:6px;">🔍 Search</h2>
       <input type="text" id="searchInput" placeholder="Search people, posts, or chatrooms..." oninput="runSearch()" style="width:100%;padding:10px 12px;border:1px solid #ccc;border-radius:6px;font-size:14.5px;margin-bottom:12px;outline:none;box-sizing:border-box;">
@@ -1010,11 +1016,28 @@ function onRecaptchaLoad(){
   try { recaptchaLoginId = grecaptcha.render('recaptchaLogin', { sitekey: RECAPTCHA_SITE_KEY }); } catch(e){}
   try { recaptchaSignupId = grecaptcha.render('recaptchaSignup', { sitekey: RECAPTCHA_SITE_KEY }); } catch(e){}
 }
-function recaptchaPassed(which){
+const RECAPTCHA_BACKEND_URL = 'https://chat-me-backend.rahmanadegboye1.workers.dev';
+async function recaptchaPassed(which){
   if (!recaptchaReady || typeof grecaptcha === 'undefined') return false;
   const id = which === 'login' ? recaptchaLoginId : recaptchaSignupId;
   if (id === null) return false;
-  return !!grecaptcha.getResponse(id);
+  const token = grecaptcha.getResponse(id);
+  if (!token) return false;
+  // Don't just trust the browser - ask our own backend to double-check
+  // this token with Google directly, so it can't be faked from the page.
+  try {
+    const res = await fetch(RECAPTCHA_BACKEND_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token })
+    });
+    const data = await res.json();
+    return data.success === true;
+  } catch (e) {
+    // If the backend is unreachable, fail safe by rejecting rather than
+    // silently letting anyone through.
+    return false;
+  }
 }
 function resetRecaptcha(which){
   if (!recaptchaReady || typeof grecaptcha === 'undefined') return;
@@ -1090,7 +1113,32 @@ function withTimeout(promise, ms){
     new Promise((_, reject) => setTimeout(() => reject(new Error('Firebase call timed out')), ms))
   ]);
 }
+/* A short-lived cache so re-reading the same piece of data seconds later
+   (very common - the same user's info shows up many times in one feed)
+   doesn't need a fresh network round trip every single time. This is the
+   biggest lever for feeling faster on a slow connection, since each
+   network read can otherwise take real time to come back. */
+const _fastCache = {};
+const FAST_CACHE_MS = 20000;
+// These change second-to-second and are read via polling - caching them
+// would make chat, typing, online status, and live challenges feel
+// laggy or stuck on old data. Everything else (profiles, posts, rooms,
+// shop, leaderboard) is read far more often than it changes, so caching
+// those is a safe, real speed win.
+const _noCachePrefixes = ['chat:', 'circlechat:', 'typing:', 'presence:', 'notifs:', 'dicechallenge:', 'challenge:', 'requests:', 'sentreq:', 'friends:', 'seen:'];
+function _isCacheable(key){ return !_noCachePrefixes.some(p => key.startsWith(p)); }
+function _cacheGet(key){
+  if (!_isCacheable(key)) return undefined;
+  const hit = _fastCache[key];
+  if (hit && (Date.now() - hit.time) < FAST_CACHE_MS) return hit.value;
+  return undefined;
+}
+function _cacheSet(key, value){ if (_isCacheable(key)) _fastCache[key] = { value, time: Date.now() }; }
+function _cacheClear(key){ delete _fastCache[key]; }
+
 async function storageGet(key){
+  const cached = _cacheGet(key);
+  if (cached !== undefined) return cached;
   if (firebaseDb) {
     try {
       const doc = await withTimeout(firebaseDb.collection('kv').doc(key).get(), 3000);
@@ -1098,6 +1146,7 @@ async function storageGet(key){
       // keep a local cache too, so the app still works offline for a moment
       if (storageBackend === 'local') { try { val === null ? localStorage.removeItem(key) : localStorage.setItem(key, val); } catch(e){} }
       else { if (val === null) delete memStore[key]; else memStore[key] = val; }
+      _cacheSet(key, val);
       return val;
     } catch (e) {
       console.warn('Firestore read failed, using local cache for this read.', e);
@@ -1109,6 +1158,7 @@ async function storageGet(key){
   return Object.prototype.hasOwnProperty.call(memStore, key) ? memStore[key] : null;
 }
 async function storageSet(key, value){
+  _cacheSet(key, value); // update immediately so the next read is instant, don't wait on the network for that
   if (firebaseDb) {
     try { await withTimeout(firebaseDb.collection('kv').doc(key).set({ value: value, updatedAt: Date.now() }), 3000); }
     catch (e) { console.warn('Firestore write failed, saving locally only for now (will not sync to other devices).', e); }
@@ -1138,6 +1188,7 @@ async function storageListKeys(prefix){
   return Object.keys(memStore).filter(k => k.startsWith(prefix));
 }
 async function storageRemove(key){
+  _cacheClear(key);
   if (firebaseDb) {
     try { await withTimeout(firebaseDb.collection('kv').doc(key).delete(), 3000); }
     catch (e) { console.warn('Firestore delete failed.', e); }
@@ -1302,7 +1353,7 @@ async function doSignup(){
     markFieldError('suPasswordConfirm', 'msgPwConfirm', 'Passwords do not match.');
     firstErrorField = firstErrorField || 'suPasswordConfirm';
   }
-  if (!recaptchaPassed('signup')) {
+  if (!(await recaptchaPassed('signup'))) {
     errEl.textContent = 'Please check the "I\'m not a robot" box first.';
     return;
   }
@@ -1774,7 +1825,7 @@ async function doLogin(){
     errEl.textContent = 'Please enter your email and password.';
     return;
   }
-  if (!recaptchaPassed('login')) {
+  if (!(await recaptchaPassed('login'))) {
     errEl.textContent = 'Please check the "I\'m not a robot" box first.';
     return;
   }
@@ -2321,6 +2372,7 @@ function switchTab(pageId){
   if (pageId === 'menuPage') loadMenuPage();
   if (pageId === 'reportPage') loadReportPage();
   if (pageId === 'searchPage') { document.getElementById('searchInput').value = ''; setSearchTab('users'); }
+  if (pageId === 'shopPage') loadShopPage();
   if (pageId === 'spinPage') loadSpinPage();
   if (pageId === 'groupsPage') loadGroupListPage();
   if (pageId === 'chatroomsPage') loadRoomListPage();
@@ -2344,8 +2396,8 @@ async function loadAdminPage(){
   let verifiedCount = 0;
   let adminCount = 0;
   const rows = [];
-  for (const k of userKeys) {
-    const raw = await storageGet(k, true);
+  const userRaws = await Promise.all(userKeys.map(k => storageGet(k, true)));
+  for (const raw of userRaws) {
     if (!raw) continue;
     let u; try { u = JSON.parse(raw); } catch (e) { continue; }
     if (u.verified) verifiedCount++;
@@ -2467,8 +2519,8 @@ async function loadAdminPage(){
   if (iAmAdmin || iAmModerator) {
     const reportKeys = await storageListKeys('report:', true);
     const reports = [];
-    for (const k of reportKeys) {
-      const raw = await storageGet(k, true);
+    const reportRaws = await Promise.all(reportKeys.map(k => storageGet(k, true)));
+    for (const raw of reportRaws) {
       if (!raw) continue;
       try { reports.push(JSON.parse(raw)); } catch(e){}
     }
@@ -2491,8 +2543,8 @@ async function loadAdminPage(){
   /* ---- Pending Leos purchases (any admin can approve/reject) ---- */
   const purchaseKeys = await storageListKeys('purchase:', true);
   const pendingPurchases = [];
-  for (const k of purchaseKeys) {
-    const raw = await storageGet(k, true);
+  const purchaseRaws = await Promise.all(purchaseKeys.map(k => storageGet(k, true)));
+  for (const raw of purchaseRaws) {
     if (!raw) continue;
     try { const p = JSON.parse(raw); if (p.status === 'pending') pendingPurchases.push(p); } catch (e) {}
   }
@@ -2704,11 +2756,14 @@ async function submitPurchaseRequest(i){
 
     // notify every admin so they can go confirm and approve it
     const userKeys = await storageListKeys('user:', true);
-    for (const k of userKeys) {
-      const raw = await storageGet(k, true);
+    const userRaws = await Promise.all(userKeys.map(k => storageGet(k, true)));
+    const admins = [];
+    for (const raw of userRaws) {
       if (!raw) continue;
       let u; try { u = JSON.parse(raw); } catch (e) { continue; }
-      if (!isAdminUser(u)) continue;
+      if (isAdminUser(u)) admins.push(u);
+    }
+    await Promise.all(admins.map(async (u) => {
       const notifRaw = await storageGet(notifsKey(u.username), true);
       const notifs = notifRaw ? JSON.parse(notifRaw) : [];
       notifs.push({
@@ -2718,7 +2773,7 @@ async function submitPurchaseRequest(i){
         leos: pkg.leos, priceNaira: pkg.priceNaira, time: Date.now(), read: false, handled: true
       });
       await storageSet(notifsKey(u.username), JSON.stringify(notifs), true);
-    }
+    }));
 
     statusEl.textContent = 'Submitted! Your Leos will be added once an admin confirms the payment.';
     setTimeout(() => loadBuyLeosPage(), 1200);
@@ -2914,8 +2969,8 @@ async function demoteModerator(username){
 async function countAdmins(){
   const userKeys = await storageListKeys('user:', true);
   let n = 0;
-  for (const k of userKeys) {
-    const r = await storageGet(k, true);
+  const countRaws = await Promise.all(userKeys.map(k => storageGet(k, true)));
+  for (const r of countRaws) {
     if (!r) continue;
     try { if (isAdminUser(JSON.parse(r))) n++; } catch(e){}
   }
@@ -3009,11 +3064,12 @@ async function deleteAccount(username){
 
   /* Remove their posts */
   const postKeys = await storageListKeys('post:', true);
-  for (const k of postKeys) {
-    const p = await storageGet(k, true);
-    if (!p) continue;
+  const postRaws = await Promise.all(postKeys.map(k => storageGet(k, true)));
+  await Promise.all(postKeys.map(async (k, i) => {
+    const p = postRaws[i];
+    if (!p) return;
     try { if (JSON.parse(p).author === username) await storageRemove(k); } catch(e){}
-  }
+  }));
   await storageRemove(userKey(email));
   await storageRemove(usernameKey(username));
   await storageRemove(friendsKey(username));
@@ -3134,19 +3190,18 @@ async function loadGameLeaderboard(){
   const listEl = document.getElementById('gameLeaderboardList');
   listEl.innerHTML = '<div class="empty-feed">Loading...</div>';
   const keys = await storageListKeys('gamewins:', true);
-  const rows = [];
-  for (const k of keys) {
+  const rows = (await Promise.all(keys.map(async k => {
     const raw = await storageGet(k, true);
     const wins = raw ? parseInt(raw, 10) || 0 : 0;
-    if (wins <= 0) continue;
+    if (wins <= 0) return null;
     const username = k.slice('gamewins:'.length);
     let u = null;
     try {
       const email = await storageGet(usernameKey(username), true);
       if (email) { const uraw = await storageGet(userKey(email), true); if (uraw) u = JSON.parse(uraw); }
     } catch(e){}
-    rows.push({ username, wins, u });
-  }
+    return { username, wins, u };
+  }))).filter(Boolean);
   rows.sort((a, b) => b.wins - a.wins);
   const top20 = rows.slice(0, 20);
   if (!top20.length) { listEl.innerHTML = '<div class="empty-feed">No wins yet - be the first!</div>'; return; }
@@ -3932,7 +3987,7 @@ function timeAgo(ts){
   return Math.floor(diff/86400) + ' day' + (Math.floor(diff/86400)===1?'':'s') + ' ago';
 }
 
-const VERIFIED_LEOS_THRESHOLD = 5000;
+const VERIFIED_LEOS_THRESHOLD = 10000;
 const MAX_ADMINS = 2;
 const MAX_MODERATORS = 3;
 function isModeratorUser(u){ return !!(u && u.isModerator); }
@@ -4039,7 +4094,7 @@ async function buildUserInfoMap(usernames){
       const u = JSON.parse(raw);
       const friendsRaw = await storageGet(friendsKey(uname), true);
       const followerCount = friendsRaw ? JSON.parse(friendsRaw).length : 0;
-      map[uname] = { leos: typeof u.leos === 'number' ? u.leos : 0, nickname: u.nickname || '', isOwner: !!u.isOwner, verified: !!u.verified, isAdmin: isAdminUser(u), isModerator: !!u.isModerator, followerCount };
+      map[uname] = { leos: typeof u.leos === 'number' ? u.leos : 0, nickname: u.nickname || '', isOwner: !!u.isOwner, verified: !!u.verified, isAdmin: isAdminUser(u), isModerator: !!u.isModerator, followerCount, activeFrame: u.activeFrame || null, activeNameEffect: u.activeNameEffect || null };
     } catch (e) { map[uname] = { leos: 0, nickname: '', followerCount: 0 }; }
   }));
   return map;
@@ -4169,7 +4224,7 @@ function renderPostCard(p, infoMap){
   return `
     <div class="post-card" style="${p.color ? `border-left:4px solid ${p.color};` : ''}">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-        <div class="post-author" style="cursor:pointer;${p.color ? `color:${p.color};` : ''}" onclick="viewProfile('${authorUname}')">${displayNameWithNickname(p.authorName || p.author, authorInfo.nickname)} ${roleBadgeHtml(authorInfo)} <span style="color:#aaa;font-weight:400;">@${escapeHtml(p.author)}</span><br>${levelBadgeHtml(authorInfo.followerCount)}</div>
+        <div class="post-author" style="cursor:pointer;${p.color ? `color:${p.color};` : ''}" onclick="viewProfile('${authorUname}')"><span style="${nameEffectStyle(authorInfo)}">${displayNameWithNickname(p.authorName || p.author, authorInfo.nickname)}</span> ${roleBadgeHtml(authorInfo)} <span style="color:#aaa;font-weight:400;">@${escapeHtml(p.author)}</span><br>${levelBadgeHtml(authorInfo.followerCount)}</div>
         ${canDelete ? `<span title="Delete post" style="cursor:pointer;color:#d32f2f;font-size:16px;" onclick="deletePost('${p.id}')">🗑</span>` : ''}
       </div>
       ${p.type === 'Shared Post' ? '<div style="font-size:12.5px;color:#888;margin-bottom:4px;">shared a post</div>' : ''}
@@ -4369,10 +4424,248 @@ async function getUserAchievements(u){
   const stats = { wins, friends, verified: !!u.verified, leos: typeof u.leos === 'number' ? u.leos : 0, hasReported: !!lastReport };
   return ACHIEVEMENT_DEFS.filter(a => a.check(stats));
 }
-function achievementsRowHtml(unlocked){
-  if (!unlocked.length) return `<div class="profile-row"><span>Achievements</span><span style="color:#aaa;">None yet</span></div>`;
-  return `<div class="profile-row" style="align-items:flex-start;"><span>Achievements</span><span style="display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end;max-width:220px;">${unlocked.map(a => `<span title="${escapeHtml(a.label)}" style="background:#f0f4ff;border-radius:12px;padding:3px 8px;font-size:12px;white-space:nowrap;">${a.emoji} ${escapeHtml(a.label)}</span>`).join('')}</span></div>`;
+function achievementsRowHtml(unlocked, purchasedBadges){
+  const bought = (purchasedBadges || []).map(id => SHOP_CATALOG.badges.find(b => b.id === id)).filter(Boolean);
+  const all = [...unlocked, ...bought.map(b => ({ emoji: b.emoji, label: b.label }))];
+  if (!all.length) return `<div class="profile-row"><span>Achievements</span><span style="color:#aaa;">None yet</span></div>`;
+  return `<div class="profile-row" style="align-items:flex-start;"><span>Achievements</span><span style="display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end;max-width:220px;">${all.map(a => `<span title="${escapeHtml(a.label)}" style="background:#f0f4ff;border-radius:12px;padding:3px 8px;font-size:12px;white-space:nowrap;">${a.emoji} ${escapeHtml(a.label)}</span>`).join('')}</span></div>`;
 }
+
+/* ================= LEOS SHOP ================= */
+const SHOP_CATALOG = {
+  themes: [
+    { id: 'sunset', label: 'Sunset', price: 100, css: 'linear-gradient(135deg,#ff7e5f,#feb47b)' },
+    { id: 'ocean', label: 'Ocean', price: 200, css: 'linear-gradient(135deg,#2b6ee0,#4fc3f7)' },
+    { id: 'forest', label: 'Forest', price: 300, css: 'linear-gradient(135deg,#134e13,#25a244)' },
+    { id: 'galaxy', label: 'Galaxy', price: 500, css: 'linear-gradient(135deg,#2b0a4a,#6a4fb8)' }
+  ],
+  frames: [
+    { id: 'gold', label: 'Gold', price: 150, color: '#d4a017' },
+    { id: 'diamond', label: 'Diamond', price: 150, color: '#4fc3f7' },
+    { id: 'fire', label: 'Fire', price: 150, color: '#e8622d' },
+    { id: 'royal', label: 'Royal', price: 150, color: '#8e5ce8' }
+  ],
+  nameEffects: [
+    { id: 'glow', label: 'Glow', price: 200 },
+    { id: 'rainbow', label: 'Rainbow', price: 200 },
+    { id: 'shadow', label: 'Shadow', price: 200 }
+  ],
+  stickers: [
+    { id: 'fun', label: 'Fun Pack', price: 50, emojis: ['🥳','😎','🤩','🥶','😜'] },
+    { id: 'love', label: 'Love Pack', price: 100, emojis: ['😍','💘','😘','🥰','💖'] },
+    { id: 'meme', label: 'Meme Pack', price: 200, emojis: ['💀','🤡','😭','🫠','👀'] }
+  ],
+  chatThemes: [
+    { id: 'sunsetChat', label: 'Sunset Chat', price: 150, css: '#ffe0b3' },
+    { id: 'nightChat', label: 'Night Chat', price: 150, css: '#1a1a2e' },
+    { id: 'roseChat', label: 'Rose Chat', price: 150, css: '#ffd9e8' }
+  ],
+  gifts: [
+    { id: 'rose', label: 'Rose', price: 50, emoji: '🌹' },
+    { id: 'cake', label: 'Cake', price: 150, emoji: '🎂' },
+    { id: 'crown', label: 'Crown', price: 500, emoji: '👑' },
+    { id: 'rocket', label: 'Rocket', price: 1000, emoji: '🚀' }
+  ],
+  badges: [
+    { id: 'legend', label: 'Legend', price: 500, emoji: '🏆' },
+    { id: 'vip', label: 'VIP', price: 500, emoji: '💎' }
+  ]
+};
+const SHOP_FIXED_PRICES = {
+  featuredProfile: 300, profileMusic: 300, privateRoom: 500, groupBackground: 300, pinMessage: 50
+};
+
+async function loadCurrentUserFull(){
+  const raw = await storageGet(userKey(currentUser.email), true);
+  if (!raw) return null;
+  try { return JSON.parse(raw); } catch(e) { return null; }
+}
+async function saveCurrentUserFull(u){
+  await storageSet(userKey(currentUser.email), JSON.stringify(u), true);
+  currentUser.leos = u.leos;
+  currentUser.activeTheme = u.activeTheme;
+  currentUser.activeFrame = u.activeFrame;
+  currentUser.activeNameEffect = u.activeNameEffect;
+  currentUser.ownedThemes = u.ownedThemes;
+  currentUser.ownedFrames = u.ownedFrames;
+  currentUser.ownedNameEffects = u.ownedNameEffects;
+  currentUser.ownedStickerPacks = u.ownedStickerPacks;
+  currentUser.ownedChatThemes = u.ownedChatThemes;
+  currentUser.ownedBadges = u.ownedBadges;
+  currentUser.profileMusicUrl = u.profileMusicUrl;
+  currentUser.hasProfileMusic = u.hasProfileMusic;
+  currentUser.featuredUntil = u.featuredUntil;
+  updateLeosDisplay();
+}
+
+async function buyShopItem(category, itemId){
+  const item = SHOP_CATALOG[category].find(i => i.id === itemId);
+  if (!item) return;
+  const u = await loadCurrentUserFull();
+  if (!u) return;
+  // Map category -> the exact field name used on the user record.
+  const fieldMap = { themes: 'ownedThemes', frames: 'ownedFrames', nameEffects: 'ownedNameEffects', stickers: 'ownedStickerPacks', chatThemes: 'ownedChatThemes', gifts: null, badges: 'ownedBadges' };
+  const field = fieldMap[category];
+  const owned = field ? (u[field] || []) : [];
+  if (field && owned.includes(itemId)) { alert('You already own this.'); return; }
+  const balance = typeof u.leos === 'number' ? u.leos : 20;
+  if (balance < item.price) { alert('You need ' + item.price + ' Leos for this. Your balance: ' + balance.toFixed(2)); return; }
+  u.leos = balance - item.price;
+  if (field) { u[field] = [...owned, itemId]; }
+  await saveCurrentUserFull(u);
+  alert('Purchased: ' + item.label + '!');
+  loadShopPage();
+}
+
+async function equipShopItem(category, itemId){
+  const u = await loadCurrentUserFull();
+  if (!u) return;
+  const activeMap = { themes: 'activeTheme', frames: 'activeFrame', nameEffects: 'activeNameEffect' };
+  const field = activeMap[category];
+  if (!field) return;
+  u[field] = itemId;
+  await saveCurrentUserFull(u);
+  loadShopPage();
+}
+
+async function buyFixedShopItem(kind){
+  const price = SHOP_FIXED_PRICES[kind];
+  const u = await loadCurrentUserFull();
+  if (!u) return;
+  const balance = typeof u.leos === 'number' ? u.leos : 20;
+  if (balance < price) { alert('You need ' + price + ' Leos for this. Your balance: ' + balance.toFixed(2)); return; }
+
+  if (kind === 'featuredProfile') {
+    u.leos = balance - price;
+    u.featuredUntil = Date.now() + 24 * 60 * 60 * 1000;
+    await saveCurrentUserFull(u);
+    alert('Your profile is now Featured for 24 hours!');
+  } else if (kind === 'profileMusic') {
+    u.leos = balance - price;
+    u.hasProfileMusic = true;
+    await saveCurrentUserFull(u);
+    alert('Profile music unlocked! Set your track link from Edit Profile.');
+  }
+  loadShopPage();
+}
+
+function nameEffectStyle(u){
+  if (!u || !u.activeNameEffect) return '';
+  if (u.activeNameEffect === 'glow') return 'text-shadow:0 0 6px #4fc3f7,0 0 10px #4fc3f7;';
+  if (u.activeNameEffect === 'shadow') return 'text-shadow:2px 2px 3px rgba(0,0,0,0.5);';
+  if (u.activeNameEffect === 'rainbow') return 'background:linear-gradient(90deg,#ff0040,#ff8c00,#ffee00,#00c853,#2979ff,#aa00ff);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:700;';
+  return '';
+}
+function frameColorFor(u){
+  if (!u || !u.activeFrame) return null;
+  const f = SHOP_CATALOG.frames.find(f => f.id === u.activeFrame);
+  return f ? f.color : null;
+}
+
+async function setProfileMusicLink(){
+  const url = prompt('Paste a direct audio link (mp3, etc.):', '');
+  if (url === null) return;
+  const u = await loadCurrentUserFull();
+  if (!u) return;
+  u.profileMusicUrl = url.trim();
+  await saveCurrentUserFull(u);
+  loadProfile();
+}
+
+async function loadShopPage(){
+  const u = await loadCurrentUserFull();
+  if (!u) return;
+  const bal = (typeof u.leos === 'number' ? u.leos : 20).toFixed(2);
+  document.getElementById('shopBalance').textContent = bal + ' Leos';
+
+  function section(title, desc, itemsHtml){
+    return `<div class="section-divider"><strong>${title}</strong><span>${desc}</span></div><div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">${itemsHtml}</div>`;
+  }
+  function itemCard(label, priceLabel, inner, actionHtml){
+    return `<div class="profile-card" style="width:140px;text-align:center;">
+      <div style="font-size:13px;font-weight:600;margin-bottom:6px;">${escapeHtml(label)}</div>
+      ${inner}
+      <div style="font-size:12px;color:#888;margin:6px 0;">${priceLabel}</div>
+      ${actionHtml}
+    </div>`;
+  }
+
+  let html = '';
+
+  html += section('🎨 Profile Themes', 'Applied behind your profile header (100-500 Leos).',
+    SHOP_CATALOG.themes.map(t => {
+      const owned = (u.ownedThemes || []).includes(t.id);
+      const active = u.activeTheme === t.id;
+      return itemCard(t.label, t.price + ' Leos', `<div style="height:40px;border-radius:6px;background:${t.css};"></div>`,
+        active ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Active</button>`
+        : owned ? `<button onclick="equipShopItem('themes','${t.id}')" style="background:#2b6ee0;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Equip</button>`
+        : `<button onclick="buyShopItem('themes','${t.id}')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`);
+    }).join(''));
+
+  html += section('🖼️ Profile Frames', 'A colored ring around your avatar (150 Leos).',
+    SHOP_CATALOG.frames.map(f => {
+      const owned = (u.ownedFrames || []).includes(f.id);
+      const active = u.activeFrame === f.id;
+      return itemCard(f.label, f.price + ' Leos', `<div style="width:40px;height:40px;margin:0 auto;border-radius:50%;border:4px solid ${f.color};background:#eee;"></div>`,
+        active ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Active</button>`
+        : owned ? `<button onclick="equipShopItem('frames','${f.id}')" style="background:#2b6ee0;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Equip</button>`
+        : `<button onclick="buyShopItem('frames','${f.id}')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`);
+    }).join(''));
+
+  html += section('✨ Name Effects', 'A special style applied to your name everywhere (200 Leos).',
+    SHOP_CATALOG.nameEffects.map(n => {
+      const owned = (u.ownedNameEffects || []).includes(n.id);
+      const active = u.activeNameEffect === n.id;
+      return itemCard(n.label, n.price + ' Leos', `<div style="font-weight:700;${n.id==='glow'?'text-shadow:0 0 6px #4fc3f7,0 0 10px #4fc3f7;':n.id==='shadow'?'text-shadow:2px 2px 3px rgba(0,0,0,0.5);':'background:linear-gradient(90deg,#ff0040,#ff8c00,#ffee00,#00c853,#2979ff,#aa00ff);-webkit-background-clip:text;background-clip:text;color:transparent;'}">Name</div>`,
+        active ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Active</button>`
+        : owned ? `<button onclick="equipShopItem('nameEffects','${n.id}')" style="background:#2b6ee0;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Equip</button>`
+        : `<button onclick="buyShopItem('nameEffects','${n.id}')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`);
+    }).join(''));
+
+  html += section('😎 Sticker Packs', 'Extra emojis to use when chatting (50-200 Leos).',
+    SHOP_CATALOG.stickers.map(s => {
+      const owned = (u.ownedStickerPacks || []).includes(s.id);
+      return itemCard(s.label, s.price + ' Leos', `<div style="font-size:20px;">${s.emojis.join(' ')}</div>`,
+        owned ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Owned</button>`
+        : `<button onclick="buyShopItem('stickers','${s.id}')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`);
+    }).join(''));
+
+  html += section('💬 Premium Chat Themes', 'Extra wallpaper colors for your private chats (150 Leos).',
+    SHOP_CATALOG.chatThemes.map(c => {
+      const owned = (u.ownedChatThemes || []).includes(c.id);
+      return itemCard(c.label, c.price + ' Leos', `<div style="height:40px;border-radius:6px;background:${c.css};border:1px solid #ddd;"></div>`,
+        owned ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Owned</button>`
+        : `<button onclick="buyShopItem('chatThemes','${c.id}')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`);
+    }).join('') + '<div style="font-size:11.5px;color:#888;width:100%;">Pick your active chat theme from inside any chat (🎨 icon).</div>');
+
+  html += section('🎁 Virtual Gifts', 'Send a gift in any private chat (50-1,000 Leos, spent when sent).',
+    SHOP_CATALOG.gifts.map(g => itemCard(g.label, g.price + ' Leos', `<div style="font-size:32px;">${g.emoji}</div>`,
+      `<div style="font-size:11px;color:#888;">Open a chat to send</div>`)).join(''));
+
+  html += section('🏆 Special Badges', 'A purchasable badge shown on your achievements (500 Leos).',
+    SHOP_CATALOG.badges.map(b => {
+      const owned = (u.ownedBadges || []).includes(b.id);
+      return itemCard(b.label, b.price + ' Leos', `<div style="font-size:28px;">${b.emoji}</div>`,
+        owned ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Owned</button>`
+        : `<button onclick="buyShopItem('badges','${b.id}')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`);
+    }).join(''));
+
+  const featuredActive = u.featuredUntil && u.featuredUntil > Date.now();
+  html += section('📣 Featured Profile', 'Shown at the top of People search for 24 hours (300 Leos).',
+    itemCard('Featured', SHOP_FIXED_PRICES.featuredProfile + ' Leos', `<div style="font-size:28px;">⭐</div>`,
+      featuredActive ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Active</button>`
+      : `<button onclick="buyFixedShopItem('featuredProfile')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`));
+
+  html += section('🎵 Profile Music', 'Add a track link that plays on your profile (300 Leos).',
+    itemCard('Music', SHOP_FIXED_PRICES.profileMusic + ' Leos', `<div style="font-size:28px;">🎵</div>`,
+      u.hasProfileMusic ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Unlocked</button>`
+      : `<button onclick="buyFixedShopItem('profileMusic')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`));
+
+  html += `<div class="section-divider"><strong>🔒 Private Rooms &amp; 🎨 Group Backgrounds</strong><span>Create a private chatroom (500 Leos) or set a custom background for a group you own (300 Leos) - both available from the Chatrooms/Groups creation screen.</span></div>`;
+
+  document.getElementById('shopContent').innerHTML = html;
+}
+
 
 function escapeHtml(s){
   const d = document.createElement('div');
@@ -4395,15 +4688,18 @@ async function loadProfile(){
 
   const editStatusHtml = editCooldownMessage(u);
   const myAchievements = await getUserAchievements(u);
+  const themeCss = u.activeTheme ? (SHOP_CATALOG.themes.find(t => t.id === u.activeTheme) || {}).css : null;
+  const frameColor = frameColorFor(u);
+  const nameStyle = nameEffectStyle(u);
 
   document.getElementById('profileCard').innerHTML = `
-    <div style="position:relative;height:110px;margin:-16px -16px 16px;border-radius:8px 8px 0 0;overflow:hidden;background:${u.coverPhoto ? `url('${u.coverPhoto}') center/cover` : 'linear-gradient(135deg,#2b6ee0,#4fc3f7)'};">
+    <div style="position:relative;height:110px;margin:-16px -16px 16px;border-radius:8px 8px 0 0;overflow:hidden;background:${u.coverPhoto ? `url('${u.coverPhoto}') center/cover` : (themeCss || 'linear-gradient(135deg,#2b6ee0,#4fc3f7)')};">
       <label style="position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,0.5);color:#fff;font-size:11.5px;padding:4px 9px;border-radius:12px;cursor:pointer;">
         📷 Change cover
         <input type="file" id="coverPhotoInput" accept="image/*" style="display:none;" onchange="onCoverPhotoChosen()">
       </label>
     </div>
-    ${avatarHtml(u.firstName, u.lastName, u.profilePic, 'avatar-lg')}
+    <div style="${frameColor ? `display:inline-block;border-radius:50%;border:4px solid ${frameColor};` : ''}">${avatarHtml(u.firstName, u.lastName, u.profilePic, 'avatar-lg')}</div>
     <div style="margin:-6px 0 10px;">
       <label style="font-size:12.5px;color:#2b6ee0;cursor:pointer;">
         Choose file
@@ -4416,13 +4712,15 @@ async function loadProfile(){
       </div>
       <div class="field-msg" id="profilePicError"></div>
     </div>
-    <div class="profile-row"><span>Name</span><span>${displayNameWithNickname(u.firstName + ' ' + u.lastName, u.nickname)} ${roleBadgeHtml(u)}</span></div>
+    <div class="profile-row"><span>Name</span><span><span style="${nameStyle}">${displayNameWithNickname(u.firstName + ' ' + u.lastName, u.nickname)}</span> ${roleBadgeHtml(u)}</span></div>
     <div class="profile-row"><span>Username</span><span>@${escapeHtml(u.username)}</span></div>
     <div class="profile-row" style="cursor:pointer;" onclick="switchTab('friendsPage')"><span>Followers</span><span>${friendsCount}</span></div>
     <div class="profile-row" style="cursor:pointer;" onclick="switchTab('friendsPage')"><span>Following</span><span>${friendsCount}</span></div>
     ${renderLevelCard(friendsCount)}
     <div class="profile-row"><span>Status</span><span>${isStatusActive(u) ? escapeHtml(u.status) : '<span style="color:#aaa;">No status yet</span>'}</span></div>
     <div class="profile-row"><span>Bio</span><span>${u.bio ? escapeHtml(u.bio) : '<span style="color:#aaa;">No bio yet</span>'}</span></div>
+    ${u.hasProfileMusic ? `<div class="profile-row"><span>Profile music</span><span>${u.profileMusicUrl ? `<audio controls src="${u.profileMusicUrl}" style="height:30px;max-width:180px;"></audio>` : `<a style="cursor:pointer;color:#2b6ee0;" onclick="setProfileMusicLink()">Set track link</a>`}</span></div>` : ''}
+    ${u.featuredUntil && u.featuredUntil > Date.now() ? `<div class="profile-row"><span>⭐ Featured</span><span style="color:#25a244;">Active until ${new Date(u.featuredUntil).toLocaleString()}</span></div>` : ''}
     <div style="margin:10px 0;">
       <label class="auth-label">Your Bio</label>
       <div class="field-block"><textarea id="bioInput" maxlength="160" placeholder="Describe yourself in a few words..." style="min-height:50px;">${escapeHtml(u.bio || '')}</textarea></div>
@@ -4434,7 +4732,7 @@ async function loadProfile(){
     <div class="profile-row"><span>Country</span><span>${escapeHtml(u.country)}</span></div>
     <div class="profile-row"><span>Leos balance</span><span>${(typeof u.leos==='number'?u.leos:20).toFixed(2)} <span style="color:#aaa;font-weight:400;">(private)</span></span></div>
     <div class="profile-row"><span>Member since</span><span>${new Date(u.createdAt).toLocaleDateString()}</span></div>
-    ${achievementsRowHtml(myAchievements)}
+    ${achievementsRowHtml(myAchievements, u.ownedBadges)}
     ${lockToggleHtml}
     <div>
       <button onclick="showEditProfileForm()" style="margin-top:14px;background:#2b6ee0;color:#fff;border:none;padding:9px 18px;border-radius:6px;cursor:pointer;font-size:14px;">Edit Profile</button>
@@ -6807,8 +7105,8 @@ async function runSearch(){
   if (searchTab === 'users') {
     const keys = await storageListKeys('user:', true);
     const matches = [];
-    for (const k of keys) {
-      const raw = await storageGet(k, true);
+    const userRaws = await Promise.all(keys.map(k => storageGet(k, true)));
+    for (const raw of userRaws) {
       if (!raw) continue;
       let u; try { u = JSON.parse(raw); } catch(e) { continue; }
       const full = (u.firstName + ' ' + u.lastName + ' ' + u.username).toLowerCase();
@@ -6828,8 +7126,8 @@ async function runSearch(){
   else if (searchTab === 'posts') {
     const keys = await storageListKeys('post:', true);
     const matches = [];
-    for (const k of keys) {
-      const raw = await storageGet(k, true);
+    const postRaws = await Promise.all(keys.map(k => storageGet(k, true)));
+    for (const raw of postRaws) {
       if (!raw) continue;
       let p; try { p = JSON.parse(raw); } catch(e) { continue; }
       if (p.type === 'Announcement') continue;
@@ -6961,6 +7259,7 @@ function loadMenuPage(){
     { label: 'Leos', page: 'leosPage' },
     { label: 'Games', page: 'gamesPage' },
     { label: '💰 Buy$', page: 'buyLeosPage' },
+    { label: '🛍️ Shop', page: 'shopPage' },
     { label: '🔍 Search', page: 'searchPage' },
     { label: '🚩 Report', page: 'reportPage' },
     { label: '🎡 Spin', page: 'spinPage' }
