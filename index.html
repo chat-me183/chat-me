@@ -136,9 +136,21 @@
   .page.active { display: flex; }
 
   /* ---- Home / feed ---- */
-  #homePage { padding: 16px; overflow-y: auto; }
-  .post-composer { background: #fff; border-radius: 10px; padding: 14px; margin-bottom: 16px; }
-  .post-composer textarea { width: 100%; border: 1px solid #ddd; border-radius: 6px; padding: 10px; outline: none; font-size: 14px; resize: vertical; min-height: 60px; margin-bottom: 10px; }
+  #homePage { padding: 12px; overflow-y: auto; background:#f0f2f5; }
+  .cm-home-status { background:#fff; border:1px solid #e4e6eb; border-radius:12px; padding:12px; margin-bottom:12px; box-shadow:0 1px 2px rgba(0,0,0,.06); }
+  .cm-status-head { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+  .cm-status-avatar { width:44px; height:44px; border-radius:50%; flex:0 0 44px; overflow:hidden; background:#2b6ee0; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:700; border:1px solid #ddd; }
+  .cm-status-avatar img { width:100%; height:100%; object-fit:cover; }
+  .cm-status-prompt { flex:1; border:0; background:#f0f2f5; border-radius:22px; min-height:44px; padding:12px 16px; color:#65676b; cursor:text; font-size:14px; display:flex; align-items:center; }
+  .cm-status-prompt:hover { background:#e9eaed; }
+  .cm-status-actions { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; border-top:1px solid #eee; padding-top:8px; margin-top:8px; }
+  .cm-status-action { border:0; background:transparent; border-radius:8px; padding:9px 5px; color:#555; cursor:pointer; font-size:13px; font-weight:600; }
+  .cm-status-action:hover { background:#f2f3f5; }
+  .cm-status-action.photo { color:#25a244; }
+  .cm-status-action.feeling { color:#e6a400; }
+  .cm-status-action.question { color:#2b6ee0; }
+  .post-composer { background: #fff; border-radius: 10px; padding: 14px; margin-bottom: 16px; border:1px solid #e4e6eb; }
+  .post-composer textarea { width: 100%; border: 1px solid #ddd; border-radius: 18px; padding: 11px 14px; outline: none; font-size: 14px; resize: vertical; min-height: 52px; margin-bottom: 10px; background:#f0f2f5 !important; }
   .composer-file-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; font-size: 13px; color: #555; flex-wrap: wrap; }
   .composer-file-row input[type=file] { font-size: 13px; }
   .composer-type-row select { padding: 8px 10px; border-radius: 6px; border: 1px solid #ddd; font-size: 14px; margin-bottom: 10px; width: 100%; background: #fafafa; }
@@ -292,6 +304,33 @@
   body.dark-mode .cm-stories-strip,body.dark-mode .cm-setting-card{background:#1d1f23;border-color:#333;color:#eee}
   body.dark-mode .cm-setting-row{border-color:#333}
   body.dark-mode .cm-setting-row small{color:#aaa}
+
+  .cm-home-social-card{background:#fff;border:1px solid #e4e6eb;border-radius:12px;padding:12px;margin-bottom:12px;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+  .cm-social-title{font-weight:700;font-size:14px;margin-bottom:9px;color:#222}
+  .cm-suggest-row{display:flex;gap:9px;overflow-x:auto;padding-bottom:3px}
+  .cm-suggest-card{min-width:145px;border:1px solid #e5e7eb;border-radius:10px;padding:9px;background:#fafafa}
+  .cm-suggest-avatar{width:46px;height:46px;border-radius:50%;overflow:hidden;background:#2b6ee0;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;margin-bottom:7px}
+  .cm-suggest-avatar img{width:100%;height:100%;object-fit:cover}
+  .cm-suggest-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:7px}
+  .cm-suggest-card button{border:0;background:#2b6ee0;color:#fff;border-radius:6px;padding:6px 9px;font-size:12px;cursor:pointer}
+  .cm-trend-list{display:flex;gap:7px;flex-wrap:wrap}
+  .cm-trend{background:#eef4ff;color:#2b5fb8;border-radius:18px;padding:7px 10px;font-size:12px;font-weight:600}
+  .cm-pin{border-left:4px solid #f0a400;padding-left:10px}
+  .cm-pin small{display:block;color:#777;margin-top:4px}
+  body.dark-mode .cm-home-social-card{background:#1d1f23;border-color:#333;color:#eee}
+  body.dark-mode .cm-suggest-card{background:#24262b;border-color:#3a3d42}
+  body.dark-mode .cm-trend{background:#1f2b3f;color:#9fc2ff}
+</style>
+<style id="chatme-social-features-css">
+.cm-social-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:7px}
+.cm-social-btn{border:1px solid #ddd;background:#fff;border-radius:16px;padding:5px 9px;font-size:12px;cursor:pointer}
+.cm-social-btn.active{background:#eaf1ff;border-color:#2b6ee0;color:#2b6ee0;font-weight:600}
+.cm-reaction-menu{display:flex;flex-wrap:wrap;gap:6px;padding:7px;background:#fff;border:1px solid #ddd;border-radius:10px;margin-top:6px}
+.cm-reaction-menu button{border:0;background:#f5f5f5;border-radius:14px;padding:5px 8px;cursor:pointer}
+.cm-reaction-summary{font-size:11.5px;color:#777;margin-top:4px}
+.cm-saved-banner{background:#fff8e1;border:1px solid #f0d98a;border-radius:8px;padding:8px;margin-bottom:10px;font-size:12.5px}
+body.dark-mode .cm-social-btn,body.dark-mode .cm-reaction-menu{background:#1d1f23;color:#eee;border-color:#444}
+body.dark-mode .cm-reaction-menu button{background:#2a2d32;color:#eee}
 </style>
 
 </head>
@@ -317,7 +356,7 @@
       <h1>Find your people in live chatrooms</h1>
       <p>Join topic-based conversations, meet new friends, share updates, and play free games in one friendly community.</p>
       <div class="welcome-stats" aria-label="Chat Me community statistics">
-        <div class="welcome-stat"><strong id="welcomeRegisteredCount">—</strong><span>Registered people</span></div>
+        <div class="welcome-stat"><strong id="welcomeRegisteredCount">—</strong><span>people have registered</span></div>
         <div class="welcome-stat"><strong>24/7</strong><span>Chat whenever you want</span></div>
         <div class="welcome-stat"><strong>Free</strong><span>To join and get started</span></div>
       </div>
@@ -536,7 +575,21 @@
         <div id="languageListArea" style="max-height:220px;overflow-y:auto;"></div>
       </div>
 
+      <div class="cm-home-status" aria-label="Create a status">
+        <div class="cm-status-head">
+          <div id="homeStatusAvatar" class="cm-status-avatar">CM</div>
+          <div class="cm-status-prompt" onclick="document.getElementById('postInput').focus()">What's on your mind?</div>
+        </div>
+        <div class="cm-status-actions">
+          <button class="cm-status-action photo" type="button" onclick="document.getElementById('postFile').click()">▣ Photo</button>
+          <button class="cm-status-action feeling" type="button" onclick="document.getElementById('postType').value='Feeling';document.getElementById('postInput').focus()">● Feeling</button>
+          <button class="cm-status-action question" type="button" onclick="document.getElementById('postType').value='Question';document.getElementById('postInput').focus()">? Question</button>
+        </div>
+      </div>
       <div id="cmStoriesStrip" class="cm-stories-strip"></div>
+      <div id="cmPinnedAnnouncement" class="cm-home-social-card" style="display:none;"></div>
+      <div id="cmPeopleSuggestions" class="cm-home-social-card" style="display:none;"></div>
+      <div id="cmTrendingTopics" class="cm-home-social-card" style="display:none;"></div>
       <div class="friends-banner" style="background:#eef6ff;border-color:#bfdcff;">💬 <strong>Live topic chatrooms</strong> — join a conversation and meet people around shared interests. <a onclick="switchTab('chatroomsPage')">Browse chatrooms</a><br><span style="font-size:12.5px;color:#555;">🎁 Invite 3 friends who sign up and earn 50 Coins.</span> <a onclick="showReferralInfo()">Invite friends</a></div>
       <div class="post-composer">
         <textarea id="postInput" placeholder="What's on your mind?"></textarea>
@@ -562,6 +615,20 @@
       </div>
       <div id="friendsBanner"></div>
       <div id="postList"></div>
+    </div>
+
+    <div class="page" id="statusbookPage">
+      <div style="max-width:760px;margin:0 auto 10px;padding:0 12px;"><button id="storyInsightsBtn" onclick="cmShowStoryViewers(currentUser.username)" style="background:#2b6ee0;color:#fff;border:0;border-radius:7px;padding:8px 12px;cursor:pointer;">👀 Story viewers</button> <span id="storyViewerCount" style="font-size:12px;color:#777;"></span></div>
+      <div class="cm-setting-card" style="max-width:760px;margin:12px auto;width:calc(100% - 24px);">
+        <div style="font-size:18px;font-weight:700;margin-bottom:4px;">Stories</div>
+        <div style="font-size:12px;color:#777;margin-bottom:10px;">Post a story for 50 Coins. It disappears automatically after 24 hours. Every new story requires a new 50-Coin purchase.</div>
+        <textarea id="statusBookInput" maxlength="140" placeholder="Write your story..." style="width:100%;min-height:80px;resize:vertical;padding:10px;border:1px solid #ccc;border-radius:8px;font-size:14px;box-sizing:border-box;"></textarea>
+        <div style="display:flex;gap:8px;align-items:center;margin:8px 0 4px;flex-wrap:wrap;">
+          <button type="button" onclick="submitStoryFromBook()" style="background:#2b6ee0;color:#fff;border:0;padding:8px 12px;border-radius:7px;cursor:pointer;font-weight:600;">Post Story · 50 Coins</button>
+          <span id="statusBookError" style="font-size:12px;color:#d32f2f;"></span>
+        </div>
+      </div>
+      <div id="statusbookList" style="max-width:760px;margin:0 auto;padding:0 12px 20px;"></div>
     </div>
 
     <div class="page" id="profilePage">
@@ -640,6 +707,20 @@
     </div>
 
     <div class="page" id="notificationsPage">
+      <div style="padding:12px 16px 8px;max-width:760px;margin:auto;">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px;">
+          <strong style="font-size:17px;color:#2b3a8f;">🔔 Notifications</strong>
+          <button onclick="markAllNotificationsRead()" style="border:0;background:#eee;color:#333;padding:7px 10px;border-radius:7px;cursor:pointer;font-size:12px;">Mark all as read</button>
+        </div>
+        <div id="notifFilters" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px;">
+          <button onclick="setNotificationFilter('all')" data-notif-filter="all" style="border:0;background:#2b6ee0;color:#fff;padding:6px 10px;border-radius:14px;cursor:pointer;font-size:12px;">All</button>
+          <button onclick="setNotificationFilter('social')" data-notif-filter="social" style="border:0;background:#eee;color:#333;padding:6px 10px;border-radius:14px;cursor:pointer;font-size:12px;">❤️ Social</button>
+          <button onclick="setNotificationFilter('friends')" data-notif-filter="friends" style="border:0;background:#eee;color:#333;padding:6px 10px;border-radius:14px;cursor:pointer;font-size:12px;">👥 Friends</button>
+          <button onclick="setNotificationFilter('messages')" data-notif-filter="messages" style="border:0;background:#eee;color:#333;padding:6px 10px;border-radius:14px;cursor:pointer;font-size:12px;">💬 Messages</button>
+          <button onclick="setNotificationFilter('system')" data-notif-filter="system" style="border:0;background:#eee;color:#333;padding:6px 10px;border-radius:14px;cursor:pointer;font-size:12px;">📢 System</button>
+        </div>
+        <div id="notifCount" style="font-size:11.5px;color:#888;margin-bottom:4px;"></div>
+      </div>
       <div id="notifList"></div>
     </div>
 
@@ -843,6 +924,11 @@
       <div id="shopContent"></div>
     </div>
 
+    <div class="page" id="savedPostsPage" style="padding:16px;overflow-y:auto;">
+      <h2 style="color:#2b3a8f;margin-bottom:6px;">🔖 Saved Posts</h2>
+      <div id="savedPostsList"></div>
+    </div>
+
     <div class="page" id="searchPage" style="padding:16px;overflow-y:auto;">
       <h2 style="color:#2b3a8f;margin-bottom:6px;">🔍 Search</h2>
       <input type="text" id="searchInput" placeholder="Search people, posts, or chatrooms..." oninput="runSearch()" style="width:100%;padding:10px 12px;border:1px solid #ccc;border-radius:6px;font-size:14.5px;margin-bottom:12px;outline:none;box-sizing:border-box;">
@@ -850,6 +936,7 @@
         <button id="searchTabUsers" onclick="setSearchTab('users')" style="flex:1;padding:8px;border:none;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600;background:#2b6ee0;color:#fff;">People</button>
         <button id="searchTabPosts" onclick="setSearchTab('posts')" style="flex:1;padding:8px;border:none;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600;background:#eee;color:#333;">Posts</button>
         <button id="searchTabRooms" onclick="setSearchTab('rooms')" style="flex:1;padding:8px;border:none;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600;background:#eee;color:#333;">Chatrooms</button>
+        <button id="searchTabHashtags" onclick="setSearchTab('hashtags')" style="flex:1;padding:8px;border:none;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600;background:#eee;color:#333;">Hashtags</button>
       </div>
       <div id="searchResults"></div>
     </div>
@@ -1042,6 +1129,19 @@ async function refreshWelcomeStats(){
   }
 }
 
+function refreshHomeStatusHeader(){
+  const el = document.getElementById('homeStatusAvatar');
+  if (!el || !currentUser) return;
+  const first = currentUser.firstName || '';
+  const last = currentUser.lastName || '';
+  const initials = ((first[0] || '') + (last[0] || '')).toUpperCase() || 'CM';
+  if (currentUser.profilePic) {
+    el.innerHTML = `<img src="${escapeHtml(currentUser.profilePic)}" alt="Your profile picture">`;
+  } else {
+    el.textContent = initials;
+  }
+}
+
 function showWelcome(){
   document.getElementById('welcomeScreen').style.display = 'flex';
   refreshWelcomeStats();
@@ -1106,7 +1206,6 @@ function refreshCaptcha(which){ resetRecaptcha(which); }
 /* Owner account: tied to ONE specific email - never to a name, since a name is
    visible in the app and anyone could sign up claiming it. Change this to your
    real email before anyone else signs up, or your own account won't become owner. */
-const OWNER_EMAIL = 'rahmanadegboye1@gmail.com';
 
 async function sha256Hex(str){
   try {
@@ -1451,17 +1550,14 @@ async function doSignup(){
     try { firebaseCredential = await withTimeout(firebaseAuth.createUserWithEmailAndPassword(email, password), 8000); }
     catch (e) { errEl.textContent = e.code === 'auth/email-already-in-use' ? 'An account with this email already exists.' : 'Secure account creation failed. Please try again.'; return; }
     const uid = firebaseCredential.user.uid;
-    // Owner status is tied to ONE specific email address, not a name - a name is
-    // public (visible in the app itself) and anyone could sign up claiming it.
-    // An email can only ever belong to one account, since signup above already
-    // blocks duplicate emails.
-    const isOwner = (email.trim().toLowerCase() === OWNER_EMAIL);
+    // Staff roles and special Coin grants must come only from trusted backend
+    // claims/operations. Never grant them from an email address in the browser.
     const user = {
       username, email, firstName: first || '', lastName: last || '', phone: phone || '',
       dob: `${year}-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`,
       country: country || '', gender: gender || '', uid,
-      leos: isOwner ? 70000.00 : 20.00, isOwner, isAdmin: isOwner, isModerator: false,
-      verified: isOwner, profileLocked: false,
+      leos: 20.00, isOwner: false, isAdmin: false, isModerator: false,
+      verified: false, profileLocked: false,
       createdAt: Date.now()
     };
     const setUserRes = await storageSet(userKey(email), JSON.stringify(user), true);
@@ -1499,20 +1595,7 @@ async function doSignup(){
       }
     } catch (e) { /* referral tracking should never block signup */ }
 
-    if (isOwner) {
-      statusEl.textContent = 'Setting up secure admin login...';
-      const backendRes = await handleAdminBackendAuth(user, password);
-      if (!backendRes.proceed) {
-        statusEl.textContent = '';
-        errEl.innerHTML = escapeHtml(backendRes.message) + (backendRes.showResend
-          ? ' <a onclick="resendVerificationEmail()" style="cursor:pointer;text-decoration:underline;color:#2b6ee0;">Resend email</a>' : '');
-        showAuth('login');
-        document.getElementById('loginEmail').value = email;
-        return;
-      }
-    } else {
-      await ensureFirebaseSession(email, password);
-    }
+    await ensureFirebaseSession(email, password);
 
     statusEl.textContent = 'Account created! Logging you in...';
     try {
@@ -2065,6 +2148,7 @@ async function loginSuccess(user){
   const supportNav = document.getElementById('supportNavItem');
   if (supportNav) supportNav.style.display = (isAdminUser(user) || isModeratorUser(user)) ? 'block' : 'none';
   document.getElementById('homeColorPicker').innerHTML = postColorPickerHtml('home');
+  refreshHomeStatusHeader();
 
   if (badgePollTimer) clearInterval(badgePollTimer);
   sendHeartbeat();
@@ -2094,7 +2178,11 @@ async function restoreSession(){
   // picked up here, on this device or any other.
   const email = sessionLocalGet();
   if (userHasNavigated) return; // they've already started signing up/logging in manually - don't interrupt them
-  if (!email) { showWelcome(); return; }
+  if (!email) {
+    if (userHasNavigated) return;
+    showWelcome();
+    return;
+  }
   const raw = await storageGet(userKey(email));
   if (userHasNavigated) return;
   if (!raw) { sessionLocalClear(); showWelcome(); return; }
@@ -2383,6 +2471,7 @@ function switchTab(pageId, fromHistory=false){
   if (pageId === 'menuPage') loadMenuPage();
   if (pageId === 'reportPage') loadReportPage();
   if (pageId === 'searchPage') { document.getElementById('searchInput').value = ''; setSearchTab('users'); }
+  if (pageId === 'savedPostsPage') cmLoadSavedPosts();
   if (pageId === 'shopPage') loadShopPage();
   if (pageId === 'groupsPage') loadGroupListPage();
   if (pageId === 'chatroomsPage') loadRoomListPage();
@@ -3551,7 +3640,7 @@ function rollDieValue(){ return 1 + Math.floor(Math.random() * 6); }
 const DIE_FACES = ['⚀','⚁','⚂','⚃','⚄','⚅'];
 function dieFace(n){ return DIE_FACES[n - 1] || '🎲'; }
 
-/* ---- AI mode: simple double-or-nothing dice roll against the bot ---- */
+/* ---- AI mode: free dice roll against the bot ---- */
 async function playDiceAI(){
   document.getElementById('diceAiPicker').style.display = 'none';
   document.getElementById('diceArena').style.display = 'block';
@@ -3972,6 +4061,7 @@ function displayNameWithNickname(name, nickname){
 }
 
 async function loadHome(){
+  refreshHomeStatusHeader();
   const listEl = document.getElementById('postList');
   listEl.innerHTML = '<div class="empty-feed">Loading posts...</div>';
   const bannerEl = document.getElementById('friendsBanner');
@@ -4014,6 +4104,7 @@ async function loadHome(){
 
   const shown = posts.slice(0, 50);
   listEl.innerHTML = shown.map(p => renderPostCard(p, infoMap)).join('');
+  cmEnhancePostCards();
 }
 
 /* Wall posts on a profile page - shows only that person's own posts */
@@ -4090,7 +4181,7 @@ function renderPostCard(p, infoMap){
   })() : '';
 
   return `
-    <div class="post-card" style="${p.color ? `border-left:4px solid ${p.color};` : ''}">
+    <div class="post-card" data-post-id="${escapeHtml(p.id)}" style="${p.color ? `border-left:4px solid ${p.color};` : ''}">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;">
         <div class="post-author" style="cursor:pointer;${p.color ? `color:${p.color};` : ''}" onclick="viewProfile('${authorUname}')"><span style="${nameEffectStyle(authorInfo)}">${displayNameWithNickname(p.authorName || p.author, authorInfo.nickname)}</span> ${roleBadgeHtml(authorInfo)} <span style="color:#aaa;font-weight:400;">@${escapeHtml(p.author)}</span><br>${levelBadgeHtml(authorInfo.followerCount)}</div>
         ${canDelete ? `<span title="Delete post" style="cursor:pointer;color:#d32f2f;font-size:16px;" onclick="deletePost('${p.id}')">🗑</span>` : ''}
@@ -4213,7 +4304,10 @@ async function toggleLike(postId){
   let p; try { p = JSON.parse(raw); } catch (e) { return; }
   p.likes = p.likes || [];
   const idx = p.likes.indexOf(currentUser.username);
-  if (idx === -1) p.likes.push(currentUser.username); else p.likes.splice(idx, 1);
+  if (idx === -1) {
+    p.likes.push(currentUser.username);
+    if (p.author && p.author !== currentUser.username) cmPushSocialNotification(p.author, 'like', `${currentUser.firstName || currentUser.username} liked your post.`);
+  } else p.likes.splice(idx, 1);
   await storageSet(key, JSON.stringify(p), true);
   loadHome();
 }
@@ -4231,6 +4325,7 @@ async function addComment(postId){
   p.comments = p.comments || [];
   p.comments.push({ author: currentUser.username, authorName: currentUser.firstName + ' ' + currentUser.lastName, text, time: Date.now() });
   await storageSet(key, JSON.stringify(p), true);
+  if (p.author && p.author !== currentUser.username) cmPushSocialNotification(p.author, 'comment', `${currentUser.firstName || currentUser.username} commented on your post.`);
   loadHome();
 }
 
@@ -4355,7 +4450,7 @@ const SHOP_CATALOG = {
     {id:'diamondBadge',label:'Diamond',price:16000,emoji:'💠'},{id:'champion',label:'Champion',price:17500,emoji:'🥇'},{id:'master',label:'Master',price:19000,emoji:'🛡️'},{id:'ultimateBadge',label:'Ultimate',price:20000,emoji:'🌟'}
   ]
 };
-const SHOP_FIXED_PRICES = { featuredProfile:850, profileMusic:950, privateRoom:1250, groupBackground:1100, pinMessage:650 };
+const SHOP_FIXED_PRICES = { featuredProfile:850, profileMusic:950, privateRoom:1250, groupBackground:1100, pinMessage:650, premiumReactions:450, storyInsights:600 };
 
 async function loadCurrentUserFull(){
   const raw = await storageGet(userKey(currentUser.email), true);
@@ -4380,6 +4475,8 @@ async function saveCurrentUserFull(u){
   currentUser.profileMusicUrl = u.profileMusicUrl;
   currentUser.hasProfileMusic = u.hasProfileMusic;
   currentUser.featuredUntil = u.featuredUntil;
+  currentUser.hasPremiumReactions = !!u.hasPremiumReactions;
+  currentUser.hasStoryInsights = !!u.hasStoryInsights;
   updateCoinsDisplay();
 }
 
@@ -4446,6 +4543,18 @@ async function buyFixedShopItem(kind){
     u.hasGroupBackground = true;
     await saveCurrentUserFull(u);
     alert('Custom Group Background access unlocked!');
+  } else if (kind === 'premiumReactions') {
+    if (u.hasPremiumReactions) { alert('Premium reactions are already unlocked.'); return; }
+    u.leos = balance - price;
+    u.hasPremiumReactions = true;
+    await saveCurrentUserFull(u);
+    alert('Premium reactions unlocked!');
+  } else if (kind === 'storyInsights') {
+    if (u.hasStoryInsights) { alert('Story Insights are already unlocked.'); return; }
+    u.leos = balance - price;
+    u.hasStoryInsights = true;
+    await saveCurrentUserFull(u);
+    alert('Story Insights unlocked! You can now see the people who viewed your stories.');
   }
   loadShopPage();
 }
@@ -4579,6 +4688,12 @@ async function loadShopPage(){
 
   html += section('📌 Premium Message Pin', 'Pin one message in a chatroom for ' + SHOP_FIXED_PRICES.pinMessage + ' Coins. This is charged when you pin; it is not an owned item.',
     itemCard('Pin Message', SHOP_FIXED_PRICES.pinMessage + ' Coins per pin', `<div style="font-size:28px;">📌</div>`, `<button onclick="switchTab('chatsPage')" style="background:#2b6ee0;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Open Chatrooms</button>`));
+  html += section('✨ Premium Reactions', 'Unlock Love, Haha, Wow and other reactions for 450 Coins.',
+    itemCard('Premium Reactions', SHOP_FIXED_PRICES.premiumReactions + ' Coins', `<div style="font-size:28px;">❤️😂😮</div>`,
+      u.hasPremiumReactions ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Unlocked</button>` : `<button onclick="buyFixedShopItem('premiumReactions')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`));
+  html += section('👀 Story Insights', 'Unlock the full list of people who viewed your current story for 600 Coins. The viewer count remains free.',
+    itemCard('Story Insights', SHOP_FIXED_PRICES.storyInsights + ' Coins', `<div style="font-size:28px;">👀</div>`,
+      u.hasStoryInsights ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Unlocked</button>` : `<button onclick="buyFixedShopItem('storyInsights')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`));
 
   document.getElementById('shopContent').innerHTML = html;
 }
@@ -4740,14 +4855,8 @@ async function deleteStatus(username){
 
 /* ---------------- STATUSBOOK (text-only statuses, no photos) ---------------- */
 async function submitStatusFromBook(){
-  const input = document.getElementById('statusBookInput');
-  const errEl = document.getElementById('statusBookError');
-  const text = input.value.trim();
-  if (!text) { errEl.textContent = 'Write something first.'; return; }
-  errEl.textContent = '';
-  await submitStatus(text);
-  input.value = '';
-  loadStatusbookPage();
+  // Statusbook stories are the paid 24-hour Story feature.
+  await submitStoryFromBook();
 }
 
 async function loadStatusbookPage(){
@@ -5485,6 +5594,24 @@ async function declineRequest(otherUsername, notifId){
 }
 
 /* ---------------- NOTIFICATIONS ---------------- */
+let cmNotificationFilter = 'all';
+function cmNotificationCategory(type){
+  if(['friend_request','friend_accept'].includes(type)) return 'friends';
+  if(['message','virtual_gift'].includes(type)) return 'messages';
+  if(['like','comment','reaction','story_view','mention'].includes(type)) return 'social';
+  return 'system';
+}
+function setNotificationFilter(filter){
+  cmNotificationFilter=filter||'all';
+  document.querySelectorAll('[data-notif-filter]').forEach(btn=>{const active=btn.getAttribute('data-notif-filter')===cmNotificationFilter;btn.style.background=active?'#2b6ee0':'#eee';btn.style.color=active?'#fff':'#333';});
+  loadNotifications();
+}
+async function markAllNotificationsRead(){
+  if(!currentUser)return;
+  const raw=await storageGet(notifsKey(currentUser.username),true);const notifs=raw?JSON.parse(raw):[];if(!notifs.length)return;
+  const now=Date.now();await storageSet(notifsKey(currentUser.username),JSON.stringify(notifs.map(n=>({...n,read:true,readAt:n.readAt||now}))),true);
+  await loadNotifications();refreshBadges();
+}
 async function loadNotifications(){
   const listEl = document.getElementById('notifList');
   listEl.innerHTML = '<div class="empty-feed">Loading...</div>';
@@ -5500,7 +5627,12 @@ async function loadNotifications(){
     return;
   }
   notifs.sort((a, b) => b.time - a.time);
-  listEl.innerHTML = notifs.map(n => {
+  const unreadCount=notifs.filter(n=>!n.read).length;
+  const filteredNotifs=cmNotificationFilter==='all'?notifs:notifs.filter(n=>cmNotificationCategory(n.type)===cmNotificationFilter);
+  const countEl=document.getElementById('notifCount');
+  if(countEl) countEl.textContent=unreadCount?`${unreadCount} unread notification${unreadCount===1?'':'s'}`:'All caught up';
+  if(!filteredNotifs.length){listEl.innerHTML='<div class="empty-feed">No notifications in this category.</div>';return;}
+  listEl.innerHTML = filteredNotifs.map(n => {
     let text, actions = '';
     if (n.type === 'friend_request' && !n.handled) {
       text = `${escapeHtml(n.fromName)} sent you a friend request.`;
@@ -5534,6 +5666,11 @@ async function loadNotifications(){
       text = `Your request to buy ${n.leos} Coins for ₦${(n.priceNaira||0).toLocaleString()} was declined. Contact an admin if you believe this is a mistake.`;
     } else if (n.type === 'welcome') {
       text = `👋 ${escapeHtml(n.text || '')}`;
+    } else if (n.type === 'like' || n.type === 'comment' || n.type === 'reaction') {
+      text = `❤️ ${escapeHtml(n.text || 'Someone interacted with your post.')}`;
+      actions = n.postId ? `<div class="notif-actions"><button class="open-btn" onclick="switchTab('homePage')">View Home</button></div>` : '';
+    } else if (n.type === 'story_view') {
+      text = `👀 ${escapeHtml(n.text || 'Someone viewed your story.')}`;
     } else if (n.type === 'mention') {
       text = `${escapeHtml(n.fromName)} mentioned you in a post.`;
       actions = `<div class="notif-actions"><button class="open-btn" onclick="switchTab('homePage')">View post</button></div>`;
@@ -7034,7 +7171,7 @@ function lastReportKey(username){ return 'lastreport:' + username.toLowerCase();
 let searchTab = 'users';
 function setSearchTab(tab){
   searchTab = tab;
-  ['Users','Posts','Rooms'].forEach(t => {
+  ['Users','Posts','Rooms','Hashtags'].forEach(t => {
     const btn = document.getElementById('searchTab' + t);
     const active = t.toLowerCase() === tab || (tab === 'rooms' && t === 'Rooms');
     btn.style.background = active ? '#2b6ee0' : '#eee';
@@ -7088,6 +7225,22 @@ async function runSearch(){
         <div style="font-size:13.5px;color:#333;">${escapeHtml((p.text || '').slice(0, 140))}${(p.text || '').length > 140 ? '...' : ''}</div>
         <div style="font-size:11px;color:#999;margin-top:6px;">${new Date(p.time).toLocaleDateString()}</div>
       </div>`).join('') : '<div class="empty-feed">No posts found.</div>';
+  }
+
+  else if (searchTab === 'hashtags') {
+    const tag = q.startsWith('#') ? q : '#' + q;
+    const keys = await storageListKeys('post:', true);
+    const matches = [];
+    const raws = await Promise.all(keys.map(k => storageGet(k, true)));
+    for (const raw of raws) {
+      if (!raw) continue;
+      let p; try { p = JSON.parse(raw); } catch(e) { continue; }
+      if (p.type === 'Announcement') continue;
+      const tags = String(p.text || '').match(/#[A-Za-z0-9_]+/g) || [];
+      if (tags.some(t => t.toLowerCase() === tag.toLowerCase())) matches.push(p);
+    }
+    matches.sort((a,b) => b.time-a.time);
+    resultsEl.innerHTML = matches.length ? matches.slice(0,20).map(p => `<div class="profile-card" style="margin-bottom:8px;cursor:pointer;" onclick="viewProfile('${p.author.replace(/'/g,"\'")}')"><div style="font-weight:600;color:#2b3a8f;">@${escapeHtml(p.author)}</div><div style="font-size:13.5px;margin-top:4px;">${escapeHtml((p.text||'').slice(0,180))}</div><div style="font-size:11px;color:#999;margin-top:5px;">${timeAgo(p.time)}</div></div>`).join('') : '<div class="empty-feed">No posts found for this hashtag.</div>';
   }
 
   else if (searchTab === 'rooms') {
@@ -7201,6 +7354,7 @@ function loadMenuPage(){
     { label: '📢 Announcements', page: 'announcementsPage' },
     { label: 'Chatrooms', page: 'chatroomsPage' },
     { label: 'Statusbook', page: 'statusbookPage' },
+    { label: 'Saved Posts', page: 'savedPostsPage' },
     { label: 'Nova', page: 'aiPage' },
     { label: 'Groups', page: 'groupsPage' },
     { label: 'Coins', page: 'leosPage' },
@@ -7257,34 +7411,12 @@ async function sendToAI(){
   renderAIChat();
 }
 
-/* Owner account: tied specifically to OWNER_EMAIL (the app's builder/owner).
-   This runs on every load - it grants owner status + Coins to that one email,
-   and makes sure no other account ever carries isOwner.
-   IMPORTANT: this MUST match by email, never by name. firstName/lastName are
-   plain text fields anyone can type at signup - matching on them would let
-   ANYONE become the owner (full admin, unlimited Coins, "wipe all data")
-   just by signing up with the right name. Email is safe to match on only
-   because signup already blocks two accounts from sharing one email. */
+/* Privileged roles and special Coin grants are backend-controlled.
+   This browser file never grants owner/admin status from an email address. */
 async function applySpecialGrantsOnce(){
-  const keys = await storageListKeys('user:');
-  await Promise.all(keys.map(async (k) => {
-    const raw = await storageGet(k);
-    if (!raw) return;
-    let u; try { u = JSON.parse(raw); } catch (e) { return; }
-    const isTargetOwner = (u.email || '').trim().toLowerCase() === OWNER_EMAIL;
-    let changed = false;
-    if (isTargetOwner) {
-      if (!u.isOwner) { u.isOwner = true; changed = true; }
-      if (!u.isAdmin) { u.isAdmin = true; changed = true; }
-      if (!u.verified) { u.verified = true; changed = true; }
-      if (typeof u.leos !== 'number' || u.leos < 70000) { u.leos = 70000; changed = true; }
-      if (!u.nickname) { u.nickname = 'Ademola'; changed = true; }
-    } else if (u.isOwner) {
-      // Nobody else should ever hold owner status.
-      u.isOwner = false; changed = true;
-    }
-    if (changed) await storageSet(k, JSON.stringify(u));
-  }));
+  // Intentionally disabled. Privileged roles and special Coin grants must be
+  // issued by trusted Firebase backend code/custom claims, never by the browser.
+  return;
 }
 
 /* ---------------- INIT ---------------- */
@@ -7340,11 +7472,13 @@ async function cmLoadStoriesStrip(){
       if(!isStatusActive(u)) continue;
       const name=u.firstName||uname;
       const avatar=u.profilePic?`<img src="${escapeHtml(u.profilePic)}" alt="">`:escapeHtml(name[0]||'?').toUpperCase();
-      cards.push(`<div class="cm-story" onclick="viewProfile('${String(uname).replace(/'/g,"\\'")}')"><div class="cm-story-avatar">${avatar}</div><div class="cm-story-name">${escapeHtml(name)}</div></div>`);
+      cards.push(`<div class="cm-story" onclick="cmOpenStory('${String(uname).replace(/'/g,"\\'")}')"><div class="cm-story-avatar">${avatar}</div><div class="cm-story-name">${escapeHtml(name)}</div></div>`);
     }catch(e){}
   }
   cards.unshift(`<div class="cm-story" onclick="switchTab('statusbookPage')"><div class="cm-story-avatar" style="border-color:#2b6ee0;font-size:24px;">+</div><div class="cm-story-name">Add story</div></div>`);
   el.innerHTML='<div style="font-weight:700;font-size:13px;margin-bottom:8px;">Stories</div>'+cards.join('');
+  const viewerCountEl=document.getElementById('storyViewerCount');
+  if(viewerCountEl){const count=await cmViewerCount(currentUser.username);viewerCountEl.textContent=count?`${count} viewer${count===1?'':'s'}`:'No viewers yet';}
 }
 
 // Keep the Stories row fresh whenever Home loads.
@@ -7371,23 +7505,149 @@ The current app stores chat messages as text. Connect a secure file-storage back
 }
 
 
-// Lightweight browser-side media preview helper for future message attachments.
-// Files remain local unless the existing app explicitly uploads/stores them.
-function cmChooseChatMedia(){
-  if(!activeChatFriend) return;
-  let input=document.getElementById('cmChatMediaInput');
-  if(!input){ input=document.createElement('input'); input.type='file'; input.accept='image/*,video/*'; input.style.display='none'; input.id='cmChatMediaInput'; document.body.appendChild(input); input.onchange=cmPreviewChatMedia; }
-  input.click();
-}
-function cmPreviewChatMedia(){
-  const input=document.getElementById('cmChatMediaInput'); if(!input?.files?.[0]) return;
-  const file=input.files[0];
-  if(file.size>5*1024*1024){ alert('Please choose a file smaller than 5 MB.'); input.value=''; return; }
-  alert('Media selected: '+file.name+'\
-The current app stores chat messages as text. Connect a secure file-storage backend before enabling permanent media uploads.');
-  input.value='';
+/* ================= SOCIAL FEATURES ================= */
+const CM_REACTIONS = { like:'👍', love:'❤️', haha:'😂', wow:'😮' };
+const CM_PREMIUM_REACTIONS = ['love','haha','wow'];
+function cmSavedKey(username){ return 'savedPosts:' + String(username||'').toLowerCase(); }
+function cmStoryViewsKey(username){ return 'storyViews:' + String(username||'').toLowerCase(); }
+
+async function cmPushSocialNotification(username,type,text,extra={}){
+  try{
+    if(!username || !currentUser || String(username).toLowerCase()===String(currentUser.username).toLowerCase()) return;
+    const key=notifsKey(username); const raw=await storageGet(key,true); const arr=raw?JSON.parse(raw):[];
+    arr.push({id:Date.now()+'-'+Math.random().toString(36).slice(2,7),type,from:currentUser.username,fromName:(currentUser.firstName||currentUser.username)+' '+(currentUser.lastName||''),text,time:Date.now(),read:false,handled:true,...extra});
+    await storageSet(key,JSON.stringify(arr.slice(-100)),true);
+  }catch(e){}
 }
 
+async function cmToggleSavePost(postId,btn){
+  if(!currentUser) return;
+  const key=cmSavedKey(currentUser.username); const raw=await storageGet(key,true); const saved=raw?JSON.parse(raw):[];
+  const i=saved.indexOf(postId);
+  if(i>=0){saved.splice(i,1); if(btn)btn.textContent='🔖 Save';}
+  else {saved.unshift(postId); if(btn)btn.textContent='✓ Saved';}
+  await storageSet(key,JSON.stringify(saved.slice(0,200)),true);
+}
+async function cmLoadSavedPosts(){
+  const el=document.getElementById('savedPostsList'); if(!el||!currentUser)return;
+  const raw=await storageGet(cmSavedKey(currentUser.username),true); const ids=raw?JSON.parse(raw):[];
+  if(!ids.length){el.innerHTML='<div class="empty-feed">No saved posts yet.</div>';return;}
+  const posts=[]; for(const id of ids){const rawP=await storageGet('post:'+id,true);if(rawP){try{posts.push(JSON.parse(rawP))}catch(e){}}}
+  const users=[...new Set(posts.map(p=>p.author).filter(Boolean))]; const info=await buildUserInfoMap(users);
+  el.innerHTML=posts.map(p=>renderPostCard(p,info)).join(''); cmEnhancePostCards();
+}
+
+async function cmReactPost(postId,reaction){
+  const key='post:'+postId; const raw=await storageGet(key,true); if(!raw||!currentUser)return;
+  let p;try{p=JSON.parse(raw)}catch(e){return;}
+  const premium=CM_PREMIUM_REACTIONS.includes(reaction);
+  const u=await loadCurrentUserFull();
+  if(premium && !(u&&u.hasPremiumReactions)){alert('Unlock Premium Reactions in the Shop first.');return;}
+  p.reactions=p.reactions||{}; Object.keys(CM_REACTIONS).forEach(k=>{p.reactions[k]=Array.isArray(p.reactions[k])?p.reactions[k]:[];});
+  for(const k of Object.keys(p.reactions)){const i=p.reactions[k].indexOf(currentUser.username);if(i>=0)p.reactions[k].splice(i,1);}
+  if(reaction && CM_REACTIONS[reaction]){p.reactions[reaction].push(currentUser.username);if(p.author!==currentUser.username)cmPushSocialNotification(p.author,'reaction',`${currentUser.firstName||currentUser.username} reacted ${CM_REACTIONS[reaction]} to your post.`);}
+  await storageSet(key,JSON.stringify(p),true); loadHome();
+}
+function cmReactionSummary(p){const r=p.reactions||{};return Object.keys(CM_REACTIONS).filter(k=>Array.isArray(r[k])&&r[k].length).map(k=>CM_REACTIONS[k]+' '+r[k].length).join(' · ');}
+function cmEnhancePostCards(){
+  document.querySelectorAll('.post-card[data-post-id]').forEach(card=>{
+    if(card.dataset.cmEnhanced==='1')return; card.dataset.cmEnhanced='1'; const id=card.dataset.postId;
+    const row=document.createElement('div');row.className='cm-social-actions';
+    row.innerHTML=`<button class="cm-social-btn" onclick="cmToggleReactionMenu('${id}',this)">😊 React</button><button class="cm-social-btn" onclick="cmToggleSavePost('${id}',this)">🔖 Save</button>`;
+    card.appendChild(row);
+    const sum=document.createElement('div');sum.className='cm-reaction-summary';sum.id='cmReactionSummary_'+id;card.appendChild(sum);cmRefreshReactionSummary(id);
+  });
+}
+function cmToggleReactionMenu(postId,btn){
+  const card=btn.closest('.post-card');let menu=card.querySelector('.cm-reaction-menu');if(menu){menu.remove();return;}
+  menu=document.createElement('div');menu.className='cm-reaction-menu';
+  const allowed=currentUser&&currentUser.hasPremiumReactions?Object.keys(CM_REACTIONS):['like'];
+  menu.innerHTML=allowed.map(k=>`<button onclick="cmReactPost('${postId}','${k}')">${CM_REACTIONS[k]} ${k[0].toUpperCase()+k.slice(1)}</button>`).join('')+(allowed.length===1?'<span style="font-size:11px;color:#888;align-self:center;">Premium reactions are available in Shop.</span>':'');
+  card.appendChild(menu);
+}
+async function cmRefreshReactionSummary(postId){const raw=await storageGet('post:'+postId,true);if(!raw)return;let p;try{p=JSON.parse(raw)}catch(e){return;}const el=document.getElementById('cmReactionSummary_'+postId);if(el)el.textContent=cmReactionSummary(p);}
+
+async function cmOpenStory(owner){
+  if(!currentUser||!owner)return;
+  const ownerName=String(owner);
+  if(ownerName.toLowerCase()!==String(currentUser.username).toLowerCase())await cmRecordStoryView(ownerName);
+  viewProfile(ownerName);
+}
+
+async function cmRecordStoryView(owner){
+  if(!currentUser||!owner||String(owner).toLowerCase()===String(currentUser.username).toLowerCase())return;
+  try{
+    const email=await storageGet(usernameKey(owner),true);const rawUser=email?await storageGet(userKey(email),true):null;
+    const storyAt=rawUser?((JSON.parse(rawUser).statusUpdatedAt)||0):0;if(!storyAt||Date.now()-storyAt>=STATUS_EXPIRY_MS)return;
+    const key=cmStoryViewsKey(owner);const raw=await storageGet(key,true);const arr=raw?JSON.parse(raw):[];
+    const fresh=arr.filter(v=>v.storyAt&&Date.now()-v.storyAt<STATUS_EXPIRY_MS);
+    const existing=fresh.find(v=>String(v.username).toLowerCase()===String(currentUser.username).toLowerCase()&&v.storyAt===storyAt);
+    if(existing)existing.time=Date.now();else fresh.push({username:currentUser.username,name:(currentUser.firstName||currentUser.username)+' '+(currentUser.lastName||''),time:Date.now(),storyAt});
+    await storageSet(key,JSON.stringify(fresh.slice(-500)),true);
+    cmPushSocialNotification(owner,'story_view',`${currentUser.firstName||currentUser.username} viewed your story.`);
+  }catch(e){}
+}
+async function cmShowStoryViewers(owner){
+  if(!currentUser||String(owner).toLowerCase()!==String(currentUser.username).toLowerCase())return;
+  const u=await loadCurrentUserFull();if(!(u&&u.hasStoryInsights)){alert('Story Insights costs 600 Coins and lets you see who viewed your story.');return;}
+  const storyAt=Number(u.statusUpdatedAt||0);if(!storyAt||!isStatusActive(u)){alert('Your current story has expired. Post a new story for 50 Coins to collect new views.');return;}
+  const raw=await storageGet(cmStoryViewsKey(owner),true);const arr=(raw?JSON.parse(raw):[]).filter(v=>v.storyAt===storyAt&&Date.now()-v.storyAt<STATUS_EXPIRY_MS);
+  if(!arr.length){alert('No one has viewed this story yet.');return;}
+  alert('Story viewers ('+arr.length+'):\n\n'+arr.sort((a,b)=>b.time-a.time).map(v=>'@'+v.username+' · '+timeAgo(v.time)).join('\n'));
+}
+async function cmViewerCount(owner){try{const email=await storageGet(usernameKey(owner),true);const rawU=email?await storageGet(userKey(email),true):null;const u=rawU?JSON.parse(rawU):null;const storyAt=u&&u.statusUpdatedAt?u.statusUpdatedAt:0;const raw=await storageGet(cmStoryViewsKey(owner),true);const arr=(raw?JSON.parse(raw):[]).filter(v=>v.storyAt===storyAt&&Date.now()-v.storyAt<STATUS_EXPIRY_MS);return arr.length;}catch(e){return 0;}}
+
+// Refresh notification types for social activity without replacing existing notifications.
+const _cmOriginalLoadNotifications=window.loadNotifications;
+if(typeof _cmOriginalLoadNotifications==='function')window.loadNotifications=async function(){await _cmOriginalLoadNotifications.apply(this,arguments);};
+
+/* ================= HOME SOCIAL EXTRAS ================= */
+const STORY_PRICE_COINS = 50;
+
+let cmStoryPosting = false;
+async function submitStoryFromBook(){
+  const input=document.getElementById('statusBookInput'), errEl=document.getElementById('statusBookError');
+  if(!currentUser || !input || cmStoryPosting) return;
+  const text=input.value.trim().slice(0,140);
+  if(!text){if(errEl) errEl.textContent='Write something first.';return;}
+  cmStoryPosting = true;
+  const btn = document.querySelector('#statusBookPage button[onclick*="submitStoryFromBook"]');
+  if(btn) btn.disabled = true;
+  try {
+    const raw=await storageGet(userKey(currentUser.email),true); if(!raw) return;
+    let u; try{u=JSON.parse(raw)}catch(e){return;}
+    const balance=typeof u.leos==='number'?u.leos:0;
+    if(balance<STORY_PRICE_COINS){if(errEl) errEl.textContent='You need 50 Coins to post a story.';return;}
+    u.leos=balance-STORY_PRICE_COINS; u.status=text; u.statusUpdatedAt=Date.now();
+    const ok=await storageSet(userKey(currentUser.email),JSON.stringify(u),true);
+    if(!ok){if(errEl) errEl.textContent='Could not purchase the story right now. Please try again.';return;}
+    currentUser.leos=u.leos; currentUser.status=u.status; currentUser.statusUpdatedAt=u.statusUpdatedAt; updateCoinsDisplay();
+    input.value=''; if(errEl){errEl.style.color='#1a8a3c';errEl.textContent='Story posted for 50 Coins. It will disappear after 24 hours.';}
+    loadStatusbookPage(); if(typeof loadHome==='function') loadHome();
+  } finally {
+    cmStoryPosting = false;
+    if(btn) btn.disabled = false;
+  }
+}
+
+async function cmLoadPinnedAnnouncement(){
+  const el=document.getElementById('cmPinnedAnnouncement'); if(!el||!currentUser)return;
+  try{const keys=await storageListKeys('post:',true);const raw=await Promise.all(keys.map(k=>storageGet(k,true)));const posts=raw.map(x=>{try{return JSON.parse(x)}catch(e){return null}}).filter(p=>p&&p.type==='Announcement');posts.sort((a,b)=>(b.time||0)-(a.time||0));const p=posts[0];if(!p){el.style.display='none';return;}el.style.display='block';el.innerHTML=`<div class="cm-social-title">📌 Pinned announcement</div><div class="cm-pin"><div>${escapeHtml(p.text||'')}</div><small>${escapeHtml(p.authorName||p.author||'Chat Me staff')} · ${p.time?new Date(p.time).toLocaleString():''}</small></div>`;}catch(e){el.style.display='none';}
+}
+
+async function cmLoadPeopleYouMayKnow(){
+  const el=document.getElementById('cmPeopleSuggestions'); if(!el||!currentUser)return;
+  try{const friendsRaw=await storageGet(friendsKey(currentUser.username),true);const friends=friendsRaw?JSON.parse(friendsRaw):[];const excluded=new Set([String(currentUser.username).toLowerCase(),...friends.map(x=>String(x).toLowerCase())]);const keys=await storageListKeys('user:',true);const candidates=[];for(const k of keys){const raw=await storageGet(k,true);if(!raw)continue;let u;try{u=JSON.parse(raw)}catch(e){continue;}const uname=String(u.username||'');if(!uname||excluded.has(uname.toLowerCase()))continue;if(Array.isArray(currentUser.blockedUsers)&&currentUser.blockedUsers.map(String).map(x=>x.toLowerCase()).includes(uname.toLowerCase()))continue;if(u.isBanned)continue;candidates.push(u);}candidates.sort(()=>Math.random()-0.5);const list=candidates.slice(0,5);if(!list.length){el.style.display='none';return;}el.style.display='block';el.innerHTML='<div class="cm-social-title">People you may know</div><div class="cm-suggest-row">'+list.map(u=>{const uname=String(u.username);const full=((u.firstName||'')+' '+(u.lastName||'')).trim()||uname;const initials=((u.firstName||'')[0]||'')+((u.lastName||'')[0]||'');const av=u.profilePic?`<img src="${escapeHtml(u.profilePic)}" alt="">`:escapeHtml((initials||uname[0]||'?').toUpperCase());return `<div class="cm-suggest-card"><div class="cm-suggest-avatar">${av}</div><div class="cm-suggest-name">${escapeHtml(full)}</div><button onclick="sendFriendRequest('${uname.replace(/'/g,"\'")}',this)">Add Friend</button></div>`;}).join('')+'</div>';}catch(e){el.style.display='none';}
+}
+
+async function cmLoadTrendingTopics(){
+  const el=document.getElementById('cmTrendingTopics'); if(!el||!currentUser)return;
+  try{const keys=await storageListKeys('post:',true);const counts={};for(const k of keys){const raw=await storageGet(k,true);if(!raw)continue;let p;try{p=JSON.parse(raw)}catch(e){continue;}const tags=String(p.text||'').match(/#[A-Za-z0-9_]+/g)||[];tags.forEach(tag=>{const x=tag.toLowerCase();counts[x]=(counts[x]||0)+1;});}const topics=Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,6);if(!topics.length){el.style.display='none';return;}el.style.display='block';el.innerHTML='<div class="cm-social-title">🔥 Trending topics</div><div class="cm-trend-list">'+topics.map(([tag,count])=>`<span class="cm-trend">${escapeHtml(tag)} · ${count}</span>`).join('')+'</div>';}catch(e){el.style.display='none';}
+}
+
+function cmSetupHomeSocialScroll(){const list=document.getElementById('postList');if(!list||!('IntersectionObserver' in window))return;if(window.__cmHomeSocialObserver)window.__cmHomeSocialObserver.disconnect();let done=false;const sentinel=document.createElement('div');sentinel.id='cmHomeSocialSentinel';sentinel.style.height='1px';list.appendChild(sentinel);window.__cmHomeSocialObserver=new IntersectionObserver(async entries=>{if(done||!entries.some(e=>e.isIntersecting))return;done=true;await cmLoadPeopleYouMayKnow();await cmLoadTrendingTopics();},{root:null,rootMargin:'500px'});window.__cmHomeSocialObserver.observe(sentinel);}
+
+const _cmHomeSocialBaseLoader=window.loadHome;if(typeof _cmHomeSocialBaseLoader==='function'){window.loadHome=async function(){const result=await _cmHomeSocialBaseLoader.apply(this,arguments);await cmLoadPinnedAnnouncement();await cmLoadPeopleYouMayKnow();await cmLoadTrendingTopics();cmSetupHomeSocialScroll();return result;};}
 
 /* ================= CUSTOMER SERVICE + ADMIN OPERATIONS ================= */
 function cmTicketKey(id){ return 'supportTicket:' + id; }
