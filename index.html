@@ -635,6 +635,63 @@ body.dark-mode .cm-reaction-menu button{background:#2a2d32;color:#eee}
       <div class="profile-card" id="profileCard"></div>
     </div>
 
+    <div class="page" id="viewProfilePage" style="padding:20px;overflow-y:auto;">
+      <div class="profile-card" id="viewProfileCard"></div>
+    </div>
+
+    <div class="page" id="settingsPage" style="padding:16px;overflow-y:auto;">
+      <div style="max-width:760px;margin:0 auto;">
+        <div class="cm-setting-card">
+          <div style="font-size:19px;font-weight:700;margin-bottom:4px;">⚙ Settings &amp; Privacy</div>
+          <div style="font-size:12.5px;color:#777;margin-bottom:14px;">Control who can see your profile, your online status, messages and social notifications.</div>
+          <label style="display:flex;gap:10px;align-items:center;padding:10px 0;border-top:1px solid #eee;cursor:pointer;">
+            <input type="checkbox" id="cmPrivateProfile" onchange="cmSavePrivacy()">
+            <span><strong>Private profile</strong><br><small style="color:#777;">Limit profile details to people who are allowed to view them.</small></span>
+          </label>
+          <label style="display:flex;gap:10px;align-items:center;padding:10px 0;border-top:1px solid #eee;cursor:pointer;">
+            <input type="checkbox" id="cmShowOnline" onchange="cmSavePrivacy()">
+            <span><strong>Show me as online</strong><br><small style="color:#777;">Let friends see your online status.</small></span>
+          </label>
+          <label style="display:flex;gap:10px;align-items:center;padding:10px 0;border-top:1px solid #eee;cursor:pointer;">
+            <input type="checkbox" id="cmMessageRequests" onchange="cmSavePrivacy()">
+            <span><strong>Allow message requests</strong><br><small style="color:#777;">Allow messages from people who are not yet friends.</small></span>
+          </label>
+          <label style="display:flex;gap:10px;align-items:center;padding:10px 0;border-top:1px solid #eee;cursor:pointer;">
+            <input type="checkbox" id="cmNotifMessages" onchange="cmSavePrivacy()">
+            <span><strong>Message notifications</strong></span>
+          </label>
+          <label style="display:flex;gap:10px;align-items:center;padding:10px 0;border-top:1px solid #eee;cursor:pointer;">
+            <input type="checkbox" id="cmNotifSocial" onchange="cmSavePrivacy()">
+            <span><strong>Social notifications</strong><br><small style="color:#777;">Likes, comments, friend activity and Story activity.</small></span>
+          </label>
+        </div>
+
+        <div class="cm-setting-card">
+          <div style="font-weight:700;margin-bottom:8px;">🚫 Blocked accounts</div>
+          <div id="cmBlockedList"></div>
+        </div>
+
+        <div class="cm-setting-card">
+          <div style="font-weight:700;margin-bottom:8px;">🎨 Appearance</div>
+          <label style="display:flex;gap:10px;align-items:center;cursor:pointer;">
+            <input type="checkbox" id="settingsDarkModeToggle" onchange="toggleDarkModeFromSettings()">
+            <span>Dark mode</span>
+          </label>
+        </div>
+
+        <div class="cm-setting-card">
+          <div style="font-weight:700;margin-bottom:8px;">🛍 Shop</div>
+          <div style="font-size:12.5px;color:#777;margin-bottom:8px;">Manage premium themes, frames, effects, gifts and other Coin purchases.</div>
+          <button onclick="switchTab('shopPage')" style="background:#e8622d;color:#fff;border:0;padding:9px 15px;border-radius:7px;cursor:pointer;">Open Shop</button>
+        </div>
+
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 20px;">
+          <button onclick="switchTab('profilePage')" style="background:#2b6ee0;color:#fff;border:0;padding:9px 15px;border-radius:7px;cursor:pointer;">My Profile</button>
+          <button onclick="switchTab('menuPage')" style="background:#eee;color:#333;border:0;padding:9px 15px;border-radius:7px;cursor:pointer;">Back to Menu</button>
+        </div>
+      </div>
+    </div>
+
     <div class="page" id="chatsPage" style="flex-direction: row;">
       <div class="friend-list" id="friendList"></div>
       <div class="private-chat" id="privateChat">
@@ -1759,15 +1816,36 @@ async function viewProfile(username){
 
   document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
-  document.getElementById('viewProfilePage').classList.add('active');
-  document.getElementById('viewProfileCard').innerHTML = '<div class="empty-feed">Loading profile...</div>';
+  const vp=document.getElementById('viewProfilePage');
+  const vc=document.getElementById('viewProfileCard');
+  if(!vp || !vc){ alert('Profile view is unavailable. Please refresh Chat Me.'); return; }
+  vp.classList.add('active');
+  vc.innerHTML = '<div class="empty-feed">Loading profile...</div>';
 
-  const email = await storageGet(usernameKey(username), true);
-  if (!email) { document.getElementById('viewProfileCard').innerHTML = '<div class="empty-feed">This person could not be found.</div>'; return; }
+  let email = await storageGet(usernameKey(username), true);
+  // If the username index is missing/stale, search the user records so profile
+  // links from Friends and Messages still work instead of showing a blank page.
+  if (!email) {
+    try {
+      const keys = await storageListKeys('user:', true);
+      for (const k of keys) {
+        const rawCandidate = await storageGet(k, true);
+        if (!rawCandidate) continue;
+        try {
+          const candidate = JSON.parse(rawCandidate);
+          if (String(candidate.username || '').toLowerCase() === String(username).toLowerCase()) {
+            email = k.slice(5);
+            break;
+          }
+        } catch(e) {}
+      }
+    } catch(e) {}
+  }
+  if (!email) { vc.innerHTML = '<div class="empty-feed">This person could not be found.</div>'; return; }
   const raw = await storageGet(userKey(email), true);
-  if (!raw) { document.getElementById('viewProfileCard').innerHTML = '<div class="empty-feed">This person could not be found.</div>'; return; }
+  if (!raw) { vc.innerHTML = '<div class="empty-feed">This person could not be found.</div>'; return; }
   let rawUser, u;
-  try { rawUser = JSON.parse(raw); u = publicProfileFields(rawUser); } catch (e) { return; }
+  try { rawUser = JSON.parse(raw); u = publicProfileFields(rawUser); } catch (e) { vc.innerHTML = '<div class="empty-feed">This profile could not be loaded.</div>'; return; }
   const theirVerified = !!rawUser.verified;
   const theyAreOwner = !!rawUser.isOwner;
   const theyAreLocked = !!rawUser.profileLocked;
@@ -2144,7 +2222,7 @@ async function loginSuccess(user){
   updateCoinsDisplay();
   const cloudStatus = await verifyCoreCloudReadiness();
   if (!cloudStatus.ok) { console.warn('Chat Me cloud sync is not currently confirmed; the app may be using local fallback.'); }
-  document.getElementById('adminNavItem').style.display = (isAdminUser(user) || isModeratorUser(user)) ? 'block' : 'none';
+  document.getElementById('adminNavItem').style.display = (currentUserHasTrustedRole('admin') || currentUserHasTrustedRole('moderator')) ? 'block' : 'none';
   const supportNav = document.getElementById('supportNavItem');
   if (supportNav) supportNav.style.display = (isAdminUser(user) || isModeratorUser(user)) ? 'block' : 'none';
   document.getElementById('homeColorPicker').innerHTML = postColorPickerHtml('home');
@@ -2189,6 +2267,7 @@ async function restoreSession(){
   let user;
   try { user = JSON.parse(raw); } catch (e) { showWelcome(); return; }
   if (userHasNavigated) return;
+  try { applyTrustedClaimsToUser(user, await refreshTrustedAuthClaims()); } catch(e) {}
   loginSuccess(publicUser(user));
 }
 
@@ -2524,7 +2603,7 @@ async function loadAdminPage(){
     <div class="section-divider"><strong>Verification requests</strong><span>Accounts that reached ${VERIFIED_COINS_THRESHOLD} Coins and are eligible for the 🌐 badge.</span></div>
     ${eligible.length ? eligible.map(u => `
       <div class="user-result" style="max-width:560px;">
-        <div class="avatar">${((u.firstName||'?')[0]+(u.lastName||'?')[0]).toUpperCase()}</div>
+        ${avatarHtml(u.firstName, u.lastName, u.profilePic, 'avatar')}
         <div class="info">
           <div class="name">${escapeHtml(u.firstName)} ${escapeHtml(u.lastName)}</div>
           <div class="uname">@${escapeHtml(u.username)} &middot; Coins: ${u.leos.toFixed(2)}</div>
@@ -2539,7 +2618,7 @@ async function loadAdminPage(){
     <div class="section-divider"><strong>Verified but below ${VERIFIED_COINS_THRESHOLD} Coins</strong><span>Their balance dropped back down - staff can remove their 🌐 badge.</span></div>
     ${droppedBelow.map(u => `
       <div class="user-result" style="max-width:560px;">
-        <div class="avatar">${((u.firstName||'?')[0]+(u.lastName||'?')[0]).toUpperCase()}</div>
+        ${avatarHtml(u.firstName, u.lastName, u.profilePic, 'avatar')}
         <div class="info">
           <div class="name">${escapeHtml(u.firstName)} ${escapeHtml(u.lastName)}</div>
           <div class="uname">@${escapeHtml(u.username)} &middot; Coins: ${(u.leos||0).toFixed(2)}</div>
@@ -2554,7 +2633,7 @@ async function loadAdminPage(){
     <div class="section-divider"><strong>Coins Leaderboard</strong><span>The top 20 accounts by Coins balance.</span></div>
     ${top20.map((u, i) => `
       <div class="user-result" style="max-width:560px;">
-        <div class="avatar">${((u.firstName||'?')[0]+(u.lastName||'?')[0]).toUpperCase()}</div>
+        ${avatarHtml(u.firstName, u.lastName, u.profilePic, 'avatar')}
         <div class="info">
           <div class="name">#${i+1} ${escapeHtml(u.firstName)} ${escapeHtml(u.lastName)} ${roleBadgeHtml(u)}</div>
           <div class="uname">@${escapeHtml(u.username)}</div>
@@ -2571,7 +2650,7 @@ async function loadAdminPage(){
     <div class="section-divider"><strong>Admins (${adminCount}/${MAX_ADMINS})</strong><span>The owner is always an admin. Up to ${MAX_ADMINS - 1} more can be chosen. For security, a new admin's original signup email must be confirmed with a one-time code first.</span></div>
     ${rows.filter(u => isAdminUser(u)).map(u => `
       <div class="user-result" style="max-width:560px;">
-        <div class="avatar">${((u.firstName||'?')[0]+(u.lastName||'?')[0]).toUpperCase()}</div>
+        ${avatarHtml(u.firstName, u.lastName, u.profilePic, 'avatar')}
         <div class="info">
           <div class="name">${escapeHtml(u.firstName)} ${escapeHtml(u.lastName)} ${ownerBadgeHtml(u.isOwner)}</div>
           <div class="uname">@${escapeHtml(u.username)}</div>
@@ -2582,7 +2661,7 @@ async function loadAdminPage(){
       <div style="margin-top:10px;font-size:12.5px;color:#888;">Awaiting email confirmation:</div>
       ${pendingVerification.map(u => `
         <div class="user-result" style="max-width:560px;">
-          <div class="avatar">${((u.firstName||'?')[0]+(u.lastName||'?')[0]).toUpperCase()}</div>
+          ${avatarHtml(u.firstName, u.lastName, u.profilePic, 'avatar')}
           <div class="info">
             <div class="name">${escapeHtml(u.firstName)} ${escapeHtml(u.lastName)}</div>
             <div class="uname">@${escapeHtml(u.username)} &middot; code sent to their email</div>
@@ -2606,7 +2685,7 @@ async function loadAdminPage(){
     <div class="section-divider"><strong>Moderators (${moderatorCount}/${MAX_MODERATORS})</strong><span>Moderators can post announcements (up to 3 days a week), verify accounts at ${VERIFIED_COINS_THRESHOLD}+ Coins, and view the Coins leaderboard. They cannot give Coins, ban, or delete accounts.</span></div>
     ${rows.filter(u => u.isModerator).map(u => `
       <div class="user-result" style="max-width:560px;">
-        <div class="avatar">${((u.firstName||'?')[0]+(u.lastName||'?')[0]).toUpperCase()}</div>
+        ${avatarHtml(u.firstName, u.lastName, u.profilePic, 'avatar')}
         <div class="info">
           <div class="name">${escapeHtml(u.firstName)} ${escapeHtml(u.lastName)} ${roleBadgeHtml(u)}</div>
           <div class="uname">@${escapeHtml(u.username)}</div>
@@ -2699,7 +2778,7 @@ async function loadAdminPage(){
     <div class="section-divider"><strong>Ban / Unban Users</strong><span>You can restrict accounts that break the rules. You cannot edit or delete accounts.</span></div>
     ${rows.filter(u => !u.isOwner && !isAdminUser(u)).map(u => `
       <div class="user-result" style="max-width:560px;">
-        <div class="avatar">${((u.firstName||'?')[0]+(u.lastName||'?')[0]).toUpperCase()}</div>
+        ${avatarHtml(u.firstName, u.lastName, u.profilePic, 'avatar')}
         <div class="info">
           <div class="name">${escapeHtml(u.firstName)} ${escapeHtml(u.lastName)} ${roleBadgeHtml(u)} ${u.banned ? '<span style="color:#d32f2f;font-size:11px;font-weight:700;border:1px solid #d32f2f;padding:1px 6px;border-radius:10px;">BANNED</span>' : ''}</div>
           <div class="uname">@${escapeHtml(u.username)}</div>
@@ -2713,7 +2792,7 @@ async function loadAdminPage(){
     <div class="section-divider"><strong>Accounts</strong><span>Admins can edit or permanently delete any account except the owner's.</span></div>
     ${rows.map(u => `
       <div class="user-result" style="max-width:560px;">
-        <div class="avatar">${((u.firstName||'?')[0]+(u.lastName||'?')[0]).toUpperCase()}</div>
+        ${avatarHtml(u.firstName, u.lastName, u.profilePic, 'avatar')}
         <div class="info">
           <div class="name">${escapeHtml(u.firstName)} ${escapeHtml(u.lastName)} ${roleBadgeHtml(u)} ${u.banned ? '<span style="color:#d32f2f;font-size:11px;font-weight:700;border:1px solid #d32f2f;padding:1px 6px;border-radius:10px;">BANNED</span>' : ''}</div>
           <div class="uname">@${escapeHtml(u.username)} &middot; ${escapeHtml(u.email)} &middot; Coins: ${(typeof u.leos==='number'?u.leos:0).toFixed(2)}</div>
@@ -3305,7 +3384,7 @@ async function loadGameLeaderboard(){
   if (!top20.length) { listEl.innerHTML = '<div class="empty-feed">No wins yet - be the first!</div>'; return; }
   listEl.innerHTML = top20.map((r, i) => `
     <div class="user-result">
-      <div class="avatar">${escapeHtml((r.u ? r.u.firstName : r.username)[0].toUpperCase())}</div>
+      ${r.u ? avatarHtml(r.u.firstName, r.u.lastName, r.u.profilePic, 'avatar') : `<div class="avatar">${escapeHtml((r.username || '?')[0].toUpperCase())}</div>`}
       <div class="info">
         <div class="name">#${i+1} ${r.u ? escapeHtml(r.u.firstName + ' ' + r.u.lastName) : escapeHtml(r.username)} ${r.u ? roleBadgeHtml(r.u) : ''}</div>
         <div class="uname">@${escapeHtml(r.username)}</div>
@@ -4893,7 +4972,7 @@ async function loadStatusbookPage(){
     return `<div class="post-card">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-          <div class="avatar" style="cursor:pointer;margin-right:0;" onclick="viewProfile('${uname}')">${initials}</div>
+          <div style="cursor:pointer;margin-right:0;" onclick="viewProfile('${uname}')">${avatarHtml(u.firstName, u.lastName, u.profilePic, 'avatar')}</div>
           <div class="post-author" style="cursor:pointer;margin-bottom:0;" onclick="viewProfile('${uname}')">${displayNameWithNickname(u.firstName + ' ' + u.lastName, u.nickname)} ${roleBadgeHtml(u)}</div>
         </div>
         ${canDelete ? `<span title="Delete status" style="cursor:pointer;color:#d32f2f;font-size:16px;" onclick="deleteStatus('${uname}')">🗑</span>` : ''}
@@ -5398,7 +5477,7 @@ async function loadMyFriendsList(){
     const initials = ((u.firstName||'?')[0] + (u.lastName||'?')[0]).toUpperCase();
     const safeUname = uname.replace(/'/g,"\\'");
     return `<div class="user-result">
-      <div class="avatar" style="cursor:pointer;" onclick="viewProfile('${safeUname}')">${initials}</div>
+      <div style="cursor:pointer;" onclick="viewProfile('${safeUname}')">${avatarHtml(u.firstName, u.lastName, u.profilePic, 'avatar')}</div>
       <div class="info">
         <div class="name" style="cursor:pointer;" onclick="viewProfile('${safeUname}')">${displayNameWithNickname(u.firstName + ' ' + u.lastName, u.nickname)} ${roleBadgeHtml(u)}</div>
         <div class="uname">@${escapeHtml(u.username)}</div>
@@ -5462,7 +5541,7 @@ async function searchPeople(){
     }
     return `
       <div class="user-result">
-        <div class="avatar">${initials}</div>
+        ${avatarHtml(u.firstName, u.lastName, u.profilePic, 'avatar')}
         <div class="info">
           <div class="name" style="cursor:pointer;" onclick="viewProfile('${uname}')">${displayNameWithNickname(u.firstName + ' ' + u.lastName, u.nickname)} ${roleBadgeHtml(u)}</div>
           <div class="uname">@${escapeHtml(u.username)}</div>
@@ -5775,7 +5854,7 @@ async function loadFriendList(){
     let u = null;
     try { u = uRaw ? JSON.parse(uRaw) : null; } catch(e){}
     const status = await getPresenceStatus(f);
-    return { username: f, display: u ? (u.firstName + ' ' + u.lastName) : f, status };
+    return { username: f, display: u ? (u.firstName + ' ' + u.lastName) : f, status, user: u };
   }));
   listEl.innerHTML = items.map(f => {
     const initials = f.display.split(' ').map(s=>s[0]).join('').slice(0,2).toUpperCase();
@@ -5783,7 +5862,7 @@ async function loadFriendList(){
     const disp = f.display.replace(/'/g,"\\'");
     const isOnline = f.status === 'Online';
     return `<div class="friend-item" onclick="openChat('${uname}', '${disp}')">
-      <div class="avatar" style="cursor:pointer;" onclick="event.stopPropagation(); viewProfile('${uname}')">${initials}</div>
+      <div style="cursor:pointer;" onclick="event.stopPropagation(); viewProfile('${uname}')">${avatarHtml(f.user ? f.user.firstName : '', f.user ? f.user.lastName : '', f.user ? f.user.profilePic : null, 'avatar')}</div>
       <div><div class="friend-name" style="cursor:pointer;" onclick="event.stopPropagation(); viewProfile('${uname}')">${escapeHtml(f.display)}</div><div class="friend-status" style="color:${isOnline?'#25d366':'#999'};">${isOnline ? '● Online' : f.status}</div></div>
     </div>`;
   }).join('');
@@ -7199,7 +7278,7 @@ async function runSearch(){
     }
     resultsEl.innerHTML = matches.length ? matches.map(u => `
       <div class="user-result" style="cursor:pointer;" onclick="viewProfile('${u.username.replace(/'/g,"\\'")}')">
-        <div class="avatar">${escapeHtml((u.firstName||'?')[0].toUpperCase())}</div>
+        ${avatarHtml(u.firstName, u.lastName, u.profilePic, 'avatar')}
         <div class="info">
           <div class="name">${escapeHtml(u.firstName)} ${escapeHtml(u.lastName)} ${roleBadgeHtml(u)}</div>
           <div class="uname">@${escapeHtml(u.username)}</div>
@@ -7365,7 +7444,7 @@ function loadMenuPage(){
     { label: '🎧 Customer Service', page: 'supportPage' },
     { label: '⚙ Settings & Privacy', page: 'settingsPage' },
   ];
-  if (currentUser && (isAdminUser(currentUser) || isModeratorUser(currentUser))) items.push({ label: '⚙ Admin', page: 'adminPage' });
+  if (currentUser && (currentUserHasTrustedRole('admin') || currentUserHasTrustedRole('moderator'))) items.push({ label: '⚙ Admin', page: 'adminPage' });
   items.push({ label: 'Log Out', page: null, action: 'logout' });
 
   document.getElementById('menuButtonGrid').innerHTML = items.map(i => `
@@ -7435,11 +7514,23 @@ applySpecialGrantsOnce().then(restoreSession);
 function cmPrivacyKey(username){ return 'privacy:' + String(username || '').toLowerCase(); }
 async function cmLoadSettings(){
   if (!currentUser) return;
+  applyDarkModePreference();
+  const dm=document.getElementById('settingsDarkModeToggle');
+  if(dm) dm.checked=document.body.classList.contains('dark-mode');
   const defaults = { privateProfile:false, showOnline:true, messageRequests:false, notifMessages:true, notifSocial:true };
   let cfg = defaults;
   try { const raw = await storageGet(cmPrivacyKey(currentUser.username), true); if (raw) cfg = Object.assign(defaults, JSON.parse(raw)); } catch(e){}
   const map = { cmPrivateProfile:'privateProfile', cmShowOnline:'showOnline', cmMessageRequests:'messageRequests', cmNotifMessages:'notifMessages', cmNotifSocial:'notifSocial' };
   Object.keys(map).forEach(id => { const el=document.getElementById(id); if(el) el.checked=!!cfg[map[id]]; });
+  cmShowBlockedUsers();
+}
+function toggleDarkModeFromSettings(){
+  const el=document.getElementById('settingsDarkModeToggle');
+  const on=!!el?.checked;
+  document.body.classList.toggle('dark-mode',on);
+  try{ localStorage.setItem('darkMode',on?'1':'0'); }catch(e){}
+  const homeToggle=document.getElementById('darkModeToggle');
+  if(homeToggle) homeToggle.checked=on;
 }
 async function cmSavePrivacy(){
   if (!currentUser) return;
