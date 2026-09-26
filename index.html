@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="light">
 <title>Chat Me</title>
-<meta name="description" content="Chat Me is a free social chat app - message friends, join group chatrooms, share posts, and play fun games like Word Cross and Dice Duel against friends or AI.">
-<meta name="keywords" content="Chat Me, chat app, chat with friends, group chat, online chatroom, free chat app, chat games">
+<meta name="description" content="Chat Me is a free community app for live topic chatrooms, friends, Statusbook posts, and fun free-play games.">
+<meta name="keywords" content="Chat Me, Nigerian community, topic chatrooms, chat with friends, online chatroom, free chat app">
 <meta property="og:title" content="Chat Me">
 <meta property="og:description" content="Message friends, join group chats, share posts, and play games - all in one free chat app.">
 <meta property="og:type" content="website">
@@ -16,6 +16,8 @@
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' rx='40' fill='%232b6ee0'/%3E%3Cpath d='M62 60 Q48 60 48 74 L48 96 Q48 110 62 110 L70 110 L70 122 L86 110 L138 110 Q152 110 152 96 L152 74 Q152 60 138 60 Z' fill='white'/%3E%3Ccircle cx='75' cy='85' r='4' fill='%232b6ee0'/%3E%3Ccircle cx='100' cy='85' r='4' fill='%232b6ee0'/%3E%3Ccircle cx='125' cy='85' r='4' fill='%232b6ee0'/%3E%3C/svg%3E">
 <meta name="apple-mobile-web-app-title" content="Chat Me">
 <meta name="theme-color" content="#2b6ee0">
+<link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://www.google.com" crossorigin>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
   .room-tab-btn { flex: 1; background: #eee; border: none; padding: 8px 4px; border-radius: 6px; cursor: pointer; font-size: 12px; color: #444; }
@@ -277,12 +279,11 @@
 <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
 
 <style id="chatme-real-app-upgrades">
-  .cm-stories-strip{background:#fff;border:1px solid #e6e6e6;border-radius:12px;padding:10px;margin-bottom:12px;overflow-x:auto;overflow-y:hidden;white-space:nowrap;scrollbar-width:thin}
-  .cm-story{display:inline-flex;vertical-align:top;flex-direction:column;align-items:center;width:104px;margin-right:8px;cursor:pointer;flex:0 0 104px;box-sizing:border-box}
-  .cm-story-avatar{width:58px;height:58px;border-radius:50%;border:3px solid #e8622d;display:flex;align-items:center;justify-content:center;background:#eee;font-weight:700;overflow:hidden;flex:0 0 58px}
+  .cm-stories-strip{background:#fff;border:1px solid #e6e6e6;border-radius:12px;padding:10px;margin-bottom:12px;overflow-x:auto;white-space:nowrap}
+  .cm-story{display:inline-flex;vertical-align:top;flex-direction:column;align-items:center;width:76px;margin-right:8px;cursor:pointer}
+  .cm-story-avatar{width:54px;height:54px;border-radius:50%;border:3px solid #e8622d;display:flex;align-items:center;justify-content:center;background:#eee;font-weight:700;overflow:hidden}
   .cm-story-avatar img{width:100%;height:100%;object-fit:cover}
-  .cm-story-name{font-size:11px;margin-top:4px;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center}
-  .cm-story-preview{font-size:10px;color:#777;width:100%;margin-top:2px;white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;text-align:center;line-height:1.2;min-height:24px}
+  .cm-story-name{font-size:11px;margin-top:4px;max-width:72px;overflow:hidden;text-overflow:ellipsis}
   .cm-setting-card{background:#fff;border:1px solid #e5e5e5;border-radius:12px;padding:14px;margin-bottom:12px}
   .cm-setting-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #eee}
   .cm-setting-row:last-child{border-bottom:0}
@@ -296,7 +297,7 @@
 </head>
 <body>
 
-  <div class="loading-overlay" id="loadingOverlay">Working...</div>
+  <div class="loading-overlay" id="loadingOverlay" aria-live="polite"><span style="background:rgba(0,0,0,.72);padding:9px 14px;border-radius:8px;">Please wait…</span></div>
 
   <!-- ============ WELCOME ============ -->
   <div id="welcomeScreen">
@@ -313,14 +314,15 @@
     <div class="welcome-hero">
       <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><circle cx="22" cy="30" r="16" fill="#fff" opacity="0.9"/><circle cx="38" cy="30" r="16" fill="#fff" opacity="0.6"/><circle cx="30" cy="30" r="8" fill="#fff"/></svg>
       <div class="welcome-hero-brand">Chat Me</div>
-      <h1>Connect, chat, and share with your community</h1>
-      <p>Meet people, make friends, share updates, and enjoy conversations in one friendly social space.</p>
+      <h1>Find your people in live chatrooms</h1>
+      <p>Join topic-based conversations, meet new friends, share updates, and play free games in one friendly community.</p>
       <div class="welcome-stats" aria-label="Chat Me community statistics">
         <div class="welcome-stat"><strong id="welcomeRegisteredCount">—</strong><span>Registered people</span></div>
         <div class="welcome-stat"><strong>24/7</strong><span>Chat whenever you want</span></div>
         <div class="welcome-stat"><strong>Free</strong><span>To join and get started</span></div>
       </div>
       <button class="welcome-cta" onclick="showAuth('signup')">Join Chat Me</button>
+      <div style="font-size:13px;margin:-4px 0 16px;opacity:.96;">🎁 Invite 3 friends who sign up and get <strong>50 Coins</strong>.</div>
       <div class="switch-line">Already have an account? <a onclick="showAuth('login')">Log in</a></div>
     </div>
     <section class="welcome-section" aria-label="About Chat Me">
@@ -412,19 +414,23 @@
       <div class="field-block"><input type="email" id="suEmail" placeholder="Enter your email" oninput="clearFieldError('suEmail')"></div>
       <div class="field-msg" id="msgEmail"></div>
 
+      <div style="display:none">
       <label class="auth-label">First Name:</label>
       <div class="field-block"><input type="text" id="suFirst" placeholder="First name" oninput="clearFieldError('suFirst')"></div>
 
       <label class="auth-label">Last Name:</label>
       <div class="field-block"><input type="text" id="suLast" placeholder="Last name" oninput="clearFieldError('suLast')"></div>
+      </div>
 
+      <div style="display:none">
       <label class="auth-label">Phone Number:</label>
       <div class="field-block"><input type="tel" id="suPhone" placeholder="Phone number" oninput="clearFieldError('suPhone')"></div>
       <div class="field-msg" id="msgPhone"></div>
+      </div>
 
       <div class="section-divider">
-        <strong>Personal information</strong>
-        <span>Required for age verification and personalized content</span>
+        <strong>Quick setup</strong>
+        <span>Your date of birth is only used for age eligibility. You can complete your profile later.</span>
       </div>
 
       <label class="auth-label">Date of Birth:</label>
@@ -436,9 +442,12 @@
       <div class="auth-hint-small">You must be at least 13 years old. Your age will not be public.</div>
       <div class="field-msg" id="msgDob"></div>
 
+      <div style="display:none">
       <label class="auth-label">Country:</label>
       <div class="field-block"><input type="text" id="suCountry" placeholder="Enter your country" oninput="clearFieldError('suCountry')"></div>
+      </div>
 
+      <div style="display:none">
       <label class="auth-label">Gender:</label>
       <div class="field-block">
         <select id="suGender">
@@ -448,6 +457,7 @@
           <option value="Other">Other</option>
           <option value="Prefer not to say">Prefer not to say</option>
         </select>
+      </div>
       </div>
 
       <div class="section-divider">
@@ -527,6 +537,7 @@
       </div>
 
       <div id="cmStoriesStrip" class="cm-stories-strip"></div>
+      <div class="friends-banner" style="background:#eef6ff;border-color:#bfdcff;">💬 <strong>Live topic chatrooms</strong> — join a conversation and meet people around shared interests. <a onclick="switchTab('chatroomsPage')">Browse chatrooms</a><br><span style="font-size:12.5px;color:#555;">🎁 Invite 3 friends who sign up and earn 50 Coins.</span> <a onclick="showReferralInfo()">Invite friends</a></div>
       <div class="post-composer">
         <textarea id="postInput" placeholder="What's on your mind?"></textarea>
         <div class="composer-file-row">
@@ -551,34 +562,6 @@
       </div>
       <div id="friendsBanner"></div>
       <div id="postList"></div>
-    </div>
-
-    <div class="page" id="statusbookPage" style="padding:16px;overflow-y:auto;">
-      <div class="profile-card" style="max-width:650px;margin-bottom:14px;">
-        <h2 style="color:#2b3a8f;margin:0 0 6px;">📖 Statusbook</h2>
-        <div style="font-size:13px;color:#777;margin-bottom:10px;">Share a short status with your friends. Statuses disappear after 24 hours.</div>
-        <textarea id="statusBookInput" maxlength="300" placeholder="What's on your mind?" style="width:100%;min-height:90px;padding:10px;border:1px solid #ccc;border-radius:8px;box-sizing:border-box;resize:vertical;font-size:14px;"></textarea>
-        <div class="auth-error" id="statusBookError"></div>
-        <button onclick="submitStatusFromBook()" style="background:#2b6ee0;color:#fff;border:0;padding:9px 18px;border-radius:7px;cursor:pointer;font-weight:600;">Post Status</button>
-      </div>
-      <div id="statusbookList"></div>
-    </div>
-
-    <div class="page" id="settingsPage" style="padding:16px;overflow-y:auto;">
-      <h2 style="color:#2b3a8f;margin:0 0 12px;">⚙ Settings & Privacy</h2>
-      <div class="cm-setting-card">
-        <div class="cm-setting-row"><div><strong>🌙 Dark mode</strong><small>Use a darker appearance on this device.</small></div><input class="cm-switch" type="checkbox" id="darkModeToggleSettings" onchange="cmToggleSettingsDarkMode()"></div>
-        <div class="cm-setting-row"><div><strong>🔒 Private profile</strong><small>Limit profile visibility to people you know.</small></div><input class="cm-switch" type="checkbox" id="cmPrivateProfile" onchange="cmSavePrivacy()"></div>
-        <div class="cm-setting-row"><div><strong>🟢 Show online status</strong><small>Allow friends to see when you are online.</small></div><input class="cm-switch" type="checkbox" id="cmShowOnline" onchange="cmSavePrivacy()"></div>
-        <div class="cm-setting-row"><div><strong>💬 Message requests</strong><small>Allow message requests from people who are not friends.</small></div><input class="cm-switch" type="checkbox" id="cmMessageRequests" onchange="cmSavePrivacy()"></div>
-        <div class="cm-setting-row"><div><strong>🔔 Message notifications</strong><small>Receive notifications for new messages.</small></div><input class="cm-switch" type="checkbox" id="cmNotifMessages" onchange="cmSavePrivacy()"></div>
-        <div class="cm-setting-row"><div><strong>🔔 Social notifications</strong><small>Receive notifications for friend and social activity.</small></div><input class="cm-switch" type="checkbox" id="cmNotifSocial" onchange="cmSavePrivacy()"></div>
-      </div>
-      <div class="cm-setting-card">
-        <h3 style="margin:0 0 8px;">🚫 Blocked accounts</h3>
-        <div style="font-size:12.5px;color:#777;margin-bottom:8px;">Accounts you have blocked will not be able to interact with you normally.</div>
-        <div id="cmBlockedList"></div>
-      </div>
     </div>
 
     <div class="page" id="profilePage">
@@ -998,15 +981,7 @@ if (firebaseConfigLooksReal) {
     firebase.initializeApp(firebaseConfig);
     firebaseAuth = firebase.auth();
     firebaseDb = firebase.firestore();
-    // Regular accounts in this app are NOT Firebase accounts - only the
-    // owner/admin ever signs into Firebase Auth directly. So every visitor
-    // (including ordinary users) is also signed in anonymously here, purely
-    // so Firestore's rules can require "must be logged in" without locking
-    // everyone except the owner out. This doesn't change how people log
-    // into the app itself - it's invisible to them.
-    firebaseAuth.signInAnonymously().catch(e => {
-      console.warn('Anonymous sign-in failed - make sure "Anonymous" is enabled under Authentication > Sign-in method in Firebase console. Firestore reads/writes will fail until this succeeds.', e);
-    });
+    // SECURITY: anonymous Firebase sessions are disabled. Only real Firebase Auth identities may access cloud data.
   } catch (e) {
     console.warn('Firebase failed to initialize - admin email verification and cross-device sync are disabled for now.', e);
     firebaseAuth = null; firebaseDb = null;
@@ -1039,7 +1014,7 @@ function showLoading(on){ document.getElementById('loadingOverlay').style.displa
    Reachable straight from the welcome screen, no login needed, since the
    whole point is to recover from a state where login itself is broken. */
 async function wipeEverything(){
-  if (!currentUser || !currentUser.isOwner) { alert('Only the owner can do this.'); return; }
+  if (!currentUser || !currentUserHasTrustedRole('owner')) { alert('Only the trusted owner account can do this.'); return; }
   if (!confirm('This permanently deletes EVERY account, post, message and status - for everyone, not just you. There is no undo. Continue?')) return;
   if (!confirm('Really sure? Type OK to confirm you want to erase all data.')) return;
   showLoading(true);
@@ -1230,9 +1205,11 @@ async function storageGet(key){
       _cacheSet(key, val);
       return val;
     } catch (e) {
-      console.warn('Firestore read failed, using local cache for this read.', e);
+      console.error('SECURITY: Firestore read failed; refusing local fallback.', e);
+      throw e;
     }
   }
+  if (firebaseConfigLooksReal) throw new Error('Secure cloud storage is unavailable.');
   if (storageBackend === 'local') {
     try { return localStorage.getItem(key); } catch (e) { /* this one key failed - not the whole session, just fall through */ }
   }
@@ -1242,9 +1219,11 @@ async function storageSet(key, value){
   _cacheSet(key, value); // update immediately so the next read is instant, don't wait on the network for that
   if (firebaseDb) {
     try { await withTimeout(firebaseDb.collection('kv').doc(key).set({ value: value, updatedAt: Date.now() }), 3000); }
-    catch (e) { console.warn('Firestore write failed, saving locally only for now (will not sync to other devices).', e); }
+    catch (e) { console.error('SECURITY: Firestore write failed; refusing local-only save.', e); throw e; }
+  } else if (firebaseConfigLooksReal) {
+    throw new Error('Secure cloud storage is unavailable.');
   }
-  if (storageBackend === 'local') {
+  if (!firebaseConfigLooksReal && storageBackend === 'local') {
     try { localStorage.setItem(key, value); return { key, value }; }
     catch (e) { console.warn('This particular save was too large for local storage - keeping it in memory for this session only.', e); }
   }
@@ -1260,9 +1239,11 @@ async function storageListKeys(prefix){
         .get(), 3000);
       return snap.docs.map(d => d.id);
     } catch (e) {
-      console.warn('Firestore list failed, using local keys only.', e);
+      console.error('SECURITY: Firestore list failed; refusing local fallback.', e);
+      throw e;
     }
   }
+  if (firebaseConfigLooksReal) throw new Error('Secure cloud storage is unavailable.');
   if (storageBackend === 'local') {
     try { return Object.keys(localStorage).filter(k => k.startsWith(prefix)); } catch (e) { /* fall through */ }
   }
@@ -1399,12 +1380,9 @@ async function doSignup(){
     markFieldError('suEmail', 'msgEmail', 'Enter a valid email address.');
     firstErrorField = firstErrorField || 'suEmail';
   }
-  if (!first) { markFieldError('suFirst'); firstErrorField = firstErrorField || 'suFirst'; }
-  if (!last) { markFieldError('suLast'); firstErrorField = firstErrorField || 'suLast'; }
-  if (!/^[\d+\-\s()]{7,}$/.test(phone)) {
-    markFieldError('suPhone', 'msgPhone', 'Enter a valid phone number.');
-    firstErrorField = firstErrorField || 'suPhone';
-  }
+  // First/last name, phone, country and gender are optional profile fields.
+  // Keeping them out of the initial signup makes registration much shorter.
+
   let age = null;
   if (!month || !day || !year) {
     markFieldError('suMonth'); markFieldError('suDay'); markFieldError('suYear');
@@ -1422,8 +1400,7 @@ async function doSignup(){
       age = null;
     }
   }
-  if (!country) { markFieldError('suCountry'); firstErrorField = firstErrorField || 'suCountry'; }
-  if (!gender) { markFieldError('suGender'); firstErrorField = firstErrorField || 'suGender'; }
+
 
   const pwRulesOk = checkPasswordRules();
   if (!pwRulesOk) {
@@ -1469,17 +1446,20 @@ async function doSignup(){
       return;
     }
 
-    const salt = randomSalt();
-    const passwordHash = await sha256Hex(salt + password);
+    if (!firebaseAuth || !firebaseDb || !firebaseConfigLooksReal) { errEl.textContent = 'Secure account creation is unavailable right now.'; return; }
+    let firebaseCredential;
+    try { firebaseCredential = await withTimeout(firebaseAuth.createUserWithEmailAndPassword(email, password), 8000); }
+    catch (e) { errEl.textContent = e.code === 'auth/email-already-in-use' ? 'An account with this email already exists.' : 'Secure account creation failed. Please try again.'; return; }
+    const uid = firebaseCredential.user.uid;
     // Owner status is tied to ONE specific email address, not a name - a name is
     // public (visible in the app itself) and anyone could sign up claiming it.
     // An email can only ever belong to one account, since signup above already
     // blocks duplicate emails.
     const isOwner = (email.trim().toLowerCase() === OWNER_EMAIL);
     const user = {
-      username, email, firstName: first, lastName: last, phone,
+      username, email, firstName: first || '', lastName: last || '', phone: phone || '',
       dob: `${year}-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`,
-      country, gender, salt, passwordHash,
+      country: country || '', gender: gender || '', uid,
       leos: isOwner ? 70000.00 : 20.00, isOwner, isAdmin: isOwner, isModerator: false,
       verified: isOwner, profileLocked: false,
       createdAt: Date.now()
@@ -1536,6 +1516,8 @@ async function doSignup(){
 
     statusEl.textContent = 'Account created! Logging you in...';
     try {
+      const trustedClaimsAfterSignup = await refreshTrustedAuthClaims();
+      applyTrustedClaimsToUser(user, trustedClaimsAfterSignup);
       await loginSuccess(publicUser(user));
     } catch (loginErr) {
       statusEl.textContent = '';
@@ -1553,7 +1535,7 @@ async function doSignup(){
 }
 
 function publicUser(user){
-  const { salt, passwordHash, ...pub } = user;
+  const { salt, passwordHash, pendingResetCode, pendingResetCodeAt, ...pub } = user;
   if (typeof pub.leos !== 'number') pub.leos = 20.00; // accounts created before Coins existed
   return pub;
 }
@@ -1805,86 +1787,72 @@ async function unfriendUser(username){
    identical to the security rules. Never blocks login/signup if it fails -
    it just quietly retries next time (the account stays "anonymous" to
    Firestore in the meantime, same as before this existed). */
-async function ensureFirebaseSession(email, password){
-  if (!firebaseAuth) return;
+async function requireFirebaseUser(){
+  if (!firebaseAuth || !firebaseDb || !firebaseConfigLooksReal) throw new Error('Secure Firebase Authentication is not configured.');
+  const u = firebaseAuth.currentUser;
+  if (!u || u.isAnonymous) throw new Error('A secure signed-in Firebase account is required.');
+  return u;
+}
+async function isTrustedStaff(){
   try {
-    await withTimeout(firebaseAuth.signInWithEmailAndPassword(email, password), 5000);
+    const u = await requireFirebaseUser();
+    const token = await u.getIdTokenResult(true);
+    return !!(token.claims.admin || token.claims.owner || token.claims.moderator);
+  } catch(e) { return false; }
+}
+
+async function ensureFirebaseSession(email, password){
+  if (!firebaseAuth) throw new Error('Secure Firebase Authentication is unavailable.');
+  return withTimeout(firebaseAuth.signInWithEmailAndPassword(email, password), 7000);
+}
+
+async function refreshTrustedAuthClaims(){
+  if (!firebaseAuth || !firebaseAuth.currentUser) return {admin:false, moderator:false, owner:false};
+  try {
+    const token = await firebaseAuth.currentUser.getIdTokenResult(true);
+    const claims = token.claims || {};
+    return {
+      admin: claims.admin === true,
+      moderator: claims.moderator === true,
+      owner: claims.owner === true
+    };
   } catch (e) {
-    if (e.code === 'auth/user-not-found') {
-      try { await withTimeout(firebaseAuth.createUserWithEmailAndPassword(email, password), 5000); }
-      catch (createErr) { console.warn('Could not create a Firebase identity for this account yet - it will stay anonymous to Firestore for now.', createErr); }
-    } else {
-      // Most commonly auth/wrong-password: the local password and the Firebase
-      // password have drifted apart (e.g. this account existed before this
-      // feature, or its password changed while Firebase was unreachable).
-      // There's no way to fix that without the OLD Firebase password, so this
-      // quietly leaves it as-is; it self-heals next time this account's
-      // password is changed through the app (see saveNewPassword).
-      console.warn('Could not establish a real Firebase session for this account - it will stay anonymous to Firestore for now.', e);
-    }
+    return {admin:false, moderator:false, owner:false};
   }
+}
+function currentUserHasTrustedRole(role){
+  if (!currentUser) return false;
+  if (role === 'owner') return currentUser._trustedOwner === true;
+  if (role === 'admin') return currentUser._trustedAdmin === true || currentUser._trustedOwner === true;
+  if (role === 'moderator') return currentUser._trustedModerator === true || currentUser._trustedAdmin === true || currentUser._trustedOwner === true;
+  return false;
+}
+function applyTrustedClaimsToUser(user, claims){
+  if (!user) return user;
+  user._trustedAdmin = claims.admin === true;
+  user._trustedModerator = claims.moderator === true;
+  user._trustedOwner = claims.owner === true;
+  // These are session-only authorization flags. They are intentionally never
+  // written back to Firestore and cannot be created by editing profile data.
+  return user;
 }
 
 async function handleAdminBackendAuth(user, password){
-  if (!isAdminUser(user)) return { proceed: true };
-  if (!firebaseAuth) return { proceed: true }; // not configured yet - don't block admins from getting in
-
+  // Never authorize staff from the profile document. The browser only accepts
+  // Firebase custom claims as the source of truth for privileged roles.
+  if (!user) return { proceed:false, message:'Secure account information is missing.' };
+  if (!firebaseAuth || !firebaseConfigLooksReal) return { proceed:false, message:'Secure Firebase Authentication is not available. Admin login is disabled.' };
   try {
-    await withTimeout(firebaseAuth.signInWithEmailAndPassword(user.email, password), 5000);
+    await withTimeout(firebaseAuth.signInWithEmailAndPassword(user.email, password), 7000);
     const fbUser = firebaseAuth.currentUser;
-    if (!fbUser.emailVerified) {
-      // Don't hard-block on this - a lot can go wrong between "email sent"
-      // and "link actually clicked" (spam folder, wrong inbox, etc.), and
-      // locking the one admin account out entirely over it causes more harm
-      // than the extra check is worth. Let them in, just note it.
-      console.warn('Admin email is not verified yet, but proceeding anyway so you are never locked out of your own account.');
+    if (!fbUser || fbUser.isAnonymous) return { proceed:false, message:'Secure Firebase identity could not be established.' };
+    const trusted = await refreshTrustedAuthClaims();
+    if (!(trusted.admin || trusted.owner || trusted.moderator)) {
+      return { proceed:false, message:'Your Firebase account is not authorized for staff access.' };
     }
-    return { proceed: true };
-  } catch (e) {
-    // The firebaseConfig above still has placeholder values (or is otherwise
-    // misconfigured) - treat that as "not set up yet" instead of locking
-    // admins out entirely. Once real Firebase credentials are pasted in,
-    // this branch stops firing and the real checks below take over.
-    const unconfigured = e.code === 'auth/invalid-api-key'
-      || e.code === 'auth/configuration-not-found'
-      || (e.code && e.code.indexOf('api-key-not-valid') !== -1)
-      || (e.message && e.message.indexOf('api-key-not-valid') !== -1);
-    if (unconfigured) {
-      console.warn('Firebase looks unconfigured (placeholder credentials in firebaseConfig) - skipping secure admin check for now.', e);
-      return { proceed: true };
-    }
-    if (e.code === 'auth/user-not-found') {
-      try {
-        const cred = await withTimeout(firebaseAuth.createUserWithEmailAndPassword(user.email, password), 5000);
-        cred.user.sendEmailVerification().catch(()=>{}); // best-effort, never blocks login
-        return { proceed: true };
-      } catch (createErr) {
-        // Even if this fails, don't lock the admin out - just skip the extra
-        // Firebase identity for now (same as if Firebase weren't configured).
-        console.warn('Could not set up the secure admin Firebase identity - continuing with local login only for now.', createErr);
-        return { proceed: true };
-      }
-    }
-    if (e.code === 'auth/wrong-password' || e.code === 'auth/invalid-credential') {
-      // The local password (already verified above, before this function ran)
-      // and the separate Firebase password have drifted apart. Don't lock the
-      // admin out over that mismatch - proceed on the local check, and try to
-      // quietly re-sync Firebase's copy in the background using the password
-      // that was just proven correct locally.
-      console.warn('Admin local password and Firebase password do not match - proceeding on the local check and attempting to resync Firebase in the background.');
-      ensureFirebaseSession(user.email, password);
-      return { proceed: true };
-    }
-    if (e.code === 'auth/too-many-requests') {
-      // Don't block on this either - it just means Firebase's OWN side is
-      // rate-limited from the many attempts during setup/testing. The local
-      // password check already succeeded before this function ran, so let
-      // that be enough; the real Firebase identity can sync again later.
-      console.warn('Firebase is rate-limiting this account right now - proceeding on the local login check only for now.', e);
-      return { proceed: true };
-    }
-    console.warn('Secure admin Firebase check failed - proceeding on the local login check only for now.', e);
-    return { proceed: true };
+    return { proceed:true };
+  } catch(e) {
+    return { proceed:false, message: e.code === 'auth/too-many-requests' ? 'Too many login attempts. Please wait and try again.' : 'Secure Firebase authentication failed.' };
   }
 }
 
@@ -1927,32 +1895,23 @@ async function doLogin(){
   loginBtn.textContent = 'Logging in...';
   showLoading(true);
   try {
+    if (!firebaseAuth || !firebaseDb || !firebaseConfigLooksReal) { errEl.textContent='Secure Firebase Authentication is unavailable. Please try again later.'; refreshCaptcha('login'); return; }
+    let fbUser;
+    try { fbUser = await ensureFirebaseSession(email,password); }
+    catch(e) { errEl.textContent = e.code==='auth/too-many-requests' ? 'Too many login attempts. Please wait and try again.' : 'Invalid email or password.'; refreshCaptcha('login'); return; }
     const raw = await storageGet(userKey(email), true);
-    if (!raw) {
-      errEl.textContent = 'Invalid email or password.';
-      refreshCaptcha('login');
-      return;
-    }
+    if (!raw) { errEl.textContent='Your Firebase account exists, but your Chat Me profile could not be found. Please contact support.'; refreshCaptcha('login'); return; }
     const user = JSON.parse(raw);
-    const hash = await sha256Hex(user.salt + password);
-    if (hash !== user.passwordHash) {
-      errEl.textContent = 'Invalid email or password.';
-      refreshCaptcha('login');
-      return;
-    }
-
-    if (isAdminUser(user)) {
-      statusEl.textContent = 'Verifying secure admin login...';
-      const backendRes = await handleAdminBackendAuth(user, password);
-      if (!backendRes.proceed) {
-        statusEl.textContent = '';
-        errEl.innerHTML = escapeHtml(backendRes.message) + (backendRes.showResend
-          ? ' <a onclick="resendVerificationEmail()" style="cursor:pointer;text-decoration:underline;color:#2b6ee0;">Resend email</a>' : '');
-        refreshCaptcha('login');
-        return;
-      }
-    } else {
-      await ensureFirebaseSession(user.email, password);
+    if (user.uid && user.uid !== fbUser.user.uid) { errEl.textContent='This account is linked to a different secure identity.'; await firebaseAuth.signOut(); refreshCaptcha('login'); return; }
+    user.uid = fbUser.user.uid;
+    delete user.salt; delete user.passwordHash; delete user.pendingResetCode; delete user.pendingResetCodeAt;
+    await storageSet(userKey(email), JSON.stringify(user), true);
+    const trustedClaims = await refreshTrustedAuthClaims();
+    applyTrustedClaimsToUser(user, trustedClaims);
+    // A profile document can say 'admin', but that value is untrusted client data.
+    // It never grants staff access. Only Firebase custom claims do.
+    if ((user.isAdmin || user.isModerator || user.isOwner) && !(trustedClaims.admin || trustedClaims.moderator || trustedClaims.owner)) {
+      console.warn('This profile has a staff flag but no trusted Firebase staff claim. Staff privileges are disabled for this session.');
     }
 
     statusEl.textContent = 'Logged in! Loading your account...';
@@ -1971,101 +1930,34 @@ async function doLogin(){
   }
 }
 
-/* ---------------- FORGOT PASSWORD (email-code reset) ----------------
-   Real SMTP sending isn't possible from a static page with no backend, so
-   this opens a mailto: draft addressed to the account's own email with the
-   code already filled in - you still hit send in your own mail app, but
-   the code only ever goes to the email already on file for that account. */
-const RESET_CODE_EXPIRY_MS = 30 * 60 * 1000;
-
+/* ---------------- FORGOT PASSWORD ----------------
+   Firebase Authentication handles password recovery. No reset codes are stored in Firestore.
+*/
 function forgotPassword(){
-  document.getElementById('forgotPasswordPanel').style.display = 'block';
-  document.getElementById('fpStep1').style.display = 'block';
-  document.getElementById('fpStep2').style.display = 'none';
-  document.getElementById('fpError').textContent = '';
-  document.getElementById('fpStatus').textContent = '';
-  document.getElementById('fpEmail').value = document.getElementById('loginEmail').value.trim();
+  document.getElementById('forgotPasswordPanel').style.display='block';
+  document.getElementById('fpStep1').style.display='block';
+  document.getElementById('fpStep2').style.display='none';
+  document.getElementById('fpError').textContent='';
+  document.getElementById('fpStatus').textContent='';
+  document.getElementById('fpEmail').value=document.getElementById('loginEmail').value.trim();
 }
-
 function cancelForgotPassword(){
-  document.getElementById('forgotPasswordPanel').style.display = 'none';
-  document.getElementById('fpError').textContent = '';
-  document.getElementById('fpStatus').textContent = '';
+  document.getElementById('forgotPasswordPanel').style.display='none';
+  document.getElementById('fpError').textContent='';
+  document.getElementById('fpStatus').textContent='';
 }
-
 async function sendPasswordResetCode(){
-  const errEl = document.getElementById('fpError');
-  const statusEl = document.getElementById('fpStatus');
-  errEl.textContent = ''; statusEl.textContent = '';
-  const email = document.getElementById('fpEmail').value.trim();
-  if (!email) { errEl.textContent = 'Enter your account email.'; return; }
-
-  const raw = await storageGet(userKey(email), true);
-  if (!raw) { errEl.textContent = 'No account found with that email.'; return; }
-  let u; try { u = JSON.parse(raw); } catch(e) { errEl.textContent = 'Something went wrong.'; return; }
-
-  const code = String(Math.floor(100000 + Math.random() * 900000));
-  u.pendingResetCode = code;
-  u.pendingResetCodeAt = Date.now();
-  await storageSet(userKey(email), JSON.stringify(u), true);
-
-  const subject = encodeURIComponent('Your Chat Me password reset code');
-  const body = encodeURIComponent('Your password reset code for Chat Me is: ' + code + '\n\nEnter this code in the app to set a new password. This code expires in 30 minutes. If you did not request this, you can ignore this email.');
-  window.open('mailto:' + encodeURIComponent(u.email) + '?subject=' + subject + '&body=' + body, '_blank');
-
-  document.getElementById('fpResetEmail').value = email;
-  statusEl.textContent = 'A reset code has been prepared for ' + u.email + ' — check the email draft that just opened (or send it, then check your inbox), then enter the code below. It expires in 30 minutes.';
-  document.getElementById('fpStep1').style.display = 'none';
-  document.getElementById('fpStep2').style.display = 'block';
+  const err=document.getElementById('fpError'), status=document.getElementById('fpStatus');
+  err.textContent=''; status.textContent='';
+  const email=document.getElementById('fpEmail').value.trim().toLowerCase();
+  if(!email){err.textContent='Enter your account email.';return;}
+  if(!firebaseAuth){err.textContent='Secure password recovery is unavailable right now.';return;}
+  try{ await withTimeout(firebaseAuth.sendPasswordResetEmail(email),8000); }catch(e){}
+  status.textContent='If an account exists for that email, Firebase has sent a secure password-reset email. Check your inbox.';
+  document.getElementById('fpStep2').style.display='none';
 }
-
 async function resetPasswordWithCode(){
-  const errEl = document.getElementById('fpError');
-  const statusEl = document.getElementById('fpStatus');
-  errEl.textContent = ''; statusEl.textContent = '';
-  const email = document.getElementById('fpResetEmail').value;
-  const code = document.getElementById('fpCode').value.trim();
-  const newPw = document.getElementById('fpNewPassword').value;
-  const newPwConfirm = document.getElementById('fpNewPasswordConfirm').value;
-
-  const raw = await storageGet(userKey(email), true);
-  if (!raw) { errEl.textContent = 'Account not found.'; return; }
-  let u; try { u = JSON.parse(raw); } catch(e) { errEl.textContent = 'Something went wrong.'; return; }
-
-  if (!u.pendingResetCode) { errEl.textContent = 'No reset in progress for this account. Please start again.'; return; }
-  if (Date.now() - (u.pendingResetCodeAt || 0) > RESET_CODE_EXPIRY_MS) {
-    delete u.pendingResetCode; delete u.pendingResetCodeAt;
-    await storageSet(userKey(email), JSON.stringify(u), true);
-    errEl.textContent = 'That code expired. Please request a new one.';
-    document.getElementById('fpStep1').style.display = 'block';
-    document.getElementById('fpStep2').style.display = 'none';
-    return;
-  }
-  if (code !== u.pendingResetCode) { errEl.textContent = 'That code does not match.'; return; }
-  if (!newPw || newPw.length < 8) { errEl.textContent = 'Choose a new password of at least 8 characters.'; return; }
-  if (newPw !== newPwConfirm) { errEl.textContent = 'Passwords do not match.'; return; }
-
-  const salt = randomSalt();
-  u.salt = salt;
-  u.passwordHash = await sha256Hex(salt + newPw);
-  u.lastPasswordChangeAt = Date.now();
-  delete u.pendingResetCode;
-  delete u.pendingResetCodeAt;
-  await storageSet(userKey(email), JSON.stringify(u), true);
-
-  // Best-effort: this only actually syncs Firebase's side if that account
-  // never had a Firebase identity yet (nothing to conflict with). If it did
-  // and the old Firebase password isn't known here, this can't fix that
-  // drift - it'll fall back to anonymous Firestore access until the next
-  // successful change through "Change Password" while logged in.
-  if (!isAdminUser(u)) ensureFirebaseSession(email, newPw);
-
-  statusEl.textContent = 'Password reset! You can log in with your new password now.';
-  document.getElementById('loginEmail').value = email;
-  document.getElementById('fpCode').value = '';
-  document.getElementById('fpNewPassword').value = '';
-  document.getElementById('fpNewPasswordConfirm').value = '';
-  setTimeout(cancelForgotPassword, 1800);
+  document.getElementById('fpError').textContent='Password reset is handled by the secure Firebase email link. Please use that link.';
 }
 
 /* ---------------- SESSION ---------------- */
@@ -2186,7 +2078,12 @@ async function loginSuccess(user){
     updateOnlineDisplay();
     }, 6000);
 
-  const savedTab = await storageGet(lastTabKey(user.username));
+  let savedTab = null;
+  try {
+    const hashTab = decodeURIComponent(String(window.location.hash || '').replace(/^#/, ''));
+    if (hashTab && document.getElementById(hashTab)) savedTab = hashTab;
+  } catch (e) {}
+  if (!savedTab) savedTab = await storageGet(lastTabKey(user.username));
   switchTab(savedTab || 'homePage');
 }
 
@@ -2226,7 +2123,7 @@ window.addEventListener('beforeunload', () => {
 });
 
 /* ---------------- RULES & REGULATIONS ---------------- */
-const REFERRAL_MILESTONES = [ { count: 5, reward: 10 }, { count: 10, reward: 15 } ];
+const REFERRAL_MILESTONES = [ { count: 3, reward: 50 } ];
 
 async function showReferralInfo(){
   const link = window.location.origin + window.location.pathname + '?ref=' + encodeURIComponent(currentUser.username);
@@ -2258,7 +2155,7 @@ async function showReferralInfo(){
 
   const toNextMilestone = REFERRAL_MILESTONES.find(m => m.count > count);
   const nextText = toNextMilestone ? `${toNextMilestone.count - count} more to earn ${toNextMilestone.reward} Coins` : "You've reached every referral milestone!";
-  const msg = `Share your link to invite friends!\n\n${link}\n\nOnly people who actually sign up with your link count.\n5 referrals = 10 Coins. 10 referrals = 15 Coins.\n\nYou've invited ${count} so far. ${nextText}`;
+  const msg = `Share your link to invite friends!\n\n${link}\n\nOnly people who actually sign up with your link count.\n3 referrals = 50 Coins.\n\nYou've invited ${count} so far. ${nextText}`;
   if (navigator.share) {
     navigator.share({ title: 'Join me on Chat Me', text: 'Join me on Chat Me!', url: link }).catch(() => {});
   } else {
@@ -2451,9 +2348,16 @@ function toggleDarkMode(){
 }
 
 /* ---------------- TAB SWITCHING ---------------- */
-function switchTab(pageId){
+function switchTab(pageId, fromHistory=false){
   if (!currentUser) return;
   storageSet(lastTabKey(currentUser.username), pageId);
+  try {
+    const targetHash = '#' + encodeURIComponent(pageId);
+    if (window.location.hash !== targetHash) {
+      if (fromHistory) history.replaceState(null, '', targetHash);
+      else history.replaceState(null, '', targetHash);
+    }
+  } catch (e) {}
   document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
   const navEl = document.querySelector(`.nav-item[data-page="${pageId}"]`);
   if (navEl) navEl.classList.add('active');
@@ -2489,6 +2393,12 @@ function switchTab(pageId){
   if (pageId === 'settingsPage') cmLoadSettings();
 }
 
+window.addEventListener('hashchange', function(){
+  if (!currentUser) return;
+  const id = decodeURIComponent(String(window.location.hash || '').replace(/^#/, ''));
+  if (id && document.getElementById(id)) switchTab(id, true);
+});
+
 /* ---------------- ADMIN (owner only) ---------------- */
 async function loadAdminPage(){
   if (!currentUser || !(isAdminUser(currentUser) || isModeratorUser(currentUser))) {
@@ -2496,7 +2406,7 @@ async function loadAdminPage(){
     switchTab('homePage');
     return;
   }
-  const iAmOwner = !!currentUser.isOwner;
+  const iAmOwner = currentUserHasTrustedRole('owner');
   const iAmAdmin = isAdminUser(currentUser); // owner or admin
   const iAmModerator = isModeratorUser(currentUser) && !iAmAdmin; // pure moderator, not also admin/owner
   const userKeys = await storageListKeys('user:', true);
@@ -2670,6 +2580,19 @@ async function loadAdminPage(){
       </div>`).join('') : '<div class="empty-feed">No pending purchases.</div>'}
   `;
 
+  /* ---- System notifications (staff only) ---- */
+  const systemNotificationSection = (iAmAdmin || iAmModerator) ? `
+    <div class="section-divider"><strong>🔔 Send System Notification</strong><span>Send a notification to one user or to everyone.</span></div>
+    <div style="margin-bottom:10px;max-width:560px;">
+      <input type="text" id="systemNotifUsername" placeholder="Username, or ALL" style="padding:8px 10px;border:1px solid #ccc;border-radius:6px;font-size:13px;margin-right:6px;margin-bottom:6px;">
+      <input type="text" id="systemNotifTitle" placeholder="Notification title" maxlength="80" style="padding:8px 10px;border:1px solid #ccc;border-radius:6px;font-size:13px;margin-right:6px;margin-bottom:6px;">
+      <textarea id="systemNotifMessage" placeholder="Write the notification..." maxlength="500" style="width:100%;min-height:70px;padding:8px 10px;border:1px solid #ccc;border-radius:6px;font-size:13px;box-sizing:border-box;margin-bottom:6px;"></textarea>
+      <button onclick="sendSystemNotificationFromAdmin()" style="background:#2b6ee0;color:#fff;border:none;padding:9px 18px;border-radius:6px;cursor:pointer;font-weight:600;">Send Notification</button>
+      <div class="auth-error" id="systemNotifError"></div>
+      <div class="auth-status" id="systemNotifStatus"></div>
+    </div>
+  ` : '';
+
   /* ---- Give Coins (any admin can act) ---- */
   const giveCoinsSection = `
     <div class="section-divider"><strong>Give Coins</strong><span>Type a username and an amount to add to their balance.</span></div>
@@ -2724,7 +2647,7 @@ async function loadAdminPage(){
   ` : '';
 
   document.getElementById('adminUserList').innerHTML = verifySection + unverifySection + leaderboardSection + banSection + reportsSection
-    + (iAmAdmin ? (adminSection + moderatorsSection + purchaseSection + giveCoinsSection + deleteSection + dangerSection) : '');
+    + (iAmAdmin ? (adminSection + moderatorsSection + purchaseSection + systemNotificationSection + giveCoinsSection + deleteSection + dangerSection) : '');
 }
 
 async function giveCoins(username, amountStr){
@@ -3069,7 +2992,7 @@ async function countAdmins(){
    this opens a mailto: draft addressed to that email with the code already
    filled in - the owner still has to hit send in their own mail app. */
 async function sendAdminVerification(username, email){
-  if (!currentUser || !currentUser.isOwner) { alert('Only the owner can choose admins.'); return; }
+  if (!currentUser || !currentUserHasTrustedRole('owner')) { alert('Only the trusted owner can choose admins.'); return; }
   username = (username || '').trim();
   email = (email || '').trim();
   if (!username || !email) { alert('Enter both a username and an email.'); return; }
@@ -3101,7 +3024,7 @@ async function sendAdminVerification(username, email){
 /* Step 2: the code from that email is entered back in the app to finish
    granting admin access. */
 async function confirmAdminCode(username, codeInput){
-  if (!currentUser || !currentUser.isOwner) { alert('Only the owner can choose admins.'); return; }
+  if (!currentUser || !currentUserHasTrustedRole('owner')) { alert('Only the trusted owner can choose admins.'); return; }
   const uEmail = await storageGet(usernameKey(username), true);
   if (!uEmail) return;
   const raw = await storageGet(userKey(uEmail), true);
@@ -3120,7 +3043,7 @@ async function confirmAdminCode(username, codeInput){
 }
 
 async function demoteAdmin(username){
-  if (!currentUser || !currentUser.isOwner) { alert('Only the owner can remove admins.'); return; }
+  if (!currentUser || !currentUserHasTrustedRole('owner')) { alert('Only the trusted owner can remove admins.'); return; }
   const email = await storageGet(usernameKey(username), true);
   if (!email) return;
   const raw = await storageGet(userKey(email), true);
@@ -3926,7 +3849,11 @@ function timeAgo(ts){
 const VERIFIED_COINS_THRESHOLD = 10000;
 const MAX_ADMINS = 2;
 const MAX_MODERATORS = 3;
-function isModeratorUser(u){ return !!(u && u.isModerator); }
+function isModeratorUser(u){
+  if (!u) return false;
+  if (currentUser && u === currentUser) return currentUserHasTrustedRole('moderator');
+  return !!u.isModerator;
+}
 
 /* ====== COINS PURCHASE SETUP ======
    Fill in YOUR real payment details below (bank transfer, or a mobile money /
@@ -3966,7 +3893,11 @@ function roleBadgeHtml(u){
   if (u.verified) return '<span title="Verified">\uD83C\uDF10</span>';
   return '';
 }
-function isAdminUser(u){ return !!(u && (u.isOwner || u.isAdmin)); }
+function isAdminUser(u){
+  if (!u) return false;
+  if (currentUser && u === currentUser) return currentUserHasTrustedRole('admin');
+  return !!(u.isOwner || u.isAdmin);
+}
 const POST_COLORS = {
   blue: '#2b6ee0', orange: '#e8622d', black: '#222222',
   green: '#1a8a3c', red: '#d32f2f', purple: '#6a4fb8'
@@ -4308,7 +4239,7 @@ async function deletePost(postId){
   const raw = await storageGet(key, true);
   if (!raw) return;
   let p; try { p = JSON.parse(raw); } catch (e) { return; }
-  if (!currentUser || (currentUser.username !== p.author && !currentUser.isOwner)) {
+  if (!currentUser || (currentUser.username !== p.author && !currentUserHasTrustedRole('owner'))) {
     alert('Only the person who posted this, or the site owner, can delete it.');
     return;
   }
@@ -4419,9 +4350,9 @@ const SHOP_CATALOG = {
     {id:'starGift',label:'Star Gift',price:1600,emoji:'🌟'},{id:'fireGift',label:'Fire Gift',price:1850,emoji:'🔥'},{id:'unicorn',label:'Unicorn',price:2200,emoji:'🦄'},{id:'galaxyGift',label:'Galaxy Gift',price:2800,emoji:'🌌'}
   ],
   badges: [
-    {id:'legend',label:'Legend',price:550,emoji:'🏆'},{id:'vip',label:'VIP',price:750,emoji:'💎'},{id:'creator',label:'Creator',price:900,emoji:'🎨'},
-    {id:'star',label:'Star',price:1050,emoji:'⭐'},{id:'royal',label:'Royal',price:1250,emoji:'👑'},{id:'elite',label:'Elite',price:1450,emoji:'⚡'},
-    {id:'diamondBadge',label:'Diamond',price:1700,emoji:'💠'},{id:'champion',label:'Champion',price:1950,emoji:'🥇'},{id:'master',label:'Master',price:2300,emoji:'🛡️'},{id:'ultimateBadge',label:'Ultimate',price:3000,emoji:'🌟'}
+    {id:'legend',label:'Legend',price:7000,emoji:'🏆'},{id:'vip',label:'VIP',price:8500,emoji:'💎'},{id:'creator',label:'Creator',price:10000,emoji:'🎨'},
+    {id:'star',label:'Star',price:11500,emoji:'⭐'},{id:'royal',label:'Royal',price:13000,emoji:'👑'},{id:'elite',label:'Elite',price:14500,emoji:'⚡'},
+    {id:'diamondBadge',label:'Diamond',price:16000,emoji:'💠'},{id:'champion',label:'Champion',price:17500,emoji:'🥇'},{id:'master',label:'Master',price:19000,emoji:'🛡️'},{id:'ultimateBadge',label:'Ultimate',price:20000,emoji:'🌟'}
   ]
 };
 const SHOP_FIXED_PRICES = { featuredProfile:850, profileMusic:950, privateRoom:1250, groupBackground:1100, pinMessage:650 };
@@ -4457,6 +4388,10 @@ async function buyShopItem(category, itemId){
   if (!item) return;
   const u = await loadCurrentUserFull();
   if (!u) return;
+  if (category === 'badges' && !u.verified) {
+    alert('Only verified users can buy badges. Reach 10,000 Coins and complete verification first.');
+    return;
+  }
   // Map category -> the exact field name used on the user record.
   const fieldMap = { themes: 'ownedThemes', frames: 'ownedFrames', nameEffects: 'ownedNameEffects', stickers: 'ownedStickerPacks', chatThemes: 'ownedChatThemes', gifts: 'ownedGifts', badges: 'ownedBadges' };
   const field = fieldMap[category];
@@ -4611,11 +4546,13 @@ async function loadShopPage(){
         `<div style="font-size:11px;color:#777;margin-bottom:5px;">Owned: ${ownedCount}</div><button onclick="buyShopItem('gifts','${g.id}')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`);
     }).join(''));
 
-  html += section('🏆 Special Badges', 'A purchasable badge shown on your achievements (550-3,000 Coins).',
+  html += section('🏆 Special Badges', 'Verified users only. Badge prices range from 7,000 to 20,000 Coins.',
     SHOP_CATALOG.badges.map(b => {
       const owned = (u.ownedBadges || []).includes(b.id);
-      return itemCard(b.label, b.price + ' Coins', `<div style="font-size:28px;">${b.emoji}</div>`,
+      const locked = !u.verified;
+      return itemCard(b.label, b.price.toLocaleString() + ' Coins', `<div style="font-size:28px;">${b.emoji}</div>`,
         owned ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Owned</button>`
+        : locked ? `<button disabled style="background:#aaa;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">🔒 Verified only</button>`
         : `<button onclick="buyShopItem('badges','${b.id}')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`);
     }).join(''));
 
@@ -4664,7 +4601,7 @@ async function loadProfile(){
           <input type="checkbox" id="lockToggle" ${u.profileLocked ? 'checked' : ''} onchange="toggleProfileLock(this.checked)"> Locked to verified users only
         </label>
       </span></div>`
-    : `<div class="profile-row"><span>Profile lock</span><span style="color:#aaa;">Reach 2,000 Coins and get admin-verified to unlock this</span></div>`;
+    : `<div class="profile-row"><span>Profile lock</span><span style="color:#aaa;">Reach 10,000 Coins and complete admin verification to unlock this</span></div>`;
 
   const editStatusHtml = editCooldownMessage(u);
   const myAchievements = await getUserAchievements(u);
@@ -5116,7 +5053,7 @@ function showChangePasswordForm(){
   const u = currentUser;
   if (!canChangePassword(u)) {
     if (!u.verified) {
-      alert('Only verified users and admins can change their password. Get verified by reaching 2,000 Coins.');
+      alert('Only verified users and admins can change their password. Get verified by reaching 10,000 Coins.');
     } else {
       const daysLeft = Math.ceil(PASSWORD_COOLDOWN_DAYS - daysSincePasswordChange(u));
       alert('You can only change your password once every ' + PASSWORD_COOLDOWN_DAYS + ' days. Try again in ' + daysLeft + ' day' + (daysLeft===1?'':'s') + '.');
@@ -5173,25 +5110,15 @@ async function saveNewPassword(){
   let stored;
   try { stored = JSON.parse(raw); } catch(e) { errEl.textContent = 'Something went wrong.'; return; }
 
-  const currentHash = await sha256Hex(stored.salt + current);
-  if (currentHash !== stored.passwordHash) { errEl.textContent = 'Current password is incorrect.'; return; }
-
-  const newSalt = randomSalt();
-  stored.salt = newSalt;
-  stored.passwordHash = await sha256Hex(newSalt + next);
-  if (!isAdminUser(stored)) stored.lastPasswordChangeAt = Date.now();
-  await storageSet(userKey(currentUser.email), JSON.stringify(stored), true);
-  currentUser.lastPasswordChangeAt = stored.lastPasswordChangeAt;
-
-  // Keep the Firebase identity's password matching, so future logins can
-  // still establish a real (non-anonymous) session for this account.
-  if (firebaseAuth && firebaseAuth.currentUser && firebaseAuth.currentUser.email
-      && firebaseAuth.currentUser.email.toLowerCase() === currentUser.email.toLowerCase()) {
-    try { await firebaseAuth.currentUser.updatePassword(next); }
-    catch (e) { console.warn('Local password changed, but could not update the matching Firebase password - will retry establishing a session at next login.', e); }
-  } else {
-    ensureFirebaseSession(currentUser.email, next);
-  }
+  if (!firebaseAuth || !firebaseAuth.currentUser) { errEl.textContent='Please sign in again before changing your password.'; return; }
+  try {
+    await withTimeout(firebaseAuth.signInWithEmailAndPassword(currentUser.email,current),7000);
+    await withTimeout(firebaseAuth.currentUser.updatePassword(next),7000);
+  } catch(e) { errEl.textContent=(e.code==='auth/wrong-password'||e.code==='auth/invalid-credential')?'Current password is incorrect.':'Could not securely change your password. Please sign in again and retry.'; return; }
+  delete stored.salt; delete stored.passwordHash;
+  if (!isAdminUser(stored)) stored.lastPasswordChangeAt=Date.now();
+  await storageSet(userKey(currentUser.email),JSON.stringify(stored),true);
+  currentUser.lastPasswordChangeAt=stored.lastPasswordChangeAt;
 
   loadProfile();
   document.getElementById('passwordEditArea').innerHTML = '<div class="auth-status" style="margin-top:8px;">Password changed successfully.</div>';
@@ -5598,6 +5525,8 @@ async function loadNotifications(){
     } else if (n.type === 'announcement') {
       text = `📢 Announcement from ${escapeHtml(n.fromName)}: "${escapeHtml(n.text || '')}"`;
       actions = `<div class="notif-actions"><button class="open-btn" onclick="switchTab('announcementsPage')">Read announcements</button></div>`;
+    } else if (n.type === 'system') {
+      text = `🔔 <strong>${escapeHtml(n.title || 'System notification')}</strong><br>${escapeHtml(n.text || '')}`;
     } else if (n.type === 'purchase_request') {
       text = `${escapeHtml(n.fromName)} wants to buy ${n.leos} Coins for ₦${(n.priceNaira||0).toLocaleString()}.`;
       actions = `<div class="notif-actions"><button class="open-btn" onclick="switchTab('adminPage')">Review in Admin</button></div>`;
@@ -5870,7 +5799,7 @@ async function openChat(username, display){
   loadMessages();
   updateChatPresence();
   if (chatPollTimer) clearInterval(chatPollTimer);
-  chatPollTimer = setInterval(() => { loadMessages(); updateChatPresence(); }, 2000);
+  chatPollTimer = setInterval(() => { loadMessages(); updateChatPresence(); }, 4000);
 }
 function typingKey(chatKeyStr, username){ return 'typing:' + chatKeyStr + ':' + username.toLowerCase(); }
 let lastTypingSentAt = 0;
@@ -6017,39 +5946,26 @@ async function deletePrivateMessage(index){
 }
 
 const MESSAGE_COST_COINS = 0.20;
-let messageSendInProgress = false;
 async function sendMessage(){
   if (isCurrentlyBanned(currentUser)) { alert(banBlockMessage(currentUser)); return; }
   if (await isBlockedEitherWay(currentUser.username, activeChatFriend)) { alert("You can't message this person."); return; }
   const input = document.getElementById('chatInput');
   const text = input.value.trim();
   if (!text || !activeChatFriend) return;
-  if (messageSendInProgress) return;
-  messageSendInProgress = true;
-  const sendBtn = document.querySelector('#privateChat .send-btn');
-  const originalSendLabel = sendBtn ? sendBtn.innerHTML : '';
-  if (sendBtn) { sendBtn.disabled = true; sendBtn.style.opacity = '0.6'; sendBtn.innerHTML = '…'; }
-
-  // Give the message send a consistent 2-second sending window.
-  await new Promise(resolve => setTimeout(resolve, 2000));
 
   const myFriendsRaw = await storageGet(friendsKey(currentUser.username), true);
   const myFriends = myFriendsRaw ? JSON.parse(myFriendsRaw) : [];
   if (!myFriends.includes(activeChatFriend)) {
     alert('You can only message people once they have accepted your friend request.');
-    messageSendInProgress = false;
-    if (sendBtn) { sendBtn.disabled = false; sendBtn.style.opacity = ''; sendBtn.innerHTML = originalSendLabel; }
     return;
   }
 
   const senderRaw = await storageGet(userKey(currentUser.email), true);
-  if (!senderRaw) { alert('Could not load your account. Please try again.'); messageSendInProgress = false; if (sendBtn) { sendBtn.disabled = false; sendBtn.style.opacity = ''; sendBtn.innerHTML = originalSendLabel; } return; }
-  let sender; try { sender = JSON.parse(senderRaw); } catch(e) { alert('Something went wrong. Please try again.'); messageSendInProgress = false; if (sendBtn) { sendBtn.disabled = false; sendBtn.style.opacity = ''; sendBtn.innerHTML = originalSendLabel; } return; }
+  if (!senderRaw) { alert('Could not load your account. Please try again.'); return; }
+  let sender; try { sender = JSON.parse(senderRaw); } catch(e) { alert('Something went wrong. Please try again.'); return; }
   const balance = typeof sender.leos === 'number' ? sender.leos : 20;
   if (balance < MESSAGE_COST_COINS) {
     alert('Sending a message costs ' + MESSAGE_COST_COINS.toFixed(2) + ' Coins and your balance is too low.');
-    messageSendInProgress = false;
-    if (sendBtn) { sendBtn.disabled = false; sendBtn.style.opacity = ''; sendBtn.innerHTML = originalSendLabel; }
     return;
   }
   sender.leos = balance - MESSAGE_COST_COINS;
@@ -7392,19 +7308,7 @@ async function cmLoadSettings(){
   try { const raw = await storageGet(cmPrivacyKey(currentUser.username), true); if (raw) cfg = Object.assign(defaults, JSON.parse(raw)); } catch(e){}
   const map = { cmPrivateProfile:'privateProfile', cmShowOnline:'showOnline', cmMessageRequests:'messageRequests', cmNotifMessages:'notifMessages', cmNotifSocial:'notifSocial' };
   Object.keys(map).forEach(id => { const el=document.getElementById(id); if(el) el.checked=!!cfg[map[id]]; });
-  const dm=document.getElementById('darkModeToggleSettings');
-  if(dm) dm.checked=document.body.classList.contains('dark-mode');
-  cmShowBlockedUsers();
 }
-function cmToggleSettingsDarkMode(){
-  const el=document.getElementById('darkModeToggleSettings');
-  const on=!!el?.checked;
-  document.body.classList.toggle('dark-mode',on);
-  try{localStorage.setItem('darkMode',on?'1':'0');}catch(e){}
-  const homeToggle=document.getElementById('darkModeToggle');
-  if(homeToggle) homeToggle.checked=on;
-}
-
 async function cmSavePrivacy(){
   if (!currentUser) return;
   const cfg = {
@@ -7436,8 +7340,7 @@ async function cmLoadStoriesStrip(){
       if(!isStatusActive(u)) continue;
       const name=u.firstName||uname;
       const avatar=u.profilePic?`<img src="${escapeHtml(u.profilePic)}" alt="">`:escapeHtml(name[0]||'?').toUpperCase();
-      const preview=escapeHtml(String(u.status||''));
-      cards.push(`<div class="cm-story" onclick="viewProfile('${String(uname).replace(/'/g,"\\'")}')"><div class="cm-story-avatar">${avatar}</div><div class="cm-story-name">${escapeHtml(name)}</div><div class="cm-story-preview">${preview}</div></div>`);
+      cards.push(`<div class="cm-story" onclick="viewProfile('${String(uname).replace(/'/g,"\\'")}')"><div class="cm-story-avatar">${avatar}</div><div class="cm-story-name">${escapeHtml(name)}</div></div>`);
     }catch(e){}
   }
   cards.unshift(`<div class="cm-story" onclick="switchTab('statusbookPage')"><div class="cm-story-avatar" style="border-color:#2b6ee0;font-size:24px;">+</div><div class="cm-story-name">Add story</div></div>`);
@@ -7496,14 +7399,45 @@ async function cmWriteAudit(action, target, detail){
   const item={id:Date.now()+'-'+Math.random().toString(36).slice(2,7),time:Date.now(),staff:currentUser.username,action,target:target||'',detail:detail||''};
   await storageSet(cmAuditKey(item.id),JSON.stringify(item),true);
 }
+async function sendSystemNotificationFromAdmin(){
+  if(!currentUser || !(isAdminUser(currentUser)||isModeratorUser(currentUser))) return;
+  const target=(document.getElementById('systemNotifUsername')?.value||'').trim();
+  const title=(document.getElementById('systemNotifTitle')?.value||'').trim();
+  const message=(document.getElementById('systemNotifMessage')?.value||'').trim();
+  const err=document.getElementById('systemNotifError'), status=document.getElementById('systemNotifStatus');
+  if(err) err.textContent=''; if(status) status.textContent='';
+  if(!target || !title || !message){ if(err) err.textContent='Enter a username (or ALL), title, and message.'; return; }
+  showLoading(true);
+  try{
+    if(target.toLowerCase()==='all'){
+      const keys=await storageListKeys('user:',true); let sent=0;
+      for(const k of keys){
+        const raw=await storageGet(k,true); if(!raw) continue;
+        let u; try{u=JSON.parse(raw)}catch(e){continue;}
+        if(u?.username && await cmNotifyUser(u.username,title,message)) sent++;
+      }
+      if(status) status.textContent=`Notification sent to ${sent} account${sent===1?'':'s'}.`;
+    }else{
+      const ok=await cmNotifyUser(target,title,message);
+      if(!ok){ if(err) err.textContent='That username was not found.'; return; }
+      if(status) status.textContent='System notification sent to @'+target+'.';
+    }
+    ['systemNotifUsername','systemNotifTitle','systemNotifMessage'].forEach(id=>{const el=document.getElementById(id); if(el) el.value='';});
+  }catch(e){ if(err) err.textContent='Could not send the notification right now.'; }
+  finally{ showLoading(false); }
+}
+
 async function cmNotifyUser(username,title,message){
   try{
-    const raw=await storageGet(usernameKey(username),true); if(!raw) return;
-    const email=raw;
-    const n={id:Date.now()+'-'+Math.random().toString(36).slice(2,7),title,message,time:Date.now(),read:false};
-    const k='notifications:'+username.toLowerCase()+':'+n.id;
-    await storageSet(k,JSON.stringify(n),true);
-  }catch(e){}
+    const raw=await storageGet(usernameKey(username),true); if(!raw) return false;
+    const n={id:Date.now()+'-'+Math.random().toString(36).slice(2,7),type:'system',title:String(title||'System notification').slice(0,80),text:String(message||'').slice(0,500),time:Date.now(),read:false,handled:true};
+    const key=notifsKey(username);
+    const existingRaw=await storageGet(key,true);
+    const notifs=existingRaw?JSON.parse(existingRaw):[];
+    notifs.push(n);
+    await storageSet(key,JSON.stringify(notifs),true);
+    return true;
+  }catch(e){ return false; }
 }
 async function cmSubmitSupportTicket(){
   const err=document.getElementById('supportError'), status=document.getElementById('supportStatus');
