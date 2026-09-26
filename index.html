@@ -277,11 +277,12 @@
 <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
 
 <style id="chatme-real-app-upgrades">
-  .cm-stories-strip{background:#fff;border:1px solid #e6e6e6;border-radius:12px;padding:10px;margin-bottom:12px;overflow-x:auto;white-space:nowrap}
-  .cm-story{display:inline-flex;vertical-align:top;flex-direction:column;align-items:center;width:76px;margin-right:8px;cursor:pointer}
-  .cm-story-avatar{width:54px;height:54px;border-radius:50%;border:3px solid #e8622d;display:flex;align-items:center;justify-content:center;background:#eee;font-weight:700;overflow:hidden}
+  .cm-stories-strip{background:#fff;border:1px solid #e6e6e6;border-radius:12px;padding:10px;margin-bottom:12px;overflow-x:auto;overflow-y:hidden;white-space:nowrap;scrollbar-width:thin}
+  .cm-story{display:inline-flex;vertical-align:top;flex-direction:column;align-items:center;width:104px;margin-right:8px;cursor:pointer;flex:0 0 104px;box-sizing:border-box}
+  .cm-story-avatar{width:58px;height:58px;border-radius:50%;border:3px solid #e8622d;display:flex;align-items:center;justify-content:center;background:#eee;font-weight:700;overflow:hidden;flex:0 0 58px}
   .cm-story-avatar img{width:100%;height:100%;object-fit:cover}
-  .cm-story-name{font-size:11px;margin-top:4px;max-width:72px;overflow:hidden;text-overflow:ellipsis}
+  .cm-story-name{font-size:11px;margin-top:4px;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center}
+  .cm-story-preview{font-size:10px;color:#777;width:100%;margin-top:2px;white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;text-align:center;line-height:1.2;min-height:24px}
   .cm-setting-card{background:#fff;border:1px solid #e5e5e5;border-radius:12px;padding:14px;margin-bottom:12px}
   .cm-setting-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #eee}
   .cm-setting-row:last-child{border-bottom:0}
@@ -550,6 +551,34 @@
       </div>
       <div id="friendsBanner"></div>
       <div id="postList"></div>
+    </div>
+
+    <div class="page" id="statusbookPage" style="padding:16px;overflow-y:auto;">
+      <div class="profile-card" style="max-width:650px;margin-bottom:14px;">
+        <h2 style="color:#2b3a8f;margin:0 0 6px;">📖 Statusbook</h2>
+        <div style="font-size:13px;color:#777;margin-bottom:10px;">Share a short status with your friends. Statuses disappear after 24 hours.</div>
+        <textarea id="statusBookInput" maxlength="300" placeholder="What's on your mind?" style="width:100%;min-height:90px;padding:10px;border:1px solid #ccc;border-radius:8px;box-sizing:border-box;resize:vertical;font-size:14px;"></textarea>
+        <div class="auth-error" id="statusBookError"></div>
+        <button onclick="submitStatusFromBook()" style="background:#2b6ee0;color:#fff;border:0;padding:9px 18px;border-radius:7px;cursor:pointer;font-weight:600;">Post Status</button>
+      </div>
+      <div id="statusbookList"></div>
+    </div>
+
+    <div class="page" id="settingsPage" style="padding:16px;overflow-y:auto;">
+      <h2 style="color:#2b3a8f;margin:0 0 12px;">⚙ Settings & Privacy</h2>
+      <div class="cm-setting-card">
+        <div class="cm-setting-row"><div><strong>🌙 Dark mode</strong><small>Use a darker appearance on this device.</small></div><input class="cm-switch" type="checkbox" id="darkModeToggleSettings" onchange="cmToggleSettingsDarkMode()"></div>
+        <div class="cm-setting-row"><div><strong>🔒 Private profile</strong><small>Limit profile visibility to people you know.</small></div><input class="cm-switch" type="checkbox" id="cmPrivateProfile" onchange="cmSavePrivacy()"></div>
+        <div class="cm-setting-row"><div><strong>🟢 Show online status</strong><small>Allow friends to see when you are online.</small></div><input class="cm-switch" type="checkbox" id="cmShowOnline" onchange="cmSavePrivacy()"></div>
+        <div class="cm-setting-row"><div><strong>💬 Message requests</strong><small>Allow message requests from people who are not friends.</small></div><input class="cm-switch" type="checkbox" id="cmMessageRequests" onchange="cmSavePrivacy()"></div>
+        <div class="cm-setting-row"><div><strong>🔔 Message notifications</strong><small>Receive notifications for new messages.</small></div><input class="cm-switch" type="checkbox" id="cmNotifMessages" onchange="cmSavePrivacy()"></div>
+        <div class="cm-setting-row"><div><strong>🔔 Social notifications</strong><small>Receive notifications for friend and social activity.</small></div><input class="cm-switch" type="checkbox" id="cmNotifSocial" onchange="cmSavePrivacy()"></div>
+      </div>
+      <div class="cm-setting-card">
+        <h3 style="margin:0 0 8px;">🚫 Blocked accounts</h3>
+        <div style="font-size:12.5px;color:#777;margin-bottom:8px;">Accounts you have blocked will not be able to interact with you normally.</div>
+        <div id="cmBlockedList"></div>
+      </div>
     </div>
 
     <div class="page" id="profilePage">
@@ -5841,7 +5870,7 @@ async function openChat(username, display){
   loadMessages();
   updateChatPresence();
   if (chatPollTimer) clearInterval(chatPollTimer);
-  chatPollTimer = setInterval(() => { loadMessages(); updateChatPresence(); }, 4000);
+  chatPollTimer = setInterval(() => { loadMessages(); updateChatPresence(); }, 2000);
 }
 function typingKey(chatKeyStr, username){ return 'typing:' + chatKeyStr + ':' + username.toLowerCase(); }
 let lastTypingSentAt = 0;
@@ -5988,26 +6017,39 @@ async function deletePrivateMessage(index){
 }
 
 const MESSAGE_COST_COINS = 0.20;
+let messageSendInProgress = false;
 async function sendMessage(){
   if (isCurrentlyBanned(currentUser)) { alert(banBlockMessage(currentUser)); return; }
   if (await isBlockedEitherWay(currentUser.username, activeChatFriend)) { alert("You can't message this person."); return; }
   const input = document.getElementById('chatInput');
   const text = input.value.trim();
   if (!text || !activeChatFriend) return;
+  if (messageSendInProgress) return;
+  messageSendInProgress = true;
+  const sendBtn = document.querySelector('#privateChat .send-btn');
+  const originalSendLabel = sendBtn ? sendBtn.innerHTML : '';
+  if (sendBtn) { sendBtn.disabled = true; sendBtn.style.opacity = '0.6'; sendBtn.innerHTML = '…'; }
+
+  // Give the message send a consistent 2-second sending window.
+  await new Promise(resolve => setTimeout(resolve, 2000));
 
   const myFriendsRaw = await storageGet(friendsKey(currentUser.username), true);
   const myFriends = myFriendsRaw ? JSON.parse(myFriendsRaw) : [];
   if (!myFriends.includes(activeChatFriend)) {
     alert('You can only message people once they have accepted your friend request.');
+    messageSendInProgress = false;
+    if (sendBtn) { sendBtn.disabled = false; sendBtn.style.opacity = ''; sendBtn.innerHTML = originalSendLabel; }
     return;
   }
 
   const senderRaw = await storageGet(userKey(currentUser.email), true);
-  if (!senderRaw) { alert('Could not load your account. Please try again.'); return; }
-  let sender; try { sender = JSON.parse(senderRaw); } catch(e) { alert('Something went wrong. Please try again.'); return; }
+  if (!senderRaw) { alert('Could not load your account. Please try again.'); messageSendInProgress = false; if (sendBtn) { sendBtn.disabled = false; sendBtn.style.opacity = ''; sendBtn.innerHTML = originalSendLabel; } return; }
+  let sender; try { sender = JSON.parse(senderRaw); } catch(e) { alert('Something went wrong. Please try again.'); messageSendInProgress = false; if (sendBtn) { sendBtn.disabled = false; sendBtn.style.opacity = ''; sendBtn.innerHTML = originalSendLabel; } return; }
   const balance = typeof sender.leos === 'number' ? sender.leos : 20;
   if (balance < MESSAGE_COST_COINS) {
     alert('Sending a message costs ' + MESSAGE_COST_COINS.toFixed(2) + ' Coins and your balance is too low.');
+    messageSendInProgress = false;
+    if (sendBtn) { sendBtn.disabled = false; sendBtn.style.opacity = ''; sendBtn.innerHTML = originalSendLabel; }
     return;
   }
   sender.leos = balance - MESSAGE_COST_COINS;
@@ -7350,7 +7392,19 @@ async function cmLoadSettings(){
   try { const raw = await storageGet(cmPrivacyKey(currentUser.username), true); if (raw) cfg = Object.assign(defaults, JSON.parse(raw)); } catch(e){}
   const map = { cmPrivateProfile:'privateProfile', cmShowOnline:'showOnline', cmMessageRequests:'messageRequests', cmNotifMessages:'notifMessages', cmNotifSocial:'notifSocial' };
   Object.keys(map).forEach(id => { const el=document.getElementById(id); if(el) el.checked=!!cfg[map[id]]; });
+  const dm=document.getElementById('darkModeToggleSettings');
+  if(dm) dm.checked=document.body.classList.contains('dark-mode');
+  cmShowBlockedUsers();
 }
+function cmToggleSettingsDarkMode(){
+  const el=document.getElementById('darkModeToggleSettings');
+  const on=!!el?.checked;
+  document.body.classList.toggle('dark-mode',on);
+  try{localStorage.setItem('darkMode',on?'1':'0');}catch(e){}
+  const homeToggle=document.getElementById('darkModeToggle');
+  if(homeToggle) homeToggle.checked=on;
+}
+
 async function cmSavePrivacy(){
   if (!currentUser) return;
   const cfg = {
@@ -7382,7 +7436,8 @@ async function cmLoadStoriesStrip(){
       if(!isStatusActive(u)) continue;
       const name=u.firstName||uname;
       const avatar=u.profilePic?`<img src="${escapeHtml(u.profilePic)}" alt="">`:escapeHtml(name[0]||'?').toUpperCase();
-      cards.push(`<div class="cm-story" onclick="viewProfile('${String(uname).replace(/'/g,"\\'")}')"><div class="cm-story-avatar">${avatar}</div><div class="cm-story-name">${escapeHtml(name)}</div></div>`);
+      const preview=escapeHtml(String(u.status||''));
+      cards.push(`<div class="cm-story" onclick="viewProfile('${String(uname).replace(/'/g,"\\'")}')"><div class="cm-story-avatar">${avatar}</div><div class="cm-story-name">${escapeHtml(name)}</div><div class="cm-story-preview">${preview}</div></div>`);
     }catch(e){}
   }
   cards.unshift(`<div class="cm-story" onclick="switchTab('statusbookPage')"><div class="cm-story-avatar" style="border-color:#2b6ee0;font-size:24px;">+</div><div class="cm-story-name">Add story</div></div>`);
