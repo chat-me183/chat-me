@@ -60,6 +60,23 @@
   .welcome-cta { background: #fff; color: #2b6ee0; border: none; padding: 14px 30px; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; margin-bottom: 18px; }
   .welcome-hero .switch-line { font-size: 14px; }
   .welcome-hero .switch-line a { color: #fff; text-decoration: underline; cursor: pointer; font-weight: 600; }
+  .welcome-stats { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin:0 auto 24px; max-width:760px; width:100%; }
+  .welcome-stat { background:#fff; color:#24316f; border-radius:12px; padding:12px 18px; min-width:150px; box-shadow:0 4px 14px rgba(0,0,0,.12); }
+  .welcome-stat strong { display:block; font-size:22px; line-height:1.1; }
+  .welcome-stat span { display:block; font-size:12px; opacity:.72; margin-top:4px; }
+  .welcome-section { padding:34px 20px; background:#f7f8fc; color:#222; }
+  .welcome-section h2 { text-align:center; color:#2b3a8f; margin-bottom:8px; font-size:22px; }
+  .welcome-section > p { text-align:center; color:#666; margin:0 auto 20px; max-width:650px; font-size:14px; line-height:1.5; }
+  .testimonial-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; max-width:900px; margin:0 auto; }
+  .testimonial-card { background:#fff; border:1px solid #e5e7eb; border-radius:12px; padding:16px; box-shadow:0 2px 8px rgba(0,0,0,.05); }
+  .testimonial-card .stars { color:#f5a623; letter-spacing:2px; margin-bottom:8px; }
+  .testimonial-card p { font-size:13px; line-height:1.55; color:#444; margin-bottom:10px; }
+  .testimonial-card strong { font-size:13px; color:#2b3a8f; }
+  .welcome-about { max-width:900px; margin:0 auto; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+  .about-card { background:#fff; border-radius:12px; padding:16px; border:1px solid #e5e7eb; }
+  .about-card b { display:block; margin-bottom:5px; color:#2b3a8f; }
+  .about-card span { color:#666; font-size:13px; line-height:1.5; }
+  @media (max-width:700px){ .testimonial-grid,.welcome-about { grid-template-columns:1fr; } .welcome-stat { min-width:135px; } }
 
   /* ---- Auth screens (login / signup) ---- */
   .auth-screen { position: fixed; inset: 0; background: #f4f5f7; display: none; align-items: flex-start; justify-content: center; z-index: 50; overflow-y: auto; padding: 24px 16px; }
@@ -258,6 +275,23 @@
   .loading-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.35); display: none; align-items: center; justify-content: center; z-index: 100; color: #fff; font-size: 15px; }
 </style>
 <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
+
+<style id="chatme-real-app-upgrades">
+  .cm-stories-strip{background:#fff;border:1px solid #e6e6e6;border-radius:12px;padding:10px;margin-bottom:12px;overflow-x:auto;white-space:nowrap}
+  .cm-story{display:inline-flex;vertical-align:top;flex-direction:column;align-items:center;width:76px;margin-right:8px;cursor:pointer}
+  .cm-story-avatar{width:54px;height:54px;border-radius:50%;border:3px solid #e8622d;display:flex;align-items:center;justify-content:center;background:#eee;font-weight:700;overflow:hidden}
+  .cm-story-avatar img{width:100%;height:100%;object-fit:cover}
+  .cm-story-name{font-size:11px;margin-top:4px;max-width:72px;overflow:hidden;text-overflow:ellipsis}
+  .cm-setting-card{background:#fff;border:1px solid #e5e5e5;border-radius:12px;padding:14px;margin-bottom:12px}
+  .cm-setting-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #eee}
+  .cm-setting-row:last-child{border-bottom:0}
+  .cm-setting-row small{display:block;color:#777;margin-top:3px}
+  .cm-switch{accent-color:#2b6ee0;transform:scale(1.15)}
+  body.dark-mode .cm-stories-strip,body.dark-mode .cm-setting-card{background:#1d1f23;border-color:#333;color:#eee}
+  body.dark-mode .cm-setting-row{border-color:#333}
+  body.dark-mode .cm-setting-row small{color:#aaa}
+</style>
+
 </head>
 <body>
 
@@ -278,11 +312,31 @@
     <div class="welcome-hero">
       <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><circle cx="22" cy="30" r="16" fill="#fff" opacity="0.9"/><circle cx="38" cy="30" r="16" fill="#fff" opacity="0.6"/><circle cx="30" cy="30" r="8" fill="#fff"/></svg>
       <div class="welcome-hero-brand">Chat Me</div>
-      <h1>Stay close to the people who matter</h1>
-      <p>Post updates, add friends, and message them privately — all in one simple space.</p>
-      <button class="welcome-cta" onclick="showAuth('signup')">Get started</button>
+      <h1>Connect, chat, and share with your community</h1>
+      <p>Meet people, make friends, share updates, and enjoy conversations in one friendly social space.</p>
+      <div class="welcome-stats" aria-label="Chat Me community statistics">
+        <div class="welcome-stat"><strong id="welcomeRegisteredCount">—</strong><span>Registered people</span></div>
+        <div class="welcome-stat"><strong>24/7</strong><span>Chat whenever you want</span></div>
+        <div class="welcome-stat"><strong>Free</strong><span>To join and get started</span></div>
+      </div>
+      <button class="welcome-cta" onclick="showAuth('signup')">Join Chat Me</button>
       <div class="switch-line">Already have an account? <a onclick="showAuth('login')">Log in</a></div>
     </div>
+    <section class="welcome-section" aria-label="About Chat Me">
+      <h2>What people say about Chat Me</h2>
+      <p>A simple place to keep in touch, discover conversations, and build a friendly community.</p>
+      <div class="testimonial-grid">
+        <article class="testimonial-card"><div class="stars">★★★★★</div><p>“A simple way to keep my conversations and friends in one place.”</p><strong>Chat Me member</strong></article>
+        <article class="testimonial-card"><div class="stars">★★★★★</div><p>“I like being able to share updates and chat with people from one home screen.”</p><strong>Chat Me member</strong></article>
+        <article class="testimonial-card"><div class="stars">★★★★★</div><p>“The community features make it easy to find conversations and stay connected.”</p><strong>Chat Me member</strong></article>
+      </div>
+      <h2 style="margin-top:30px;">Why Chat Me?</h2>
+      <div class="welcome-about">
+        <div class="about-card"><b>💬 Conversations</b><span>Message friends and take part in group chats and chatrooms.</span></div>
+        <div class="about-card"><b>👥 Community</b><span>Build your profile, connect with people, and share posts.</span></div>
+        <div class="about-card"><b>🛍️ Personalize</b><span>Use the Shop to customize your Chat Me experience.</span></div>
+      </div>
+    </section>
   </div>
 
   <!-- ============ LOGIN ============ -->
@@ -447,10 +501,13 @@
       <div class="nav-item" data-page="statusbookPage" onclick="switchTab('statusbookPage')"><span class="i18n" data-key="statusbook">Statusbook</span></div>
       <div class="nav-item" data-page="aiPage" onclick="switchTab('aiPage')">Nova</div>
       <div class="nav-item" data-page="groupsPage" onclick="switchTab('groupsPage')"><span class="i18n" data-key="groups">Groups</span></div>
-      <div class="nav-item points" data-page="leosPage" id="pointsNavItem" onclick="switchTab('leosPage')"><span class="i18n" data-key="leos">Leos</span>: <span id="leosNavAmount">0.00</span></div>
+      <div class="nav-item points" data-page="leosPage" id="pointsNavItem" onclick="switchTab('leosPage')"><span class="i18n" data-key="leos">Coins</span>: <span id="leosNavAmount">0.00</span></div>
       <div class="nav-item" data-page="gamesPage" onclick="switchTab('gamesPage')"><span class="i18n" data-key="games">Games</span></div>
-      <div class="nav-item" data-page="buyLeosPage" onclick="switchTab('buyLeosPage')"><span class="i18n" data-key="buy">Buy$</span></div>
+      <div class="nav-item" data-page="buyCoinsPage" onclick="switchTab('buyCoinsPage')"><span class="i18n" data-key="buy">Buy Coins</span></div>
+      <div class="nav-item" data-page="shopPage" onclick="switchTab('shopPage')">🛍️ Shop</div>
       <div class="nav-item" data-page="menuPage" onclick="switchTab('menuPage')"><span class="i18n" data-key="menu">Menu</span></div>
+      <div class="nav-item" data-page="settingsPage" onclick="switchTab('settingsPage')">⚙ Settings</div>
+      <div class="nav-item" data-page="supportPage" id="supportNavItem" onclick="switchTab('supportPage')" style="display:none;background:#e7f7ef;color:#146c43;">🎧 <span>Support</span></div>
       <div class="nav-item" data-page="adminPage" id="adminNavItem" onclick="switchTab('adminPage')" style="display:none;background:#ffe0e0;color:#9c1c1c;">⚙ <span class="i18n" data-key="admin">Admin</span></div>
     </div>
 
@@ -467,6 +524,8 @@
         <input type="text" id="languageSearchInput" placeholder="Search language..." oninput="filterLanguageList()" style="width:100%;padding:8px 10px;border:1px solid #ccc;border-radius:6px;font-size:13px;margin-bottom:8px;outline:none;">
         <div id="languageListArea" style="max-height:220px;overflow-y:auto;"></div>
       </div>
+
+      <div id="cmStoriesStrip" class="cm-stories-strip"></div>
       <div class="post-composer">
         <textarea id="postInput" placeholder="What's on your mind?"></textarea>
         <div class="composer-file-row">
@@ -510,8 +569,13 @@
           <div style="font-weight:700;color:#2b3a8f;margin-bottom:8px;">Create a Group</div>
           <input type="text" id="groupNameInput" placeholder="Group name" maxlength="60" style="width:100%;padding:9px 10px;border-radius:6px;border:1px solid #ccc;font-size:13.5px;margin-bottom:6px;outline:none;">
           <textarea id="groupDescInput" placeholder="What's this group about? (optional)" maxlength="200" style="width:100%;padding:9px 10px;border-radius:6px;border:1px solid #ccc;font-size:13px;margin-bottom:6px;outline:none;min-height:50px;resize:vertical;"></textarea>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+            <input type="file" id="groupBackgroundInput" accept="image/*" style="display:none;" onchange="onGroupBackgroundChosen()">
+            <button onclick="document.getElementById('groupBackgroundInput').click()" style="background:#eee;border:none;padding:7px 10px;border-radius:6px;cursor:pointer;font-size:12.5px;">Choose custom background</button>
+            <span id="groupBackgroundFileName" style="font-size:12px;color:#888;">Shop unlock required</span>
+          </div>
           <div class="field-msg" id="groupCreateError" style="min-height:14px;"></div>
-          <button onclick="createCircle('group')" style="width:100%;background:#25a244;color:#fff;border:none;padding:9px;border-radius:6px;cursor:pointer;font-size:13.5px;font-weight:600;">Create Group (needs 100 Leos)</button>
+          <button onclick="createCircle('group')" style="width:100%;background:#25a244;color:#fff;border:none;padding:9px;border-radius:6px;cursor:pointer;font-size:13.5px;font-weight:600;">Create Group (needs 100 Coins)</button>
         </div>
         <div id="groupListItems"></div>
       </div>
@@ -536,13 +600,16 @@
           <div style="font-weight:700;color:#2b3a8f;margin-bottom:6px;font-size:13px;">Create a Chatroom</div>
           <input type="text" id="roomNameInput" placeholder="Chatroom name" maxlength="60" style="width:100%;padding:9px 10px;border-radius:6px;border:1px solid #ccc;font-size:13.5px;margin-bottom:6px;outline:none;">
           <textarea id="roomDescInput" placeholder="Rules or description (optional)" maxlength="300" style="width:100%;padding:9px 10px;border-radius:6px;border:1px solid #ccc;font-size:13px;margin-bottom:6px;outline:none;min-height:50px;resize:vertical;"></textarea>
+          <label style="font-size:12.5px;display:flex;align-items:center;gap:6px;margin-bottom:8px;">
+            <input type="checkbox" id="createRoomPrivateToggle"> Make this a private room (requires Private Room access from Shop)
+          </label>
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
             <input type="file" id="roomPicInput" accept="image/*" style="display:none;" onchange="onRoomPicChosen()">
             <button onclick="document.getElementById('roomPicInput').click()" style="background:#eee;border:none;padding:7px 10px;border-radius:6px;cursor:pointer;font-size:12.5px;">Choose picture (optional)</button>
             <span id="roomPicFileName" style="font-size:12px;color:#888;">No file chosen</span>
           </div>
           <div class="field-msg" id="roomCreateError" style="min-height:14px;"></div>
-          <button onclick="createCircle('room')" style="width:100%;background:#25a244;color:#fff;border:none;padding:9px;border-radius:6px;cursor:pointer;font-size:13.5px;font-weight:600;">Create Chatroom (needs 300 Leos)</button>
+          <button onclick="createCircle('room')" style="width:100%;background:#25a244;color:#fff;border:none;padding:9px;border-radius:6px;cursor:pointer;font-size:13.5px;font-weight:600;">Create Chatroom (needs 300 Coins)</button>
         </div>
         <div id="roomListItems"></div>
       </div>
@@ -626,12 +693,12 @@
         <div id="gamePicker" style="display:none;gap:14px;flex-wrap:wrap;margin-top:16px;">
           <div class="profile-card" style="max-width:220px;">
             <div style="font-weight:600;color:#2b3a8f;margin-bottom:6px;">Bot 1 — Normal</div>
-            <div style="font-size:13px;color:#666;margin-bottom:12px;">A fair, average bot. Win 2 Leos.</div>
+            <div style="font-size:13px;color:#666;margin-bottom:12px;">A fair, average bot. Win +2 Coins.</div>
             <button onclick="startWordGame('normal')" style="background:#25a244;color:#fff;border:none;padding:9px 16px;border-radius:6px;cursor:pointer;font-size:14px;">Play Bot 1</button>
           </div>
           <div class="profile-card" style="max-width:220px;">
             <div style="font-weight:600;color:#9c1c1c;margin-bottom:6px;">Bot 2 — Hard</div>
-            <div style="font-size:13px;color:#666;margin-bottom:12px;">Lightning fast and sharp. Win 4 Leos.</div>
+            <div style="font-size:13px;color:#666;margin-bottom:12px;">Lightning fast and sharp. Win +2 Coins.</div>
             <button onclick="startWordGame('hard')" style="background:#d32f2f;color:#fff;border:none;padding:9px 16px;border-radius:6px;cursor:pointer;font-size:14px;">Play Bot 2</button>
           </div>
         </div>
@@ -639,10 +706,10 @@
         <div id="friendChallengePicker" style="display:none;margin-top:16px;max-width:420px;">
           <div class="profile-card" style="margin-bottom:14px;">
             <div style="font-weight:700;color:#2b3a8f;margin-bottom:8px;">Create a Challenge</div>
-            <div style="font-size:12.5px;color:#666;margin-bottom:8px;">Bet 3-15 Leos. Winner takes both bets. If nobody joins within 5 minutes, you're refunded automatically.</div>
-            <input type="number" id="challengeBetInput" min="3" max="15" placeholder="Leos to bet (3-15)" style="width:100%;padding:9px 10px;border:1px solid #ccc;border-radius:6px;font-size:14px;margin-bottom:8px;outline:none;">
+            <div style="font-size:12.5px;color:#666;margin-bottom:8px;">Free challenge. No Coins are used. If nobody joins within 5 minutes, the challenge expires.</div>
+            <input type="hidden" id="challengeBetInput" value="0" style="width:100%;padding:9px 10px;border:1px solid #ccc;border-radius:6px;font-size:14px;margin-bottom:8px;outline:none;">
             <div class="field-msg" id="challengeCreateError"></div>
-            <button onclick="createChallenge()" style="background:#25a244;color:#fff;border:none;padding:9px 18px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:600;">Bet &amp; Get Code</button>
+            <button onclick="createChallenge()" style="background:#25a244;color:#fff;border:none;padding:9px 18px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:600;">Create Free Challenge</button>
           </div>
           <div class="profile-card">
             <div style="font-weight:700;color:#2b3a8f;margin-bottom:8px;">Join a Challenge</div>
@@ -688,7 +755,7 @@
         <div id="diceAiPicker" style="display:none;margin-top:16px;max-width:260px;">
           <div class="profile-card">
             <div style="font-weight:600;color:#2b3a8f;margin-bottom:6px;">🤖 Dice Bot</div>
-            <div style="font-size:13px;color:#666;margin-bottom:12px;">Roll against the AI. Win: double your bet. Lose: bet is gone. Tie: refunded.</div>
+            <div style="font-size:13px;color:#666;margin-bottom:12px;">Roll against the AI for free. Wins count toward your game record; no Coins are used.</div>
             <button onclick="playDiceAI()" style="background:#25a244;color:#fff;border:none;padding:9px 16px;border-radius:6px;cursor:pointer;font-size:14px;">Play vs AI</button>
           </div>
         </div>
@@ -696,10 +763,10 @@
         <div id="diceFriendPicker" style="display:none;margin-top:16px;max-width:420px;">
           <div class="profile-card" style="margin-bottom:14px;">
             <div style="font-weight:700;color:#2b3a8f;margin-bottom:8px;">Create a Challenge</div>
-            <div style="font-size:12.5px;color:#666;margin-bottom:8px;">Bet 3-10 Leos. Winner takes both bets. If nobody joins within 5 minutes, you're refunded automatically.</div>
-            <input type="number" id="diceBetInput" min="3" max="10" placeholder="Leos to bet (3-10)" style="width:100%;padding:9px 10px;border:1px solid #ccc;border-radius:6px;font-size:14px;margin-bottom:8px;outline:none;">
+            <div style="font-size:12.5px;color:#666;margin-bottom:8px;">Free challenge. No Coins are used. If nobody joins within 5 minutes, the challenge expires.</div>
+            <input type="hidden" id="diceBetInput" value="0" style="width:100%;padding:9px 10px;border:1px solid #ccc;border-radius:6px;font-size:14px;margin-bottom:8px;outline:none;">
             <div class="field-msg" id="diceCreateError"></div>
-            <button onclick="createDiceChallenge()" style="background:#25a244;color:#fff;border:none;padding:9px 18px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:600;">Bet &amp; Get Code</button>
+            <button onclick="createDiceChallenge()" style="background:#25a244;color:#fff;border:none;padding:9px 18px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:600;">Create Free Challenge</button>
           </div>
           <div class="profile-card">
             <div style="font-weight:700;color:#2b3a8f;margin-bottom:8px;">Join a Challenge</div>
@@ -742,16 +809,16 @@
 
     <div class="page" id="leosPage" style="padding:20px;">
       <div class="profile-card" style="max-width:420px;">
-        <div style="font-size:15px;color:#888;margin-bottom:6px;">Your Leos balance</div>
+        <div style="font-size:15px;color:#888;margin-bottom:6px;">Your Coins balance</div>
         <div style="font-size:34px;font-weight:700;color:#2b3a8f;" id="leosBig">0.00</div>
         <div style="font-size:13px;color:#999;margin-top:10px;">This balance is private — other people can't see it, and you can't see anyone else's.</div>
       </div>
     </div>
 
-    <div class="page" id="buyLeosPage" style="padding:16px;overflow-y:auto;">
-      <h2 style="color:#2b3a8f;margin-bottom:6px;">💰 Buy Leos</h2>
+    <div class="page" id="buyCoinsPage" style="padding:16px;overflow-y:auto;">
+      <h2 style="color:#2b3a8f;margin-bottom:6px;">💰 Buy Coins</h2>
       <div style="font-size:13px;color:#666;margin-bottom:14px;max-width:520px;">
-        Pick a package below, transfer the amount shown to the account details, then submit your payment reference. An admin will confirm it and credit your Leos.
+        Choose a package only when official payment details are available. An admin will confirm a genuine payment before Coins are credited.
       </div>
       <div id="buyPackages" style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px;"></div>
       <div id="buyCooldownNote" style="font-size:12.5px;color:#d32f2f;margin-bottom:10px;"></div>
@@ -759,8 +826,8 @@
     </div>
 
     <div class="page" id="shopPage" style="padding:16px;overflow-y:auto;">
-      <h2 style="color:#2b3a8f;margin-bottom:2px;">🛍️ Leos Shop</h2>
-      <div style="font-size:13px;color:#888;margin-bottom:10px;">Your balance: <strong id="shopBalance">0.00 Leos</strong></div>
+      <h2 style="color:#2b3a8f;margin-bottom:2px;">🛍️ Coins Shop</h2>
+      <div style="font-size:13px;color:#888;margin-bottom:10px;">Your balance: <strong id="shopBalance">0.00 Coins</strong></div>
       <div id="shopContent"></div>
     </div>
 
@@ -791,45 +858,22 @@
       </div>
     </div>
 
-    <div class="page" id="spinPage" style="padding:16px;overflow-y:auto;">
-      <h2 style="color:#2b3a8f;margin-bottom:6px;">🎡 Daily Spin</h2>
-      <div style="font-size:13px;color:#666;margin-bottom:14px;max-width:420px;">
-        Stay active in the app for 10 hours total in a day to unlock one free spin for bonus Leos. Your progress pauses when you leave and picks back up when you return. The day resets at 1:00 AM.
+    <div class="page" id="supportPage" style="padding:16px;overflow-y:auto;">
+      <h2 style="color:#146c43;margin-bottom:4px;">🎧 Customer Service</h2>
+      <div style="font-size:13px;color:#666;margin-bottom:14px;max-width:650px;">Create a support ticket for account, chat, profile, report follow-up, shop, payment, group, bug, or suggestion issues. Do not include passwords or private security codes.</div>
+      <div class="profile-card" style="max-width:650px;">
+        <div style="font-weight:700;margin-bottom:8px;">New support ticket</div>
+        <select id="supportCategory" style="width:100%;padding:9px;border:1px solid #ccc;border-radius:6px;margin-bottom:8px;box-sizing:border-box;">
+          <option value="account">Account / login</option><option value="chat">Chat / messaging</option><option value="profile">Profile / settings</option><option value="report">Report follow-up</option><option value="shop">Shop issue</option><option value="payment">Payment / Coins issue</option><option value="group">Group / chatroom</option><option value="bug">Bug / technical issue</option><option value="suggestion">Suggestion</option><option value="other">Other</option>
+        </select>
+        <input id="supportSubject" maxlength="100" placeholder="Short subject" style="width:100%;padding:9px;border:1px solid #ccc;border-radius:6px;margin-bottom:8px;box-sizing:border-box;">
+        <textarea id="supportMessage" maxlength="1500" placeholder="Describe the problem clearly." style="width:100%;min-height:120px;padding:9px;border:1px solid #ccc;border-radius:6px;resize:vertical;box-sizing:border-box;"></textarea>
+        <div class="auth-error" id="supportError"></div><div class="auth-status" id="supportStatus"></div>
+        <button onclick="cmSubmitSupportTicket()" style="background:#146c43;color:#fff;border:0;padding:9px 16px;border-radius:6px;cursor:pointer;font-weight:600;">Create Ticket</button>
       </div>
-      <div class="profile-card" style="max-width:340px;text-align:center;">
-        <div style="font-size:70px;margin-bottom:10px;" id="spinWheelEmoji">🎡</div>
-        <div id="spinProgressText" style="font-size:13.5px;color:#555;margin-bottom:10px;"></div>
-        <div style="background:#eee;border-radius:8px;height:10px;overflow:hidden;margin-bottom:14px;">
-          <div id="spinProgressBar" style="background:#25a244;height:100%;width:0%;"></div>
-        </div>
-        <button id="spinBtn" onclick="doSpin()" style="background:#e8622d;color:#fff;border:none;padding:10px 24px;border-radius:6px;cursor:pointer;font-size:15px;font-weight:600;" disabled>Spin</button>
-        <div id="spinResult" style="margin-top:12px;font-size:14px;font-weight:600;"></div>
-      </div>
-    </div>
-
-    <div class="page" id="viewProfilePage">
-      <div class="profile-card" id="viewProfileCard"></div>
-    </div>
-
-    <div class="page" id="statusbookPage" style="padding:16px;overflow-y:auto;">
-      <div class="post-composer" style="max-width:520px;">
-        <textarea id="statusBookInput" maxlength="140" placeholder="What's on your mind? (text only, no photos)"></textarea>
-        <div class="composer-row"><span class="composer-err" id="statusBookError"></span><button onclick="submitStatusFromBook()">Post Status</button></div>
-      </div>
-      <div id="statusbookList" style="max-width:520px;"></div>
-    </div>
-
-    <div class="page" id="aiPage" style="padding:16px;overflow-y:auto;">
-      <div class="profile-card" style="max-width:520px;">
-        <div style="font-weight:700;color:#2b3a8f;font-size:16px;margin-bottom:4px;">Nova</div>
-        <div style="font-size:12.5px;color:#888;margin-bottom:12px;">Chat Me's assistant — coming soon.</div>
-        <div id="aiChatArea" style="max-height:340px;overflow-y:auto;margin-bottom:10px;"></div>
-        <div style="display:flex;gap:8px;">
-          <input type="text" id="aiInput" placeholder="Say something..." style="flex:1;padding:10px 12px;border-radius:6px;border:1px solid #ccc;font-size:14px;outline:none;" onkeydown="if(event.key==='Enter') sendToAI()">
-          <button onclick="sendToAI()" style="background:#e8622d;color:#fff;border:none;border-radius:6px;padding:10px 16px;cursor:pointer;font-size:14px;">Send</button>
-        </div>
-        <div class="field-msg" id="aiError" style="margin-top:6px;"></div>
-      </div>
+      <h3 style="margin:18px 0 8px;">My tickets</h3>
+      <div id="supportMyTickets"></div>
+      <div id="cmStaffSupportInbox"></div>
     </div>
 
     <div class="page" id="adminPage" style="padding:20px;overflow-y:auto;">
@@ -845,7 +889,7 @@
           <div style="font-size:26px;font-weight:700;color:#2b3a8f;" id="adminTotalPosts">-</div>
         </div>
         <div class="profile-card" style="max-width:180px;">
-          <div style="font-size:12px;color:#888;">Verified (1,000+ Leos)</div>
+          <div style="font-size:12px;color:#888;">Verified (1,000+ Coins)</div>
           <div style="font-size:26px;font-weight:700;color:#2b3a8f;" id="adminTotalVerified">-</div>
         </div>
       </div>
@@ -857,8 +901,7 @@
       <span onclick="switchTab('profilePage')">👤<br>Profile</span>
       <span onclick="switchTab('chatsPage')">💬<br>Message</span>
       <span onclick="switchTab('gamesPage')">🎮<br>Game</span>
-      <span onclick="switchTab('buyLeosPage')">💰<br>Buy$</span>
-      <span onclick="switchTab('spinPage')">🎡<br>Spin</span>
+      <span onclick="switchTab('buyCoinsPage')">💰<br>Buy Coins</span>
     </div>
 
     <div class="footer-tiles">
@@ -875,7 +918,7 @@
         <div class="tile-icon">🔗</div><div class="tile-label">Referral</div>
       </div>
     </div>
-    <div class="tile-support" onclick="alert('Customer Service is coming soon.')">🎧 Customer Service</div>
+    <div class="tile-support" onclick="switchTab('supportPage')">🎧 Customer Service</div>
 
     <div class="app-footer">
       <span class="footer-user" id="footerUserLabel"></span>
@@ -984,8 +1027,20 @@ async function wipeEverything(){
   }
 }
 
+async function refreshWelcomeStats(){
+  const el = document.getElementById('welcomeRegisteredCount');
+  if (!el) return;
+  try {
+    const keys = await storageListKeys('user:');
+    el.textContent = keys.length.toLocaleString();
+  } catch (e) {
+    el.textContent = '—';
+  }
+}
+
 function showWelcome(){
   document.getElementById('welcomeScreen').style.display = 'flex';
+  refreshWelcomeStats();
   document.getElementById('loginScreen').style.display = 'none';
   document.getElementById('signupScreen').style.display = 'none';
   document.getElementById('app').style.display = 'none';
@@ -1407,7 +1462,7 @@ async function doSignup(){
     await storageSet(notifsKey(username), JSON.stringify([{
       id: Date.now() + '-' + Math.random().toString(36).slice(2, 8),
       type: 'welcome', time: Date.now(), read: false, handled: true,
-      text: "Welcome to Chat Me! We are excited to have you join our growing community of friends, chatters, and gamers. Here you can message people, join group chats, share posts, play fun games with friends or the AI, and earn Leos along the way. Please be kind and respectful, and follow the rules. Enjoy your time here, and let's chat!"
+      text: "Welcome to Chat Me! We are excited to have you join our growing community of friends, chatters, and gamers. Here you can message people, join group chats, share posts, play fun games with friends or the AI, and earn Coins along the way. Please be kind and respectful, and follow the rules. Enjoy your time here, and let's chat!"
     }]), true);
 
     // Referral tracking: ?ref=someusername in the URL that brought them here.
@@ -1470,7 +1525,7 @@ async function doSignup(){
 
 function publicUser(user){
   const { salt, passwordHash, ...pub } = user;
-  if (typeof pub.leos !== 'number') pub.leos = 20.00; // accounts created before Leos existed
+  if (typeof pub.leos !== 'number') pub.leos = 20.00; // accounts created before Coins existed
   return pub;
 }
 
@@ -1505,7 +1560,7 @@ function animateNumberEl(el, from, to, duration){
   requestAnimationFrame(tick);
 }
 
-function updateLeosDisplay(){
+function updateCoinsDisplay(){
   if (!currentUser) return;
   const amount = typeof currentUser.leos === 'number' ? currentUser.leos : 20;
   const navEl = document.getElementById('leosNavAmount');
@@ -1548,7 +1603,7 @@ if (!document.getElementById('confettiStyleTag')) {
   document.head.appendChild(styleTag);
 }
 
-function loadLeosPage(){
+function loadCoinsPage(){
   const amount = (typeof currentUser.leos === 'number' ? currentUser.leos : 20).toFixed(2);
   document.getElementById('leosBig').textContent = amount;
 }
@@ -1625,6 +1680,9 @@ async function viewProfile(username){
   const viewerIsAdmin = isAdminUser(currentUser);
   const canSeeFull = viewerIsAdmin || !!currentUser.verified || !theyAreLocked;
 
+  // Always read the latest shared friend list before sending so a newly accepted
+  // friendship on another device is recognized immediately.
+  _cacheClear(friendsKey(currentUser.username));
   const myFriendsRaw = await storageGet(friendsKey(currentUser.username), true);
   const myFriends = myFriendsRaw ? JSON.parse(myFriendsRaw) : [];
   const incomingRaw = await storageGet(requestsKey(currentUser.username), true);
@@ -2034,7 +2092,7 @@ async function grantDailyBonusIfDue(){
     u.leos = (typeof u.leos === 'number' ? u.leos : 0) + DAILY_BONUS_AMOUNT;
     await storageSet(userKey(currentUser.email), JSON.stringify(u), true);
     currentUser.leos = u.leos;
-    updateLeosDisplay();
+    updateCoinsDisplay();
   } catch(e){ return; }
   await storageSet(dailyBonusKey(currentUser.username), today, true);
 
@@ -2043,9 +2101,22 @@ async function grantDailyBonusIfDue(){
   notifs.push({
     id: Date.now() + '-' + Math.random().toString(36).slice(2, 8),
     type: 'welcome', time: Date.now(), read: false, handled: true,
-    text: `You received your daily login bonus: +${DAILY_BONUS_AMOUNT} Leos! Come back tomorrow for more.`
+    text: `You received your daily login bonus: +${DAILY_BONUS_AMOUNT} Coins! Come back tomorrow for more.`
   });
   await storageSet(notifsKey(currentUser.username), JSON.stringify(notifs), true);
+}
+
+async function verifyCoreCloudReadiness(){
+  // Registration/login should never silently look successful while the app is
+  // disconnected from its shared database. This is a diagnostic only: it
+  // does not expose account data and never blocks local recovery.
+  if (!firebaseDb) return {ok:false, reason:'offline'};
+  try {
+    await withTimeout(firebaseDb.collection('kv').doc('_chatme_healthcheck').get(), 3000);
+    return {ok:true};
+  } catch(e) {
+    return {ok:false, reason:'cloud'};
+  }
 }
 
 async function loginSuccess(user){
@@ -2066,23 +2137,25 @@ async function loginSuccess(user){
   document.getElementById('suDay').value = '';
   document.getElementById('suYear').value = '';
   document.getElementById('footerUserLabel').textContent = (user.firstName || '') + ' ' + (user.lastName || '') + ' (@' + user.username + ')';
-  updateLeosDisplay();
+  updateCoinsDisplay();
+  const cloudStatus = await verifyCoreCloudReadiness();
+  if (!cloudStatus.ok) { console.warn('Chat Me cloud sync is not currently confirmed; the app may be using local fallback.'); }
   document.getElementById('adminNavItem').style.display = (isAdminUser(user) || isModeratorUser(user)) ? 'block' : 'none';
+  const supportNav = document.getElementById('supportNavItem');
+  if (supportNav) supportNav.style.display = (isAdminUser(user) || isModeratorUser(user)) ? 'block' : 'none';
   document.getElementById('homeColorPicker').innerHTML = postColorPickerHtml('home');
 
   if (badgePollTimer) clearInterval(badgePollTimer);
   sendHeartbeat();
   refreshBadges();
   updateOnlineDisplay();
-  trackSpinActiveTime();
   grantDailyBonusIfDue();
   checkFriendBirthdaysToday();
   badgePollTimer = setInterval(() => {
     sendHeartbeat();
     refreshBadges();
     updateOnlineDisplay();
-    trackSpinActiveTime();
-  }, 6000);
+    }, 6000);
 
   const savedTab = await storageGet(lastTabKey(user.username));
   switchTab(savedTab || 'homePage');
@@ -2137,7 +2210,7 @@ async function showReferralInfo(){
   if (unclaimed.length) {
     const next = unclaimed[0];
     const claimNow = confirm(
-      `You earned ${next.amount} Leos for reaching ${next.milestone} referrals!\n\n` +
+      `You earned ${next.amount} Coins for reaching ${next.milestone} referrals!\n\n` +
       `Tap OK to withdraw it now, or Cancel to claim it later (it'll stay saved for you).`
     );
     if (claimNow) {
@@ -2148,15 +2221,15 @@ async function showReferralInfo(){
         u2.leos = (typeof u2.leos === 'number' ? u2.leos : 20) + reward.amount;
         await storageSet(userKey(currentUser.email), JSON.stringify(u2), true);
         currentUser.leos = u2.leos;
-        updateLeosDisplay();
-        alert('Withdrawn! +' + reward.amount + ' Leos.');
+        updateCoinsDisplay();
+        alert('Withdrawn! +' + reward.amount + ' Coins.');
       }
     }
   }
 
   const toNextMilestone = REFERRAL_MILESTONES.find(m => m.count > count);
-  const nextText = toNextMilestone ? `${toNextMilestone.count - count} more to earn ${toNextMilestone.reward} Leos` : "You've reached every referral milestone!";
-  const msg = `Share your link to invite friends!\n\n${link}\n\nOnly people who actually sign up with your link count.\n5 referrals = 10 Leos. 10 referrals = 15 Leos.\n\nYou've invited ${count} so far. ${nextText}`;
+  const nextText = toNextMilestone ? `${toNextMilestone.count - count} more to earn ${toNextMilestone.reward} Coins` : "You've reached every referral milestone!";
+  const msg = `Share your link to invite friends!\n\n${link}\n\nOnly people who actually sign up with your link count.\n5 referrals = 10 Coins. 10 referrals = 15 Coins.\n\nYou've invited ${count} so far. ${nextText}`;
   if (navigator.share) {
     navigator.share({ title: 'Join me on Chat Me', text: 'Join me on Chat Me!', url: link }).catch(() => {});
   } else {
@@ -2286,13 +2359,13 @@ const LANGUAGE_LIST = [
   'Zulu','Shona','Afrikaans','Tagalog'
 ];
 const TRANSLATIONS = {
-  'English': { home:'Home', profile:'Profile', message:'Message', friends:'Friends', notifications:'Notifications', chatrooms:'Chatrooms', statusbook:'Statusbook', groups:'Groups', leos:'Leos', games:'Games', buy:'Buy$', menu:'Menu', admin:'Admin', login:'Log In', signup:'Sign Up' },
-  'French': { home:'Accueil', profile:'Profil', message:'Message', friends:'Amis', notifications:'Notifications', chatrooms:'Salons', statusbook:'Statuts', groups:'Groupes', leos:'Leos', games:'Jeux', buy:'Acheter$', menu:'Menu', admin:'Admin', login:'Connexion', signup:"S'inscrire" },
-  'Spanish': { home:'Inicio', profile:'Perfil', message:'Mensaje', friends:'Amigos', notifications:'Notificaciones', chatrooms:'Salas', statusbook:'Estados', groups:'Grupos', leos:'Leos', games:'Juegos', buy:'Comprar$', menu:'Menú', admin:'Admin', login:'Iniciar sesión', signup:'Registrarse' },
-  'Yoruba': { home:'Ile', profile:'Profaili', message:'Ifiranṣẹ', friends:'Ọ̀rẹ́', notifications:'Ìkéde', chatrooms:'Yàrá ìjíròrò', statusbook:'Ìwé ipò', groups:'Àwùjọ', leos:'Leos', games:'Eré', buy:'Ra$', menu:'Àkójọ', admin:'Alábòójútó', login:'Wọlé', signup:'Forúkọsílẹ̀' },
-  'Hausa': { home:'Gida', profile:'Bayani', message:'Saƙo', friends:'Abokai', notifications:'Sanarwa', chatrooms:'Ɗakunan hira', statusbook:'Littafin matsayi', groups:'Ƙungiyoyi', leos:'Leos', games:'Wasanni', buy:'Saya$', menu:'Menu', admin:'Admin', login:'Shiga', signup:'Yi rijista' },
-  'Igbo': { home:'Ụlọ', profile:'Profaịlụ', message:'Ozi', friends:'Ndị enyi', notifications:'Ọkwa', chatrooms:'Ụlọ nkata', statusbook:'Akwụkwọ ọnọdụ', groups:'Òtù', leos:'Leos', games:'Egwuregwu', buy:'Zụta$', menu:'Menu', admin:'Onye nlekọta', login:'Banye', signup:'Debanye aha' },
-  'Nigerian Pidgin': { home:'Home', profile:'Profile', message:'Message', friends:'Padi dem', notifications:'Notification', chatrooms:'Chatroom', statusbook:'Statusbook', groups:'Group', leos:'Leos', games:'Game', buy:'Buy$', menu:'Menu', admin:'Admin', login:'Enter', signup:'Register' }
+  'English': { home:'Home', profile:'Profile', message:'Message', friends:'Friends', notifications:'Notifications', chatrooms:'Chatrooms', statusbook:'Statusbook', groups:'Groups', leos:'Coins', games:'Games', buy:'Buy Coins', menu:'Menu', admin:'Admin', login:'Log In', signup:'Sign Up' },
+  'French': { home:'Accueil', profile:'Profil', message:'Message', friends:'Amis', notifications:'Notifications', chatrooms:'Salons', statusbook:'Statuts', groups:'Groupes', leos:'Coins', games:'Jeux', buy:'Acheter des Coins', menu:'Menu', admin:'Admin', login:'Connexion', signup:"S'inscrire" },
+  'Spanish': { home:'Inicio', profile:'Perfil', message:'Mensaje', friends:'Amigos', notifications:'Notificaciones', chatrooms:'Salas', statusbook:'Estados', groups:'Grupos', leos:'Coins', games:'Juegos', buy:'Comprar Coins', menu:'Menú', admin:'Admin', login:'Iniciar sesión', signup:'Registrarse' },
+  'Yoruba': { home:'Ile', profile:'Profaili', message:'Ifiranṣẹ', friends:'Ọ̀rẹ́', notifications:'Ìkéde', chatrooms:'Yàrá ìjíròrò', statusbook:'Ìwé ipò', groups:'Àwùjọ', leos:'Coins', games:'Eré', buy:'Ra Coins', menu:'Àkójọ', admin:'Alábòójútó', login:'Wọlé', signup:'Forúkọsílẹ̀' },
+  'Hausa': { home:'Gida', profile:'Bayani', message:'Saƙo', friends:'Abokai', notifications:'Sanarwa', chatrooms:'Ɗakunan hira', statusbook:'Littafin matsayi', groups:'Ƙungiyoyi', leos:'Coins', games:'Wasanni', buy:'Saya Coins', menu:'Menu', admin:'Admin', login:'Shiga', signup:'Yi rijista' },
+  'Igbo': { home:'Ụlọ', profile:'Profaịlụ', message:'Ozi', friends:'Ndị enyi', notifications:'Ọkwa', chatrooms:'Ụlọ nkata', statusbook:'Akwụkwọ ọnọdụ', groups:'Òtù', leos:'Coins', games:'Egwuregwu', buy:'Zụta Coins', menu:'Menu', admin:'Onye nlekọta', login:'Banye', signup:'Debanye aha' },
+  'Nigerian Pidgin': { home:'Home', profile:'Profile', message:'Message', friends:'Padi dem', notifications:'Notification', chatrooms:'Chatroom', statusbook:'Statusbook', groups:'Group', leos:'Coins', games:'Game', buy:'Buy Coins', menu:'Menu', admin:'Admin', login:'Enter', signup:'Register' }
 };
 function currentLangCode(){
   let lang = 'English';
@@ -2371,19 +2444,20 @@ function switchTab(pageId){
   if (pageId === 'chatsPage') loadFriendList();
   if (pageId === 'friendsPage') { document.getElementById('peopleResults').innerHTML = ''; loadMyFriendsList(); }
   if (pageId === 'notificationsPage') loadNotifications();
-  if (pageId === 'leosPage') loadLeosPage();
+  if (pageId === 'leosPage') loadCoinsPage();
   if (pageId === 'statusbookPage') loadStatusbookPage();
   if (pageId === 'aiPage') loadAIPage();
   if (pageId === 'menuPage') loadMenuPage();
   if (pageId === 'reportPage') loadReportPage();
   if (pageId === 'searchPage') { document.getElementById('searchInput').value = ''; setSearchTab('users'); }
   if (pageId === 'shopPage') loadShopPage();
-  if (pageId === 'spinPage') loadSpinPage();
   if (pageId === 'groupsPage') loadGroupListPage();
   if (pageId === 'chatroomsPage') loadRoomListPage();
   if (pageId === 'adminPage') loadAdminPage();
+  if (pageId === 'supportPage') cmLoadSupportPage();
   if (pageId === 'announcementsPage') loadAnnouncementsPage();
-  if (pageId === 'buyLeosPage') loadBuyLeosPage();
+  if (pageId === 'buyCoinsPage') loadBuyCoinsPage();
+  if (pageId === 'settingsPage') cmLoadSettings();
 }
 
 /* ---------------- ADMIN (owner only) ---------------- */
@@ -2416,40 +2490,40 @@ async function loadAdminPage(){
   rows.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
 
   /* ---- Verification requests (admin or moderator can act) ---- */
-  const eligible = rows.filter(u => !u.verified && typeof u.leos === 'number' && u.leos >= VERIFIED_LEOS_THRESHOLD);
+  const eligible = rows.filter(u => !u.verified && typeof u.leos === 'number' && u.leos >= VERIFIED_COINS_THRESHOLD);
   const canVerify = iAmAdmin || iAmModerator;
   const verifySection = `
-    <div class="section-divider"><strong>Verification requests</strong><span>Accounts that reached ${VERIFIED_LEOS_THRESHOLD} Leos and are eligible for the 🌐 badge.</span></div>
+    <div class="section-divider"><strong>Verification requests</strong><span>Accounts that reached ${VERIFIED_COINS_THRESHOLD} Coins and are eligible for the 🌐 badge.</span></div>
     ${eligible.length ? eligible.map(u => `
       <div class="user-result" style="max-width:560px;">
         <div class="avatar">${((u.firstName||'?')[0]+(u.lastName||'?')[0]).toUpperCase()}</div>
         <div class="info">
           <div class="name">${escapeHtml(u.firstName)} ${escapeHtml(u.lastName)}</div>
-          <div class="uname">@${escapeHtml(u.username)} &middot; Leos: ${u.leos.toFixed(2)}</div>
+          <div class="uname">@${escapeHtml(u.username)} &middot; Coins: ${u.leos.toFixed(2)}</div>
         </div>
         ${canVerify ? `<button onclick="verifyUser('${u.username.replace(/'/g,"\\'")}')">Verify</button>` : `<span style="color:#aaa;font-size:12.5px;">Only staff can verify</span>`}
       </div>`).join('') : '<div class="empty-feed">No one is currently eligible.</div>'}
   `;
 
   /* ---- Verified accounts that fell back below the threshold - staff can remove the badge ---- */
-  const droppedBelow = rows.filter(u => u.verified && !(typeof u.leos === 'number' && u.leos >= VERIFIED_LEOS_THRESHOLD));
+  const droppedBelow = rows.filter(u => u.verified && !(typeof u.leos === 'number' && u.leos >= VERIFIED_COINS_THRESHOLD));
   const unverifySection = droppedBelow.length ? `
-    <div class="section-divider"><strong>Verified but below ${VERIFIED_LEOS_THRESHOLD} Leos</strong><span>Their balance dropped back down - staff can remove their 🌐 badge.</span></div>
+    <div class="section-divider"><strong>Verified but below ${VERIFIED_COINS_THRESHOLD} Coins</strong><span>Their balance dropped back down - staff can remove their 🌐 badge.</span></div>
     ${droppedBelow.map(u => `
       <div class="user-result" style="max-width:560px;">
         <div class="avatar">${((u.firstName||'?')[0]+(u.lastName||'?')[0]).toUpperCase()}</div>
         <div class="info">
           <div class="name">${escapeHtml(u.firstName)} ${escapeHtml(u.lastName)}</div>
-          <div class="uname">@${escapeHtml(u.username)} &middot; Leos: ${(u.leos||0).toFixed(2)}</div>
+          <div class="uname">@${escapeHtml(u.username)} &middot; Coins: ${(u.leos||0).toFixed(2)}</div>
         </div>
         ${canVerify ? `<button style="background:#e8622d;" onclick="unverifyUser('${u.username.replace(/'/g,"\\'")}')">Remove Verification</button>` : ''}
       </div>`).join('')}
   ` : '';
 
-  /* ---- Leos leaderboard - top 20, visible to admins and moderators ---- */
+  /* ---- Coins leaderboard - top 20, visible to admins and moderators ---- */
   const top20 = rows.slice().sort((a,b) => (b.leos||0) - (a.leos||0)).slice(0, 20);
   const leaderboardSection = `
-    <div class="section-divider"><strong>Leos Leaderboard</strong><span>The top 20 accounts by Leos balance.</span></div>
+    <div class="section-divider"><strong>Coins Leaderboard</strong><span>The top 20 accounts by Coins balance.</span></div>
     ${top20.map((u, i) => `
       <div class="user-result" style="max-width:560px;">
         <div class="avatar">${((u.firstName||'?')[0]+(u.lastName||'?')[0]).toUpperCase()}</div>
@@ -2501,7 +2575,7 @@ async function loadAdminPage(){
   /* ---- Moderators (owner or admin can promote/demote; max MAX_MODERATORS) ---- */
   const moderatorCount = rows.filter(u => u.isModerator).length;
   const moderatorsSection = iAmAdmin ? `
-    <div class="section-divider"><strong>Moderators (${moderatorCount}/${MAX_MODERATORS})</strong><span>Moderators can post announcements (up to 3 days a week), verify accounts at ${VERIFIED_LEOS_THRESHOLD}+ Leos, and view the Leos leaderboard. They cannot give Leos, ban, or delete accounts.</span></div>
+    <div class="section-divider"><strong>Moderators (${moderatorCount}/${MAX_MODERATORS})</strong><span>Moderators can post announcements (up to 3 days a week), verify accounts at ${VERIFIED_COINS_THRESHOLD}+ Coins, and view the Coins leaderboard. They cannot give Coins, ban, or delete accounts.</span></div>
     ${rows.filter(u => u.isModerator).map(u => `
       <div class="user-result" style="max-width:560px;">
         <div class="avatar">${((u.firstName||'?')[0]+(u.lastName||'?')[0]).toUpperCase()}</div>
@@ -2545,7 +2619,7 @@ async function loadAdminPage(){
     `;
   }
 
-  /* ---- Pending Leos purchases (any admin can approve/reject) ---- */
+  /* ---- Pending Coins purchases (any admin can approve/reject) ---- */
   const purchaseKeys = await storageListKeys('purchase:', true);
   const pendingPurchases = [];
   const purchaseRaws = await Promise.all(purchaseKeys.map(k => storageGet(k, true)));
@@ -2555,27 +2629,27 @@ async function loadAdminPage(){
   }
   pendingPurchases.sort((a, b) => b.time - a.time);
   const purchaseSection = `
-    <div class="section-divider"><strong>Pending Leos purchases</strong><span>Only approve once you've actually confirmed the money arrived in your account.</span></div>
+    <div class="section-divider"><strong>Pending Coins purchases</strong><span>Only approve once you've actually confirmed the money arrived in your account.</span></div>
     ${pendingPurchases.length ? pendingPurchases.map(p => `
       <div class="user-result" style="max-width:560px;">
         <div class="info">
           <div class="name">${escapeHtml(p.buyerName)} <span style="color:#888;font-weight:400;">@${escapeHtml(p.username)}</span></div>
-          <div class="uname">${p.leos} Leos for ₦${p.priceNaira.toLocaleString()} &middot; ref: ${escapeHtml(p.reference)} &middot; ${timeAgo(p.time)}</div>
+          <div class="uname">${p.leos} Coins for ₦${p.priceNaira.toLocaleString()} &middot; ref: ${escapeHtml(p.reference)} &middot; ${timeAgo(p.time)}</div>
         </div>
         <button onclick="approvePurchase('${p.id}')">Approve</button>
         <button style="background:#d32f2f;" onclick="rejectPurchase('${p.id}')">Reject</button>
       </div>`).join('') : '<div class="empty-feed">No pending purchases.</div>'}
   `;
 
-  /* ---- Give Leos (any admin can act) ---- */
-  const giveLeosSection = `
-    <div class="section-divider"><strong>Give Leos</strong><span>Type a username and an amount to add to their balance.</span></div>
+  /* ---- Give Coins (any admin can act) ---- */
+  const giveCoinsSection = `
+    <div class="section-divider"><strong>Give Coins</strong><span>Type a username and an amount to add to their balance.</span></div>
     <div style="margin-bottom:10px;">
-      <input type="text" id="giveLeosUsername" placeholder="Username" style="padding:8px 10px;border:1px solid #ccc;border-radius:6px;font-size:13px;margin-right:6px;">
-      <input type="number" id="giveLeosAmount" placeholder="Amount" step="0.01" style="padding:8px 10px;border:1px solid #ccc;border-radius:6px;font-size:13px;margin-right:6px;width:110px;">
-      <button onclick="giveLeos(document.getElementById('giveLeosUsername').value.trim(), document.getElementById('giveLeosAmount').value)">Send Leos</button>
-      <div class="auth-error" id="giveLeosError"></div>
-      <div class="auth-status" id="giveLeosStatus"></div>
+      <input type="text" id="giveCoinsUsername" placeholder="Username" style="padding:8px 10px;border:1px solid #ccc;border-radius:6px;font-size:13px;margin-right:6px;">
+      <input type="number" id="giveCoinsAmount" placeholder="Amount" step="0.01" style="padding:8px 10px;border:1px solid #ccc;border-radius:6px;font-size:13px;margin-right:6px;width:110px;">
+      <button onclick="giveCoins(document.getElementById('giveCoinsUsername').value.trim(), document.getElementById('giveCoinsAmount').value)">Send Coins</button>
+      <div class="auth-error" id="giveCoinsError"></div>
+      <div class="auth-status" id="giveCoinsStatus"></div>
     </div>
   `;
 
@@ -2601,7 +2675,7 @@ async function loadAdminPage(){
         <div class="avatar">${((u.firstName||'?')[0]+(u.lastName||'?')[0]).toUpperCase()}</div>
         <div class="info">
           <div class="name">${escapeHtml(u.firstName)} ${escapeHtml(u.lastName)} ${roleBadgeHtml(u)} ${u.banned ? '<span style="color:#d32f2f;font-size:11px;font-weight:700;border:1px solid #d32f2f;padding:1px 6px;border-radius:10px;">BANNED</span>' : ''}</div>
-          <div class="uname">@${escapeHtml(u.username)} &middot; ${escapeHtml(u.email)} &middot; Leos: ${(typeof u.leos==='number'?u.leos:0).toFixed(2)}</div>
+          <div class="uname">@${escapeHtml(u.username)} &middot; ${escapeHtml(u.email)} &middot; Coins: ${(typeof u.leos==='number'?u.leos:0).toFixed(2)}</div>
           ${u.banned ? `<div style="font-size:11.5px;color:#d32f2f;margin-top:2px;">Reason: ${escapeHtml(u.banReason || 'No reason given')} &middot; ${u.banUntil ? 'until ' + new Date(u.banUntil).toLocaleDateString() : 'no expiry'}</div>` : ''}
         </div>
         ${u.isOwner ? '<span style="color:#aaa;font-size:12.5px;">Protected</span>' : `
@@ -2610,16 +2684,6 @@ async function loadAdminPage(){
           <button style="background:#d32f2f;" onclick="deleteAccount('${u.username.replace(/'/g,"\\'")}')">Delete Account</button>`}
       </div>`).join('')}
     <div id="adminEditArea"></div>
-  `;
-
-  const aiVaultRaw = await storageGet(AI_VAULT_KEY, true);
-  const aiVaultBalance = aiVaultRaw ? parseFloat(aiVaultRaw) : 0;
-  const aiVaultSection = `
-    <div class="section-divider"><strong>AI Game Vault</strong><span>Admin-only. Leos lost by players betting against the AI bots.</span></div>
-    <div class="user-result" style="max-width:560px;display:block;">
-      <div style="font-size:20px;font-weight:700;color:#2b3a8f;margin-bottom:8px;">${aiVaultBalance.toFixed(2)} Leos</div>
-      <button onclick="withdrawAiVault()" ${aiVaultBalance <= 0 ? 'disabled' : ''} style="background:${aiVaultBalance <= 0 ? '#bbb' : '#25a244'};">Withdraw to my balance</button>
-    </div>
   `;
 
   const dangerSection = iAmOwner ? `
@@ -2631,33 +2695,14 @@ async function loadAdminPage(){
   ` : '';
 
   document.getElementById('adminUserList').innerHTML = verifySection + unverifySection + leaderboardSection + banSection + reportsSection
-    + (iAmAdmin ? (adminSection + moderatorsSection + purchaseSection + giveLeosSection + deleteSection + aiVaultSection + dangerSection) : '');
+    + (iAmAdmin ? (adminSection + moderatorsSection + purchaseSection + giveCoinsSection + deleteSection + dangerSection) : '');
 }
 
-async function withdrawAiVault(){
-  if (!isAdminUser(currentUser)) return;
-  const raw = await storageGet(AI_VAULT_KEY, true);
-  const balance = raw ? parseFloat(raw) : 0;
-  if (balance <= 0) return;
-  const uraw = await storageGet(userKey(currentUser.email), true);
-  if (!uraw) { alert('Could not load your account.'); return; }
-  try {
-    const u = JSON.parse(uraw);
-    u.leos = (typeof u.leos === 'number' ? u.leos : 0) + balance;
-    await storageSet(userKey(currentUser.email), JSON.stringify(u), true);
-    currentUser.leos = u.leos;
-    updateLeosDisplay();
-    await storageSet(AI_VAULT_KEY, '0', true);
-    alert('Withdrew ' + balance.toFixed(2) + ' Leos from the AI vault.');
-    loadAdminPage();
-  } catch(e) { alert('Something went wrong.'); }
-}
-
-async function giveLeos(username, amountStr){
-  const errEl = document.getElementById('giveLeosError');
-  const statusEl = document.getElementById('giveLeosStatus');
+async function giveCoins(username, amountStr){
+  const errEl = document.getElementById('giveCoinsError');
+  const statusEl = document.getElementById('giveCoinsStatus');
   errEl.textContent = ''; statusEl.textContent = '';
-  if (!isAdminUser(currentUser)) { errEl.textContent = 'Only admins can send Leos.'; return; }
+  if (!isAdminUser(currentUser)) { errEl.textContent = 'Only admins can send Coins.'; return; }
   const amount = parseFloat(amountStr);
   if (!username) { errEl.textContent = 'Enter a username.'; return; }
   if (isNaN(amount) || amount === 0) { errEl.textContent = 'Enter a valid amount.'; return; }
@@ -2669,13 +2714,13 @@ async function giveLeos(username, amountStr){
     const u = JSON.parse(raw);
     u.leos = (typeof u.leos === 'number' ? u.leos : 0) + amount;
     await storageSet(userKey(email), JSON.stringify(u), true);
-    statusEl.textContent = 'Sent ' + amount.toFixed(2) + ' Leos to @' + username + '. New balance: ' + u.leos.toFixed(2);
+    statusEl.textContent = 'Sent ' + amount.toFixed(2) + ' Coins to @' + username + '. New balance: ' + u.leos.toFixed(2);
 
     const notifRaw = await storageGet(notifsKey(username), true);
     const notifs = notifRaw ? JSON.parse(notifRaw) : [];
     notifs.push({
       id: Date.now() + '-' + Math.random().toString(36).slice(2, 8),
-      type: 'leos_topup', from: currentUser.username,
+      type: 'coins_topup', from: currentUser.username,
       fromName: currentUser.firstName + ' ' + currentUser.lastName,
       amount, newBalance: u.leos, time: Date.now(), read: false, handled: true
     });
@@ -2684,8 +2729,15 @@ async function giveLeos(username, amountStr){
   loadAdminPage();
 }
 
-/* ---------------- BUY LEOS (manual bank transfer + admin confirmation) ---------------- */
-async function loadBuyLeosPage(){
+/* ---------------- BUY COINS (manual bank transfer + admin confirmation) ---------------- */
+async function loadBuyCoinsPage(){
+  if (!PAYMENT_DETAILS.bankName || !PAYMENT_DETAILS.accountNumber || !PAYMENT_DETAILS.accountName) {
+    const host = document.getElementById('buyPackages');
+    if (host) host.innerHTML = '<div class="profile-card" style="max-width:620px;"><strong>Coin purchases are temporarily unavailable.</strong><div style="margin-top:6px;color:#666;">Official payment details have not been configured yet. Please use Customer Service for help.</div><button onclick="switchTab(\'supportPage\')" style="margin-top:10px;background:#146c43;color:#fff;border:0;padding:9px 14px;border-radius:6px;cursor:pointer;">Contact Customer Service</button></div>';
+    const confirmArea = document.getElementById('buyConfirmArea');
+    if (confirmArea) confirmArea.innerHTML = '';
+    return;
+  }
   const packagesEl = document.getElementById('buyPackages');
   const cooldownEl = document.getElementById('buyCooldownNote');
   document.getElementById('buyConfirmArea').innerHTML = '';
@@ -2700,10 +2752,10 @@ async function loadBuyLeosPage(){
     cooldownEl.textContent = `You can submit another purchase in about ${mins} minute${mins===1?'':'s'}.`;
   }
 
-  packagesEl.innerHTML = LEOS_PACKAGES.map((pkg, i) => `
+  packagesEl.innerHTML = COINS_PACKAGES.map((pkg, i) => `
     <div class="profile-card" style="max-width:180px;text-align:center;">
       <div style="font-size:24px;font-weight:700;color:#2b3a8f;">${pkg.leos}</div>
-      <div style="font-size:12.5px;color:#888;margin-bottom:8px;">Leos</div>
+      <div style="font-size:12.5px;color:#888;margin-bottom:8px;">Coins</div>
       <div style="font-size:17px;font-weight:700;color:#25a244;margin-bottom:10px;">₦${pkg.priceNaira.toLocaleString()}</div>
       <button ${onCooldown ? 'disabled' : ''} onclick="selectPackage(${i})" style="background:${onCooldown ? '#bbb' : '#2b6ee0'};color:#fff;border:none;padding:9px 18px;border-radius:6px;cursor:${onCooldown ? 'default' : 'pointer'};font-weight:600;">Buy</button>
     </div>
@@ -2711,11 +2763,11 @@ async function loadBuyLeosPage(){
 }
 
 function selectPackage(i){
-  const pkg = LEOS_PACKAGES[i];
+  const pkg = COINS_PACKAGES[i];
   if (!pkg) return;
   document.getElementById('buyConfirmArea').innerHTML = `
     <div class="profile-card" style="max-width:480px;">
-      <div style="font-weight:700;color:#2b3a8f;margin-bottom:8px;">You're buying ${pkg.leos} Leos for ₦${pkg.priceNaira.toLocaleString()}</div>
+      <div style="font-weight:700;color:#2b3a8f;margin-bottom:8px;">You're buying ${pkg.leos} Coins for ₦${pkg.priceNaira.toLocaleString()}</div>
       <div style="font-size:13.5px;color:#333;line-height:1.6;margin-bottom:10px;">
         Bank: <b>${escapeHtml(PAYMENT_DETAILS.bankName)}</b><br>
         Account number: <b>${escapeHtml(PAYMENT_DETAILS.accountNumber)}</b><br>
@@ -2735,7 +2787,7 @@ async function submitPurchaseRequest(i){
   const errEl = document.getElementById('buyError');
   const statusEl = document.getElementById('buyStatus');
   errEl.textContent = ''; statusEl.textContent = '';
-  const pkg = LEOS_PACKAGES[i];
+  const pkg = COINS_PACKAGES[i];
   if (!pkg) return;
   const reference = document.getElementById('buyReference').value.trim();
   if (!reference) { errEl.textContent = 'Enter your payment reference or sender name first.'; return; }
@@ -2780,8 +2832,8 @@ async function submitPurchaseRequest(i){
       await storageSet(notifsKey(u.username), JSON.stringify(notifs), true);
     }));
 
-    statusEl.textContent = 'Submitted! Your Leos will be added once an admin confirms the payment.';
-    setTimeout(() => loadBuyLeosPage(), 1200);
+    statusEl.textContent = 'Submitted! Your Coins will be added once an admin confirms the payment.';
+    setTimeout(() => loadBuyCoinsPage(), 1200);
   } catch (e) {
     errEl.textContent = 'Could not submit your request. Please try again.';
   } finally {
@@ -2812,7 +2864,7 @@ async function approvePurchase(id){
     const notifs = notifRaw ? JSON.parse(notifRaw) : [];
     notifs.push({
       id: Date.now() + '-' + Math.random().toString(36).slice(2, 8),
-      type: 'leos_topup', from: currentUser.username,
+      type: 'coins_topup', from: currentUser.username,
       fromName: currentUser.firstName + ' ' + currentUser.lastName,
       amount: purchase.leos, newBalance: u.leos, time: Date.now(), read: false, handled: true
     });
@@ -2919,7 +2971,7 @@ async function verifyUser(username){
   if (!raw) return;
   try {
     const u = JSON.parse(raw);
-    if (!(typeof u.leos === 'number' && u.leos >= VERIFIED_LEOS_THRESHOLD)) { alert('This account has not reached ' + VERIFIED_LEOS_THRESHOLD + ' Leos yet.'); return; }
+    if (!(typeof u.leos === 'number' && u.leos >= VERIFIED_COINS_THRESHOLD)) { alert('This account has not reached ' + VERIFIED_COINS_THRESHOLD + ' Coins yet.'); return; }
     u.verified = true;
     await storageSet(userKey(email), JSON.stringify(u), true);
   } catch(e){}
@@ -3255,48 +3307,26 @@ async function addToAiVault(amount){
 }
 
 async function startWordGame(mode){
-  const betInput = prompt('Bet how many Leos on this round? (1-10)\nWin: get your bet back plus the reward. Lose or quit: your bet is gone.', '1');
-  if (betInput === null) return;
-  const bet = parseFloat(betInput);
-  if (!bet || bet < 1 || bet > 10) { alert('Bet must be between 1 and 10 Leos.'); return; }
-
-  const raw = await storageGet(userKey(currentUser.email), true);
-  if (!raw) { alert('Could not load your account. Please try again.'); return; }
-  let u; try { u = JSON.parse(raw); } catch(e) { alert('Something went wrong.'); return; }
-  const balance = typeof u.leos === 'number' ? u.leos : 20;
-  if (balance < bet) { alert('You need ' + bet + ' Leos to place that bet.'); return; }
-  u.leos = balance - bet;
-  await storageSet(userKey(currentUser.email), JSON.stringify(u), true);
-  currentUser.leos = u.leos;
-  updateLeosDisplay();
-
   const word = WORD_GAME_LIST[Math.floor(Math.random() * WORD_GAME_LIST.length)];
   const botConfig = mode === 'hard'
-    ? { label: 'Bot 2 — Hard', minDelay: 400, maxDelay: 1200, accuracy: 0.9, reward: 4 }
+    ? { label: 'Bot 2 — Hard', minDelay: 400, maxDelay: 1200, accuracy: 0.9, reward: 2 }
     : { label: 'Bot 1 — Normal', minDelay: 1000, maxDelay: 2500, accuracy: 0.55, reward: 2 };
-
-  gameState = { mode, word, ...botConfig, secondsLeft: 10, over: false, bet };
-
+  gameState = { mode, word, ...botConfig, secondsLeft: 10, over: false, bet: 0 };
   document.getElementById('gamePicker').style.display = 'none';
   document.getElementById('gameArena').style.display = 'block';
-  document.getElementById('gameBotLabel').textContent = 'vs ' + botConfig.label + ' — bet ' + bet + ', win ' + (bet + botConfig.reward) + ' Leos total';
+  document.getElementById('gameBotLabel').textContent = 'vs ' + botConfig.label + ' — free game';
   document.getElementById('gameScrambled').textContent = scrambleWord(word);
   document.getElementById('gameGuessInput').value = '';
   document.getElementById('gameResult').textContent = '';
   document.getElementById('gameTimer').textContent = 'Time left: 10s';
   document.getElementById('gameGuessInput').focus();
-
   const botDelay = botConfig.minDelay + Math.random() * (botConfig.maxDelay - botConfig.minDelay);
   gameState.botTimer = setTimeout(() => {
     if (!gameState || gameState.over) return;
     const botCorrect = Math.random() < botConfig.accuracy;
-    if (botCorrect) {
-      endWordGame(false, 'bot');
-    } else {
-      document.getElementById('gameResult').textContent = "The bot guessed wrong! Keep going.";
-    }
+    if (botCorrect) endWordGame(false, 'bot');
+    else document.getElementById('gameResult').textContent = 'The bot guessed wrong! Keep going.';
   }, botDelay);
-
   gameState.tickTimer = setInterval(() => {
     if (!gameState || gameState.over) return;
     gameState.secondsLeft--;
@@ -3324,55 +3354,51 @@ async function incrementGameWins(username){
   await storageSet(gameWinsKey(username), String(n + 1), true);
 }
 
+async function awardGameCoins(amount = 2){
+  const reward = Math.max(0, Number(amount) || 0);
+  if (!currentUser || reward <= 0) return;
+  const raw = await storageGet(userKey(currentUser.email), true);
+  if (!raw) return;
+  let u; try { u = JSON.parse(raw); } catch(e) { return; }
+  u.leos = (typeof u.leos === 'number' ? u.leos : 0) + reward;
+  await storageSet(userKey(currentUser.email), JSON.stringify(u), true);
+  currentUser.leos = u.leos;
+  updateCoinsDisplay();
+}
+
 async function endWordGame(won, reason){
   if (!gameState) return;
   clearTimeout(gameState.botTimer);
   clearInterval(gameState.tickTimer);
   gameState.over = true;
   const resultEl = document.getElementById('gameResult');
-  const bet = gameState.bet || 0;
-
   if (won) {
-    const payout = bet + gameState.reward;
     await incrementGameWins(currentUser.username);
-  fireConfetti();
-    const raw = await storageGet(userKey(currentUser.email), true);
-    if (raw) {
-      try {
-        const u = JSON.parse(raw);
-        u.leos = (typeof u.leos === 'number' ? u.leos : 0) + payout;
-        await storageSet(userKey(currentUser.email), JSON.stringify(u), true);
-        currentUser.leos = u.leos;
-        updateLeosDisplay();
-      } catch(e){}
-    }
+    await awardGameCoins(2);
+    fireConfetti();
     resultEl.style.color = '#25a244';
-    resultEl.textContent = 'You got it — "' + gameState.word + '"! +' + payout + ' Leos (your ' + bet + ' bet back + ' + gameState.reward + ' reward).';
+    resultEl.textContent = 'You got it — "' + gameState.word + '"! +2 Coins earned.';
+  } else if (reason === 'bot') {
+    resultEl.style.color = '#d32f2f';
+    resultEl.textContent = 'The bot solved it first — the word was "' + gameState.word + '".';
+  } else if (reason === 'timeout') {
+    resultEl.style.color = '#d32f2f';
+    resultEl.textContent = 'Time\'s up! The word was "' + gameState.word + '".';
   } else {
-    if (bet > 0) await addToAiVault(bet);
-    if (reason === 'bot') {
-      resultEl.style.color = '#d32f2f';
-      resultEl.textContent = 'The bot solved it first — the word was "' + gameState.word + '". Your ' + bet + ' Leos bet is gone.';
-    } else if (reason === 'timeout') {
-      resultEl.style.color = '#d32f2f';
-      resultEl.textContent = "Time's up! The word was \"" + gameState.word + '". Your ' + bet + ' Leos bet is gone.';
-    } else {
-      resultEl.style.color = '#d32f2f';
-      resultEl.textContent = bet > 0 ? ('You quit — your ' + bet + ' Leos bet is gone.') : '';
-    }
+    resultEl.style.color = '#888';
+    resultEl.textContent = 'Round ended.';
   }
-
   setTimeout(() => {
     document.getElementById('gameArena').style.display = 'none';
     document.getElementById('gameModePicker').style.display = 'flex';
     document.getElementById('gamePicker').style.display = 'none';
     gameState = null;
-  }, (won || reason || bet > 0) ? 2200 : 0);
+  }, 2200);
 }
 
-/* ================= FRIEND CHALLENGES (bet-based PvP) ================= */
-const CHALLENGE_MIN_BET = 3;
-const CHALLENGE_MAX_BET = 15;
+/* ================= FRIEND CHALLENGES (free PvP) ================= */
+const CHALLENGE_MIN_BET = 0;
+const CHALLENGE_MAX_BET = 0; // legacy compatibility; challenges are free
 const CHALLENGE_EXPIRE_MS = 5 * 60 * 1000;
 function challengeKey(code){ return 'challenge:' + code; }
 function generateChallengeCode(){
@@ -3388,37 +3414,19 @@ let activeChallengeCode = null;
 async function createChallenge(){
   const input = document.getElementById('challengeBetInput');
   const errEl = document.getElementById('challengeCreateError');
-  const bet = parseFloat(input.value);
   errEl.textContent = '';
-  if (!bet || bet < CHALLENGE_MIN_BET || bet > CHALLENGE_MAX_BET) {
-    errEl.textContent = `Bet must be between ${CHALLENGE_MIN_BET} and ${CHALLENGE_MAX_BET} Leos.`;
-    return;
-  }
-  const raw = await storageGet(userKey(currentUser.email), true);
-  if (!raw) { errEl.textContent = 'Could not load your account. Try again.'; return; }
-  let u; try { u = JSON.parse(raw); } catch(e) { errEl.textContent = 'Something went wrong.'; return; }
-  const balance = typeof u.leos === 'number' ? u.leos : 20;
-  if (balance < bet) { errEl.textContent = 'You do not have enough Leos for that bet.'; return; }
-
-  u.leos = balance - bet;
-  await storageSet(userKey(currentUser.email), JSON.stringify(u), true);
-  currentUser.leos = u.leos;
-  updateLeosDisplay();
-
   const code = generateChallengeCode();
   const challenge = {
     code, creator: currentUser.username, creatorName: currentUser.firstName + ' ' + currentUser.lastName,
-    bet, opponent: null, opponentName: null, status: 'waiting', createdAt: Date.now(),
+    bet: 0, opponent: null, opponentName: null, status: 'waiting', createdAt: Date.now(),
     word: null, scrambled: null, winner: null
   };
   await storageSet(challengeKey(code), JSON.stringify(challenge), true);
-  input.value = '';
-
+  if (input) input.value = '';
   activeChallengeCode = code;
   document.getElementById('friendChallengePicker').style.display = 'none';
   document.getElementById('challengeWaitingArea').style.display = 'block';
   document.getElementById('challengeCodeDisplay').textContent = code;
-
   if (challengePollTimer) clearInterval(challengePollTimer);
   challengePollTimer = setInterval(() => pollWaitingChallenge(code), 3000);
   pollWaitingChallenge(code);
@@ -3434,7 +3442,7 @@ async function pollWaitingChallenge(code){
   if (expiryEl) {
     if (c.status === 'waiting' && msLeft > 0) {
       const m = Math.floor(msLeft / 60000), s = Math.floor((msLeft % 60000) / 1000);
-      expiryEl.textContent = 'Expires and refunds in ' + m + ':' + String(s).padStart(2, '0');
+      expiryEl.textContent = 'Expires in ' + m + ':' + String(s).padStart(2, '0');
     }
   }
 
@@ -3447,11 +3455,7 @@ async function pollWaitingChallenge(code){
     clearInterval(challengePollTimer);
     c.status = 'expired';
     await storageSet(challengeKey(code), JSON.stringify(c), true);
-    const uraw = await storageGet(userKey(currentUser.email), true);
-    if (uraw) {
-      try { const u = JSON.parse(uraw); u.leos = (typeof u.leos === 'number' ? u.leos : 0) + c.bet; await storageSet(userKey(currentUser.email), JSON.stringify(u), true); currentUser.leos = u.leos; updateLeosDisplay(); } catch(e){}
-    }
-    alert('Nobody joined in time - your ' + c.bet + ' Leos have been refunded.');
+    alert('Nobody joined in time. The free challenge has ended.');
     document.getElementById('challengeWaitingArea').style.display = 'none';
     document.getElementById('friendChallengePicker').style.display = 'block';
   }
@@ -3465,10 +3469,6 @@ async function cancelChallenge(){
     if (c && c.status === 'waiting') {
       c.status = 'expired';
       await storageSet(challengeKey(activeChallengeCode), JSON.stringify(c), true);
-      const uraw = await storageGet(userKey(currentUser.email), true);
-      if (uraw) {
-        try { const u = JSON.parse(uraw); u.leos = (typeof u.leos === 'number' ? u.leos : 0) + c.bet; await storageSet(userKey(currentUser.email), JSON.stringify(u), true); currentUser.leos = u.leos; updateLeosDisplay(); } catch(e){}
-      }
     }
   }
   if (challengePollTimer) clearInterval(challengePollTimer);
@@ -3489,18 +3489,6 @@ async function joinChallenge(){
   if (c.status !== 'waiting') { errEl.textContent = 'That challenge is no longer available.'; return; }
   if (c.creator.toLowerCase() === currentUser.username.toLowerCase()) { errEl.textContent = 'You cannot join your own challenge.'; return; }
   if (Date.now() - c.createdAt > CHALLENGE_EXPIRE_MS) { errEl.textContent = 'That challenge has expired.'; return; }
-
-  const uraw = await storageGet(userKey(currentUser.email), true);
-  if (!uraw) { errEl.textContent = 'Could not load your account.'; return; }
-  let u; try { u = JSON.parse(uraw); } catch(e) { errEl.textContent = 'Something went wrong.'; return; }
-  const balance = typeof u.leos === 'number' ? u.leos : 20;
-  if (balance < c.bet) { errEl.textContent = 'You need ' + c.bet + ' Leos to match this bet.'; return; }
-
-  u.leos = balance - c.bet;
-  await storageSet(userKey(currentUser.email), JSON.stringify(u), true);
-  currentUser.leos = u.leos;
-  updateLeosDisplay();
-
   const word = WORD_GAME_LIST[Math.floor(Math.random() * WORD_GAME_LIST.length)];
   c.opponent = currentUser.username;
   c.opponentName = currentUser.firstName + ' ' + currentUser.lastName;
@@ -3510,7 +3498,6 @@ async function joinChallenge(){
   c.startedAt = Date.now();
   const res = await storageSet(challengeKey(code), JSON.stringify(c), true);
   if (!res) { errEl.textContent = 'Could not join. Please try again.'; return; }
-
   input.value = '';
   startPvpGame(c, true);
 }
@@ -3525,7 +3512,7 @@ function startPvpGame(challenge, isJoiner){
 
   gameState = { mode: 'pvp', isPvp: true, code: challenge.code, word: challenge.word, secondsLeft: 10, over: false };
   const opponentLabel = isJoiner ? challenge.creatorName : (challenge.opponentName || 'your opponent');
-  document.getElementById('gameBotLabel').textContent = 'vs @' + (isJoiner ? challenge.creator : challenge.opponent) + ' — winner takes ' + (challenge.bet * 2) + ' Leos';
+  document.getElementById('gameBotLabel').textContent = 'vs @' + (isJoiner ? challenge.creator : challenge.opponent) + ' — free challenge';
   document.getElementById('gameScrambled').textContent = challenge.scrambled;
   document.getElementById('gameGuessInput').value = '';
   document.getElementById('gameResult').textContent = '';
@@ -3553,20 +3540,14 @@ async function winPvpChallenge(){
   const raw = await storageGet(challengeKey(gameState.code), true);
   if (!raw) return;
   let c; try { c = JSON.parse(raw); } catch(e) { return; }
-  if (c.status !== 'active') { finishPvpLocally(c); return; } // someone already finished it first
-
+  if (c.status !== 'active') { finishPvpLocally(c); return; }
   c.status = 'finished';
   c.winner = currentUser.username;
   c.finishedAt = Date.now();
   await storageSet(challengeKey(gameState.code), JSON.stringify(c), true);
   await incrementGameWins(currentUser.username);
+  await awardGameCoins(2);
   fireConfetti();
-
-  const pot = c.bet * 2;
-  const uraw = await storageGet(userKey(currentUser.email), true);
-  if (uraw) {
-    try { const u = JSON.parse(uraw); u.leos = (typeof u.leos === 'number' ? u.leos : 0) + pot; await storageSet(userKey(currentUser.email), JSON.stringify(u), true); currentUser.leos = u.leos; updateLeosDisplay(); } catch(e){}
-  }
   finishPvpLocally(c);
 }
 
@@ -3576,14 +3557,9 @@ async function tiePvpChallenge(){
   if (!raw) { finishPvpLocally({ status: 'tied' }); return; }
   let c; try { c = JSON.parse(raw); } catch(e) { finishPvpLocally({ status: 'tied' }); return; }
   if (c.status === 'active') {
-    // Time ran out with nobody solving it - refund this player's own bet; the
-    // other player's client independently does the same for theirs.
+    // Time ran out with nobody solving it; the free round ends for both players.
     c.status = 'tied';
     await storageSet(challengeKey(gameState.code), JSON.stringify(c), true);
-  }
-  const uraw = await storageGet(userKey(currentUser.email), true);
-  if (uraw) {
-    try { const u = JSON.parse(uraw); u.leos = (typeof u.leos === 'number' ? u.leos : 0) + c.bet; await storageSet(userKey(currentUser.email), JSON.stringify(u), true); currentUser.leos = u.leos; updateLeosDisplay(); } catch(e){}
   }
   finishPvpLocally(c);
 }
@@ -3596,10 +3572,10 @@ function finishPvpLocally(c){
   const resultEl = document.getElementById('gameResult');
   if (c.status === 'tied') {
     resultEl.style.color = '#888';
-    resultEl.textContent = "Time's up for both of you — the word was \"" + (c.word || gameState.word) + '". Your bet has been refunded.';
+    resultEl.textContent = "Time's up for both of you — the word was \"" + (c.word || gameState.word) + '". The free round has ended.';
   } else if (c.winner && c.winner.toLowerCase() === currentUser.username.toLowerCase()) {
     resultEl.style.color = '#25a244';
-    resultEl.textContent = 'You won! The word was "' + (c.word || gameState.word) + '". +' + (c.bet * 2) + ' Leos.';
+    resultEl.textContent = 'You won! The word was "' + (c.word || gameState.word) + '". +2 Coins earned.';
   } else {
     resultEl.style.color = '#d32f2f';
     resultEl.textContent = '@' + c.winner + ' guessed it first — the word was "' + (c.word || gameState.word) + '". Better luck next time!';
@@ -3625,24 +3601,9 @@ function dieFace(n){ return DIE_FACES[n - 1] || '🎲'; }
 
 /* ---- AI mode: simple double-or-nothing dice roll against the bot ---- */
 async function playDiceAI(){
-  const betInput = prompt('Bet how many Leos on this roll? (1-10)\nWin: double your bet. Lose: bet is gone. Tie: refunded.', '1');
-  if (betInput === null) return;
-  const bet = parseFloat(betInput);
-  if (!bet || bet < 1 || bet > 10) { alert('Bet must be between 1 and 10 Leos.'); return; }
-
-  const raw = await storageGet(userKey(currentUser.email), true);
-  if (!raw) { alert('Could not load your account. Please try again.'); return; }
-  let u; try { u = JSON.parse(raw); } catch(e) { alert('Something went wrong.'); return; }
-  const balance = typeof u.leos === 'number' ? u.leos : 20;
-  if (balance < bet) { alert('You need ' + bet + ' Leos to place that bet.'); return; }
-  u.leos = balance - bet;
-  await storageSet(userKey(currentUser.email), JSON.stringify(u), true);
-  currentUser.leos = u.leos;
-  updateLeosDisplay();
-
   document.getElementById('diceAiPicker').style.display = 'none';
   document.getElementById('diceArena').style.display = 'block';
-  document.getElementById('diceOpponentLabel').textContent = 'vs 🤖 Dice Bot — bet ' + bet + ' Leos';
+  document.getElementById('diceOpponentLabel').textContent = 'vs 🤖 Dice Bot — free game';
   document.getElementById('diceOpponentName').textContent = '🤖 Bot';
   document.getElementById('diceYouFace').textContent = '🎲';
   document.getElementById('diceOppFace').textContent = '🎲';
@@ -3650,8 +3611,7 @@ async function playDiceAI(){
   const btn = document.getElementById('diceRollBtn');
   btn.disabled = false;
   btn.style.display = 'inline-block';
-
-  diceGameState = { mode: 'ai', bet, isPvp: false, over: false };
+  diceGameState = { mode: 'ai', bet: 0, isPvp: false, over: false };
 }
 
 async function rollDice(){
@@ -3687,42 +3647,30 @@ async function rollDice(){
 
 async function finishDiceRoll(myRoll, oppRoll){
   const resultEl = document.getElementById('diceResult');
-  const bet = diceGameState.bet;
-
   if (myRoll === oppRoll) {
-    const raw = await storageGet(userKey(currentUser.email), true);
-    if (raw) {
-      try { const u = JSON.parse(raw); u.leos = (typeof u.leos === 'number' ? u.leos : 0) + bet; await storageSet(userKey(currentUser.email), JSON.stringify(u), true); currentUser.leos = u.leos; updateLeosDisplay(); } catch(e){}
-    }
     resultEl.style.color = '#888';
-    resultEl.textContent = 'Tie! You both rolled ' + myRoll + '. Your ' + bet + ' Leos bet has been refunded.';
+    resultEl.textContent = 'Tie! You both rolled ' + myRoll + '.';
   } else if (myRoll > oppRoll) {
-    const payout = bet * 2;
     await incrementGameWins(currentUser.username);
-  fireConfetti();
-    const raw = await storageGet(userKey(currentUser.email), true);
-    if (raw) {
-      try { const u = JSON.parse(raw); u.leos = (typeof u.leos === 'number' ? u.leos : 0) + payout; await storageSet(userKey(currentUser.email), JSON.stringify(u), true); currentUser.leos = u.leos; updateLeosDisplay(); } catch(e){}
-    }
+    await awardGameCoins(2);
+    fireConfetti();
     resultEl.style.color = '#25a244';
-    resultEl.textContent = 'You rolled ' + myRoll + ' vs ' + oppRoll + ' — you win! +' + payout + ' Leos.';
+    resultEl.textContent = 'You rolled ' + myRoll + ' vs ' + oppRoll + ' — you win! +2 Coins earned.';
   } else {
-    if (!diceGameState.isPvp) await addToAiVault(bet);
     resultEl.style.color = '#d32f2f';
-    resultEl.textContent = 'You rolled ' + myRoll + ' vs ' + oppRoll + ' — you lose. Your ' + bet + ' Leos bet is gone.';
+    resultEl.textContent = 'You rolled ' + myRoll + ' vs ' + oppRoll + ' — the bot wins this round.';
   }
-
   setTimeout(() => {
     document.getElementById('diceArena').style.display = 'none';
     document.getElementById('diceModePicker').style.display = 'flex';
     diceGameState = null;
     activeDiceChallengeCode = null;
-  }, 2600);
+  }, 2200);
 }
 
-/* ---- Friends mode: bet-based dice PvP, mirrors the Word Cross challenge system ---- */
-const DICE_CHALLENGE_MIN_BET = 3;
-const DICE_CHALLENGE_MAX_BET = 10;
+/* ---- Friends mode: free PvP ---- */
+const DICE_CHALLENGE_MIN_BET = 0;
+const DICE_CHALLENGE_MAX_BET = 0; // legacy compatibility; challenges are free
 const DICE_CHALLENGE_EXPIRE_MS = 5 * 60 * 1000;
 function diceChallengeKey(code){ return 'dicechallenge:' + code; }
 function generateDiceChallengeCode(){
@@ -3739,37 +3687,15 @@ let diceGameState = null;
 async function createDiceChallenge(){
   const input = document.getElementById('diceBetInput');
   const errEl = document.getElementById('diceCreateError');
-  const bet = parseFloat(input.value);
   errEl.textContent = '';
-  if (!bet || bet < DICE_CHALLENGE_MIN_BET || bet > DICE_CHALLENGE_MAX_BET) {
-    errEl.textContent = `Bet must be between ${DICE_CHALLENGE_MIN_BET} and ${DICE_CHALLENGE_MAX_BET} Leos.`;
-    return;
-  }
-  const raw = await storageGet(userKey(currentUser.email), true);
-  if (!raw) { errEl.textContent = 'Could not load your account. Try again.'; return; }
-  let u; try { u = JSON.parse(raw); } catch(e) { errEl.textContent = 'Something went wrong.'; return; }
-  const balance = typeof u.leos === 'number' ? u.leos : 20;
-  if (balance < bet) { errEl.textContent = 'You do not have enough Leos for that bet.'; return; }
-
-  u.leos = balance - bet;
-  await storageSet(userKey(currentUser.email), JSON.stringify(u), true);
-  currentUser.leos = u.leos;
-  updateLeosDisplay();
-
   const code = generateDiceChallengeCode();
-  const challenge = {
-    code, creator: currentUser.username, creatorName: currentUser.firstName + ' ' + currentUser.lastName,
-    bet, opponent: null, opponentName: null, status: 'waiting', createdAt: Date.now(),
-    creatorRoll: null, joinerRoll: null
-  };
+  const challenge = { code, creator: currentUser.username, creatorName: currentUser.firstName + ' ' + currentUser.lastName, bet: 0, opponent: null, opponentName: null, status: 'waiting', createdAt: Date.now(), creatorRoll: null, joinerRoll: null };
   await storageSet(diceChallengeKey(code), JSON.stringify(challenge), true);
-  input.value = '';
-
+  if (input) input.value = '';
   activeDiceChallengeCode = code;
   document.getElementById('diceFriendPicker').style.display = 'none';
   document.getElementById('diceWaitingArea').style.display = 'block';
   document.getElementById('diceCodeDisplay').textContent = code;
-
   if (diceChallengePollTimer) clearInterval(diceChallengePollTimer);
   diceChallengePollTimer = setInterval(() => pollWaitingDiceChallenge(code), 3000);
   pollWaitingDiceChallenge(code);
@@ -3784,7 +3710,7 @@ async function pollWaitingDiceChallenge(code){
   const expiryEl = document.getElementById('diceExpiryDisplay');
   if (expiryEl && c.status === 'waiting' && msLeft > 0) {
     const m = Math.floor(msLeft / 60000), s = Math.floor((msLeft % 60000) / 1000);
-    expiryEl.textContent = 'Expires and refunds in ' + m + ':' + String(s).padStart(2, '0');
+    expiryEl.textContent = 'Expires in ' + m + ':' + String(s).padStart(2, '0');
   }
 
   if (c.status === 'active') {
@@ -3796,11 +3722,7 @@ async function pollWaitingDiceChallenge(code){
     clearInterval(diceChallengePollTimer);
     c.status = 'expired';
     await storageSet(diceChallengeKey(code), JSON.stringify(c), true);
-    const uraw = await storageGet(userKey(currentUser.email), true);
-    if (uraw) {
-      try { const u = JSON.parse(uraw); u.leos = (typeof u.leos === 'number' ? u.leos : 0) + c.bet; await storageSet(userKey(currentUser.email), JSON.stringify(u), true); currentUser.leos = u.leos; updateLeosDisplay(); } catch(e){}
-    }
-    alert('Nobody joined in time - your ' + c.bet + ' Leos have been refunded.');
+    alert('Nobody joined in time. The free challenge has ended.');
     document.getElementById('diceWaitingArea').style.display = 'none';
     document.getElementById('diceFriendPicker').style.display = 'block';
   }
@@ -3814,10 +3736,6 @@ async function cancelDiceChallenge(){
     if (c && c.status === 'waiting') {
       c.status = 'expired';
       await storageSet(diceChallengeKey(activeDiceChallengeCode), JSON.stringify(c), true);
-      const uraw = await storageGet(userKey(currentUser.email), true);
-      if (uraw) {
-        try { const u = JSON.parse(uraw); u.leos = (typeof u.leos === 'number' ? u.leos : 0) + c.bet; await storageSet(userKey(currentUser.email), JSON.stringify(u), true); currentUser.leos = u.leos; updateLeosDisplay(); } catch(e){}
-      }
     }
   }
   if (diceChallengePollTimer) clearInterval(diceChallengePollTimer);
@@ -3838,21 +3756,6 @@ async function joinDiceChallenge(){
   if (c.status !== 'waiting') { errEl.textContent = 'That challenge is no longer available.'; return; }
   if (c.creator.toLowerCase() === currentUser.username.toLowerCase()) { errEl.textContent = 'You cannot join your own challenge.'; return; }
   if (Date.now() - c.createdAt > DICE_CHALLENGE_EXPIRE_MS) { errEl.textContent = 'That challenge has expired.'; return; }
-
-  const uraw = await storageGet(userKey(currentUser.email), true);
-  if (!uraw) { errEl.textContent = 'Could not load your account.'; return; }
-  let u; try { u = JSON.parse(uraw); } catch(e) { errEl.textContent = 'Something went wrong.'; return; }
-  const balance = typeof u.leos === 'number' ? u.leos : 20;
-  if (balance < c.bet) { errEl.textContent = 'You need ' + c.bet + ' Leos to match this bet.'; return; }
-
-  u.leos = balance - c.bet;
-  await storageSet(userKey(currentUser.email), JSON.stringify(u), true);
-  currentUser.leos = u.leos;
-  updateLeosDisplay();
-
-  // Both dice values are decided right now, once, by whoever joins - this
-  // avoids any "who clicked first" race later; the roll button just reveals
-  // an outcome that's already fixed, like a sealed envelope.
   c.opponent = currentUser.username;
   c.opponentName = currentUser.firstName + ' ' + currentUser.lastName;
   c.status = 'active';
@@ -3861,7 +3764,6 @@ async function joinDiceChallenge(){
   c.startedAt = Date.now();
   const res = await storageSet(diceChallengeKey(code), JSON.stringify(c), true);
   if (!res) { errEl.textContent = 'Could not join. Please try again.'; return; }
-
   input.value = '';
   startDiceArena(c, true);
 }
@@ -3874,7 +3776,7 @@ function startDiceArena(challenge, isJoiner){
   document.getElementById('diceArena').style.display = 'block';
 
   const opponentName = isJoiner ? challenge.creator : challenge.opponent;
-  document.getElementById('diceOpponentLabel').textContent = 'vs @' + opponentName + ' — winner takes ' + (challenge.bet * 2) + ' Leos';
+  document.getElementById('diceOpponentLabel').textContent = 'vs @' + opponentName + ' — free challenge';
   document.getElementById('diceOpponentName').textContent = '@' + opponentName;
   document.getElementById('diceYouFace').textContent = '🎲';
   document.getElementById('diceOppFace').textContent = '🎲';
@@ -3992,26 +3894,26 @@ function timeAgo(ts){
   return Math.floor(diff/86400) + ' day' + (Math.floor(diff/86400)===1?'':'s') + ' ago';
 }
 
-const VERIFIED_LEOS_THRESHOLD = 10000;
+const VERIFIED_COINS_THRESHOLD = 10000;
 const MAX_ADMINS = 2;
 const MAX_MODERATORS = 3;
 function isModeratorUser(u){ return !!(u && u.isModerator); }
 
-/* ====== LEOS PURCHASE SETUP ======
+/* ====== COINS PURCHASE SETUP ======
    Fill in YOUR real payment details below (bank transfer, or a mobile money /
    payment link — whatever you actually want people sending money to). This
    is not a real payment gateway - there is no card processing here. People
    submit a package + a payment reference after transferring manually, and it
    sits as a pending request until you (the admin) confirm the money arrived
-   and approve it from the Admin page, which credits their Leos. Never
+   and approve it from the Admin page, which credits their Coins. Never
    approve a request you have not actually been paid for. */
 const PAYMENT_DETAILS = {
-  bankName: 'PASTE_YOUR_BANK_NAME_HERE',
-  accountNumber: 'PASTE_YOUR_ACCOUNT_NUMBER_HERE',
-  accountName: 'PASTE_YOUR_ACCOUNT_NAME_HERE',
-  contactNote: 'After sending, submit the reference below — your Leos are added once an admin confirms the payment.'
+  bankName: '',
+  accountNumber: '',
+  accountName: '',
+  contactNote: 'Payment details are not configured yet. Please use Customer Service for payment instructions; never send money until staff confirms the official payment details.'
 };
-const LEOS_PACKAGES = [
+const COINS_PACKAGES = [
   { leos: 20, priceNaira: 500 },
   { leos: 50, priceNaira: 1000 },
   { leos: 100, priceNaira: 2000 }
@@ -4031,6 +3933,7 @@ function roleBadgeHtml(u){
   if (u.isOwner) return '<span title="Owner">\uD83D\uDC8E\uD83C\uDFC5\uD83C\uDF10\uD83D\uDC8D</span>';
   if (u.isAdmin) return '<span title="Admin">\uD83D\uDC8D\uD83C\uDF10\uD83C\uDFC5</span>';
   if (u.isModerator) return '<span title="Moderator">\uD83C\uDFC5\uD83C\uDF10</span>';
+  if (u.isSupportAgent) return '<span title="Support Agent">🎧</span>';
   if (u.verified) return '<span title="Verified">\uD83C\uDF10</span>';
   return '';
 }
@@ -4416,8 +4319,8 @@ const ACHIEVEMENT_DEFS = [
   { id: 'champion', emoji: '👑', label: 'Champion', check: (s) => s.wins >= 50 },
   { id: 'social', emoji: '👥', label: 'Popular', check: (s) => s.friends >= 10 },
   { id: 'verified', emoji: '🌐', label: 'Verified', check: (s) => s.verified },
-  { id: 'wealthy', emoji: '💰', label: 'Leos Collector', check: (s) => s.leos >= 500 },
-  { id: 'rich', emoji: '💎', label: 'Leos Millionaire', check: (s) => s.leos >= 5000 },
+  { id: 'wealthy', emoji: '💰', label: 'Coins Collector', check: (s) => s.leos >= 500 },
+  { id: 'rich', emoji: '💎', label: 'Coins Millionaire', check: (s) => s.leos >= 5000 },
   { id: 'watchdog', emoji: '🚩', label: 'Community Watch', check: (s) => s.hasReported },
 ];
 async function getUserAchievements(u){
@@ -4436,49 +4339,63 @@ function achievementsRowHtml(unlocked, purchasedBadges){
   return `<div class="profile-row" style="align-items:flex-start;"><span>Achievements</span><span style="display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end;max-width:220px;">${all.map(a => `<span title="${escapeHtml(a.label)}" style="background:#f0f4ff;border-radius:12px;padding:3px 8px;font-size:12px;white-space:nowrap;">${a.emoji} ${escapeHtml(a.label)}</span>`).join('')}</span></div>`;
 }
 
-/* ================= LEOS SHOP ================= */
+/* ================= COINS SHOP ================= */
 const SHOP_CATALOG = {
   themes: [
-    { id: 'sunset', label: 'Sunset', price: 100, css: 'linear-gradient(135deg,#ff7e5f,#feb47b)' },
-    { id: 'ocean', label: 'Ocean', price: 200, css: 'linear-gradient(135deg,#2b6ee0,#4fc3f7)' },
-    { id: 'forest', label: 'Forest', price: 300, css: 'linear-gradient(135deg,#134e13,#25a244)' },
-    { id: 'galaxy', label: 'Galaxy', price: 500, css: 'linear-gradient(135deg,#2b0a4a,#6a4fb8)' }
+    {id:'sunset',label:'Sunset',price:450,css:'linear-gradient(135deg,#ff7e5f,#feb47b)'},
+    {id:'ocean',label:'Ocean',price:550,css:'linear-gradient(135deg,#2b6ee0,#4fc3f7)'},
+    {id:'forest',label:'Forest',price:650,css:'linear-gradient(135deg,#134e13,#25a244)'},
+    {id:'galaxy',label:'Galaxy',price:800,css:'linear-gradient(135deg,#2b0a4a,#6a4fb8)'},
+    {id:'royalNight',label:'Royal Night',price:950,css:'linear-gradient(135deg,#111827,#4c1d95)'},
+    {id:'aurora',label:'Aurora',price:1100,css:'linear-gradient(135deg,#0f766e,#7c3aed)'},
+    {id:'cherry',label:'Cherry',price:1250,css:'linear-gradient(135deg,#9f1239,#fb7185)'},
+    {id:'emerald',label:'Emerald',price:1400,css:'linear-gradient(135deg,#064e3b,#34d399)'},
+    {id:'sunrise',label:'Sunrise',price:1600,css:'linear-gradient(135deg,#f97316,#facc15)'},
+    {id:'midnight',label:'Midnight',price:1800,css:'linear-gradient(135deg,#020617,#1e3a8a)'}
   ],
   frames: [
-    { id: 'gold', label: 'Gold', price: 150, color: '#d4a017' },
-    { id: 'diamond', label: 'Diamond', price: 150, color: '#4fc3f7' },
-    { id: 'fire', label: 'Fire', price: 150, color: '#e8622d' },
-    { id: 'royal', label: 'Royal', price: 150, color: '#8e5ce8' }
+    {id:'gold',label:'Gold',price:400,color:'#d4a017'},
+    {id:'diamond',label:'Diamond',price:525,color:'#4fc3f7'},
+    {id:'fire',label:'Fire',price:675,color:'#e8622d'},
+    {id:'royal',label:'Royal',price:800,color:'#8e5ce8'},
+    {id:'emerald',label:'Emerald',price:950,color:'#25a244'},
+    {id:'ruby',label:'Ruby',price:1100,color:'#c1121f'},
+    {id:'sapphire',label:'Sapphire',price:1250,color:'#2563eb'},
+    {id:'platinum',label:'Platinum',price:1450,color:'#94a3b8'},
+    {id:'aurora',label:'Aurora',price:1650,color:'#14b8a6'},
+    {id:'cosmic',label:'Cosmic',price:1900,color:'#7c3aed'}
   ],
   nameEffects: [
-    { id: 'glow', label: 'Glow', price: 200 },
-    { id: 'rainbow', label: 'Rainbow', price: 200 },
-    { id: 'shadow', label: 'Shadow', price: 200 }
+    {id:'glow',label:'Glow',price:425},{id:'rainbow',label:'Rainbow',price:600},{id:'shadow',label:'Shadow',price:750},
+    {id:'neon',label:'Neon',price:900},{id:'ice',label:'Ice',price:1050},{id:'fireText',label:'Fire Text',price:1200},
+    {id:'goldText',label:'Gold Text',price:1400},{id:'electric',label:'Electric',price:1600},{id:'sparkle',label:'Sparkle',price:1800},{id:'cosmicText',label:'Cosmic Text',price:2100}
   ],
   stickers: [
-    { id: 'fun', label: 'Fun Pack', price: 50, emojis: ['🥳','😎','🤩','🥶','😜'] },
-    { id: 'love', label: 'Love Pack', price: 100, emojis: ['😍','💘','😘','🥰','💖'] },
-    { id: 'meme', label: 'Meme Pack', price: 200, emojis: ['💀','🤡','😭','🫠','👀'] }
+    {id:'fun',label:'Fun Pack',price:350,emojis:['🥳','😎','🤩','🥶','😜']},{id:'love',label:'Love Pack',price:475,emojis:['😍','💘','😘','🥰','💖']},
+    {id:'meme',label:'Meme Pack',price:625,emojis:['💀','🤡','😭','🫠','👀']},{id:'animals',label:'Animals Pack',price:800,emojis:['🐶','🐱','🦊','🐼','🐸']},
+    {id:'food',label:'Food Pack',price:950,emojis:['🍕','🍔','🍟','🍩','🍰']},{id:'sports',label:'Sports Pack',price:1100,emojis:['⚽','🏀','🏆','🎾','🥇']},
+    {id:'space',label:'Space Pack',price:1300,emojis:['🚀','🪐','🌙','⭐','👽']},{id:'magic',label:'Magic Pack',price:1500,emojis:['🪄','🔮','✨','🧙','🧚']},
+    {id:'celebration',label:'Celebration Pack',price:1750,emojis:['🎉','🎊','🎈','🥳','🎁']},{id:'ultimate',label:'Ultimate Pack',price:2200,emojis:['👑','💎','🔥','⚡','🌟']}
   ],
   chatThemes: [
-    { id: 'sunsetChat', label: 'Sunset Chat', price: 150, css: '#ffe0b3' },
-    { id: 'nightChat', label: 'Night Chat', price: 150, css: '#1a1a2e' },
-    { id: 'roseChat', label: 'Rose Chat', price: 150, css: '#ffd9e8' }
+    {id:'sunsetChat',label:'Sunset Chat',price:450,css:'#ffe0b3'},{id:'nightChat',label:'Night Chat',price:575,css:'#1a1a2e'},
+    {id:'roseChat',label:'Rose Chat',price:700,css:'#ffd9e8'},{id:'oceanChat',label:'Ocean Chat',price:850,css:'#dbeafe'},
+    {id:'forestChat',label:'Forest Chat',price:1000,css:'#dcfce7'},{id:'lavenderChat',label:'Lavender Chat',price:1150,css:'#ede9fe'},
+    {id:'peachChat',label:'Peach Chat',price:1300,css:'#ffedd5'},{id:'midnightChat',label:'Midnight Chat',price:1500,css:'#0f172a'},
+    {id:'emeraldChat',label:'Emerald Chat',price:1750,css:'#d1fae5'},{id:'cosmicChat',label:'Cosmic Chat',price:2100,css:'#312e81'}
   ],
   gifts: [
-    { id: 'rose', label: 'Rose', price: 50, emoji: '🌹' },
-    { id: 'cake', label: 'Cake', price: 150, emoji: '🎂' },
-    { id: 'crown', label: 'Crown', price: 500, emoji: '👑' },
-    { id: 'rocket', label: 'Rocket', price: 1000, emoji: '🚀' }
+    {id:'rose',label:'Rose',price:350,emoji:'🌹'},{id:'cake',label:'Cake',price:500,emoji:'🎂'},{id:'crown',label:'Crown',price:700,emoji:'👑'},
+    {id:'rocket',label:'Rocket',price:900,emoji:'🚀'},{id:'trophy',label:'Trophy',price:1100,emoji:'🏆'},{id:'diamondGift',label:'Diamond Gift',price:1350,emoji:'💎'},
+    {id:'starGift',label:'Star Gift',price:1600,emoji:'🌟'},{id:'fireGift',label:'Fire Gift',price:1850,emoji:'🔥'},{id:'unicorn',label:'Unicorn',price:2200,emoji:'🦄'},{id:'galaxyGift',label:'Galaxy Gift',price:2800,emoji:'🌌'}
   ],
   badges: [
-    { id: 'legend', label: 'Legend', price: 500, emoji: '🏆' },
-    { id: 'vip', label: 'VIP', price: 500, emoji: '💎' }
+    {id:'legend',label:'Legend',price:550,emoji:'🏆'},{id:'vip',label:'VIP',price:750,emoji:'💎'},{id:'creator',label:'Creator',price:900,emoji:'🎨'},
+    {id:'star',label:'Star',price:1050,emoji:'⭐'},{id:'royal',label:'Royal',price:1250,emoji:'👑'},{id:'elite',label:'Elite',price:1450,emoji:'⚡'},
+    {id:'diamondBadge',label:'Diamond',price:1700,emoji:'💠'},{id:'champion',label:'Champion',price:1950,emoji:'🥇'},{id:'master',label:'Master',price:2300,emoji:'🛡️'},{id:'ultimateBadge',label:'Ultimate',price:3000,emoji:'🌟'}
   ]
 };
-const SHOP_FIXED_PRICES = {
-  featuredProfile: 300, profileMusic: 300, privateRoom: 500, groupBackground: 300, pinMessage: 50
-};
+const SHOP_FIXED_PRICES = { featuredProfile:850, profileMusic:950, privateRoom:1250, groupBackground:1100, pinMessage:650 };
 
 async function loadCurrentUserFull(){
   const raw = await storageGet(userKey(currentUser.email), true);
@@ -4496,11 +4413,14 @@ async function saveCurrentUserFull(u){
   currentUser.ownedNameEffects = u.ownedNameEffects;
   currentUser.ownedStickerPacks = u.ownedStickerPacks;
   currentUser.ownedChatThemes = u.ownedChatThemes;
+  currentUser.ownedGifts = u.ownedGifts;
   currentUser.ownedBadges = u.ownedBadges;
+  currentUser.hasPrivateRoom = u.hasPrivateRoom;
+  currentUser.hasGroupBackground = u.hasGroupBackground;
   currentUser.profileMusicUrl = u.profileMusicUrl;
   currentUser.hasProfileMusic = u.hasProfileMusic;
   currentUser.featuredUntil = u.featuredUntil;
-  updateLeosDisplay();
+  updateCoinsDisplay();
 }
 
 async function buyShopItem(category, itemId){
@@ -4509,12 +4429,12 @@ async function buyShopItem(category, itemId){
   const u = await loadCurrentUserFull();
   if (!u) return;
   // Map category -> the exact field name used on the user record.
-  const fieldMap = { themes: 'ownedThemes', frames: 'ownedFrames', nameEffects: 'ownedNameEffects', stickers: 'ownedStickerPacks', chatThemes: 'ownedChatThemes', gifts: null, badges: 'ownedBadges' };
+  const fieldMap = { themes: 'ownedThemes', frames: 'ownedFrames', nameEffects: 'ownedNameEffects', stickers: 'ownedStickerPacks', chatThemes: 'ownedChatThemes', gifts: 'ownedGifts', badges: 'ownedBadges' };
   const field = fieldMap[category];
   const owned = field ? (u[field] || []) : [];
-  if (field && owned.includes(itemId)) { alert('You already own this.'); return; }
+  if (field && category !== 'gifts' && owned.includes(itemId)) { alert('You already own this.'); return; }
   const balance = typeof u.leos === 'number' ? u.leos : 20;
-  if (balance < item.price) { alert('You need ' + item.price + ' Leos for this. Your balance: ' + balance.toFixed(2)); return; }
+  if (balance < item.price) { alert('You need ' + item.price + ' Coins for this. Your balance: ' + balance.toFixed(2)); return; }
   u.leos = balance - item.price;
   if (field) { u[field] = [...owned, itemId]; }
   await saveCurrentUserFull(u);
@@ -4538,7 +4458,7 @@ async function buyFixedShopItem(kind){
   const u = await loadCurrentUserFull();
   if (!u) return;
   const balance = typeof u.leos === 'number' ? u.leos : 20;
-  if (balance < price) { alert('You need ' + price + ' Leos for this. Your balance: ' + balance.toFixed(2)); return; }
+  if (balance < price) { alert('You need ' + price + ' Coins for this. Your balance: ' + balance.toFixed(2)); return; }
 
   if (kind === 'featuredProfile') {
     u.leos = balance - price;
@@ -4550,6 +4470,18 @@ async function buyFixedShopItem(kind){
     u.hasProfileMusic = true;
     await saveCurrentUserFull(u);
     alert('Profile music unlocked! Set your track link from Edit Profile.');
+  } else if (kind === 'privateRoom') {
+    if (u.hasPrivateRoom) { alert('You already own Private Room access.'); return; }
+    u.leos = balance - price;
+    u.hasPrivateRoom = true;
+    await saveCurrentUserFull(u);
+    alert('Private Room access unlocked!');
+  } else if (kind === 'groupBackground') {
+    if (u.hasGroupBackground) { alert('You already own Group Background access.'); return; }
+    u.leos = balance - price;
+    u.hasGroupBackground = true;
+    await saveCurrentUserFull(u);
+    alert('Custom Group Background access unlocked!');
   }
   loadShopPage();
 }
@@ -4581,13 +4513,13 @@ async function loadShopPage(){
   const u = await loadCurrentUserFull();
   if (!u) return;
   const bal = (typeof u.leos === 'number' ? u.leos : 20).toFixed(2);
-  document.getElementById('shopBalance').textContent = bal + ' Leos';
+  document.getElementById('shopBalance').textContent = bal + ' Coins';
 
   function section(title, desc, itemsHtml){
-    return `<div class="section-divider"><strong>${title}</strong><span>${desc}</span></div><div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">${itemsHtml}</div>`;
+    return `<div class="section-divider"><strong>${title}</strong><span>${desc}</span></div><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:16px;">${itemsHtml}</div>`;
   }
   function itemCard(label, priceLabel, inner, actionHtml){
-    return `<div class="profile-card" style="width:140px;text-align:center;">
+    return `<div class="profile-card" style="width:auto;min-height:150px;text-align:center;display:flex;flex-direction:column;justify-content:space-between;">
       <div style="font-size:13px;font-weight:600;margin-bottom:6px;">${escapeHtml(label)}</div>
       ${inner}
       <div style="font-size:12px;color:#888;margin:6px 0;">${priceLabel}</div>
@@ -4597,76 +4529,90 @@ async function loadShopPage(){
 
   let html = '';
 
-  html += section('🎨 Profile Themes', 'Applied behind your profile header (100-500 Leos).',
+  html += section('🎨 Profile Themes', 'Applied behind your profile header (450-1,800 Coins).',
     SHOP_CATALOG.themes.map(t => {
       const owned = (u.ownedThemes || []).includes(t.id);
       const active = u.activeTheme === t.id;
-      return itemCard(t.label, t.price + ' Leos', `<div style="height:40px;border-radius:6px;background:${t.css};"></div>`,
+      return itemCard(t.label, t.price + ' Coins', `<div style="height:40px;border-radius:6px;background:${t.css};"></div>`,
         active ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Active</button>`
         : owned ? `<button onclick="equipShopItem('themes','${t.id}')" style="background:#2b6ee0;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Equip</button>`
         : `<button onclick="buyShopItem('themes','${t.id}')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`);
     }).join(''));
 
-  html += section('🖼️ Profile Frames', 'A colored ring around your avatar (150 Leos).',
+  html += section('🖼️ Profile Frames', 'A colored ring around your avatar (400-1,900 Coins).',
     SHOP_CATALOG.frames.map(f => {
       const owned = (u.ownedFrames || []).includes(f.id);
       const active = u.activeFrame === f.id;
-      return itemCard(f.label, f.price + ' Leos', `<div style="width:40px;height:40px;margin:0 auto;border-radius:50%;border:4px solid ${f.color};background:#eee;"></div>`,
+      return itemCard(f.label, f.price + ' Coins', `<div style="width:40px;height:40px;margin:0 auto;border-radius:50%;border:4px solid ${f.color};background:#eee;"></div>`,
         active ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Active</button>`
         : owned ? `<button onclick="equipShopItem('frames','${f.id}')" style="background:#2b6ee0;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Equip</button>`
         : `<button onclick="buyShopItem('frames','${f.id}')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`);
     }).join(''));
 
-  html += section('✨ Name Effects', 'A special style applied to your name everywhere (200 Leos).',
+  html += section('✨ Name Effects', 'A special style applied to your name everywhere (425-2,100 Coins).',
     SHOP_CATALOG.nameEffects.map(n => {
       const owned = (u.ownedNameEffects || []).includes(n.id);
       const active = u.activeNameEffect === n.id;
-      return itemCard(n.label, n.price + ' Leos', `<div style="font-weight:700;${n.id==='glow'?'text-shadow:0 0 6px #4fc3f7,0 0 10px #4fc3f7;':n.id==='shadow'?'text-shadow:2px 2px 3px rgba(0,0,0,0.5);':'background:linear-gradient(90deg,#ff0040,#ff8c00,#ffee00,#00c853,#2979ff,#aa00ff);-webkit-background-clip:text;background-clip:text;color:transparent;'}">Name</div>`,
+      return itemCard(n.label, n.price + ' Coins', `<div style="font-weight:700;${n.id==='glow'?'text-shadow:0 0 6px #4fc3f7,0 0 10px #4fc3f7;':n.id==='shadow'?'text-shadow:2px 2px 3px rgba(0,0,0,0.5);':'background:linear-gradient(90deg,#ff0040,#ff8c00,#ffee00,#00c853,#2979ff,#aa00ff);-webkit-background-clip:text;background-clip:text;color:transparent;'}">Name</div>`,
         active ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Active</button>`
         : owned ? `<button onclick="equipShopItem('nameEffects','${n.id}')" style="background:#2b6ee0;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Equip</button>`
         : `<button onclick="buyShopItem('nameEffects','${n.id}')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`);
     }).join(''));
 
-  html += section('😎 Sticker Packs', 'Extra emojis to use when chatting (50-200 Leos).',
+  html += section('😎 Sticker Packs', 'Extra emojis to use when chatting (350-2,200 Coins).',
     SHOP_CATALOG.stickers.map(s => {
       const owned = (u.ownedStickerPacks || []).includes(s.id);
-      return itemCard(s.label, s.price + ' Leos', `<div style="font-size:20px;">${s.emojis.join(' ')}</div>`,
+      return itemCard(s.label, s.price + ' Coins', `<div style="font-size:20px;">${s.emojis.join(' ')}</div>`,
         owned ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Owned</button>`
         : `<button onclick="buyShopItem('stickers','${s.id}')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`);
     }).join(''));
 
-  html += section('💬 Premium Chat Themes', 'Extra wallpaper colors for your private chats (150 Leos).',
+  html += section('💬 Premium Chat Themes', 'Extra wallpaper colors for your private chats (450-2,100 Coins).',
     SHOP_CATALOG.chatThemes.map(c => {
       const owned = (u.ownedChatThemes || []).includes(c.id);
-      return itemCard(c.label, c.price + ' Leos', `<div style="height:40px;border-radius:6px;background:${c.css};border:1px solid #ddd;"></div>`,
+      return itemCard(c.label, c.price + ' Coins', `<div style="height:40px;border-radius:6px;background:${c.css};border:1px solid #ddd;"></div>`,
         owned ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Owned</button>`
         : `<button onclick="buyShopItem('chatThemes','${c.id}')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`);
     }).join('') + '<div style="font-size:11.5px;color:#888;width:100%;">Pick your active chat theme from inside any chat (🎨 icon).</div>');
 
-  html += section('🎁 Virtual Gifts', 'Send a gift in any private chat (50-1,000 Leos, spent when sent).',
-    SHOP_CATALOG.gifts.map(g => itemCard(g.label, g.price + ' Leos', `<div style="font-size:32px;">${g.emoji}</div>`,
-      `<div style="font-size:11px;color:#888;">Open a chat to send</div>`)).join(''));
+  html += section('🎁 Virtual Gifts', 'Buy gifts here, then send them from the Gift button at the top of a private chat.',
+    SHOP_CATALOG.gifts.map(g => {
+      const ownedCount = (u.ownedGifts || []).filter(id => id === g.id).length;
+      return itemCard(g.label, g.price + ' Coins', `<div style="font-size:32px;">${g.emoji}</div>`,
+        `<div style="font-size:11px;color:#777;margin-bottom:5px;">Owned: ${ownedCount}</div><button onclick="buyShopItem('gifts','${g.id}')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`);
+    }).join(''));
 
-  html += section('🏆 Special Badges', 'A purchasable badge shown on your achievements (500 Leos).',
+  html += section('🏆 Special Badges', 'A purchasable badge shown on your achievements (550-3,000 Coins).',
     SHOP_CATALOG.badges.map(b => {
       const owned = (u.ownedBadges || []).includes(b.id);
-      return itemCard(b.label, b.price + ' Leos', `<div style="font-size:28px;">${b.emoji}</div>`,
+      return itemCard(b.label, b.price + ' Coins', `<div style="font-size:28px;">${b.emoji}</div>`,
         owned ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Owned</button>`
         : `<button onclick="buyShopItem('badges','${b.id}')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`);
     }).join(''));
 
   const featuredActive = u.featuredUntil && u.featuredUntil > Date.now();
-  html += section('📣 Featured Profile', 'Shown at the top of People search for 24 hours (300 Leos).',
-    itemCard('Featured', SHOP_FIXED_PRICES.featuredProfile + ' Leos', `<div style="font-size:28px;">⭐</div>`,
+  html += section('📣 Featured Profile', 'Shown at the top of People search for 24 hours (850 Coins).',
+    itemCard('Featured', SHOP_FIXED_PRICES.featuredProfile + ' Coins', `<div style="font-size:28px;">⭐</div>`,
       featuredActive ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Active</button>`
       : `<button onclick="buyFixedShopItem('featuredProfile')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`));
 
-  html += section('🎵 Profile Music', 'Add a track link that plays on your profile (300 Leos).',
-    itemCard('Music', SHOP_FIXED_PRICES.profileMusic + ' Leos', `<div style="font-size:28px;">🎵</div>`,
+  html += section('🎵 Profile Music', 'Add a track link that plays on your profile (950 Coins).',
+    itemCard('Music', SHOP_FIXED_PRICES.profileMusic + ' Coins', `<div style="font-size:28px;">🎵</div>`,
       u.hasProfileMusic ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Unlocked</button>`
       : `<button onclick="buyFixedShopItem('profileMusic')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`));
 
-  html += `<div class="section-divider"><strong>🔒 Private Rooms &amp; 🎨 Group Backgrounds</strong><span>Create a private chatroom (500 Leos) or set a custom background for a group you own (300 Leos) - both available from the Chatrooms/Groups creation screen.</span></div>`;
+  html += section('🔒 Private Rooms', 'Unlock private chatroom creation (1,250 Coins).',
+    itemCard('Private Room', SHOP_FIXED_PRICES.privateRoom + ' Coins', `<div style="font-size:28px;">🔒</div>`,
+      u.hasPrivateRoom ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Unlocked</button>`
+      : `<button onclick="buyFixedShopItem('privateRoom')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`));
+
+  html += section('🎨 Group Backgrounds', 'Unlock custom background images for groups (1,100 Coins).',
+    itemCard('Group Background', SHOP_FIXED_PRICES.groupBackground + ' Coins', `<div style="height:40px;border-radius:6px;background:linear-gradient(135deg,#2b6ee0,#6a4fb8);"></div>`,
+      u.hasGroupBackground ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Unlocked</button>`
+      : `<button onclick="buyFixedShopItem('groupBackground')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`));
+
+  html += section('📌 Premium Message Pin', 'Pin one message in a chatroom for ' + SHOP_FIXED_PRICES.pinMessage + ' Coins. This is charged when you pin; it is not an owned item.',
+    itemCard('Pin Message', SHOP_FIXED_PRICES.pinMessage + ' Coins per pin', `<div style="font-size:28px;">📌</div>`, `<button onclick="switchTab('chatsPage')" style="background:#2b6ee0;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Open Chatrooms</button>`));
 
   document.getElementById('shopContent').innerHTML = html;
 }
@@ -4689,7 +4635,7 @@ async function loadProfile(){
           <input type="checkbox" id="lockToggle" ${u.profileLocked ? 'checked' : ''} onchange="toggleProfileLock(this.checked)"> Locked to verified users only
         </label>
       </span></div>`
-    : `<div class="profile-row"><span>Profile lock</span><span style="color:#aaa;">Reach 2,000 Leos and get admin-verified to unlock this</span></div>`;
+    : `<div class="profile-row"><span>Profile lock</span><span style="color:#aaa;">Reach 2,000 Coins and get admin-verified to unlock this</span></div>`;
 
   const editStatusHtml = editCooldownMessage(u);
   const myAchievements = await getUserAchievements(u);
@@ -4735,7 +4681,7 @@ async function loadProfile(){
     <div class="profile-row"><span>Email</span><span>${escapeHtml(u.email)}</span></div>
     <div class="profile-row"><span>Phone</span><span>${escapeHtml(u.phone)}</span></div>
     <div class="profile-row"><span>Country</span><span>${escapeHtml(u.country)}</span></div>
-    <div class="profile-row"><span>Leos balance</span><span>${(typeof u.leos==='number'?u.leos:20).toFixed(2)} <span style="color:#aaa;font-weight:400;">(private)</span></span></div>
+    <div class="profile-row"><span>Coins balance</span><span>${(typeof u.leos==='number'?u.leos:20).toFixed(2)} <span style="color:#aaa;font-weight:400;">(private)</span></span></div>
     <div class="profile-row"><span>Member since</span><span>${new Date(u.createdAt).toLocaleDateString()}</span></div>
     ${achievementsRowHtml(myAchievements, u.ownedBadges)}
     ${lockToggleHtml}
@@ -5141,7 +5087,7 @@ function showChangePasswordForm(){
   const u = currentUser;
   if (!canChangePassword(u)) {
     if (!u.verified) {
-      alert('Only verified users and admins can change their password. Get verified by reaching 2,000 Leos.');
+      alert('Only verified users and admins can change their password. Get verified by reaching 2,000 Coins.');
     } else {
       const daysLeft = Math.ceil(PASSWORD_COOLDOWN_DAYS - daysSincePasswordChange(u));
       alert('You can only change your password once every ' + PASSWORD_COOLDOWN_DAYS + ' days. Try again in ' + daysLeft + ' day' + (daysLeft===1?'':'s') + '.');
@@ -5614,17 +5560,20 @@ async function loadNotifications(){
     } else if (n.type === 'message') {
       text = `New message from ${escapeHtml(n.fromName)}: "${escapeHtml(n.text || '')}"`;
       actions = `<div class="notif-actions"><button class="open-btn" onclick="switchTab('chatsPage'); setTimeout(()=>openChat('${n.from.replace(/'/g,"\\'")}','${(n.fromName||n.from).replace(/'/g,"\\'")}'),50)">Open chat</button></div>`;
-    } else if (n.type === 'leos_topup') {
-      text = `You received ${(n.amount||0).toFixed ? (n.amount).toFixed(2) : n.amount} Leos from an admin. New balance: ${typeof n.newBalance==='number' ? n.newBalance.toFixed(2) : n.newBalance}.`;
-      actions = `<div class="notif-actions"><button class="open-btn" onclick="switchTab('leosPage')">View Leos</button></div>`;
+    } else if (n.type === 'virtual_gift') {
+      text = `${escapeHtml(n.fromName || n.from)} sent you ${escapeHtml(n.giftEmoji || '🎁')} ${escapeHtml(n.giftLabel || 'a gift')}.`;
+      actions = `<div class="notif-actions"><button class="open-btn" onclick="switchTab('chatsPage'); setTimeout(()=>openChat('${n.from.replace(/'/g,"\\'")}','${(n.fromName||n.from).replace(/'/g,"\\'")}'),50)">Open chat</button></div>`;
+    } else if (n.type === 'coins_topup') {
+      text = `You received ${(n.amount||0).toFixed ? (n.amount).toFixed(2) : n.amount} Coins from an admin. New balance: ${typeof n.newBalance==='number' ? n.newBalance.toFixed(2) : n.newBalance}.`;
+      actions = `<div class="notif-actions"><button class="open-btn" onclick="switchTab('leosPage')">View Coins</button></div>`;
     } else if (n.type === 'announcement') {
       text = `📢 Announcement from ${escapeHtml(n.fromName)}: "${escapeHtml(n.text || '')}"`;
       actions = `<div class="notif-actions"><button class="open-btn" onclick="switchTab('announcementsPage')">Read announcements</button></div>`;
     } else if (n.type === 'purchase_request') {
-      text = `${escapeHtml(n.fromName)} wants to buy ${n.leos} Leos for ₦${(n.priceNaira||0).toLocaleString()}.`;
+      text = `${escapeHtml(n.fromName)} wants to buy ${n.leos} Coins for ₦${(n.priceNaira||0).toLocaleString()}.`;
       actions = `<div class="notif-actions"><button class="open-btn" onclick="switchTab('adminPage')">Review in Admin</button></div>`;
     } else if (n.type === 'purchase_rejected') {
-      text = `Your request to buy ${n.leos} Leos for ₦${(n.priceNaira||0).toLocaleString()} was declined. Contact an admin if you believe this is a mistake.`;
+      text = `Your request to buy ${n.leos} Coins for ₦${(n.priceNaira||0).toLocaleString()} was declined. Contact an admin if you believe this is a mistake.`;
     } else if (n.type === 'welcome') {
       text = `👋 ${escapeHtml(n.text || '')}`;
     } else if (n.type === 'mention') {
@@ -5685,95 +5634,6 @@ const ONLINE_WINDOW_MS = 15000;   // must be > the poll interval below
 const PRESENCE_STALE_MS = 5 * 60 * 1000;
 
 /* ---------------- DAILY SPIN (10hrs cumulative active time to unlock) ---------------- */
-const SPIN_REQUIRED_SECONDS = 10 * 60 * 60;
-const SPIN_REWARDS = [1, 2, 3, 5, 8, 10];
-function spinKey(username){ return 'spin:' + username.toLowerCase(); }
-// The "spin day" rolls over at 1:00 AM, not midnight - shift the clock back
-// an hour before reading the calendar date so 12:00am-12:59am still counts
-// as the previous day's cycle.
-function spinDayString(){
-  const d = new Date(Date.now() - 60 * 60 * 1000);
-  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
-}
-async function getSpinState(username){
-  const raw = await storageGet(spinKey(username), true);
-  let state = raw ? JSON.parse(raw) : null;
-  const today = spinDayString();
-  if (!state || state.day !== today) {
-    state = { day: today, activeSeconds: 0, spun: false };
-  }
-  return state;
-}
-async function trackSpinActiveTime(){
-  if (!currentUser) return;
-  if (document.hidden || document.visibilityState === 'hidden') return; // paused while the tab isn't in front of them
-  const state = await getSpinState(currentUser.username);
-  if (state.activeSeconds < SPIN_REQUIRED_SECONDS) {
-    state.activeSeconds += 6; // matches the 6-second heartbeat tick
-    await storageSet(spinKey(currentUser.username), JSON.stringify(state), true);
-  }
-}
-
-async function loadSpinPage(){
-  const state = await getSpinState(currentUser.username);
-  const pct = Math.min(100, Math.round((state.activeSeconds / SPIN_REQUIRED_SECONDS) * 100));
-  document.getElementById('spinProgressBar').style.width = pct + '%';
-  const btn = document.getElementById('spinBtn');
-  const resultEl = document.getElementById('spinResult');
-  resultEl.textContent = '';
-  if (state.spun) {
-    document.getElementById('spinProgressText').textContent = "You've already used today's spin. Come back after 1:00 AM!";
-    btn.disabled = true;
-    btn.textContent = 'Spin';
-  } else if (state.activeSeconds >= SPIN_REQUIRED_SECONDS) {
-    document.getElementById('spinProgressText').textContent = 'Your spin is ready!';
-    btn.disabled = false;
-  } else {
-    const remaining = SPIN_REQUIRED_SECONDS - state.activeSeconds;
-    const hrs = Math.floor(remaining / 3600);
-    const mins = Math.floor((remaining % 3600) / 60);
-    document.getElementById('spinProgressText').textContent = `Stay active ${hrs}h ${mins}m more today to unlock your spin.`;
-    btn.disabled = true;
-  }
-}
-
-async function doSpin(){
-  const state = await getSpinState(currentUser.username);
-  if (state.spun || state.activeSeconds < SPIN_REQUIRED_SECONDS) return;
-
-  document.getElementById('spinBtn').disabled = true;
-  const wheelEl = document.getElementById('spinWheelEmoji');
-  let ticks = 0;
-  const anim = setInterval(() => {
-    wheelEl.style.transform = `rotate(${ticks * 60}deg)`;
-    ticks++;
-    if (ticks >= 10) {
-      clearInterval(anim);
-      finishSpin(state);
-    }
-  }, 100);
-}
-
-async function finishSpin(state){
-  const reward = SPIN_REWARDS[Math.floor(Math.random() * SPIN_REWARDS.length)];
-  state.spun = true;
-  await storageSet(spinKey(currentUser.username), JSON.stringify(state), true);
-
-  const raw = await storageGet(userKey(currentUser.email), true);
-  if (raw) {
-    try {
-      const u = JSON.parse(raw);
-      u.leos = (typeof u.leos === 'number' ? u.leos : 0) + reward;
-      await storageSet(userKey(currentUser.email), JSON.stringify(u), true);
-      currentUser.leos = u.leos;
-      updateLeosDisplay();
-    } catch(e){}
-  }
-  document.getElementById('spinResult').textContent = `🎉 You won ${reward} Leos!`;
-  document.getElementById('spinProgressText').textContent = "You've already used today's spin. Come back after 1:00 AM!";
-  fireConfetti();
-}
-
 async function sendHeartbeat(){
   if (!currentUser) return;
   await storageSet(presenceKey(currentUser.username), String(Date.now()), true);
@@ -5840,9 +5700,24 @@ const WALLPAPER_COLORS = {
 };
 function wallpaperPickerHtml(){
   const current = currentUser.chatWallpaper || WALLPAPER_COLORS.default;
-  return Object.entries(WALLPAPER_COLORS).map(([name, hex]) =>
-    `<span onclick="setChatWallpaper('${hex}')" title="${name}" style="display:inline-block;width:20px;height:20px;border-radius:50%;background:${hex};margin-right:5px;cursor:pointer;border:2px solid ${current === hex ? '#2b6ee0' : 'transparent'};vertical-align:middle;"></span>`
+  const basic = Object.entries(WALLPAPER_COLORS).map(([name, hex]) =>
+    `<span onclick="setChatWallpaper('${hex}')" title="${name}" style="display:inline-block;width:22px;height:22px;border-radius:50%;background:${hex};margin-right:5px;cursor:pointer;border:2px solid ${current === hex ? '#2b6ee0' : 'transparent'};vertical-align:middle;"></span>`
   ).join('');
+  const owned = new Set(currentUser.ownedChatThemes || []);
+  const premium = SHOP_CATALOG.chatThemes.map(t => {
+    const isOwned = owned.has(t.id);
+    const active = current === t.css;
+    if (isOwned) return `<span onclick="setChatWallpaper('${t.css}')" title="${escapeHtml(t.label)}" style="display:inline-block;width:22px;height:22px;border-radius:50%;background:${t.css};margin-right:5px;cursor:pointer;border:2px solid ${active ? '#2b6ee0' : '#25a244'};vertical-align:middle;"></span>`;
+    return `<button onclick="buyChatThemeFromChat('${t.id}')" style="margin:0 5px 4px 0;background:#e8622d;color:#fff;border:none;padding:4px 7px;border-radius:5px;cursor:pointer;font-size:11px;">Buy ${escapeHtml(t.label)} (${t.price})</button>`;
+  }).join('');
+  return `<div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;"><span style="font-size:11.5px;color:#666;margin-right:2px;">Basic:</span>${basic}<span style="font-size:11.5px;color:#666;margin-left:5px;">Premium:</span>${premium}</div>`;
+}
+async function buyChatThemeFromChat(itemId){
+  await buyShopItem('chatThemes', itemId);
+  const raw = await storageGet(userKey(currentUser.email), true);
+  if (raw) { try { currentUser = JSON.parse(raw); } catch(e){} }
+  const pickerEl = document.getElementById('wallpaperPicker');
+  if (pickerEl) pickerEl.innerHTML = wallpaperPickerHtml();
 }
 async function setChatWallpaper(hex){
   currentUser.chatWallpaper = hex;
@@ -5862,6 +5737,53 @@ async function setChatWallpaper(hex){
 function toggleWallpaperPicker(){
   const el = document.getElementById('wallpaperPickerRow');
   if (el) el.style.display = el.style.display === 'none' ? 'block' : 'none';
+}
+
+function chatStickerPickerHtml(){
+  const packs = (currentUser.ownedStickerPacks || []).map(id => SHOP_CATALOG.stickers.find(s => s.id === id)).filter(Boolean);
+  if (!packs.length) return `<div style="font-size:12px;color:#777;padding:6px 0;">No sticker packs yet. <button onclick="switchTab('shopPage')" style="background:#2b6ee0;color:#fff;border:none;padding:4px 8px;border-radius:5px;cursor:pointer;font-size:11px;">Open Shop</button></div>`;
+  return packs.map(p => `<div style="margin-bottom:5px;"><div style="font-size:11px;color:#777;margin-bottom:2px;">${escapeHtml(p.label)}</div>${p.emojis.map(e => `<button onclick="insertChatSticker('${e.replace(/'/g, "\\'")}')" style="border:none;background:#fff;font-size:22px;padding:3px;cursor:pointer;">${e}</button>`).join('')}</div>`).join('');
+}
+function toggleChatStickerPicker(){
+  const el = document.getElementById('chatStickerPicker');
+  if (!el) return;
+  el.style.display = el.style.display === 'none' ? 'block' : 'none';
+  if (el.style.display === 'block') el.innerHTML = chatStickerPickerHtml();
+}
+function insertChatSticker(emoji){
+  const input = document.getElementById('chatInput');
+  if (!input) return;
+  input.value += emoji;
+  input.focus();
+}
+function toggleChatGiftPicker(){
+  const el = document.getElementById('chatGiftPicker');
+  if (!el) return;
+  el.style.display = el.style.display === 'none' ? 'block' : 'none';
+  if (el.style.display === 'block') {
+    const gifts = (currentUser.ownedGifts || []).map(id => SHOP_CATALOG.gifts.find(g => g.id === id)).filter(Boolean);
+    el.innerHTML = gifts.length ? gifts.map(g => `<button onclick="sendVirtualGift('${g.id}')" style="background:#fff;border:1px solid #ddd;border-radius:7px;padding:7px 9px;cursor:pointer;margin:3px;font-size:13px;">${g.emoji} ${escapeHtml(g.label)}</button>`).join('') : `<div style="font-size:12px;color:#777;padding:6px;">No gifts owned. <button onclick="switchTab('shopPage')" style="background:#2b6ee0;color:#fff;border:none;padding:4px 8px;border-radius:5px;cursor:pointer;font-size:11px;">Open Shop</button></div>`;
+  }
+}
+async function sendVirtualGift(itemId){
+  if (!activeChatFriend) return;
+  const u = await loadCurrentUserFull();
+  if (!u) return;
+  const owned = u.ownedGifts || [];
+  const idx = owned.indexOf(itemId);
+  if (idx === -1) { alert('Buy this gift in the Shop first.'); return; }
+  const gift = SHOP_CATALOG.gifts.find(g => g.id === itemId);
+  if (!gift) return;
+  owned.splice(idx, 1);
+  u.ownedGifts = owned;
+  await saveCurrentUserFull(u);
+  const notifRaw = await storageGet(notifsKey(activeChatFriend), true);
+  const notifs = notifRaw ? JSON.parse(notifRaw) : [];
+  notifs.push({ id: Date.now() + '-' + Math.random().toString(36).slice(2,8), type:'virtual_gift', from:currentUser.username, fromName:currentUser.firstName + ' ' + currentUser.lastName, giftId:gift.id, giftEmoji:gift.emoji, giftLabel:gift.label, time:Date.now(), read:false, handled:true });
+  await storageSet(notifsKey(activeChatFriend), JSON.stringify(notifs), true);
+  alert('Sent ' + gift.emoji + ' ' + gift.label + ' to @' + activeChatFriend + '.');
+  const el = document.getElementById('chatGiftPicker');
+  if (el) { el.style.display = 'none'; el.innerHTML = ''; }
 }
 
 async function openChat(username, display){
@@ -5894,19 +5816,27 @@ async function openChat(username, display){
           <div id="chatPresence" style="font-size:11px;color:#999;"></div>
         </span>
       </span>
-      <span style="font-size:11.5px;color:#888;margin-left:auto;">0.20 Leos / message</span>
-      <span style="cursor:pointer;font-size:18px;" onclick="toggleWallpaperPicker()" title="Chat wallpaper">🎨</span>
+      <span style="font-size:11.5px;color:#888;margin-left:auto;">0.20 Coins / message</span>
+      <button onclick="toggleWallpaperPicker()" title="Chat themes" style="background:#2b6ee0;color:#fff;border:none;padding:6px 8px;border-radius:6px;cursor:pointer;font-size:12px;">🎨 Theme</button>
+      <button onclick="switchTab('shopPage')" title="Open Shop" style="background:#e8622d;color:#fff;border:none;padding:6px 8px;border-radius:6px;cursor:pointer;font-size:12px;">🛍 Shop</button>
     </div>
     <div id="wallpaperPickerRow" style="display:none;padding:8px 14px;border-bottom:1px solid #ddd;background:#fafafa;">
+      <div style="font-size:12px;font-weight:700;color:#444;margin-bottom:5px;">Chat theme</div>
       <span id="wallpaperPicker">${wallpaperPickerHtml()}</span>
     </div>
     <div class="messages" id="messagesArea" style="background:${currentUser.chatWallpaper || WALLPAPER_COLORS.default};"></div>
     ${blocked
       ? `<div style="padding:14px;text-align:center;color:#d32f2f;font-size:13px;border-top:1px solid #ddd;">You can't message this person.</div>`
-      : `<div class="input-bar">
-      <input type="text" id="chatInput" placeholder="Type a message" oninput="notifyTyping()" onkeydown="if(event.key==='Enter') sendMessage()">
-      <button class="send-btn" onclick="sendMessage()">&#10148;</button>
-    </div>`}
+      : `<div style="position:relative;">
+        <div id="chatStickerPicker" style="display:none;background:#fff;border-top:1px solid #ddd;padding:8px 12px;max-height:150px;overflow-y:auto;"></div>
+        <div id="chatGiftPicker" style="display:none;background:#fff;border-top:1px solid #ddd;padding:6px 10px;"></div>
+        <div class="input-bar">
+          <button onclick="toggleChatStickerPicker()" title="Stickers" style="background:#fff;border:1px solid #ccc;border-radius:8px;padding:7px 8px;cursor:pointer;font-size:16px;">😊</button>
+          <button onclick="toggleChatGiftPicker()" title="Send gift" style="background:#fff;border:1px solid #ccc;border-radius:8px;padding:7px 8px;cursor:pointer;font-size:16px;">🎁</button>
+          <input type="text" id="chatInput" placeholder="Type a message" oninput="notifyTyping()" onkeydown="if(event.key==='Enter') sendMessage()">
+          <button class="send-btn" onclick="sendMessage()">&#10148;</button>
+        </div>
+      </div>`}
   `;
   loadMessages();
   updateChatPresence();
@@ -5969,6 +5899,7 @@ function toggleReactPicker(index){
 async function loadMessages(){
   if (!activeChatFriend) return;
   const key = chatKey(currentUser.username, activeChatFriend);
+  _cacheClear(key);
   const raw = await storageGet(key, true);
   const msgs = raw ? JSON.parse(raw) : [];
   const area = document.getElementById('messagesArea');
@@ -6056,7 +5987,7 @@ async function deletePrivateMessage(index){
   loadMessages();
 }
 
-const MESSAGE_COST_LEOS = 0.20;
+const MESSAGE_COST_COINS = 0.20;
 async function sendMessage(){
   if (isCurrentlyBanned(currentUser)) { alert(banBlockMessage(currentUser)); return; }
   if (await isBlockedEitherWay(currentUser.username, activeChatFriend)) { alert("You can't message this person."); return; }
@@ -6075,14 +6006,14 @@ async function sendMessage(){
   if (!senderRaw) { alert('Could not load your account. Please try again.'); return; }
   let sender; try { sender = JSON.parse(senderRaw); } catch(e) { alert('Something went wrong. Please try again.'); return; }
   const balance = typeof sender.leos === 'number' ? sender.leos : 20;
-  if (balance < MESSAGE_COST_LEOS) {
-    alert('Sending a message costs ' + MESSAGE_COST_LEOS.toFixed(2) + ' Leos and your balance is too low.');
+  if (balance < MESSAGE_COST_COINS) {
+    alert('Sending a message costs ' + MESSAGE_COST_COINS.toFixed(2) + ' Coins and your balance is too low.');
     return;
   }
-  sender.leos = balance - MESSAGE_COST_LEOS;
+  sender.leos = balance - MESSAGE_COST_COINS;
   await storageSet(userKey(currentUser.email), JSON.stringify(sender), true);
   currentUser.leos = sender.leos;
-  updateLeosDisplay();
+  updateCoinsDisplay();
 
   input.value = '';
   const key = chatKey(currentUser.username, activeChatFriend);
@@ -6108,8 +6039,8 @@ async function sendMessage(){
 
 /* ---------------- GROUPS & CHATROOMS ----------------
    Both are the same "circle" concept under the hood, distinguished by `kind`
-   ('group' or 'room'), just with a different Leos requirement to create one. */
-const CIRCLE_MIN_LEOS = { group: 100, room: 300 };
+   ('group' or 'room'), just with a different Coins requirement to create one. */
+const CIRCLE_MIN_COINS = { group: 100, room: 300 };
 const CIRCLE_LABEL = { group: 'Group', room: 'Chatroom' };
 function circleKey(kind, id){ return kind + ':' + id; }
 function circleChatKey(kind, id){ return kind + 'chat:' + id; }
@@ -6132,6 +6063,7 @@ async function loadAllCircles(kind){
 }
 
 let chosenRoomPicDataUrl = null;
+let chosenGroupBackgroundDataUrl = null;
 function onRoomPicChosen(){
   const input = document.getElementById('roomPicInput');
   const fileNameEl = document.getElementById('roomPicFileName');
@@ -6153,6 +6085,33 @@ function onRoomPicChosen(){
   reader.readAsDataURL(file);
 }
 
+function onGroupBackgroundChosen(){
+  const input = document.getElementById('groupBackgroundInput');
+  const nameEl = document.getElementById('groupBackgroundFileName');
+  const errEl = document.getElementById('groupCreateError');
+  chosenGroupBackgroundDataUrl = null;
+  if (!input.files || !input.files[0]) { nameEl.textContent = 'No file chosen'; return; }
+  if (!currentUser.hasGroupBackground) {
+    nameEl.textContent = 'Shop unlock required';
+    input.value = '';
+    errEl.textContent = 'Buy Group Background access in the Shop first.';
+    return;
+  }
+  const file = input.files[0];
+  nameEl.textContent = file.name;
+  if (file.size > 8 * 1024 * 1024) {
+    nameEl.textContent = 'Image too big (max 8MB)';
+    input.value = '';
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = async () => {
+    try { chosenGroupBackgroundDataUrl = await resizeImageDataUrl(reader.result, 900); }
+    catch(e) { nameEl.textContent = 'Could not read that image.'; }
+  };
+  reader.readAsDataURL(file);
+}
+
 async function createCircle(kind){
   const inputId = kind === 'group' ? 'groupNameInput' : 'roomNameInput';
   const errId = kind === 'group' ? 'groupCreateError' : 'roomCreateError';
@@ -6162,10 +6121,15 @@ async function createCircle(kind){
   errEl.textContent = '';
   if (!name) { errEl.textContent = 'Give it a name first.'; return; }
 
-  const minLeos = CIRCLE_MIN_LEOS[kind];
+  const minCoins = CIRCLE_MIN_COINS[kind];
   const balance = typeof currentUser.leos === 'number' ? currentUser.leos : 20;
-  if (balance < minLeos && !isAdminUser(currentUser)) {
-    errEl.textContent = 'You need at least ' + minLeos.toFixed(2) + ' Leos to create a ' + CIRCLE_LABEL[kind].toLowerCase() + '.';
+  const privateRequested = kind === 'room' && !!document.getElementById('createRoomPrivateToggle')?.checked;
+  if (privateRequested && !currentUser.hasPrivateRoom && !isAdminUser(currentUser)) {
+    errEl.textContent = 'Buy Private Room access in the Shop first.';
+    return;
+  }
+  if (balance < minCoins && !isAdminUser(currentUser)) {
+    errEl.textContent = 'You need at least ' + minCoins.toFixed(2) + ' Coins to create a ' + CIRCLE_LABEL[kind].toLowerCase() + '.';
     return;
   }
 
@@ -6175,14 +6139,20 @@ async function createCircle(kind){
     creator: currentUser.username,
     members: [currentUser.username],
     admins: [],
-    isPrivate: false,
+    isPrivate: privateRequested,
     createdAt: Date.now(),
     lastActivityAt: Date.now()
   };
   if (kind === 'group') {
     const descInput = document.getElementById('groupDescInput');
     circle.description = descInput ? descInput.value.trim().slice(0, 200) : '';
+    circle.backgroundImage = chosenGroupBackgroundDataUrl || null;
     if (descInput) descInput.value = '';
+    chosenGroupBackgroundDataUrl = null;
+    const bgInput = document.getElementById('groupBackgroundInput');
+    if (bgInput) bgInput.value = '';
+    const bgNameEl = document.getElementById('groupBackgroundFileName');
+    if (bgNameEl) bgNameEl.textContent = 'Shop unlock required';
   } else {
     circle.pendingInvites = [];
     const descInput = document.getElementById('roomDescInput');
@@ -6194,6 +6164,8 @@ async function createCircle(kind){
     if (picInput) picInput.value = '';
     const picNameEl = document.getElementById('roomPicFileName');
     if (picNameEl) picNameEl.textContent = 'No file chosen';
+    const privateToggle = document.getElementById('createRoomPrivateToggle');
+    if (privateToggle) privateToggle.checked = false;
   }
   await storageSet(circleKey(kind, id), JSON.stringify(circle), true);
   input.value = '';
@@ -6477,7 +6449,7 @@ function renderPinnedBar(c){
     </div>`;
 }
 
-async function pinCircleMessage(index){
+async function pinCircleMessage(index, paidByMember = false){
   if (!activeCircle) return;
   const { kind, id } = activeCircle;
   const raw = await storageGet(circleKey(kind, id), true);
@@ -6485,15 +6457,25 @@ async function pinCircleMessage(index){
   let c; try { c = JSON.parse(raw); } catch(e) { return; }
   const isCreator = currentUser.username.toLowerCase() === c.creator.toLowerCase();
   const isCircleAdmin = (c.admins || []).map(a => a.toLowerCase()).includes(currentUser.username.toLowerCase());
-  if (!isCreator && !isCircleAdmin && !isAdminUser(currentUser)) { alert('Only the creator or an admin of this chatroom can pin messages.'); return; }
+  const privileged = isCreator || isCircleAdmin || isAdminUser(currentUser);
+  if (!privileged && !paidByMember) { alert('Pinning this message costs ' + SHOP_FIXED_PRICES.pinMessage + ' Coins.'); return; }
 
   const msgsRaw = await storageGet(circleChatKey(kind, id), true);
   const msgs = msgsRaw ? JSON.parse(msgsRaw) : [];
   if (index < 0 || index >= msgs.length) return;
   const m = msgs[index];
-  c.pinnedMessage = { text: m.text, from: m.from, time: m.time };
+  if (!privileged && paidByMember) {
+    const u = await loadCurrentUserFull();
+    if (!u) return;
+    const balance = typeof u.leos === 'number' ? u.leos : 20;
+    if (balance < SHOP_FIXED_PRICES.pinMessage) { alert('You need ' + SHOP_FIXED_PRICES.pinMessage + ' Coins to pin this message.'); return; }
+    u.leos = balance - SHOP_FIXED_PRICES.pinMessage;
+    await saveCurrentUserFull(u);
+  }
+  c.pinnedMessage = { text: m.text, from: m.from, time: m.time, pinnedBy: currentUser.username };
   await storageSet(circleKey(kind, id), JSON.stringify(c), true);
   renderPinnedBar(c);
+  loadCircleMessages();
 }
 
 async function unpinCircleMessage(){
@@ -6535,12 +6517,14 @@ async function loadCircleMessages(){
     const canDelete = sent || isAdminUser(currentUser);
     const isCreatorHere = currentUser.username.toLowerCase() === circleCache_creator;
     const canPin = isCreatorHere || circleCache_isAdmin || isAdminUser(currentUser);
+    const canBuyPin = !canPin;
     const fromEsc = m.from.replace(/'/g, "\\'");
     const nameTag = `<div style="font-size:10.5px;font-weight:700;color:${sent ? '#dfe4ff' : '#2b3a8f'};cursor:pointer;" onclick="viewProfile('${fromEsc}')">@${escapeHtml(m.from)} &middot; ${getFollowerLevel(info.followerCount).emoji} ${getFollowerLevel(info.followerCount).label}</div>`;
     const links = [];
     if (sent) links.push(`<span style="cursor:pointer;text-decoration:underline;" onclick="editCircleMessage(${i})">Edit</span>`);
     if (canDelete) links.push(`<span style="cursor:pointer;text-decoration:underline;" onclick="deleteCircleMessage(${i})">Delete</span>`);
     if (canPin) links.push(`<span style="cursor:pointer;text-decoration:underline;" onclick="pinCircleMessage(${i})">Pin</span>`);
+    else if (canBuyPin) links.push(`<span style="cursor:pointer;text-decoration:underline;" onclick="pinCircleMessage(${i}, true)">Pin for 50 Coins</span>`);
     return `<div class="msg-row ${sent ? 'sent' : 'received'}">
       <div class="bubble" style="font-size:13px;">${nameTag}${escapeHtml(m.text)}${m.edited ? ' <span style="font-size:10px;color:#999;">(edited)</span>' : ''}<span class="time">${t}</span></div>
       ${links.length ? `<div style="font-size:11px;color:#666;margin-top:2px;display:flex;gap:8px;">${links.join('')}</div>` : ''}
@@ -6654,7 +6638,7 @@ async function openGroup(id){
   panel.innerHTML = `
     <div style="overflow-y:auto;height:100%;">
       <div style="display:inline-block;padding:10px 14px;cursor:pointer;text-decoration:underline;font-size:13px;color:#2b6ee0;font-weight:600;" onclick="closeGroup()">&larr; Back</div>
-      ${c.bannerImage ? `<img src="${c.bannerImage}" style="width:100%;height:140px;object-fit:cover;display:block;">` : `<div style="width:100%;height:100px;background:linear-gradient(135deg,#2b6ee0,#6a4fb8);"></div>`}
+      ${c.backgroundImage ? `<div style="width:100%;height:140px;background-image:url('${c.backgroundImage}');background-size:cover;background-position:center;"></div>` : c.bannerImage ? `<img src="${c.bannerImage}" style="width:100%;height:140px;object-fit:cover;display:block;">` : `<div style="width:100%;height:100px;background:linear-gradient(135deg,#2b6ee0,#6a4fb8);"></div>`}
       <div style="padding:14px;">
         <div style="font-size:20px;font-weight:700;color:#222;">${escapeHtml(c.name)}</div>
         ${c.description ? `<div style="font-size:13.5px;color:#555;margin-top:4px;">${escapeHtml(c.description)}</div>` : ''}
@@ -7261,13 +7245,13 @@ function loadMenuPage(){
     { label: 'Statusbook', page: 'statusbookPage' },
     { label: 'Nova', page: 'aiPage' },
     { label: 'Groups', page: 'groupsPage' },
-    { label: 'Leos', page: 'leosPage' },
+    { label: 'Coins', page: 'leosPage' },
     { label: 'Games', page: 'gamesPage' },
-    { label: '💰 Buy$', page: 'buyLeosPage' },
-    { label: '🛍️ Shop', page: 'shopPage' },
+    { label: '💰 Buy Coins', page: 'buyCoinsPage' },
     { label: '🔍 Search', page: 'searchPage' },
     { label: '🚩 Report', page: 'reportPage' },
-    { label: '🎡 Spin', page: 'spinPage' }
+    { label: '🎧 Customer Service', page: 'supportPage' },
+    { label: '⚙ Settings & Privacy', page: 'settingsPage' },
   ];
   if (currentUser && (isAdminUser(currentUser) || isModeratorUser(currentUser))) items.push({ label: '⚙ Admin', page: 'adminPage' });
   items.push({ label: 'Log Out', page: null, action: 'logout' });
@@ -7316,11 +7300,11 @@ async function sendToAI(){
 }
 
 /* Owner account: tied specifically to OWNER_EMAIL (the app's builder/owner).
-   This runs on every load - it grants owner status + Leos to that one email,
+   This runs on every load - it grants owner status + Coins to that one email,
    and makes sure no other account ever carries isOwner.
    IMPORTANT: this MUST match by email, never by name. firstName/lastName are
    plain text fields anyone can type at signup - matching on them would let
-   ANYONE become the owner (full admin, unlimited Leos, "wipe all data")
+   ANYONE become the owner (full admin, unlimited Coins, "wipe all data")
    just by signing up with the right name. Email is safe to match on only
    because signup already blocks two accounts from sharing one email. */
 async function applySpecialGrantsOnce(){
@@ -7353,6 +7337,203 @@ applyDarkModePreference();
 applyLanguage();
 storageRemove(SESSION_KEY); // one-time cleanup: delete the old shared cloud session doc from before this was made tab-local, so no leftover email sits in the shared store
 applySpecialGrantsOnce().then(restoreSession);
+
+/* ================= REAL SOCIAL APP UPGRADES =================
+   These additions build on the existing feed, status, chat, groups,
+   notifications, search, blocking and Firebase-backed storage systems.
+*/
+function cmPrivacyKey(username){ return 'privacy:' + String(username || '').toLowerCase(); }
+async function cmLoadSettings(){
+  if (!currentUser) return;
+  const defaults = { privateProfile:false, showOnline:true, messageRequests:false, notifMessages:true, notifSocial:true };
+  let cfg = defaults;
+  try { const raw = await storageGet(cmPrivacyKey(currentUser.username), true); if (raw) cfg = Object.assign(defaults, JSON.parse(raw)); } catch(e){}
+  const map = { cmPrivateProfile:'privateProfile', cmShowOnline:'showOnline', cmMessageRequests:'messageRequests', cmNotifMessages:'notifMessages', cmNotifSocial:'notifSocial' };
+  Object.keys(map).forEach(id => { const el=document.getElementById(id); if(el) el.checked=!!cfg[map[id]]; });
+}
+async function cmSavePrivacy(){
+  if (!currentUser) return;
+  const cfg = {
+    privateProfile: !!document.getElementById('cmPrivateProfile')?.checked,
+    showOnline: !!document.getElementById('cmShowOnline')?.checked,
+    messageRequests: !!document.getElementById('cmMessageRequests')?.checked,
+    notifMessages: !!document.getElementById('cmNotifMessages')?.checked,
+    notifSocial: !!document.getElementById('cmNotifSocial')?.checked
+  };
+  await storageSet(cmPrivacyKey(currentUser.username), JSON.stringify(cfg), true);
+}
+async function cmShowBlockedUsers(){
+  const el=document.getElementById('cmBlockedList'); if(!el || !currentUser) return;
+  const list=Array.isArray(currentUser.blockedUsers)?currentUser.blockedUsers:[];
+  el.innerHTML=list.length ? list.map(u=>`<div style="padding:7px 0;border-top:1px solid #eee;font-size:13px;display:flex;justify-content:space-between;align-items:center;"><span>@${escapeHtml(u)}</span><button onclick="toggleBlockUser('${String(u).replace(/'/g,"\\'")}');setTimeout(cmShowBlockedUsers,200)" style="border:0;background:#eee;padding:5px 8px;border-radius:5px;cursor:pointer;">Unblock</button></div>`).join('') : '<div style="font-size:13px;color:#888;">No blocked accounts.</div>';
+}
+
+async function cmLoadStoriesStrip(){
+  const el=document.getElementById('cmStoriesStrip'); if(!el || !currentUser) return;
+  const users=[currentUser.username];
+  try { const raw=await storageGet(friendsKey(currentUser.username),true); const fs=raw?JSON.parse(raw):[]; users.push(...fs.slice(0,20)); } catch(e){}
+  const unique=[...new Set(users.map(x=>String(x)))];
+  const cards=[];
+  for(const uname of unique){
+    try{
+      const email=await storageGet(usernameKey(uname),true); if(!email) continue;
+      const raw=await storageGet(userKey(email),true); if(!raw) continue;
+      const u=JSON.parse(raw);
+      if(!isStatusActive(u)) continue;
+      const name=u.firstName||uname;
+      const avatar=u.profilePic?`<img src="${escapeHtml(u.profilePic)}" alt="">`:escapeHtml(name[0]||'?').toUpperCase();
+      cards.push(`<div class="cm-story" onclick="viewProfile('${String(uname).replace(/'/g,"\\'")}')"><div class="cm-story-avatar">${avatar}</div><div class="cm-story-name">${escapeHtml(name)}</div></div>`);
+    }catch(e){}
+  }
+  cards.unshift(`<div class="cm-story" onclick="switchTab('statusbookPage')"><div class="cm-story-avatar" style="border-color:#2b6ee0;font-size:24px;">+</div><div class="cm-story-name">Add story</div></div>`);
+  el.innerHTML='<div style="font-weight:700;font-size:13px;margin-bottom:8px;">Stories</div>'+cards.join('');
+}
+
+// Keep the Stories row fresh whenever Home loads.
+const _cmOriginalLoadHome = window.loadHome;
+if (typeof _cmOriginalLoadHome === 'function') {
+  window.loadHome = async function(){ const r=await _cmOriginalLoadHome.apply(this,arguments); cmLoadStoriesStrip(); return r; };
+}
+
+// Lightweight browser-side media preview helper for future message attachments.
+// Files remain local unless the existing app explicitly uploads/stores them.
+function cmChooseChatMedia(){
+  if(!activeChatFriend) return;
+  let input=document.getElementById('cmChatMediaInput');
+  if(!input){ input=document.createElement('input'); input.type='file'; input.accept='image/*,video/*'; input.style.display='none'; input.id='cmChatMediaInput'; document.body.appendChild(input); input.onchange=cmPreviewChatMedia; }
+  input.click();
+}
+function cmPreviewChatMedia(){
+  const input=document.getElementById('cmChatMediaInput'); if(!input?.files?.[0]) return;
+  const file=input.files[0];
+  if(file.size>5*1024*1024){ alert('Please choose a file smaller than 5 MB.'); input.value=''; return; }
+  alert('Media selected: '+file.name+'\
+The current app stores chat messages as text. Connect a secure file-storage backend before enabling permanent media uploads.');
+  input.value='';
+}
+
+
+// Lightweight browser-side media preview helper for future message attachments.
+// Files remain local unless the existing app explicitly uploads/stores them.
+function cmChooseChatMedia(){
+  if(!activeChatFriend) return;
+  let input=document.getElementById('cmChatMediaInput');
+  if(!input){ input=document.createElement('input'); input.type='file'; input.accept='image/*,video/*'; input.style.display='none'; input.id='cmChatMediaInput'; document.body.appendChild(input); input.onchange=cmPreviewChatMedia; }
+  input.click();
+}
+function cmPreviewChatMedia(){
+  const input=document.getElementById('cmChatMediaInput'); if(!input?.files?.[0]) return;
+  const file=input.files[0];
+  if(file.size>5*1024*1024){ alert('Please choose a file smaller than 5 MB.'); input.value=''; return; }
+  alert('Media selected: '+file.name+'\
+The current app stores chat messages as text. Connect a secure file-storage backend before enabling permanent media uploads.');
+  input.value='';
+}
+
+
+/* ================= CUSTOMER SERVICE + ADMIN OPERATIONS ================= */
+function cmTicketKey(id){ return 'supportTicket:' + id; }
+function cmAuditKey(id){ return 'audit:' + id; }
+function cmTicketStatusClass(s){ return ({'Open':'open','In progress':'progress','Waiting for user':'waiting','Resolved':'resolved','Closed':'closed'})[s] || 'open'; }
+function cmSafeDate(t){ try{return new Date(t).toLocaleString();}catch(e){return '';} }
+async function cmWriteAudit(action, target, detail){
+  if(!currentUser) return;
+  const item={id:Date.now()+'-'+Math.random().toString(36).slice(2,7),time:Date.now(),staff:currentUser.username,action,target:target||'',detail:detail||''};
+  await storageSet(cmAuditKey(item.id),JSON.stringify(item),true);
+}
+async function cmNotifyUser(username,title,message){
+  try{
+    const raw=await storageGet(usernameKey(username),true); if(!raw) return;
+    const email=raw;
+    const n={id:Date.now()+'-'+Math.random().toString(36).slice(2,7),title,message,time:Date.now(),read:false};
+    const k='notifications:'+username.toLowerCase()+':'+n.id;
+    await storageSet(k,JSON.stringify(n),true);
+  }catch(e){}
+}
+async function cmSubmitSupportTicket(){
+  const err=document.getElementById('supportError'), status=document.getElementById('supportStatus');
+  err.textContent=''; status.textContent='';
+  if(!currentUser){err.textContent='Please log in first.';return;}
+  const subject=document.getElementById('supportSubject').value.trim();
+  const message=document.getElementById('supportMessage').value.trim();
+  const category=document.getElementById('supportCategory').value;
+  if(!subject || !message){err.textContent='Please enter a subject and describe the problem.';return;}
+  const id='CS-'+Date.now().toString(36).toUpperCase()+'-'+Math.random().toString(36).slice(2,6).toUpperCase();
+  const ticket={id,username:currentUser.username,name:(currentUser.firstName||'')+' '+(currentUser.lastName||''),category,subject,message,time:Date.now(),status:'Open',replies:[]};
+  const ok=await storageSet(cmTicketKey(id),JSON.stringify(ticket),true);
+  if(!ok){err.textContent='Could not create the ticket. Please try again.';return;}
+  await cmWriteAudit('ticket_created',id,category+' / '+subject);
+  document.getElementById('supportSubject').value=''; document.getElementById('supportMessage').value='';
+  status.textContent='Ticket '+id+' created. Staff can now review it.';
+  cmLoadSupportPage();
+}
+async function cmGetTickets(){
+  const keys=await storageListKeys('supportTicket:',true); const out=[];
+  for(const k of keys){const raw=await storageGet(k,true); if(raw){try{out.push(JSON.parse(raw))}catch(e){}}}
+  return out.sort((a,b)=>(b.time||0)-(a.time||0));
+}
+function cmRenderTicket(t, staff){
+  const replies=(t.replies||[]).map(r=>`<div class="cm-reply ${r.byStaff?'staff':'user'}"><div style="font-size:11px;color:#777;margin-bottom:3px;">${r.byStaff?'Staff':'You'} · ${escapeHtml(r.by||'')} · ${cmSafeDate(r.time)}</div><div>${escapeHtml(r.text||'')}</div></div>`).join('');
+  const actions=staff?`<div class="cm-admin-tools"><select onchange="cmSetTicketStatus('${t.id}',this.value)"><option ${t.status==='Open'?'selected':''}>Open</option><option ${t.status==='In progress'?'selected':''}>In progress</option><option ${t.status==='Waiting for user'?'selected':''}>Waiting for user</option><option ${t.status==='Resolved'?'selected':''}>Resolved</option><option ${t.status==='Closed'?'selected':''}>Closed</option></select><button class="cm-mini-btn" onclick="cmReplyTicket('${t.id}')">Reply</button></div>`:'';
+  return `<div class="cm-ticket"><div class="cm-ticket-head"><div><div class="cm-ticket-title">${escapeHtml(t.subject)} <span class="cm-pill ${cmTicketStatusClass(t.status)}">${escapeHtml(t.status)}</span></div><div class="cm-ticket-meta">${escapeHtml(t.id)} · ${escapeHtml(t.category)} · ${cmSafeDate(t.time)}${staff?' · @'+escapeHtml(t.username):''}</div></div></div><div style="margin-top:8px;white-space:pre-wrap;">${escapeHtml(t.message||'')}</div>${replies}${actions}</div>`;
+}
+async function cmLoadSupportPage(){
+  if(!currentUser) return;
+  const el=document.getElementById('supportMyTickets'); if(!el)return;
+  const all=await cmGetTickets(); const mine=all.filter(t=>String(t.username).toLowerCase()===String(currentUser.username).toLowerCase());
+  el.innerHTML=mine.length?mine.map(t=>cmRenderTicket(t,false)).join(''):'<div class="empty-feed">You have no support tickets yet.</div>';
+}
+async function cmSetTicketStatus(id,status){
+  if(!currentUser || !(isAdminUser(currentUser)||isModeratorUser(currentUser))) return;
+  const raw=await storageGet(cmTicketKey(id),true); if(!raw)return; let t;try{t=JSON.parse(raw)}catch(e){return;}
+  t.status=status; t.updatedAt=Date.now(); t.updatedBy=currentUser.username;
+  await storageSet(cmTicketKey(id),JSON.stringify(t),true); await cmWriteAudit('ticket_status',id,status); await cmNotifyUser(t.username,'Customer Service update','Your support ticket '+id+' is now '+status+'.'); cmLoadAdminSupport();
+}
+async function cmReplyTicket(id){
+  if(!currentUser || !(isAdminUser(currentUser)||isModeratorUser(currentUser))) return;
+  const raw=await storageGet(cmTicketKey(id),true); if(!raw)return; let t;try{t=JSON.parse(raw)}catch(e){return;}
+  const text=prompt('Reply to @'+t.username+':',''); if(text===null||!text.trim())return;
+  t.replies=t.replies||[]; t.replies.push({text:text.trim(),by:currentUser.username,byStaff:true,time:Date.now()}); t.status='Waiting for user'; t.updatedAt=Date.now();
+  await storageSet(cmTicketKey(id),JSON.stringify(t),true); await cmWriteAudit('ticket_reply',id,text.trim().slice(0,120)); await cmNotifyUser(t.username,'Customer Service replied','Staff replied to support ticket '+id+'.'); cmLoadAdminSupport();
+}
+async function cmLoadAdminSupport(){
+  const host=document.getElementById('cmAdminOperations'); if(!host||!currentUser||( !isAdminUser(currentUser)&&!isModeratorUser(currentUser)))return;
+  const tickets=await cmGetTickets();
+  const open=tickets.filter(t=>t.status==='Open').length, progress=tickets.filter(t=>t.status==='In progress').length, resolved=tickets.filter(t=>t.status==='Resolved'||t.status==='Closed').length;
+  const reportKeys=await storageListKeys('report:',true); const auditKeys=await storageListKeys('audit:',true);
+  host.innerHTML=`<div class="section-divider"><strong>Operations & Customer Service</strong><span>Moderation and support workspace for staff.</span></div><div class="cm-support-grid"><div class="cm-stat"><div class="v">${open}</div><div class="l">Open tickets</div></div><div class="cm-stat"><div class="v">${progress}</div><div class="l">In progress</div></div><div class="cm-stat"><div class="v">${resolved}</div><div class="l">Resolved / closed</div></div><div class="cm-stat"><div class="v">${reportKeys.length}</div><div class="l">Reports</div></div><div class="cm-stat"><div class="v">${auditKeys.length}</div><div class="l">Audit events</div></div></div><div class="cm-admin-tools"><input id="cmTicketFilter" placeholder="Filter tickets by ID, user, subject..." oninput="cmFilterAdminTickets()"><select id="cmTicketStatusFilter" onchange="cmFilterAdminTickets()"><option value="all">All statuses</option><option>Open</option><option>In progress</option><option>Waiting for user</option><option>Resolved</option><option>Closed</option></select></div><div id="cmAdminTicketList">${tickets.length?tickets.map(t=>cmRenderTicket(t,true)).join(''):'<div class="empty-feed">No support tickets.</div>'}</div><div class="section-divider"><strong>Recent audit log</strong><span>Staff actions recorded by this app.</span></div><div id="cmAuditList"></div>`;
+  cmLoadAudit();
+}
+async function cmFilterAdminTickets(){
+  const host=document.getElementById('cmAdminTicketList'); if(!host)return; const q=(document.getElementById('cmTicketFilter').value||'').toLowerCase(); const st=document.getElementById('cmTicketStatusFilter').value; const ts=await cmGetTickets(); const f=ts.filter(t=>(st==='all'||t.status===st)&&((t.id+' '+t.username+' '+t.subject+' '+t.category).toLowerCase().includes(q))); host.innerHTML=f.length?f.map(t=>cmRenderTicket(t,true)).join(''):'<div class="empty-feed">No matching tickets.</div>';
+}
+async function cmLoadAudit(){
+  const el=document.getElementById('cmAuditList');if(!el)return; const keys=await storageListKeys('audit:',true); const arr=[]; for(const k of keys){const raw=await storageGet(k,true);if(raw){try{arr.push(JSON.parse(raw))}catch(e){}}} arr.sort((a,b)=>b.time-a.time); el.innerHTML=arr.slice(0,25).map(a=>`<div class="cm-ticket-meta" style="padding:6px 0;border-bottom:1px solid #eee;"><strong>${escapeHtml(a.action)}</strong> · ${escapeHtml(a.target)} · @${escapeHtml(a.staff)} · ${cmSafeDate(a.time)}${a.detail?' · '+escapeHtml(a.detail):''}</div>`).join('')||'<div class="empty-feed">No audit events yet.</div>';
+}
+async function cmAdminEnhance(){
+  const host=document.getElementById('adminUserList'); if(!host)return;
+  let op=document.getElementById('cmAdminOperations'); if(!op){op=document.createElement('div');op.id='cmAdminOperations';host.parentNode.insertBefore(op,host);}
+  await cmLoadAdminSupport();
+}
+const _cmOldLoadAdminPage=loadAdminPage;
+loadAdminPage=async function(){ await _cmOldLoadAdminPage.apply(this,arguments); if(currentUser&&(isAdminUser(currentUser)||isModeratorUser(currentUser))) await cmAdminEnhance(); };
+
+
+
+
+async function cmLoadStaffSupportInbox(){
+  const host=document.getElementById('cmStaffSupportInbox');
+  if(!host || !currentUser || !(isAdminUser(currentUser)||isModeratorUser(currentUser))) return;
+  const tickets=await cmGetTickets();
+  const open=tickets.filter(t=>t.status!=='Resolved'&&t.status!=='Closed');
+  host.innerHTML='<div class="section-divider"><strong>Staff inbox ('+open.length+' open)</strong><span>Review and respond to customer tickets.</span></div>'+(open.length?open.map(t=>cmRenderTicket(t,true)).join(''):'<div class="empty-feed">No open tickets.</div>');
+}
+const _cmOldLoadSupportPage=cmLoadSupportPage;
+cmLoadSupportPage=async function(){ await _cmOldLoadSupportPage.apply(this,arguments); await cmLoadStaffSupportInbox(); };
+
+</script>
+<script>
+window.addEventListener('load', function(){ refreshWelcomeStats(); });
 </script>
 </body>
 </html>
