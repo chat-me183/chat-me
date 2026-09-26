@@ -1007,7 +1007,7 @@ function showAuth(type){
 }
 
 /* ---------------- reCAPTCHA (real, Google-verified bot protection) ---------------- */
-const RECAPTCHA_SITE_KEY = '6LcF9sItAAAAAPrQmuCeO6DhYrMiB7e7Ubi7Mbja';
+const RECAPTCHA_SITE_KEY = '6Ld_C9AtAAAAAIumTV_HqB6lXc4XTVpbEAsWCuWW';
 let recaptchaLoginId = null;
 let recaptchaSignupId = null;
 let recaptchaReady = false;
@@ -1018,25 +1018,22 @@ function onRecaptchaLoad(){
 }
 const RECAPTCHA_BACKEND_URL = 'https://chat-me-backend.rahmanadegboye1.workers.dev';
 async function recaptchaPassed(which){
-  if (!recaptchaReady || typeof grecaptcha === 'undefined') return false;
+  if (!recaptchaReady || typeof grecaptcha === 'undefined') return { ok: false, reason: 'not_ready' };
   const id = which === 'login' ? recaptchaLoginId : recaptchaSignupId;
-  if (id === null) return false;
+  if (id === null) return { ok: false, reason: 'not_ready' };
   const token = grecaptcha.getResponse(id);
-  if (!token) return false;
-  // Don't just trust the browser - ask our own backend to double-check
-  // this token with Google directly, so it can't be faked from the page.
+  if (!token) return { ok: false, reason: 'unchecked' };
   try {
     const res = await fetch(RECAPTCHA_BACKEND_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ token })
     });
+    if (!res.ok) return { ok: false, reason: 'backend' };
     const data = await res.json();
-    return data.success === true;
+    return data.success === true ? { ok: true } : { ok: false, reason: 'rejected' };
   } catch (e) {
-    // If the backend is unreachable, fail safe by rejecting rather than
-    // silently letting anyone through.
-    return false;
+    return { ok: false, reason: 'backend' };
   }
 }
 function resetRecaptcha(which){
@@ -1353,8 +1350,12 @@ async function doSignup(){
     markFieldError('suPasswordConfirm', 'msgPwConfirm', 'Passwords do not match.');
     firstErrorField = firstErrorField || 'suPasswordConfirm';
   }
-  if (!(await recaptchaPassed('signup'))) {
-    errEl.textContent = 'Please check the "I\'m not a robot" box first.';
+  const captchaResult = await recaptchaPassed('signup');
+  if (!captchaResult.ok) {
+    if (captchaResult.reason === 'unchecked') errEl.textContent = 'Please check the "I\'m not a robot" box first.';
+    else if (captchaResult.reason === 'backend') { errEl.textContent = 'Captcha verification could not reach the verification server. Please try again.'; refreshCaptcha('signup'); }
+    else if (captchaResult.reason === 'rejected') { errEl.textContent = 'Captcha verification failed. Please check the box again.'; refreshCaptcha('signup'); }
+    else errEl.textContent = 'Captcha is still loading. Please wait a moment and try again.';
     return;
   }
   if (age === null && month && day && year) {
@@ -1825,8 +1826,12 @@ async function doLogin(){
     errEl.textContent = 'Please enter your email and password.';
     return;
   }
-  if (!(await recaptchaPassed('login'))) {
-    errEl.textContent = 'Please check the "I\'m not a robot" box first.';
+  const captchaResult = await recaptchaPassed('login');
+  if (!captchaResult.ok) {
+    if (captchaResult.reason === 'unchecked') errEl.textContent = 'Please check the "I\'m not a robot" box first.';
+    else if (captchaResult.reason === 'backend') { errEl.textContent = 'Captcha verification could not reach the verification server. Please try again.'; refreshCaptcha('login'); }
+    else if (captchaResult.reason === 'rejected') { errEl.textContent = 'Captcha verification failed. Please check the box again.'; refreshCaptcha('login'); }
+    else errEl.textContent = 'Captcha is still loading. Please wait a moment and try again.';
     return;
   }
 
