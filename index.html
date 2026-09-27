@@ -1302,10 +1302,29 @@ async function secureStorageRequest(op, key, body) {
     return { handled:true, data };
   } catch(e) {
     if (e && e.secureStorage) throw e;
-    // A network failure before the new Worker is deployed should not break the
-    // existing app. Once the Worker is active, server responses above are strict.
-    return { handled:false };
+    // The secure Worker is now the authoritative storage backend. Do not silently
+    // fall back to client-accessible Firestore when the Worker is unreachable.
+    secureStorageBackendState = 'secure-error';
+    const err = new Error('Secure storage backend unavailable');
+    err.secureStorage = true;
+    throw err;
   }
+}
+
+async function secureRoleRequest(path, body){
+  if(!firebaseAuth || !firebaseAuth.currentUser || firebaseAuth.currentUser.isAnonymous) return {handled:false};
+  try{
+    const token=await firebaseAuth.currentUser.getIdToken();
+    const res=await fetch(RECAPTCHA_BACKEND_URL.replace(/\/$/,'')+path,{method:body?'POST':'GET',headers:{'Authorization':'Bearer '+token,'Content-Type':'application/json'},body:body?JSON.stringify(body):undefined});
+    if(res.status===404||res.status===405) return {handled:false};
+    const data=await res.json().catch(()=>({}));
+    if(!res.ok) { const err=new Error(data?.error||'Secure role request failed'); err.secureRole=true; throw err; }
+    return {handled:true,data};
+  }catch(e){ if(e?.secureRole) throw e; const err=new Error('Secure role backend unavailable'); err.secureRole=true; throw err; }
+}
+async function setTrustedStaffRole(uid, role){
+  const r=await secureRoleRequest('/staff-role',{uid,role});
+  return r.handled && r.data?.ok===true;
 }
 
 async function recaptchaPassed(which){
@@ -1368,56 +1387,27 @@ function randomSalt(){
   }
 }
 
-/* ---------------- storage helpers (localStorage, with in-memory fallback) ---------------- */
-let memStore = {};
-let storageBackend = 'local';
+/* ---------------- SECURE CLOUD STORAGE ----------------
+   Production Chat Me data is authoritative in the authenticated Cloudflare
+   Worker/KV backend. Browser localStorage is used only for harmless UI
+   preferences (language/theme) and never as an account/data fallback.
+*/
 let storageWarningShown = false;
-(function detectStorageBackend(){
-  try {
-    const testKey = '__cm_test__' + Math.random();
-    localStorage.setItem(testKey, '1');
-    localStorage.removeItem(testKey);
-    storageBackend = 'local';
-  } catch (e) {
-    storageBackend = 'memory';
-  }
-})();
-function warnMemoryStorageOnce(){
-  if (storageWarningShown) return;
-  storageWarningShown = true;
-  const banner = document.createElement('div');
-  banner.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#fff3cd;color:#664d03;padding:8px 12px;font-size:12.5px;text-align:center;z-index:200;';
-  banner.textContent = "This browser is blocking persistent storage for local files, so accounts and posts will only last for this session (they won't survive closing the page). Tap to dismiss.";
-  banner.onclick = () => banner.remove();
-  document.body.appendChild(banner);
-}
-/* Wrap any Firestore call with this so a slow or unreachable network can
-   never leave the app stuck on "Working..." - it just falls back to the
-   local cache instead of hanging. */
 function withTimeout(promise, ms){
   return Promise.race([
     promise,
-    new Promise((_, reject) => setTimeout(() => reject(new Error('Firebase call timed out')), ms))
+    new Promise((_, reject) => setTimeout(() => reject(new Error('Request timed out')), ms))
   ]);
 }
-/* A short-lived cache so re-reading the same piece of data seconds later
-   (very common - the same user's info shows up many times in one feed)
-   doesn't need a fresh network round trip every single time. This is the
-   biggest lever for feeling faster on a slow connection, since each
-   network read can otherwise take real time to come back. */
 const _fastCache = {};
 const FAST_CACHE_MS = 20000;
-// These change second-to-second and are read via polling - caching them
-// would make chat, typing, online status, and live challenges feel
-// laggy or stuck on old data. Everything else (profiles, posts, rooms,
-// shop, leaderboard) is read far more often than it changes, so caching
-// those is a safe, real speed win.
 const _noCachePrefixes = ['chat:', 'circlechat:', 'typing:', 'presence:', 'notifs:', 'dicechallenge:', 'challenge:', 'requests:', 'sentreq:', 'friends:', 'seen:'];
 function _isCacheable(key){ return !_noCachePrefixes.some(p => key.startsWith(p)); }
 function _cacheGet(key){
   if (!_isCacheable(key)) return undefined;
   const hit = _fastCache[key];
   if (hit && (Date.now() - hit.time) < FAST_CACHE_MS) return hit.value;
+  delete _fastCache[key];
   return undefined;
 }
 function _cacheSet(key, value){ if (_isCacheable(key)) _fastCache[key] = { value, time: Date.now() }; }
@@ -1427,80 +1417,26 @@ async function storageGet(key){
   const cached = _cacheGet(key);
   if (cached !== undefined) return cached;
   const secure = await secureStorageRequest('get', key);
-  if (secure.handled) {
-    const val = secure.data?.value ?? null;
-    _cacheSet(key, val);
-    return val;
-  }
-  if (firebaseDb) {
-    try {
-      const doc = await withTimeout(firebaseDb.collection('kv').doc(key).get(), 3000);
-      const val = doc.exists ? doc.data().value : null;
-      if (storageBackend === 'local') { try { val === null ? localStorage.removeItem(key) : localStorage.setItem(key, val); } catch(e){} }
-      else { if (val === null) delete memStore[key]; else memStore[key] = val; }
-      _cacheSet(key, val);
-      return val;
-    } catch (e) {
-      console.error('SECURITY: Firestore read failed; refusing local fallback.', e);
-      throw e;
-    }
-  }
-  if (firebaseConfigLooksReal) throw new Error('Secure cloud storage is unavailable.');
-  if (storageBackend === 'local') {
-    try { return localStorage.getItem(key); } catch (e) {}
-  }
-  return Object.prototype.hasOwnProperty.call(memStore, key) ? memStore[key] : null;
+  if (!secure.handled) throw new Error('Secure storage backend is not deployed or unavailable.');
+  const val = secure.data?.value ?? null;
+  _cacheSet(key, val);
+  return val;
 }
 async function storageSet(key, value){
   _cacheSet(key, value);
   const secure = await secureStorageRequest('set', key, { value });
-  if (secure.handled) return { key, value };
-  if (firebaseDb) {
-    try { await withTimeout(firebaseDb.collection('kv').doc(key).set({ value: value, updatedAt: Date.now() }), 3000); }
-    catch (e) { console.error('SECURITY: Firestore write failed; refusing local-only save.', e); throw e; }
-  } else if (firebaseConfigLooksReal) {
-    throw new Error('Secure cloud storage is unavailable.');
-  }
-  if (!firebaseConfigLooksReal && storageBackend === 'local') {
-    try { localStorage.setItem(key, value); return { key, value }; }
-    catch (e) { console.warn('This particular save was too large for local storage - keeping it in memory for this session only.', e); }
-  }
-  memStore[key] = value;
+  if (!secure.handled) throw new Error('Secure storage backend is not deployed or unavailable.');
   return { key, value };
 }
 async function storageListKeys(prefix){
   const secure = await secureStorageRequest('list', prefix);
-  if (secure.handled) return secure.data?.keys || [];
-  if (firebaseDb) {
-    try {
-      const snap = await withTimeout(firebaseDb.collection('kv')
-        .where(firebase.firestore.FieldPath.documentId(), '>=', prefix)
-        .where(firebase.firestore.FieldPath.documentId(), '<', prefix + '\uf8ff')
-        .get(), 3000);
-      return snap.docs.map(d => d.id);
-    } catch (e) {
-      console.error('SECURITY: Firestore list failed; refusing local fallback.', e);
-      throw e;
-    }
-  }
-  if (firebaseConfigLooksReal) throw new Error('Secure cloud storage is unavailable.');
-  if (storageBackend === 'local') {
-    try { return Object.keys(localStorage).filter(k => k.startsWith(prefix)); } catch (e) {}
-  }
-  return Object.keys(memStore).filter(k => k.startsWith(prefix));
+  if (!secure.handled) throw new Error('Secure storage backend is not deployed or unavailable.');
+  return secure.data?.keys || [];
 }
 async function storageRemove(key){
   _cacheClear(key);
   const secure = await secureStorageRequest('delete', key);
-  if (secure.handled) return true;
-  if (firebaseDb) {
-    try { await withTimeout(firebaseDb.collection('kv').doc(key).delete(), 3000); }
-    catch (e) { console.error('SECURITY: Firestore delete failed.', e); throw e; }
-  }
-  if (storageBackend === 'local') {
-    try { localStorage.removeItem(key); return true; } catch (e) {}
-  }
-  delete memStore[key];
+  if (!secure.handled) throw new Error('Secure storage backend is not deployed or unavailable.');
   return true;
 }
 
@@ -1688,7 +1624,7 @@ async function doSignup(){
       return;
     }
 
-    if (!firebaseAuth || !firebaseDb || !firebaseConfigLooksReal) { errEl.textContent = 'Secure account creation is unavailable right now.'; return; }
+    if (!firebaseAuth || !firebaseConfigLooksReal) { errEl.textContent = 'Secure account creation is unavailable right now.'; return; }
     let firebaseCredential;
     try { firebaseCredential = await withTimeout(firebaseAuth.createUserWithEmailAndPassword(email, password), 8000); }
     catch (e) { errEl.textContent = e.code === 'auth/email-already-in-use' ? 'An account with this email already exists.' : 'Secure account creation failed. Please try again.'; return; }
@@ -2058,11 +1994,15 @@ async function refreshTrustedAuthClaims(){
   try {
     const token = await firebaseAuth.currentUser.getIdTokenResult(true);
     const claims = token.claims || {};
-    return {
-      admin: claims.admin === true,
-      moderator: claims.moderator === true,
-      owner: claims.owner === true
-    };
+    let result = { admin: claims.admin === true, moderator: claims.moderator === true, owner: claims.owner === true };
+    try {
+      const role = await secureRoleRequest('/role');
+      if(role.handled){
+        const r=role.data?.role;
+        result = { owner:r==='owner' || result.owner, admin:r==='owner'||r==='admin'||result.admin, moderator:r==='owner'||r==='admin'||r==='moderator'||result.moderator };
+      }
+    } catch(e) {}
+    return result;
   } catch (e) {
     return {admin:false, moderator:false, owner:false};
   }
@@ -2142,10 +2082,17 @@ async function doLogin(){
   loginBtn.textContent = 'Logging in...';
   showLoading(true);
   try {
-    if (!firebaseAuth || !firebaseDb || !firebaseConfigLooksReal) { errEl.textContent='Secure Firebase Authentication is unavailable. Please try again later.'; refreshCaptcha('login'); return; }
+    if (!firebaseAuth || !firebaseConfigLooksReal) { errEl.textContent='Secure Firebase Authentication is unavailable. Please try again later.'; refreshCaptcha('login'); return; }
     let fbUser;
     try { fbUser = await ensureFirebaseSession(email,password); }
-    catch(e) { errEl.textContent = e.code==='auth/too-many-requests' ? 'Too many login attempts. Please wait and try again.' : 'Invalid email or password.'; refreshCaptcha('login'); return; }
+    catch(e) {
+      const code = String(e && e.code || '');
+      if (code === 'auth/too-many-requests') errEl.textContent = 'Too many login attempts. Please wait and try again.';
+      else if (code === 'auth/network-request-failed') errEl.textContent = 'Network error while signing in. Check your connection and try again.';
+      else if (code === 'auth/user-disabled') errEl.textContent = 'This Firebase account has been disabled. Contact support.';
+      else errEl.textContent = 'Invalid email or password, or this account has not been migrated to Firebase yet.';
+      refreshCaptcha('login'); return;
+    }
     const raw = await storageGet(userKey(email), true);
     if (!raw) { errEl.textContent='Your Firebase account exists, but your Chat Me profile could not be found. Please contact support.'; refreshCaptcha('login'); return; }
     const user = JSON.parse(raw);
@@ -2656,6 +2603,58 @@ window.addEventListener('hashchange', function(){
 });
 
 /* ---------------- ADMIN (owner only) ---------------- */
+let _cmAdminPostCache = [];
+
+async function cmLoadAdminPostsForPanel(){
+  const keys = await storageListKeys('post:', true);
+  const raws = await Promise.all(keys.map(k => storageGet(k, true)));
+  const out=[];
+  for(const raw of raws){ if(!raw) continue; try{ const p=JSON.parse(raw); if(p&&p.id) out.push(p); }catch(e){} }
+  out.sort((a,b)=>(b.time||0)-(a.time||0));
+  _cmAdminPostCache=out;
+  return out;
+}
+
+function cmRenderAdminPostRow(p){
+  return `<div class="user-result" style="max-width:650px;align-items:flex-start;">
+    <div class="info">
+      <div class="name">${p.type === 'Announcement' ? '📢 Announcement' : 'Post'} · @${escapeHtml(p.author || 'unknown')}</div>
+      <div style="font-size:13px;color:#444;margin:4px 0;white-space:pre-wrap;word-break:break-word;">${escapeHtml(String(p.text || '').slice(0,500))}${String(p.text || '').length > 500 ? '…' : ''}</div>
+      <div style="font-size:11px;color:#999;">${p.time ? new Date(p.time).toLocaleString() : ''} · ID: ${escapeHtml(String(p.id || ''))}</div>
+    </div>
+    <button style="background:#d32f2f;" onclick="adminDeletePost('${String(p.id).replace(/'/g,"\'")}')">Delete</button>
+  </div>`;
+}
+
+function cmFilterAdminPosts(){
+  const q=(document.getElementById('cmAdminPostSearch')?.value||'').trim().toLowerCase();
+  const type=(document.getElementById('cmAdminPostType')?.value||'all');
+  const filtered=_cmAdminPostCache.filter(p=>{
+    const matchesType=type==='all'||(type==='announcement'&&p.type==='Announcement')||(type==='post'&&p.type!=='Announcement');
+    const hay=(String(p.author||'')+' '+String(p.authorName||'')+' '+String(p.text||'')+' '+String(p.id||'')).toLowerCase();
+    return matchesType && (!q || hay.includes(q));
+  });
+  const host=document.getElementById('cmAdminPostList');
+  if(host) host.innerHTML=filtered.length?filtered.slice(0,100).map(cmRenderAdminPostRow).join(''):'<div class="empty-feed">No matching posts.</div>';
+}
+
+async function adminCreateAnnouncement(){
+  if(!currentUser || !currentUserHasTrustedRole('admin')) { alert('Only trusted admins can post announcements from Admin.'); return; }
+  const input=document.getElementById('cmAdminAnnouncementText');
+  const status=document.getElementById('cmAdminAnnouncementStatus');
+  const text=(input?.value||'').trim();
+  if(!text){ if(status) status.textContent='Write an announcement first.'; return; }
+  if(text.length>2000){ if(status) status.textContent='Announcement is too long.'; return; }
+  try{
+    const post={id:Date.now()+'-'+Math.random().toString(36).slice(2,8),author:currentUser.username,authorName:(currentUser.firstName||'')+' '+(currentUser.lastName||''),text,type:'Announcement',image:null,time:Date.now(),likes:[],comments:[],shareCount:0};
+    await storageSet('post:'+post.id,JSON.stringify(post),true);
+    await broadcastAnnouncementNotification(text);
+    input.value='';
+    if(status) status.textContent='Announcement published to everyone.';
+    await loadAdminPage();
+  }catch(e){ if(status) status.textContent='Could not publish the announcement right now.'; }
+}
+
 async function loadAdminPage(){
   // Refresh Firebase custom claims every time the Admin panel opens. This makes
   // newly granted staff access take effect without requiring a profile flag or
@@ -2790,7 +2789,7 @@ async function loadAdminPage(){
   /* ---- Moderators (owner or admin can promote/demote; max MAX_MODERATORS) ---- */
   const moderatorCount = rows.filter(u => u.isModerator).length;
   const moderatorsSection = iAmAdmin ? `
-    <div class="section-divider"><strong>Moderators (${moderatorCount}/${MAX_MODERATORS})</strong><span>Moderators can post announcements (up to 3 days a week), verify accounts at ${VERIFIED_COINS_THRESHOLD}+ Coins, and view the Coins leaderboard. They cannot give Coins, ban, or delete accounts.</span></div>
+    <div class="section-divider"><strong>Moderators (${moderatorCount}/${MAX_MODERATORS})</strong><span>Moderators can post announcements (up to 3 days a week), verify accounts at ${VERIFIED_COINS_THRESHOLD}+ Coins, handle reports/support, and ban accounts. They cannot give Coins, edit accounts, or delete accounts.</span></div>
     ${rows.filter(u => u.isModerator).map(u => `
       <div class="user-result" style="max-width:560px;">
         ${avatarHtml(u.firstName, u.lastName, u.profilePic, 'avatar')}
@@ -2806,6 +2805,31 @@ async function loadAdminPage(){
         <input type="text" id="promoteModUsername" placeholder="Username" style="padding:8px 10px;border:1px solid #ccc;border-radius:6px;font-size:13px;margin-right:6px;margin-bottom:6px;">
         <button onclick="promoteModerator(document.getElementById('promoteModUsername').value.trim())">Make Moderator</button>
       </div>` : ''}
+  ` : '';
+
+  /* ---- Post moderation (admin/owner only) ---- */
+  let postModerationSection = '';
+  if (iAmAdmin) {
+    const recentPosts = await cmLoadAdminPostsForPanel();
+    postModerationSection = `
+      <div class="section-divider"><strong>🛡️ Post & announcement moderation</strong><span>Admins can search and remove posts or announcements. The owner account remains protected.</span></div>
+      <div style="max-width:650px;margin-bottom:10px;display:flex;gap:6px;flex-wrap:wrap;">
+        <input id="cmAdminPostSearch" placeholder="Search username, text or post ID..." oninput="cmFilterAdminPosts()" style="flex:1;min-width:220px;padding:9px 10px;border:1px solid #ccc;border-radius:6px;">
+        <select id="cmAdminPostType" onchange="cmFilterAdminPosts()" style="padding:9px 10px;border:1px solid #ccc;border-radius:6px;">
+          <option value="all">All</option><option value="post">Posts</option><option value="announcement">Announcements</option>
+        </select>
+      </div>
+      <div id="cmAdminPostList">${recentPosts.length ? recentPosts.slice(0,80).map(cmRenderAdminPostRow).join('') : '<div class="empty-feed">No posts found.</div>'}</div>
+    `;
+  }
+
+  const adminAnnouncementSection = iAmAdmin ? `
+    <div class="section-divider"><strong>📢 Publish announcement</strong><span>Admin-only quick publisher. Everyone will receive the announcement notification.</span></div>
+    <div style="max-width:650px;margin-bottom:10px;">
+      <textarea id="cmAdminAnnouncementText" maxlength="2000" placeholder="Write an announcement for everyone..." style="width:100%;min-height:85px;box-sizing:border-box;padding:10px;border:1px solid #ccc;border-radius:7px;resize:vertical;"></textarea>
+      <button onclick="adminCreateAnnouncement()" style="margin-top:7px;background:#2b6ee0;color:#fff;border:0;padding:9px 18px;border-radius:6px;cursor:pointer;font-weight:600;">Publish Announcement</button>
+      <div id="cmAdminAnnouncementStatus" class="auth-status"></div>
+    </div>
   ` : '';
 
   /* ---- User reports (admin/owner only) ---- */
@@ -2922,9 +2946,29 @@ async function loadAdminPage(){
     </div>
   ` : '';
 
-  document.getElementById('adminUserList').innerHTML = staffRoleSection + verifySection + unverifySection + leaderboardSection + banSection + reportsSection
+  document.getElementById('adminUserList').innerHTML = staffRoleSection + verifySection + unverifySection + leaderboardSection + adminAnnouncementSection + postModerationSection + banSection + reportsSection
     + (iAmAdmin ? (adminSection + moderatorsSection + purchaseSection + systemNotificationSection + giveCoinsSection + deleteSection + dangerSection) : '');
 }
+
+async function adminDeletePost(postId){
+  if (!currentUser || !currentUserHasTrustedRole('admin')) { alert('Only trusted admins can delete posts.'); return; }
+  const id = String(postId || '').trim();
+  if (!id || id.length > 160) { alert('Invalid post.'); return; }
+  const raw = await storageGet('post:' + id, true);
+  if (!raw) { alert('Post not found.'); return; }
+  let post; try { post = JSON.parse(raw); } catch(e) { alert('This post could not be read.'); return; }
+  const author = post.author || 'unknown';
+  const type = post.type === 'Announcement' ? 'announcement' : 'post';
+  if (!confirm('Delete this ' + type + ' by @' + author + '? This cannot be undone.')) return;
+  try {
+    await storageRemove('post:' + id, true);
+    await cmWriteAudit('delete_post', id, type + ' by @' + author);
+    await loadAdminPage();
+  } catch(e) {
+    alert('Could not delete the post right now.');
+  }
+}
+
 
 async function giveCoins(username, amountStr){
   const errEl = document.getElementById('giveCoinsError');
@@ -3232,6 +3276,7 @@ async function promoteModerator(username){
   const currentCount = (await Promise.all((await storageListKeys('user:', true)).map(k => storageGet(k, true))))
     .filter(Boolean).map(r => { try { return JSON.parse(r); } catch(e) { return null; } }).filter(x => x && x.isModerator).length;
   if (currentCount >= MAX_MODERATORS) { alert('Moderator limit reached (' + MAX_MODERATORS + ').'); return; }
+  if(u.uid){ const secured=await setTrustedStaffRole(u.uid,'moderator'); if(!secured && secureStorageBackendState==='secure') { alert('Secure role service did not accept the change.'); return; } }
   u.isModerator = true;
   await storageSet(userKey(email), JSON.stringify(u), true);
   loadAdminPage();
@@ -3245,6 +3290,7 @@ async function demoteModerator(username){
   if (!raw) return;
   try {
     const u = JSON.parse(raw);
+    if(u.uid){ const secured=await setTrustedStaffRole(u.uid,'user'); if(!secured && secureStorageBackendState==='secure') { alert('Secure role service did not accept the change.'); return; } }
     u.isModerator = false;
     await storageSet(userKey(email), JSON.stringify(u), true);
   } catch(e){}
@@ -3310,6 +3356,7 @@ async function confirmAdminCode(username, codeInput){
   if ((codeInput || '').trim() !== u.pendingAdminCode) { alert('That code does not match.'); return; }
   const adminCount = await countAdmins();
   if (adminCount >= MAX_ADMINS) { alert('Admin limit reached (' + MAX_ADMINS + ').'); return; }
+  if(u.uid){ const secured=await setTrustedStaffRole(u.uid,'admin'); if(!secured && secureStorageBackendState==='secure') { alert('Secure role service did not accept the change.'); return; } }
   u.isAdmin = true;
   u.adminEmailVerified = true;
   delete u.pendingAdminCode;
@@ -3327,6 +3374,7 @@ async function demoteAdmin(username){
   try {
     const u = JSON.parse(raw);
     if (u.isOwner) return; // owner can never be demoted
+    if(u.uid){ const secured=await setTrustedStaffRole(u.uid,'user'); if(!secured && secureStorageBackendState==='secure') { alert('Secure role service did not accept the change.'); return; } }
     u.isAdmin = false;
     delete u.adminEmailVerified;
     delete u.pendingAdminCode;
@@ -4340,13 +4388,21 @@ function renderPostCard(p, infoMap){
     </div>`;
   })() : '';
 
-  const commentsBlock = comments.map(c => {
+  const commentsBlock = comments.map((c, ci) => {
     const cInfo = infoMap[c.author] || {};
+    const isMyComment = !!currentUser && String(c.author || '').toLowerCase() === String(currentUser.username || '').toLowerCase();
+    const canDeleteComment = isMyComment || isAdminUser(currentUser);
+    const commentId = String(c.id || ci).replace(/'/g, "\\'");
+    const author = String(c.author || '').replace(/'/g, "\\'");
+    const actions = [];
+    if (isMyComment) actions.push(`<button type="button" onclick="editComment('${p.id}','${commentId}')" style="border:0;background:none;padding:0;color:#555;text-decoration:underline;cursor:pointer;font-size:11px;">Edit</button>`);
+    if (canDeleteComment) actions.push(`<button type="button" onclick="deleteComment('${p.id}','${commentId}')" style="border:0;background:none;padding:0;color:#d32f2f;text-decoration:underline;cursor:pointer;font-size:11px;">Delete</button>`);
+    if (currentUser) actions.push(`<button type="button" onclick="reportComment('${p.id}','${commentId}')" style="border:0;background:none;padding:0;color:#777;text-decoration:underline;cursor:pointer;font-size:11px;">Report</button>`);
     return `
     <div style="padding:6px 0;border-top:1px solid #f2f2f2;font-size:13.5px;">
-      <span style="font-weight:600;color:#2b3a8f;cursor:pointer;" onclick="viewProfile('${(c.author||'').replace(/'/g,"\\'")}')">${displayNameWithNickname(c.authorName || c.author, cInfo.nickname)} ${roleBadgeHtml(cInfo)}</span>
-      <span style="color:#333;"> ${escapeHtml(c.text)}</span>
-      <div style="color:#aaa;font-size:11px;">${timeAgo(c.time)}</div>
+      <span style="font-weight:600;color:#2b3a8f;cursor:pointer;" onclick="viewProfile('${author}')">${displayNameWithNickname(c.authorName || c.author, cInfo.nickname)} ${roleBadgeHtml(cInfo)}</span>
+      <span style="color:#333;"> ${escapeHtml(c.text)}</span>${c.edited ? ' <span style="color:#aaa;font-size:10px;">(edited)</span>' : ''}
+      <div style="color:#aaa;font-size:11px;">${timeAgo(c.time)}${actions.length ? ' · ' + actions.join(' · ') : ''}</div>
     </div>
   `;
   }).join('');
@@ -4499,6 +4555,79 @@ async function toggleLike(postId){
   } else p.likes.splice(idx, 1);
   await storageSet(key, JSON.stringify(p), true);
   loadHome();
+}
+
+async function editComment(postId, commentId){
+  if (!currentUser) return;
+  if (isCurrentlyBanned(currentUser)) { alert(banBlockMessage(currentUser)); return; }
+  const raw = await storageGet('post:' + postId, true);
+  if (!raw) return;
+  let p; try { p = JSON.parse(raw); } catch(e) { return; }
+  p.comments = Array.isArray(p.comments) ? p.comments : [];
+  const idx = p.comments.findIndex((c,i) => String(c.id || i) === String(commentId));
+  if (idx < 0) return;
+  const c = p.comments[idx];
+  if (String(c.author || '').toLowerCase() !== String(currentUser.username || '').toLowerCase()) {
+    alert('You can only edit your own comment.'); return;
+  }
+  const next = prompt('Edit your comment:', String(c.text || ''));
+  if (next === null) return;
+  const text = next.trim();
+  if (!text) { alert('Comment cannot be empty.'); return; }
+  if (text.length > 5000) { alert('Comment is too long.'); return; }
+  c.text = text; c.edited = true; c.editedAt = Date.now();
+  try { await storageSet('post:' + postId, JSON.stringify(p), true); _cacheClear('post:' + postId); loadHome(); }
+  catch(e) { alert('Could not edit the comment right now.'); }
+}
+
+async function deleteComment(postId, commentId){
+  if (!currentUser) return;
+  if (isCurrentlyBanned(currentUser)) { alert(banBlockMessage(currentUser)); return; }
+  const raw = await storageGet('post:' + postId, true);
+  if (!raw) return;
+  let p; try { p = JSON.parse(raw); } catch(e) { return; }
+  p.comments = Array.isArray(p.comments) ? p.comments : [];
+  const idx = p.comments.findIndex((c,i) => String(c.id || i) === String(commentId));
+  if (idx < 0) return;
+  const c = p.comments[idx];
+  const mine = String(c.author || '').toLowerCase() === String(currentUser.username || '').toLowerCase();
+  if (!mine && !isAdminUser(currentUser)) { alert('Only the comment author, or an admin, can delete this comment.'); return; }
+  if (!confirm('Delete this comment?')) return;
+  p.comments.splice(idx, 1);
+  try { await storageSet('post:' + postId, JSON.stringify(p), true); _cacheClear('post:' + postId); loadHome(); }
+  catch(e) { alert('Could not delete the comment right now.'); }
+}
+
+async function reportComment(postId, commentId){
+  if (!currentUser) return;
+  if (isCurrentlyBanned(currentUser)) { alert(banBlockMessage(currentUser)); return; }
+  const raw = await storageGet('post:' + postId, true);
+  if (!raw) return;
+  let p; try { p = JSON.parse(raw); } catch(e) { return; }
+  const comments = Array.isArray(p.comments) ? p.comments : [];
+  const idx = comments.findIndex((c,i) => String(c.id || i) === String(commentId));
+  if (idx < 0) return;
+  const c = comments[idx];
+  if (String(c.author || '').toLowerCase() === String(currentUser.username || '').toLowerCase()) {
+    alert('You cannot report your own comment.'); return;
+  }
+  const reportKey = 'commentreport:' + currentUser.username.toLowerCase() + ':' + postId + ':' + String(commentId);
+  if (await storageGet(reportKey, true)) { alert('You already reported this comment.'); return; }
+  const reason = prompt('Why are you reporting this comment?', '');
+  if (reason === null || !reason.trim()) return;
+  const report = {
+    id: Date.now() + '-' + Math.random().toString(36).slice(2,8),
+    type:'comment', reporterUsername:currentUser.username,
+    reporterName:(currentUser.firstName || '') + ' ' + (currentUser.lastName || ''),
+    description:reason.trim(), postId, commentId:String(commentId),
+    commentAuthor:c.author || '', commentAuthorName:c.authorName || '', commentText:c.text || '',
+    time:Date.now(), status:'open', adminReply:null
+  };
+  try {
+    await storageSet('report:' + report.id, JSON.stringify(report), true);
+    await storageSet(reportKey, '1', true);
+    alert('Comment reported. Staff will review it.');
+  } catch(e) { alert('Could not send the report right now.'); }
 }
 
 async function addComment(postId){
@@ -7525,7 +7654,7 @@ async function replyToReport(reportId){
   const notifs = notifRaw ? JSON.parse(notifRaw) : [];
   notifs.push({
     id: Date.now() + '-' + Math.random().toString(36).slice(2, 8),
-    type: 'welcome', time: Date.now(), read: false, handled: true,
+    type: 'welcome', from: currentUser.username, time: Date.now(), read: false, handled: true,
     text: `Reply to your report: "${reply.trim()}"`
   });
   await storageSet(notifsKey(report.reporterUsername), JSON.stringify(notifs), true);
@@ -7628,12 +7757,34 @@ async function migrateLegacyCloudData(){
   } catch(e) { alert('Migration could not start: ' + e.message); }
 }
 
+/* ---------------- PRODUCTION BACKEND READINESS ---------------- */
+async function checkChatMeBackendReady(){
+  try {
+    const res = await fetch(RECAPTCHA_BACKEND_URL.replace(/\/$/, '') + '/health', { method:'GET', cache:'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json().catch(()=>({}));
+    return data && data.ok === true;
+  } catch (e) {
+    return false;
+  }
+}
+function showBackendUnavailableBanner(){
+  if (document.getElementById('cmBackendBanner')) return;
+  const banner=document.createElement('div');
+  banner.id='cmBackendBanner';
+  banner.style.cssText='position:fixed;left:10px;right:10px;bottom:12px;background:#fff3cd;color:#664d03;border:1px solid #ffe69c;border-radius:10px;padding:10px 12px;font-size:12px;line-height:1.4;z-index:9999;box-shadow:0 3px 14px rgba(0,0,0,.12);';
+  banner.textContent='Chat Me secure backend is temporarily unavailable. Please try again shortly.';
+  banner.onclick=()=>banner.remove();
+  document.body.appendChild(banner);
+}
+
 /* ---------------- INIT ---------------- */
 populateDobSelects();
 refreshCaptcha('login');
 refreshCaptcha('signup');
 applyDarkModePreference();
 applyLanguage();
+checkChatMeBackendReady().then(ok => { if (!ok) console.warn('Chat Me secure backend is not ready yet.'); });
 storageRemove(SESSION_KEY); // one-time cleanup: delete the old shared cloud session doc from before this was made tab-local, so no leftover email sits in the shared store
 applySpecialGrantsOnce().then(restoreSession);
 
@@ -7911,7 +8062,7 @@ async function sendSystemNotificationFromAdmin(){
 async function cmNotifyUser(username,title,message){
   try{
     const raw=await storageGet(usernameKey(username),true); if(!raw) return false;
-    const n={id:Date.now()+'-'+Math.random().toString(36).slice(2,7),type:'system',title:String(title||'System notification').slice(0,80),text:String(message||'').slice(0,500),time:Date.now(),read:false,handled:true};
+    const n={id:Date.now()+'-'+Math.random().toString(36).slice(2,7),type:'system',from:currentUser?.username||'',title:String(title||'System notification').slice(0,80),text:String(message||'').slice(0,500),time:Date.now(),read:false,handled:true};
     const key=notifsKey(username);
     const existingRaw=await storageGet(key,true);
     const notifs=existingRaw?JSON.parse(existingRaw):[];
