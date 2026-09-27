@@ -47,38 +47,47 @@
   body { display: flex; }
 
   /* ---- Welcome / landing ---- */
-  #welcomeScreen { position: fixed; inset: 0; background: #fff; z-index: 60; display: flex; flex-direction: column; overflow-y: auto; }
-  .welcome-nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; border-bottom: 1px solid #eee; }
-  .welcome-nav-brand { display: flex; align-items: center; gap: 8px; font-size: 20px; font-weight: 700; color: #2b3a8f; }
-  .welcome-nav-brand svg { width: 26px; height: 26px; }
-  .welcome-nav-actions { display: flex; gap: 12px; align-items: center; }
-  .welcome-nav-actions .nav-login { color: #2b6ee0; font-weight: 600; cursor: pointer; background: none; border: none; font-size: 15px; }
-  .welcome-nav-actions .nav-signup { background: #25a244; color: #fff; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 15px; }
-  .welcome-hero { flex: 1; background: #2b6ee0; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px 24px; }
-  .welcome-hero svg { width: 70px; height: 70px; margin-bottom: 6px; }
-  .welcome-hero-brand { font-size: 28px; font-weight: 700; margin-bottom: 24px; }
-  .welcome-hero h1 { font-size: 24px; font-weight: 700; margin-bottom: 14px; }
-  .welcome-hero p { font-size: 15px; opacity: 0.95; margin-bottom: 28px; max-width: 320px; line-height: 1.5; }
-  .welcome-cta { background: #fff; color: #2b6ee0; border: none; padding: 14px 30px; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; margin-bottom: 18px; }
-  .welcome-hero .switch-line { font-size: 14px; }
-  .welcome-hero .switch-line a { color: #fff; text-decoration: underline; cursor: pointer; font-weight: 600; }
-  .welcome-stats { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin:0 auto 24px; max-width:760px; width:100%; }
-  .welcome-stat { background:#fff; color:#24316f; border-radius:12px; padding:12px 18px; min-width:150px; box-shadow:0 4px 14px rgba(0,0,0,.12); }
-  .welcome-stat strong { display:block; font-size:22px; line-height:1.1; }
-  .welcome-stat span { display:block; font-size:12px; opacity:.72; margin-top:4px; }
-  .welcome-section { padding:34px 20px; background:#f7f8fc; color:#222; }
-  .welcome-section h2 { text-align:center; color:#2b3a8f; margin-bottom:8px; font-size:22px; }
-  .welcome-section > p { text-align:center; color:#666; margin:0 auto 20px; max-width:650px; font-size:14px; line-height:1.5; }
-  .testimonial-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; max-width:900px; margin:0 auto; }
-  .testimonial-card { background:#fff; border:1px solid #e5e7eb; border-radius:12px; padding:16px; box-shadow:0 2px 8px rgba(0,0,0,.05); }
-  .testimonial-card .stars { color:#f5a623; letter-spacing:2px; margin-bottom:8px; }
-  .testimonial-card p { font-size:13px; line-height:1.55; color:#444; margin-bottom:10px; }
-  .testimonial-card strong { font-size:13px; color:#2b3a8f; }
-  .welcome-about { max-width:900px; margin:0 auto; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
-  .about-card { background:#fff; border-radius:12px; padding:16px; border:1px solid #e5e7eb; }
-  .about-card b { display:block; margin-bottom:5px; color:#2b3a8f; }
-  .about-card span { color:#666; font-size:13px; line-height:1.5; }
-  @media (max-width:700px){ .testimonial-grid,.welcome-about { grid-template-columns:1fr; } .welcome-stat { min-width:135px; } }
+  #welcomeScreen{position:fixed;inset:0;background:#f5f7fb;z-index:60;display:flex;flex-direction:column;overflow-y:auto;color:#172033}
+  .welcome-nav{height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:#fff;border-bottom:1px solid #e7eaf0;position:sticky;top:0;z-index:2}
+  .welcome-nav-brand{display:flex;align-items:center;gap:10px;font-size:21px;font-weight:800;color:#24316f}
+  .welcome-nav-brand svg{width:32px;height:32px}
+  .welcome-nav-actions{display:flex;gap:10px;align-items:center}
+  .welcome-nav-actions .nav-login{color:#2b6ee0;font-weight:700;cursor:pointer;background:transparent;border:1px solid #d7deed;font-size:14px;padding:9px 17px;border-radius:9px}
+  .welcome-nav-actions .nav-login:hover{background:#f4f7ff}
+  .welcome-nav-actions .nav-signup{background:#2b6ee0;color:#fff;border:none;padding:10px 18px;border-radius:9px;font-weight:700;cursor:pointer;font-size:14px;box-shadow:0 5px 14px rgba(43,110,224,.18)}
+  .welcome-main{width:min(1120px,92%);margin:0 auto;display:grid;grid-template-columns:1.08fr .92fr;gap:44px;align-items:center;padding:58px 0 42px;min-height:calc(100vh - 68px)}
+  .welcome-copy{padding:10px 0}
+  .welcome-badge{display:inline-flex;align-items:center;gap:7px;background:#eaf1ff;color:#2b6ee0;border:1px solid #d6e2ff;border-radius:999px;padding:7px 12px;font-size:12px;font-weight:700;margin-bottom:18px}
+  .welcome-copy h1{font-size:clamp(34px,5vw,58px);line-height:1.04;letter-spacing:-1.8px;margin-bottom:18px;color:#17224d;max-width:650px}
+  .welcome-copy h1 span{color:#2b6ee0}
+  .welcome-copy>p{font-size:17px;line-height:1.65;color:#667085;max-width:600px;margin-bottom:26px}
+  .welcome-actions{display:flex;gap:11px;flex-wrap:wrap;margin-bottom:28px}
+  .welcome-cta{background:#2b6ee0;color:#fff;border:none;padding:13px 22px;border-radius:10px;font-size:15px;font-weight:800;cursor:pointer;box-shadow:0 8px 20px rgba(43,110,224,.2)}
+  .welcome-secondary{background:#fff;color:#24316f;border:1px solid #dce2ed;padding:13px 22px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer}
+  .welcome-points{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:620px}
+  .welcome-point{background:#fff;border:1px solid #e5e9f1;border-radius:12px;padding:13px;box-shadow:0 4px 14px rgba(16,24,40,.04)}
+  .welcome-point b{display:block;font-size:13px;color:#24316f;margin-bottom:4px}
+  .welcome-point span{font-size:11.5px;line-height:1.45;color:#737b8c}
+  .welcome-login-card{background:#fff;border:1px solid #e1e6ef;border-radius:18px;padding:28px;box-shadow:0 18px 45px rgba(24,39,75,.10);max-width:410px;width:100%;justify-self:end}
+  .welcome-login-card h2{font-size:24px;color:#202b5b;margin-bottom:7px}
+  .welcome-login-card>p{font-size:13px;color:#7a8190;line-height:1.5;margin-bottom:20px}
+  .welcome-login-option{width:100%;padding:12px 14px;border-radius:9px;border:1px solid #d9dfeb;background:#fff;color:#27345f;font-size:14px;font-weight:700;cursor:pointer;text-align:left;margin-top:9px}
+  .welcome-login-option.primary{background:#2b6ee0;color:#fff;border-color:#2b6ee0;text-align:center}
+  .welcome-login-option:hover{filter:brightness(.98)}
+  .welcome-login-note{font-size:11.5px;color:#8a91a0;text-align:center;margin-top:14px;line-height:1.45}
+  .welcome-stats{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .welcome-stat{background:#f7f9fd;color:#24316f;border:1px solid #e6eaf2;border-radius:10px;padding:9px 13px;min-width:105px}
+  .welcome-stat strong{display:block;font-size:17px;line-height:1.1}
+  .welcome-stat span{display:block;font-size:10.5px;opacity:.72;margin-top:3px}
+  .welcome-section{width:min(1120px,92%);margin:0 auto;padding:8px 0 48px;color:#222}
+  .welcome-section h2{text-align:center;color:#24316f;margin:18px 0 7px;font-size:24px}
+  .welcome-section>p{text-align:center;color:#707887;margin:0 auto 18px;max-width:650px;font-size:13px;line-height:1.5}
+  .welcome-about{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+  .about-card{background:#fff;border-radius:13px;padding:18px;border:1px solid #e5e9f1;box-shadow:0 4px 14px rgba(16,24,40,.04)}
+  .about-card b{display:block;margin-bottom:6px;color:#24316f}
+  .about-card span{color:#697386;font-size:13px;line-height:1.55}
+  @media(max-width:800px){.welcome-main{grid-template-columns:1fr;gap:25px;padding-top:38px;min-height:auto}.welcome-login-card{justify-self:center}.welcome-points{grid-template-columns:1fr}.welcome-copy h1{font-size:40px}.welcome-section{padding-bottom:30px}}
+  @media(max-width:480px){.welcome-nav{padding:0 14px}.welcome-nav-brand{font-size:18px}.welcome-nav-actions .nav-login{padding:8px 11px}.welcome-nav-actions .nav-signup{padding:9px 12px}.welcome-main{width:92%;padding-top:28px}.welcome-login-card{padding:22px}.welcome-copy h1{font-size:34px;letter-spacing:-1px}}
 
   /* ---- Auth screens (login / signup) ---- */
   .auth-screen { position: fixed; inset: 0; background: #f4f5f7; display: none; align-items: flex-start; justify-content: center; z-index: 50; overflow-y: auto; padding: 24px 16px; }
@@ -195,7 +204,11 @@
   .friend-list { width: 300px; border-right: 1px solid #ddd; background: #fff; overflow-y: auto; flex-shrink: 0; }
   .friend-item { display: flex; align-items: center; padding: 12px 16px; cursor: pointer; border-bottom: 1px solid #f5f5f5; }
   .friend-item:hover, .friend-item.active { background: #f5f5f5; }
-  .avatar { width: 42px; height: 42px; border-radius: 50%; background: #2b3a8f; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 600; margin-right: 12px; flex-shrink: 0; font-size: 15px; }
+  .avatar { width: 42px; height: 42px; border-radius: 50%; background: #2b3a8f; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 600; margin-right: 12px; flex-shrink: 0; font-size: 15px; overflow: hidden; }
+  .cm-real-avatar { position: relative; padding: 0; }
+  .cm-real-avatar img { width: 100%; height: 100%; display: block; object-fit: cover; border-radius: 50%; }
+  .cm-avatar-initials { display: none; }
+  .cm-real-avatar.cm-avatar-fallback .cm-avatar-initials { display: flex; width: 100%; height: 100%; align-items: center; justify-content: center; }
   .friend-name { font-size: 15px; font-weight: 600; color: #222; }
   .friend-status { font-size: 12px; color: #888; }
   .online-dot { width: 8px; height: 8px; border-radius: 50%; background: #25d366; margin-left: auto; }
@@ -338,7 +351,7 @@ body.dark-mode .cm-reaction-menu button{background:#2a2d32;color:#eee}
 
   <div class="loading-overlay" id="loadingOverlay" aria-live="polite"><span style="background:rgba(0,0,0,.72);padding:9px 14px;border-radius:8px;">Please wait…</span></div>
 
-  <!-- ============ WELCOME ============ -->
+  <!-- ============ WELCOME / HOME ============ -->
   <div id="welcomeScreen">
     <div class="welcome-nav">
       <div class="welcome-nav-brand">
@@ -346,37 +359,48 @@ body.dark-mode .cm-reaction-menu button{background:#2a2d32;color:#eee}
         <span>Chat Me</span>
       </div>
       <div class="welcome-nav-actions">
-        <button class="nav-login" onclick="showAuth('login')"><span class="i18n" data-key="login">Log In</span></button>
-        <button class="nav-signup" onclick="showAuth('signup')"><span class="i18n" data-key="signup">Sign Up</span></button>
+        <button class="nav-login" onclick="showAuth('login')">Log In</button>
+        <button class="nav-signup" onclick="showAuth('signup')">Create account</button>
       </div>
     </div>
-    <div class="welcome-hero">
-      <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><circle cx="22" cy="30" r="16" fill="#fff" opacity="0.9"/><circle cx="38" cy="30" r="16" fill="#fff" opacity="0.6"/><circle cx="30" cy="30" r="8" fill="#fff"/></svg>
-      <div class="welcome-hero-brand">Chat Me</div>
-      <h1>Find your people in live chatrooms</h1>
-      <p>Join topic-based conversations, meet new friends, share updates, and play free games in one friendly community.</p>
-      <div class="welcome-stats" aria-label="Chat Me community statistics">
-        <div class="welcome-stat"><strong id="welcomeRegisteredCount">—</strong><span>people have registered</span></div>
-        <div class="welcome-stat"><strong>24/7</strong><span>Chat whenever you want</span></div>
-        <div class="welcome-stat"><strong>Free</strong><span>To join and get started</span></div>
-      </div>
-      <button class="welcome-cta" onclick="showAuth('signup')">Join Chat Me</button>
-      <div style="font-size:13px;margin:-4px 0 16px;opacity:.96;">🎁 Invite 3 friends who sign up and get <strong>50 Coins</strong>.</div>
-      <div class="switch-line">Already have an account? <a onclick="showAuth('login')">Log in</a></div>
-    </div>
-    <section class="welcome-section" aria-label="About Chat Me">
-      <h2>What people say about Chat Me</h2>
-      <p>A simple place to keep in touch, discover conversations, and build a friendly community.</p>
-      <div class="testimonial-grid">
-        <article class="testimonial-card"><div class="stars">★★★★★</div><p>“A simple way to keep my conversations and friends in one place.”</p><strong>Chat Me member</strong></article>
-        <article class="testimonial-card"><div class="stars">★★★★★</div><p>“I like being able to share updates and chat with people from one home screen.”</p><strong>Chat Me member</strong></article>
-        <article class="testimonial-card"><div class="stars">★★★★★</div><p>“The community features make it easy to find conversations and stay connected.”</p><strong>Chat Me member</strong></article>
-      </div>
-      <h2 style="margin-top:30px;">Why Chat Me?</h2>
+
+    <main class="welcome-main">
+      <section class="welcome-copy" aria-label="Chat Me introduction">
+        <div class="welcome-badge">💬 Connect • Chat • Share</div>
+        <h1>Your people. Your conversations. <span>One home.</span></h1>
+        <p>Chat with friends, discover community conversations, share updates, join group chats and enjoy Chat Me from one simple home page.</p>
+        <div class="welcome-actions">
+          <button class="welcome-cta" onclick="showAuth('signup')">Create your account</button>
+          <button class="welcome-secondary" onclick="showAuth('login')">Log in to Chat Me</button>
+        </div>
+        <div class="welcome-stats" aria-label="Chat Me highlights">
+          <div class="welcome-stat"><strong id="welcomeRegisteredCount">—</strong><span>registered members</span></div>
+          <div class="welcome-stat"><strong>24/7</strong><span>chat access</span></div>
+          <div class="welcome-stat"><strong>Free</strong><span>to get started</span></div>
+        </div>
+        <div class="welcome-points">
+          <div class="welcome-point"><b>💬 Conversations</b><span>Keep private chats, group chats and community conversations together.</span></div>
+          <div class="welcome-point"><b>👥 Community</b><span>Find people, make friends and share your updates.</span></div>
+          <div class="welcome-point"><b>🎮 Free fun</b><span>Enjoy the community and free-play features built into Chat Me.</span></div>
+        </div>
+      </section>
+
+      <section class="welcome-login-card" aria-label="Chat Me login">
+        <h2>Welcome back</h2>
+        <p>Already have a Chat Me account? Use the secure login screen to continue.</p>
+        <button class="welcome-login-option primary" onclick="showAuth('login')">Log in</button>
+        <button class="welcome-login-option" onclick="showAuth('signup')">New to Chat Me? Create an account</button>
+        <div class="welcome-login-note">Your existing login, password protection and reCAPTCHA flow are kept in the secure login screen.</div>
+      </section>
+    </main>
+
+    <section class="welcome-section" aria-label="Chat Me features">
+      <h2>Everything starts from one home page</h2>
+      <p>A simple front door for Chat Me, with quick access to login and account creation.</p>
       <div class="welcome-about">
-        <div class="about-card"><b>💬 Conversations</b><span>Message friends and take part in group chats and chatrooms.</span></div>
-        <div class="about-card"><b>👥 Community</b><span>Build your profile, connect with people, and share posts.</span></div>
-        <div class="about-card"><b>🛍️ Personalize</b><span>Use the Shop to customize your Chat Me experience.</span></div>
+        <div class="about-card"><b>💬 Chat with friends</b><span>Message people you know and keep conversations organized.</span></div>
+        <div class="about-card"><b>🌍 Join the community</b><span>Explore shared conversations, groups and posts in your Chat Me community.</span></div>
+        <div class="about-card"><b>✨ Make it yours</b><span>Build your profile and personalize your Chat Me experience.</span></div>
       </div>
     </section>
   </div>
@@ -1034,7 +1058,7 @@ body.dark-mode .cm-reaction-menu button{background:#2a2d32;color:#eee}
 
     <div class="page" id="adminPage" style="padding:20px;overflow-y:auto;">
       <h2 style="color:#9c1c1c;margin-bottom:4px;">Admin panel</h2>
-      <div style="color:#888;font-size:13px;margin-bottom:16px;">Visible only to the app owner.</div>
+      <div style="color:#888;font-size:13px;margin-bottom:16px;">Visible to trusted Chat Me staff. Owners and admins can manage the full panel; moderators see only the controls allowed for their role.</div>
       <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:20px;">
         <div class="profile-card" style="max-width:180px;">
           <div style="font-size:12px;color:#888;">Total users</div>
@@ -1047,6 +1071,18 @@ body.dark-mode .cm-reaction-menu button{background:#2a2d32;color:#eee}
         <div class="profile-card" style="max-width:180px;">
           <div style="font-size:12px;color:#888;">Verified (1,000+ Coins)</div>
           <div style="font-size:26px;font-weight:700;color:#2b3a8f;" id="adminTotalVerified">-</div>
+        </div>
+        <div class="profile-card" style="max-width:180px;">
+          <div style="font-size:12px;color:#888;">Admins</div>
+          <div style="font-size:26px;font-weight:700;color:#2b3a8f;" id="adminTotalAdmins">-</div>
+        </div>
+        <div class="profile-card" style="max-width:180px;">
+          <div style="font-size:12px;color:#888;">Moderators</div>
+          <div style="font-size:26px;font-weight:700;color:#2b3a8f;" id="adminTotalModerators">-</div>
+        </div>
+        <div class="profile-card" style="max-width:180px;">
+          <div style="font-size:12px;color:#888;">Banned</div>
+          <div style="font-size:26px;font-weight:700;color:#d32f2f;" id="adminTotalBanned">-</div>
         </div>
       </div>
       <div id="adminUserList"></div>
@@ -1193,7 +1229,7 @@ function refreshHomeStatusHeader(){
   const last = currentUser.lastName || '';
   const initials = ((first[0] || '') + (last[0] || '')).toUpperCase() || 'CM';
   if (currentUser.profilePic) {
-    el.innerHTML = `<img src="${escapeHtml(currentUser.profilePic)}" alt="Your profile picture">`;
+    el.innerHTML = `<img src="${escapeHtml(currentUser.profilePic)}" alt="Your profile picture" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;" onerror="this.remove();this.parentElement.textContent='${initials}'">`;
   } else {
     el.textContent = initials;
   }
@@ -1233,6 +1269,45 @@ function onRecaptchaLoad(){
   try { recaptchaSignupId = grecaptcha.render('recaptchaSignup', { sitekey: RECAPTCHA_SITE_KEY }); } catch(e){}
 }
 const RECAPTCHA_BACKEND_URL = 'https://chat-me-backend.rahmanadegboye1.workers.dev';
+// Secure storage backend. The same Worker also handles reCAPTCHA, so the app can
+// switch over automatically once the new Worker is deployed. During the short
+// migration window, a 404 from /storage means the old Worker is still live and
+// the existing Firestore path is used; auth failures from the new endpoint are
+// never silently downgraded to a local/insecure cloud write.
+const SECURE_STORAGE_BACKEND_URL = RECAPTCHA_BACKEND_URL.replace(/\/$/, '') + '/storage';
+let secureStorageBackendState = 'unknown';
+async function secureStorageRequest(op, key, body) {
+  if (!firebaseAuth || !firebaseAuth.currentUser || firebaseAuth.currentUser.isAnonymous) return { handled:false };
+  try {
+    const token = await firebaseAuth.currentUser.getIdToken();
+    const url = SECURE_STORAGE_BACKEND_URL + '?op=' + encodeURIComponent(op) + '&key=' + encodeURIComponent(key || '');
+    const res = await fetch(url, {
+      method: body ? 'POST' : 'GET',
+      headers: { 'Authorization': 'Bearer ' + token, ...(body ? {'Content-Type':'application/json'} : {}) },
+      body: body ? JSON.stringify(body) : undefined
+    });
+    if (res.status === 404 || res.status === 405) {
+      secureStorageBackendState = 'legacy';
+      return { handled:false };
+    }
+    if (!res.ok) {
+      let detail = null; try { detail = await res.json(); } catch(e){}
+      secureStorageBackendState = 'secure-error';
+      const err = new Error(detail?.error || ('Secure storage request failed (' + res.status + ')'));
+      err.secureStorage = true; err.status = res.status;
+      throw err;
+    }
+    const data = await res.json();
+    secureStorageBackendState = 'secure';
+    return { handled:true, data };
+  } catch(e) {
+    if (e && e.secureStorage) throw e;
+    // A network failure before the new Worker is deployed should not break the
+    // existing app. Once the Worker is active, server responses above are strict.
+    return { handled:false };
+  }
+}
+
 async function recaptchaPassed(which){
   if (!recaptchaReady || typeof grecaptcha === 'undefined') return { ok: false, reason: 'not_ready' };
   const id = which === 'login' ? recaptchaLoginId : recaptchaSignupId;
@@ -1351,11 +1426,16 @@ function _cacheClear(key){ delete _fastCache[key]; }
 async function storageGet(key){
   const cached = _cacheGet(key);
   if (cached !== undefined) return cached;
+  const secure = await secureStorageRequest('get', key);
+  if (secure.handled) {
+    const val = secure.data?.value ?? null;
+    _cacheSet(key, val);
+    return val;
+  }
   if (firebaseDb) {
     try {
       const doc = await withTimeout(firebaseDb.collection('kv').doc(key).get(), 3000);
       const val = doc.exists ? doc.data().value : null;
-      // keep a local cache too, so the app still works offline for a moment
       if (storageBackend === 'local') { try { val === null ? localStorage.removeItem(key) : localStorage.setItem(key, val); } catch(e){} }
       else { if (val === null) delete memStore[key]; else memStore[key] = val; }
       _cacheSet(key, val);
@@ -1367,12 +1447,14 @@ async function storageGet(key){
   }
   if (firebaseConfigLooksReal) throw new Error('Secure cloud storage is unavailable.');
   if (storageBackend === 'local') {
-    try { return localStorage.getItem(key); } catch (e) { /* this one key failed - not the whole session, just fall through */ }
+    try { return localStorage.getItem(key); } catch (e) {}
   }
   return Object.prototype.hasOwnProperty.call(memStore, key) ? memStore[key] : null;
 }
 async function storageSet(key, value){
-  _cacheSet(key, value); // update immediately so the next read is instant, don't wait on the network for that
+  _cacheSet(key, value);
+  const secure = await secureStorageRequest('set', key, { value });
+  if (secure.handled) return { key, value };
   if (firebaseDb) {
     try { await withTimeout(firebaseDb.collection('kv').doc(key).set({ value: value, updatedAt: Date.now() }), 3000); }
     catch (e) { console.error('SECURITY: Firestore write failed; refusing local-only save.', e); throw e; }
@@ -1387,6 +1469,8 @@ async function storageSet(key, value){
   return { key, value };
 }
 async function storageListKeys(prefix){
+  const secure = await secureStorageRequest('list', prefix);
+  if (secure.handled) return secure.data?.keys || [];
   if (firebaseDb) {
     try {
       const snap = await withTimeout(firebaseDb.collection('kv')
@@ -1401,18 +1485,20 @@ async function storageListKeys(prefix){
   }
   if (firebaseConfigLooksReal) throw new Error('Secure cloud storage is unavailable.');
   if (storageBackend === 'local') {
-    try { return Object.keys(localStorage).filter(k => k.startsWith(prefix)); } catch (e) { /* fall through */ }
+    try { return Object.keys(localStorage).filter(k => k.startsWith(prefix)); } catch (e) {}
   }
   return Object.keys(memStore).filter(k => k.startsWith(prefix));
 }
 async function storageRemove(key){
   _cacheClear(key);
+  const secure = await secureStorageRequest('delete', key);
+  if (secure.handled) return true;
   if (firebaseDb) {
     try { await withTimeout(firebaseDb.collection('kv').doc(key).delete(), 3000); }
-    catch (e) { console.warn('Firestore delete failed.', e); }
+    catch (e) { console.error('SECURITY: Firestore delete failed.', e); throw e; }
   }
   if (storageBackend === 'local') {
-    try { localStorage.removeItem(key); return true; } catch (e) { /* fall through */ }
+    try { localStorage.removeItem(key); return true; } catch (e) {}
   }
   delete memStore[key];
   return true;
@@ -2220,11 +2306,13 @@ async function loginSuccess(user){
   document.getElementById('suYear').value = '';
   document.getElementById('footerUserLabel').textContent = (user.firstName || '') + ' ' + (user.lastName || '') + ' (@' + user.username + ')';
   updateCoinsDisplay();
+  // Re-read trusted staff claims on every successful login/session restore.
+  try { applyTrustedClaimsToUser(user, await refreshTrustedAuthClaims()); } catch(e) {}
   const cloudStatus = await verifyCoreCloudReadiness();
   if (!cloudStatus.ok) { console.warn('Chat Me cloud sync is not currently confirmed; the app may be using local fallback.'); }
   document.getElementById('adminNavItem').style.display = (currentUserHasTrustedRole('admin') || currentUserHasTrustedRole('moderator')) ? 'block' : 'none';
   const supportNav = document.getElementById('supportNavItem');
-  if (supportNav) supportNav.style.display = (isAdminUser(user) || isModeratorUser(user)) ? 'block' : 'none';
+  if (supportNav) supportNav.style.display = (currentUserHasTrustedRole('admin') || currentUserHasTrustedRole('moderator')) ? 'block' : 'none';
   document.getElementById('homeColorPicker').innerHTML = postColorPickerHtml('home');
   refreshHomeStatusHeader();
 
@@ -2569,14 +2657,20 @@ window.addEventListener('hashchange', function(){
 
 /* ---------------- ADMIN (owner only) ---------------- */
 async function loadAdminPage(){
-  if (!currentUser || !(isAdminUser(currentUser) || isModeratorUser(currentUser))) {
-    // Not staff - kick back to Home even if they somehow reach this tab.
+  // Refresh Firebase custom claims every time the Admin panel opens. This makes
+  // newly granted staff access take effect without requiring a profile flag or
+  // a browser refresh, while keeping authorization based on trusted claims.
+  try {
+    const freshClaims = await refreshTrustedAuthClaims();
+    applyTrustedClaimsToUser(currentUser, freshClaims);
+  } catch(e) {}
+  if (!currentUser || !(currentUserHasTrustedRole('admin') || currentUserHasTrustedRole('moderator'))) {
     switchTab('homePage');
     return;
   }
   const iAmOwner = currentUserHasTrustedRole('owner');
-  const iAmAdmin = isAdminUser(currentUser); // owner or admin
-  const iAmModerator = isModeratorUser(currentUser) && !iAmAdmin; // pure moderator, not also admin/owner
+  const iAmAdmin = currentUserHasTrustedRole('admin');
+  const iAmModerator = currentUserHasTrustedRole('moderator') && !iAmAdmin;
   const userKeys = await storageListKeys('user:', true);
   const postKeys = await storageListKeys('post:', true);
   let verifiedCount = 0;
@@ -2593,8 +2687,22 @@ async function loadAdminPage(){
   document.getElementById('adminTotalUsers').textContent = rows.length;
   document.getElementById('adminTotalPosts').textContent = postKeys.length;
   document.getElementById('adminTotalVerified').textContent = verifiedCount;
+  document.getElementById('adminTotalAdmins').textContent = adminCount;
+  document.getElementById('adminTotalModerators').textContent = rows.filter(u => u.isModerator).length;
+  document.getElementById('adminTotalBanned').textContent = rows.filter(u => isCurrentlyBanned(u)).length;
 
   rows.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+  const staffRoleLabel = iAmOwner ? 'Owner' : (iAmAdmin ? 'Admin' : 'Moderator');
+  const staffRoleSection = `
+    <div class="section-divider"><strong>Staff access: ${staffRoleLabel}</strong><span>Authorization is controlled by Firebase custom claims. Profile fields cannot grant admin access.</span></div>
+    <div class="profile-card" style="max-width:760px;margin-bottom:14px;">
+      <div style="font-weight:700;margin-bottom:5px;">Admin controls are active</div>
+      <div style="font-size:12.5px;color:#666;margin-bottom:9px;">You are signed in with trusted staff access. Use Refresh after another staff member changes a role.</div>
+      <button onclick="loadAdminPage()">Refresh Admin Panel</button>
+      ${iAmOwner ? '<button onclick="migrateLegacyCloudData()" style="margin-left:8px;background:#7b1fa2;color:#fff;border:none;padding:9px 18px;border-radius:6px;cursor:pointer;">Migrate Cloud Data</button>' : ''}
+    </div>
+  `;
 
   /* ---- Verification requests (admin or moderator can act) ---- */
   const eligible = rows.filter(u => !u.verified && typeof u.leos === 'number' && u.leos >= VERIFIED_COINS_THRESHOLD);
@@ -2814,7 +2922,7 @@ async function loadAdminPage(){
     </div>
   ` : '';
 
-  document.getElementById('adminUserList').innerHTML = verifySection + unverifySection + leaderboardSection + banSection + reportsSection
+  document.getElementById('adminUserList').innerHTML = staffRoleSection + verifySection + unverifySection + leaderboardSection + banSection + reportsSection
     + (iAmAdmin ? (adminSection + moderatorsSection + purchaseSection + systemNotificationSection + giveCoinsSection + deleteSection + dangerSection) : '');
 }
 
@@ -4072,10 +4180,12 @@ const POST_COLORS = {
 };
 function avatarHtml(firstName, lastName, profilePic, cls){
   const initials = ((firstName||'?')[0] + (lastName||'?')[0]).toUpperCase();
+  const safeCls = cls || 'avatar';
   if (profilePic) {
-    return `<div class="${cls}" style="background-image:url('${profilePic}');background-size:cover;background-position:center;"></div>`;
+    const safePic = escapeHtml(String(profilePic));
+    return `<div class="${safeCls} cm-real-avatar"><img src="${safePic}" alt="${escapeHtml(((firstName||'')+' '+(lastName||'')).trim() || 'Profile picture')}" loading="lazy" onerror="this.style.display='none';this.parentElement.classList.add('cm-avatar-fallback')"><span class="cm-avatar-initials">${initials}</span></div>`;
   }
-  return `<div class="${cls}">${initials}</div>`;
+  return `<div class="${safeCls}">${initials}</div>`;
 }
 /* Follower-count based level badges shown next to names in posts/messages */
 const FOLLOWER_LEVELS = [
@@ -7496,6 +7606,26 @@ async function applySpecialGrantsOnce(){
   // Intentionally disabled. Privileged roles and special Coin grants must be
   // issued by trusted Firebase backend code/custom claims, never by the browser.
   return;
+}
+
+async function migrateLegacyCloudData(){
+  if (!currentUser || !(currentUserHasTrustedRole('owner') || currentUser.isOwner === true)) { alert('Only the account owner can start the one-time cloud migration.'); return; }
+  if (!firebaseAuth?.currentUser) { alert('Please sign in again first.'); return; }
+  if (!confirm('Start the one-time Chat Me cloud migration? Do this only after the new secure Worker is deployed.')) return;
+  try {
+    const token = await firebaseAuth.currentUser.getIdToken(true);
+    let pageToken = '';
+    let total = 0;
+    for (let page = 0; page < 100; page++) {
+      const res = await fetch(RECAPTCHA_BACKEND_URL.replace(/\/$/,'') + '/migrate-legacy', { method:'POST', headers:{'Authorization':'Bearer '+token,'Content-Type':'application/json'}, body:JSON.stringify({ pageToken }) });
+      const data = await res.json().catch(()=>({}));
+      if (!res.ok || !data.ok) throw new Error(data.error || 'Migration failed');
+      total += Number(data.migrated || 0);
+      pageToken = data.nextPageToken || '';
+      if (!pageToken) break;
+    }
+    alert('Migration copied ' + total + ' records into the secure cloud store.');
+  } catch(e) { alert('Migration could not start: ' + e.message); }
 }
 
 /* ---------------- INIT ---------------- */
