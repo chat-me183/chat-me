@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="light">
-<title>Chat Me</title>
+<title>Chat Me — Connect, Chat &amp; Community</title>
 <meta name="description" content="Chat Me is a free community app for live topic chatrooms, friends, Statusbook posts, and fun free-play games.">
 <meta name="keywords" content="Chat Me, Nigerian community, topic chatrooms, chat with friends, online chatroom, free chat app">
 <meta property="og:title" content="Chat Me">
@@ -86,7 +86,24 @@
   .about-card{background:#fff;border-radius:13px;padding:18px;border:1px solid #e5e9f1;box-shadow:0 4px 14px rgba(16,24,40,.04)}
   .about-card b{display:block;margin-bottom:6px;color:#24316f}
   .about-card span{color:#697386;font-size:13px;line-height:1.55}
-  @media(max-width:800px){.welcome-main{grid-template-columns:1fr;gap:25px;padding-top:38px;min-height:auto}.welcome-login-card{justify-self:center}.welcome-points{grid-template-columns:1fr}.welcome-copy h1{font-size:40px}.welcome-section{padding-bottom:30px}}
+  .welcome-testimonials{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:18px}
+  .welcome-quote{background:linear-gradient(135deg,#fff,#f7f9ff);border:1px solid #e2e7f2;border-radius:16px;padding:18px;box-shadow:0 8px 24px rgba(24,39,75,.06);position:relative}
+  .welcome-quote b{display:block;color:#24316f;font-size:13px;margin-bottom:7px}.welcome-quote p{color:#4d5668;font-size:13px;line-height:1.6;margin:0 0 10px;text-align:left}
+  .welcome-quote strong{color:#24316f;font-size:12.5px}
+  .welcome-steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:18px}
+  .welcome-step{background:#fff;border:1px solid #e5e9f1;border-radius:14px;padding:16px;text-align:left;box-shadow:0 6px 18px rgba(24,39,75,.04)}
+  .welcome-step .num{width:30px;height:30px;border-radius:50%;background:#eef2ff;color:#24316f;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;margin-bottom:10px}
+  .welcome-step b{display:block;color:#24316f;font-size:13px;margin-bottom:4px}
+  .welcome-step span{color:#737b8c;font-size:11.5px;line-height:1.5}
+  .welcome-note{margin-top:18px;padding:14px 16px;border-radius:14px;background:#f7f9fc;border:1px solid #e5e9f1;color:#626c7d;font-size:12px;line-height:1.55}
+  .welcome-trust{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:18px}
+  .welcome-trust-card{background:#fff;border:1px solid #e5e9f1;border-radius:12px;padding:14px;text-align:center}
+  .welcome-trust-card b{display:block;color:#24316f;font-size:13px;margin-bottom:4px}
+  .welcome-trust-card span{color:#737b8c;font-size:11.5px;line-height:1.45}
+  .public-policy-modal{position:fixed;inset:0;background:rgba(15,23,42,.62);z-index:100;display:none;align-items:center;justify-content:center;padding:18px}
+  .public-policy-box{background:#fff;border-radius:18px;max-width:680px;width:100%;max-height:88vh;overflow:auto;padding:24px;box-shadow:0 24px 70px rgba(0,0,0,.25)}
+  .public-policy-box h2{color:#24316f;margin-bottom:8px}.public-policy-box p{color:#5f6878;font-size:13px;line-height:1.6;margin:8px 0}.public-policy-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.public-policy-actions button{border:0;border-radius:9px;padding:10px 15px;cursor:pointer;font-weight:700}.public-policy-close{background:#eef1f6;color:#27324f}.public-policy-login{background:#2b6ee0;color:#fff}
+  @media(max-width:800px){.welcome-testimonials,.welcome-steps,.welcome-trust{grid-template-columns:1fr}.welcome-main{grid-template-columns:1fr;gap:25px;padding-top:38px;min-height:auto}.welcome-login-card{justify-self:center}.welcome-points{grid-template-columns:1fr}.welcome-copy h1{font-size:40px}.welcome-section{padding-bottom:30px}}
   @media(max-width:480px){.welcome-nav{padding:0 14px}.welcome-nav-brand{font-size:18px}.welcome-nav-actions .nav-login{padding:8px 11px}.welcome-nav-actions .nav-signup{padding:9px 12px}.welcome-main{width:92%;padding-top:28px}.welcome-login-card{padding:22px}.welcome-copy h1{font-size:34px;letter-spacing:-1px}}
 
   /* ---- Auth screens (login / signup) ---- */
@@ -395,14 +412,55 @@ body.dark-mode .cm-reaction-menu button{background:#2a2d32;color:#eee}
     </main>
 
     <section class="welcome-section" aria-label="Chat Me features">
-      <h2>Everything starts from one home page</h2>
-      <p>A simple front door for Chat Me, with quick access to login and account creation.</p>
+      <h2>More than a chat app — a place to belong</h2>
+      <p>Chat Me brings conversations, friends, community posts, groups, notifications and free-play features into one simple Nigerian community space.</p>
       <div class="welcome-about">
-        <div class="about-card"><b>💬 Chat with friends</b><span>Message people you know and keep conversations organized.</span></div>
-        <div class="about-card"><b>🌍 Join the community</b><span>Explore shared conversations, groups and posts in your Chat Me community.</span></div>
-        <div class="about-card"><b>✨ Make it yours</b><span>Build your profile and personalize your Chat Me experience.</span></div>
+        <div class="about-card"><b>💬 Real conversations</b><span>Keep private chats, group conversations and community discussions close at hand.</span></div>
+        <div class="about-card"><b>🌍 Community first</b><span>Meet people, share updates, join groups and discover conversations around you.</span></div>
+        <div class="about-card"><b>✨ Your space</b><span>Build your profile, personalize your experience and choose how you participate.</span></div>
+      </div>
+
+      <h2 style="margin-top:34px;">What people can use Chat Me for</h2>
+      <p>Real features for staying connected, sharing updates and taking part in a community — without invented reviews or ratings.</p>
+      <div class="welcome-testimonials" aria-label="What people can use Chat Me for">
+        <div class="welcome-quote"><b>💬 Keep conversations going</b><p>Chat privately, take part in group conversations and stay connected with people you know.</p><strong>Everyday conversations</strong></div>
+        <div class="welcome-quote"><b>👥 Find your community</b><p>Join groups, discover shared interests and participate in community discussions.</p><strong>Community &amp; connections</strong></div>
+        <div class="welcome-quote"><b>📝 Share and discover</b><p>Post updates, react, comment, save posts and explore the features available to you.</p><strong>Social &amp; free-play features</strong></div>
+      </div>
+
+      <h2 style="margin-top:34px;">How Chat Me works</h2>
+      <div class="welcome-steps" aria-label="How Chat Me works">
+        <div class="welcome-step"><div class="num">1</div><b>Create your account</b><span>Set up your profile and choose how you want to present yourself in the community.</span></div>
+        <div class="welcome-step"><div class="num">2</div><b>Connect</b><span>Find friends, send requests and start private or community conversations.</span></div>
+        <div class="welcome-step"><div class="num">3</div><b>Share &amp; discover</b><span>Post updates, join groups, follow conversations and use the features that interest you.</span></div>
+        <div class="welcome-step"><div class="num">4</div><b>Stay in control</b><span>Use privacy, reporting, blocking and moderation features when you need them.</span></div>
+      </div>
+      <div class="welcome-note"><b>Before you join:</b> Chat Me currently uses an age-eligibility check and is not intended for children under 13. Virtual Coins have no cash value, and coin purchases are currently disabled. Please read the Privacy &amp; Policies information before creating an account.</div>
+
+      <div class="welcome-trust" aria-label="Chat Me principles">
+        <div class="welcome-trust-card"><b>🔒 Privacy-aware</b><span>Clear privacy information and a dedicated privacy/support contact.</span></div>
+        <div class="welcome-trust-card"><b>🚩 Reporting</b><span>Users can report problems and staff tools support moderation.</span></div>
+        <div class="welcome-trust-card"><b>🪙 Virtual Coins</b><span>Coin purchases are disabled for now and Coins are not cashable.</span></div>
+        <div class="welcome-trust-card"><b>🛡️ Security</b><span>Authentication and protected backend controls are used to help protect accounts.</span></div>
       </div>
     </section>
+    <div style="text-align:center;margin:8px 0 28px;font-size:12.5px;color:#667085;">
+      <button onclick="showPublicPolicy()" style="background:none;border:0;color:#2b6ee0;text-decoration:underline;cursor:pointer;font-size:12.5px;">🔒 Privacy, Safety &amp; Policies</button>
+    </div>
+
+    <div class="public-policy-modal" id="publicPolicyModal" role="dialog" aria-modal="true" aria-label="Privacy and policies">
+      <div class="public-policy-box">
+        <h2>🔒 Privacy &amp; Policies</h2>
+        <p><b>Chat Me is currently a free community service.</b> Coin purchases are disabled. Coins have no cash value and cannot be exchanged or withdrawn for real money.</p>
+        <p><b>Privacy &amp; support:</b> adegboyeabdulrahmanl@gmail.com</p>
+        <p>Our policies explain account information, community content, security, reporting/moderation, service providers, user rights and how privacy requests can be made.</p>
+        <p style="font-size:12px;color:#7a8190;">The full policy pages are available inside Chat Me after login.</p>
+        <div class="public-policy-actions">
+          <button class="public-policy-login" onclick="showAuth('login');closePublicPolicy();">Log in to read full policies</button>
+          <button class="public-policy-close" onclick="closePublicPolicy()">Close</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- ============ LOGIN ============ -->
@@ -577,7 +635,7 @@ body.dark-mode .cm-reaction-menu button{background:#2a2d32;color:#eee}
       <div class="nav-item" data-page="groupsPage" onclick="switchTab('groupsPage')"><span class="i18n" data-key="groups">Groups</span></div>
       <div class="nav-item points" data-page="leosPage" id="pointsNavItem" onclick="switchTab('leosPage')"><span class="i18n" data-key="leos">Coins</span>: <span id="leosNavAmount">0.00</span></div>
       <div class="nav-item" data-page="gamesPage" onclick="switchTab('gamesPage')"><span class="i18n" data-key="games">Games</span></div>
-      <div class="nav-item" data-page="buyCoinsPage" onclick="switchTab('buyCoinsPage')"><span class="i18n" data-key="buy">Buy Coins</span></div>
+      <div class="nav-item" data-page="buyCoinsPage" style="display:none;" aria-hidden="true"></div>
       <div class="nav-item" data-page="shopPage" onclick="switchTab('shopPage')">🛍️ Shop</div>
       <div class="nav-item" data-page="menuPage" onclick="switchTab('menuPage')"><span class="i18n" data-key="menu">Menu</span></div>
       <div class="nav-item" data-page="settingsPage" onclick="switchTab('settingsPage')">⚙ Settings</div>
@@ -735,7 +793,7 @@ body.dark-mode .cm-reaction-menu button{background:#2a2d32;color:#eee}
             <span id="groupBackgroundFileName" style="font-size:12px;color:#888;">Shop unlock required</span>
           </div>
           <div class="field-msg" id="groupCreateError" style="min-height:14px;"></div>
-          <button onclick="createCircle('group')" style="width:100%;background:#25a244;color:#fff;border:none;padding:9px;border-radius:6px;cursor:pointer;font-size:13.5px;font-weight:600;">Create Group (needs 100 Coins)</button>
+          <button onclick="createCircle('group')" style="width:100%;background:#25a244;color:#fff;border:none;padding:9px;border-radius:6px;cursor:pointer;font-size:13.5px;font-weight:600;">Create Group (needs 1,000 Coins)</button>
         </div>
         <div id="groupListItems"></div>
       </div>
@@ -769,7 +827,7 @@ body.dark-mode .cm-reaction-menu button{background:#2a2d32;color:#eee}
             <span id="roomPicFileName" style="font-size:12px;color:#888;">No file chosen</span>
           </div>
           <div class="field-msg" id="roomCreateError" style="min-height:14px;"></div>
-          <button onclick="createCircle('room')" style="width:100%;background:#25a244;color:#fff;border:none;padding:9px;border-radius:6px;cursor:pointer;font-size:13.5px;font-weight:600;">Create Chatroom (needs 300 Coins)</button>
+          <button onclick="createCircle('room')" style="width:100%;background:#25a244;color:#fff;border:none;padding:9px;border-radius:6px;cursor:pointer;font-size:13.5px;font-weight:600;">Create Chatroom (needs 1,000 Coins)</button>
         </div>
         <div id="roomListItems"></div>
       </div>
@@ -981,6 +1039,19 @@ body.dark-mode .cm-reaction-menu button{background:#2a2d32;color:#eee}
 
     </div>
 
+    <div class="page" id="aiPage" style="padding:16px;overflow-y:auto;">
+      <h2 style="color:#2b3a8f;margin-bottom:6px;">🤖 Nova</h2>
+      <div class="profile-card" style="max-width:620px;">
+        <div id="aiChatArea" style="min-height:120px;max-height:360px;overflow-y:auto;margin-bottom:10px;"></div>
+        <div style="display:flex;gap:8px;">
+          <input id="aiInput" type="text" placeholder="Message Nova" style="flex:1;padding:10px;border:1px solid #ccc;border-radius:6px;">
+          <button onclick="sendToAI()" style="background:#2b6ee0;color:#fff;border:none;padding:9px 14px;border-radius:6px;cursor:pointer;">Send</button>
+        </div>
+        <div id="aiError" class="auth-error" style="margin-top:6px;"></div>
+        <div style="font-size:12px;color:#888;margin-top:8px;">Nova is currently a placeholder and is not connected to a real AI service.</div>
+      </div>
+    </div>
+
     <div class="page" id="leosPage" style="padding:20px;">
       <div class="profile-card" style="max-width:420px;">
         <div style="font-size:15px;color:#888;margin-bottom:6px;">Your Coins balance</div>
@@ -991,12 +1062,13 @@ body.dark-mode .cm-reaction-menu button{background:#2a2d32;color:#eee}
 
     <div class="page" id="buyCoinsPage" style="padding:16px;overflow-y:auto;">
       <h2 style="color:#2b3a8f;margin-bottom:6px;">💰 Buy Coins</h2>
-      <div style="font-size:13px;color:#666;margin-bottom:14px;max-width:520px;">
-        Choose a package only when official payment details are available. An admin will confirm a genuine payment before Coins are credited.
+      <div class="profile-card" style="max-width:650px;line-height:1.6;font-size:14px;">
+        <p><b>Coin purchases are currently disabled.</b></p>
+        <p>Chat Me does not accept manual bank transfers, OPay/PalmPay transfers, payment references, or manual payment confirmations.</p>
+        <p>No money should be sent to Chat Me for Coins at this time. Coins remain virtual in-app items and cannot be cashed out, exchanged for Naira, or withdrawn.</p>
+        <p>Paid Coin purchases will only be enabled after the business/legal structure, payment provider, consumer terms, privacy/compliance requirements, and applicable app-store requirements have been reviewed and the proper payment integration is implemented.</p>
+        <button onclick="switchTab('leosPage')" style="margin-top:10px;background:#2b6ee0;color:#fff;border:0;padding:9px 14px;border-radius:6px;cursor:pointer;">Back to Coins</button>
       </div>
-      <div id="buyPackages" style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px;"></div>
-      <div id="buyCooldownNote" style="font-size:12.5px;color:#d32f2f;margin-bottom:10px;"></div>
-      <div id="buyConfirmArea"></div>
     </div>
 
     <div class="page" id="shopPage" style="padding:16px;overflow-y:auto;">
@@ -1056,6 +1128,53 @@ body.dark-mode .cm-reaction-menu button{background:#2a2d32;color:#eee}
       <div id="cmStaffSupportInbox"></div>
     </div>
 
+    <div class="page" id="tosPage" style="padding:16px;overflow-y:auto;">
+      <h2 style="color:#2b3a8f;margin-bottom:6px;">Terms of Service</h2>
+      <div class="profile-card" style="max-width:650px;line-height:1.6;font-size:14px;">
+        <p>Welcome to Chat Me. By using this app, you agree to the following:</p>
+        <p><b>1. Community app.</b> Chat Me is a free community app for chatting, posting, and playing games with friends.</p>
+        <p><b>2. Be respectful.</b> No harassment, hate speech, illegal content, or impersonation. Accounts that break the rules can be warned, restricted, or removed by staff.</p>
+        <p><b>3. Coins are virtual.</b> Coins have no cash value outside the app and cannot be exchanged, sold, or withdrawn for real money. Coin purchases are currently disabled.</p>
+        <p><b>4. Your content.</b> You're responsible for what you post. Don't post anything you don't have the right to share.</p>
+        <p><b>5. Changes.</b> These terms may be updated as the app grows. Continued use means you accept the current version.</p>
+        <p><b>6. No warranty.</b> This app is provided "as is," for community and entertainment use, without guarantees of uptime or data retention.</p>
+      </div>
+    </div>
+
+    <div class="page" id="privacyPolicyPage" style="padding:16px;overflow-y:auto;">
+      <h2 style="color:#2b3a8f;margin-bottom:6px;">Privacy Policy</h2>
+      <div class="profile-card" style="max-width:700px;line-height:1.65;font-size:14px;">
+        <p><b>Effective date:</b> 29 September 2026</p>
+        <p><b>Data controller / legal owner:</b> <span style="color:#b42318;">Adegboye Abdulrahman Ayofe</span></p>
+        <p><b>Privacy and support contact:</b> <span style="color:#b42318;">adegboyeabdulrahmanl@gmail.com</span></p>
+        <p>Chat Me is a community service. The controller/owner and privacy/support contact listed above are the project contact details provided for this Privacy Policy.</p>
+        <p><b>What we collect:</b> account information such as name, username, email address, date of birth/age-eligibility information, profile information, profile picture, posts, comments, messages, reports, support requests, moderation records, and information needed to operate security and authentication. Technical information may also be processed by service providers used to operate the site.</p>
+        <p><b>Why we process it:</b> to create and secure accounts; provide chats, posts, groups, stories, notifications and other requested features; prevent abuse and fraud; respond to reports and support requests; enforce community rules; maintain security; and comply with applicable legal obligations.</p>
+        <p><b>Lawful basis:</b> depending on the activity, processing may rely on performance of a contract/service requested by the user, compliance with legal obligations, legitimate interests such as security and abuse prevention, or consent where consent is required.</p>
+        <p><b>Who processes or receives data:</b> Chat Me may use service providers such as Firebase/Google services for authentication and related infrastructure, Cloudflare for backend/security infrastructure, and Google reCAPTCHA for anti-abuse verification. Providers should receive only the information needed for their services and remain subject to their own applicable terms and privacy notices.</p>
+        <p><b>Public and private information:</b> information you intentionally post publicly may be visible to other users. Private messages are intended for their participants. Staff may access information when reasonably necessary for moderation, security, support, reports, or legal compliance.</p>
+        <p><b>Security:</b> Chat Me uses authentication, server-side authorization and protected backend storage controls intended to reduce unauthorized access. No internet service can guarantee absolute security.</p>
+        <p><b>Retention:</b> information is retained only for as long as reasonably necessary for the purpose for which it was collected, account/service operation, security, dispute handling, or legal obligations. Specific retention periods may vary by data type.</p>
+        <p><b>Your rights:</b> subject to applicable law and lawful exceptions, you may have rights to be informed, access your personal data, request correction, object to certain processing, request restriction or deletion where applicable, request portability where applicable, withdraw consent where consent is the basis, and request human intervention regarding certain automated decisions.</p>
+        <p><b>Privacy requests:</b> contact the real privacy/support contact shown above. Requests should identify the account and clearly describe what is being requested. We may need to verify identity before responding.</p>
+        <p><b>Complaints:</b> users in Nigeria may also have the right to lodge a complaint with the Nigeria Data Protection Commission (NDPC), subject to the applicable procedure.</p>
+        <p><b>Children:</b> Chat Me currently uses an age-eligibility check and is not intended for children under 13. Do not provide false age information or use another person's account.</p>
+        <p><b>Cookies and local storage:</b> the website may use browser storage for necessary session/UI preferences and similar technical purposes. Third-party services such as reCAPTCHA may use their own technical mechanisms.</p>
+        <p><b>Changes:</b> this policy may be updated when the service, law, or processing practices change. The effective date will be updated when material changes are made.</p>
+        <p style="background:#fff4e5;border:1px solid #f2c078;padding:10px;border-radius:8px;"><b>Important before publication:</b> The controller/owner name and privacy/support contact above should remain accurate and should be updated if the legal controller or contact address changes.</p>
+      </div>
+    </div>
+
+    <div class="page" id="refundPolicyPage" style="padding:16px;overflow-y:auto;">
+      <h2 style="color:#2b3a8f;margin-bottom:6px;">Refund Policy</h2>
+      <div class="profile-card" style="max-width:650px;line-height:1.6;font-size:14px;">
+        <p><b>Coins are virtual currency</b> for use inside Chat Me only - for games, stories, and shop items.</p>
+        <p><b>No cash-out.</b> Coins cannot be converted, withdrawn, exchanged, or cashed out to Naira or any other currency, under any circumstances.</p>
+        <p><b>Purchases:</b> Coin purchases are currently disabled. No manual bank-transfer, OPay/PalmPay, payment-reference, "manual payment confirmation", or admin approval purchase flow is offered. If paid Coins are introduced later, separate purchase terms will be published after the payment method and applicable legal/platform requirements are reviewed.</p>
+        <p><b>Currently:</b> Coin purchases are disabled. Do not send money to anyone claiming to sell Chat Me Coins.</p>
+      </div>
+    </div>
+
     <div class="page" id="adminPage" style="padding:20px;overflow-y:auto;">
       <h2 style="color:#9c1c1c;margin-bottom:4px;">Admin panel</h2>
       <div style="color:#888;font-size:13px;margin-bottom:16px;">Visible to trusted Chat Me staff. Owners and admins can manage the full panel; moderators see only the controls allowed for their role.</div>
@@ -1093,7 +1212,7 @@ body.dark-mode .cm-reaction-menu button{background:#2a2d32;color:#eee}
       <span onclick="switchTab('profilePage')">👤<br>Profile</span>
       <span onclick="switchTab('chatsPage')">💬<br>Message</span>
       <span onclick="switchTab('gamesPage')">🎮<br>Game</span>
-      <span onclick="switchTab('buyCoinsPage')">💰<br>Buy Coins</span>
+      <span style="display:none;" aria-hidden="true">💰<br>Buy Coins</span>
     </div>
 
     <div class="footer-tiles">
@@ -1111,6 +1230,7 @@ body.dark-mode .cm-reaction-menu button{background:#2a2d32;color:#eee}
       </div>
     </div>
     <div class="tile-support" onclick="switchTab('supportPage')">🎧 Customer Service</div>
+    <div class="tile-support" onclick="switchTab('privacyPolicyPage')" style="background:linear-gradient(145deg,#10243f,#245b8f);border-color:#67b7ff;">🔒 Privacy &amp; Policies</div>
 
     <div class="app-footer">
       <span class="footer-user" id="footerUserLabel"></span>
@@ -1243,6 +1363,15 @@ function showWelcome(){
   document.getElementById('app').style.display = 'none';
 }
 let userHasNavigated = false;
+function showPublicPolicy(){
+  const m=document.getElementById('publicPolicyModal');
+  if(m) m.style.display='flex';
+}
+function closePublicPolicy(){
+  const m=document.getElementById('publicPolicyModal');
+  if(m) m.style.display='none';
+}
+
 function showAuth(type){
   userHasNavigated = true;
   document.getElementById('welcomeScreen').style.display = 'none';
@@ -1387,27 +1516,56 @@ function randomSalt(){
   }
 }
 
-/* ---------------- SECURE CLOUD STORAGE ----------------
-   Production Chat Me data is authoritative in the authenticated Cloudflare
-   Worker/KV backend. Browser localStorage is used only for harmless UI
-   preferences (language/theme) and never as an account/data fallback.
-*/
+/* ---------------- storage helpers (localStorage, with in-memory fallback) ---------------- */
+let memStore = {};
+let storageBackend = 'local';
 let storageWarningShown = false;
+(function detectStorageBackend(){
+  try {
+    const testKey = '__cm_test__' + Math.random();
+    localStorage.setItem(testKey, '1');
+    localStorage.removeItem(testKey);
+    storageBackend = 'local';
+  } catch (e) {
+    storageBackend = 'memory';
+  }
+})();
+function warnMemoryStorageOnce(){
+  if (storageWarningShown) return;
+  storageWarningShown = true;
+  const banner = document.createElement('div');
+  banner.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#fff3cd;color:#664d03;padding:8px 12px;font-size:12.5px;text-align:center;z-index:200;';
+  banner.textContent = "This browser is blocking persistent storage for local files, so accounts and posts will only last for this session (they won't survive closing the page). Tap to dismiss.";
+  banner.onclick = () => banner.remove();
+  document.body.appendChild(banner);
+}
+/* Wrap any Firestore call with this so a slow or unreachable network can
+   never leave the app stuck on "Working..." - it just falls back to the
+   local cache instead of hanging. */
 function withTimeout(promise, ms){
   return Promise.race([
     promise,
-    new Promise((_, reject) => setTimeout(() => reject(new Error('Request timed out')), ms))
+    new Promise((_, reject) => setTimeout(() => reject(new Error('Firebase call timed out')), ms))
   ]);
 }
+/* A short-lived cache so re-reading the same piece of data seconds later
+   (very common - the same user's info shows up many times in one feed)
+   doesn't need a fresh network round trip every single time. This is the
+   biggest lever for feeling faster on a slow connection, since each
+   network read can otherwise take real time to come back. */
 const _fastCache = {};
 const FAST_CACHE_MS = 20000;
+// These change second-to-second and are read via polling - caching them
+// would make chat, typing, online status, and live challenges feel
+// laggy or stuck on old data. Everything else (profiles, posts, rooms,
+// shop, leaderboard) is read far more often than it changes, so caching
+// those is a safe, real speed win.
 const _noCachePrefixes = ['chat:', 'circlechat:', 'typing:', 'presence:', 'notifs:', 'dicechallenge:', 'challenge:', 'requests:', 'sentreq:', 'friends:', 'seen:'];
 function _isCacheable(key){ return !_noCachePrefixes.some(p => key.startsWith(p)); }
 function _cacheGet(key){
   if (!_isCacheable(key)) return undefined;
   const hit = _fastCache[key];
   if (hit && (Date.now() - hit.time) < FAST_CACHE_MS) return hit.value;
-  delete _fastCache[key];
   return undefined;
 }
 function _cacheSet(key, value){ if (_isCacheable(key)) _fastCache[key] = { value, time: Date.now() }; }
@@ -1417,26 +1575,80 @@ async function storageGet(key){
   const cached = _cacheGet(key);
   if (cached !== undefined) return cached;
   const secure = await secureStorageRequest('get', key);
-  if (!secure.handled) throw new Error('Secure storage backend is not deployed or unavailable.');
-  const val = secure.data?.value ?? null;
-  _cacheSet(key, val);
-  return val;
+  if (secure.handled) {
+    const val = secure.data?.value ?? null;
+    _cacheSet(key, val);
+    return val;
+  }
+  if (firebaseDb) {
+    try {
+      const doc = await withTimeout(firebaseDb.collection('kv').doc(key).get(), 3000);
+      const val = doc.exists ? doc.data().value : null;
+      if (storageBackend === 'local') { try { val === null ? localStorage.removeItem(key) : localStorage.setItem(key, val); } catch(e){} }
+      else { if (val === null) delete memStore[key]; else memStore[key] = val; }
+      _cacheSet(key, val);
+      return val;
+    } catch (e) {
+      console.error('SECURITY: Firestore read failed; refusing local fallback.', e);
+      throw e;
+    }
+  }
+  if (firebaseConfigLooksReal) throw new Error('Secure cloud storage is unavailable.');
+  if (storageBackend === 'local') {
+    try { return localStorage.getItem(key); } catch (e) {}
+  }
+  return Object.prototype.hasOwnProperty.call(memStore, key) ? memStore[key] : null;
 }
 async function storageSet(key, value){
   _cacheSet(key, value);
   const secure = await secureStorageRequest('set', key, { value });
-  if (!secure.handled) throw new Error('Secure storage backend is not deployed or unavailable.');
+  if (secure.handled) return { key, value };
+  if (firebaseDb) {
+    try { await withTimeout(firebaseDb.collection('kv').doc(key).set({ value: value, updatedAt: Date.now() }), 3000); }
+    catch (e) { console.error('SECURITY: Firestore write failed; refusing local-only save.', e); throw e; }
+  } else if (firebaseConfigLooksReal) {
+    throw new Error('Secure cloud storage is unavailable.');
+  }
+  if (!firebaseConfigLooksReal && storageBackend === 'local') {
+    try { localStorage.setItem(key, value); return { key, value }; }
+    catch (e) { console.warn('This particular save was too large for local storage - keeping it in memory for this session only.', e); }
+  }
+  memStore[key] = value;
   return { key, value };
 }
 async function storageListKeys(prefix){
   const secure = await secureStorageRequest('list', prefix);
-  if (!secure.handled) throw new Error('Secure storage backend is not deployed or unavailable.');
-  return secure.data?.keys || [];
+  if (secure.handled) return secure.data?.keys || [];
+  if (firebaseDb) {
+    try {
+      const snap = await withTimeout(firebaseDb.collection('kv')
+        .where(firebase.firestore.FieldPath.documentId(), '>=', prefix)
+        .where(firebase.firestore.FieldPath.documentId(), '<', prefix + '\uf8ff')
+        .get(), 3000);
+      return snap.docs.map(d => d.id);
+    } catch (e) {
+      console.error('SECURITY: Firestore list failed; refusing local fallback.', e);
+      throw e;
+    }
+  }
+  if (firebaseConfigLooksReal) throw new Error('Secure cloud storage is unavailable.');
+  if (storageBackend === 'local') {
+    try { return Object.keys(localStorage).filter(k => k.startsWith(prefix)); } catch (e) {}
+  }
+  return Object.keys(memStore).filter(k => k.startsWith(prefix));
 }
 async function storageRemove(key){
   _cacheClear(key);
   const secure = await secureStorageRequest('delete', key);
-  if (!secure.handled) throw new Error('Secure storage backend is not deployed or unavailable.');
+  if (secure.handled) return true;
+  if (firebaseDb) {
+    try { await withTimeout(firebaseDb.collection('kv').doc(key).delete(), 3000); }
+    catch (e) { console.error('SECURITY: Firestore delete failed.', e); throw e; }
+  }
+  if (storageBackend === 'local') {
+    try { localStorage.removeItem(key); return true; } catch (e) {}
+  }
+  delete memStore[key];
   return true;
 }
 
@@ -1624,7 +1836,7 @@ async function doSignup(){
       return;
     }
 
-    if (!firebaseAuth || !firebaseConfigLooksReal) { errEl.textContent = 'Secure account creation is unavailable right now.'; return; }
+    if (!firebaseAuth || !firebaseDb || !firebaseConfigLooksReal) { errEl.textContent = 'Secure account creation is unavailable right now.'; return; }
     let firebaseCredential;
     try { firebaseCredential = await withTimeout(firebaseAuth.createUserWithEmailAndPassword(email, password), 8000); }
     catch (e) { errEl.textContent = e.code === 'auth/email-already-in-use' ? 'An account with this email already exists.' : 'Secure account creation failed. Please try again.'; return; }
@@ -1647,6 +1859,11 @@ async function doSignup(){
       id: Date.now() + '-' + Math.random().toString(36).slice(2, 8),
       type: 'welcome', time: Date.now(), read: false, handled: true,
       text: "Welcome to Chat Me! We are excited to have you join our growing community of friends, chatters, and gamers. Here you can message people, join group chats, share posts, play fun games with friends or the AI, and earn Coins along the way. Please be kind and respectful, and follow the rules. Enjoy your time here, and let's chat!"
+    }, {
+      id: Date.now() + '-' + Math.random().toString(36).slice(2, 8),
+      type: 'system', time: Date.now() + 1, read: false, handled: true,
+      title: 'What can I use my Coins for?',
+      text: 'Your Coins can be used to create a Chatroom (1,000 Coins) or Group (1,000 Coins), and to buy items and features in the Shop: profile themes, profile frames, name effects, sticker packs, premium chat themes, virtual gifts, special badges, Featured Profile, Profile Music, Private Room access, Group Background access, Premium Message Pins, Premium Reactions, and Story Insights. You can also earn 50 Coins by inviting 3 friends who actually sign up with your referral link. Check the Shop before spending your Coins so you can see the current prices.'
     }]), true);
 
     // Referral tracking: ?ref=someusername in the URL that brought them here.
@@ -2082,17 +2299,10 @@ async function doLogin(){
   loginBtn.textContent = 'Logging in...';
   showLoading(true);
   try {
-    if (!firebaseAuth || !firebaseConfigLooksReal) { errEl.textContent='Secure Firebase Authentication is unavailable. Please try again later.'; refreshCaptcha('login'); return; }
+    if (!firebaseAuth || !firebaseDb || !firebaseConfigLooksReal) { errEl.textContent='Secure Firebase Authentication is unavailable. Please try again later.'; refreshCaptcha('login'); return; }
     let fbUser;
     try { fbUser = await ensureFirebaseSession(email,password); }
-    catch(e) {
-      const code = String(e && e.code || '');
-      if (code === 'auth/too-many-requests') errEl.textContent = 'Too many login attempts. Please wait and try again.';
-      else if (code === 'auth/network-request-failed') errEl.textContent = 'Network error while signing in. Check your connection and try again.';
-      else if (code === 'auth/user-disabled') errEl.textContent = 'This Firebase account has been disabled. Contact support.';
-      else errEl.textContent = 'Invalid email or password, or this account has not been migrated to Firebase yet.';
-      refreshCaptcha('login'); return;
-    }
+    catch(e) { errEl.textContent = e.code==='auth/too-many-requests' ? 'Too many login attempts. Please wait and try again.' : 'Invalid email or password.'; refreshCaptcha('login'); return; }
     const raw = await storageGet(userKey(email), true);
     if (!raw) { errEl.textContent='Your Firebase account exists, but your Chat Me profile could not be found. Please contact support.'; refreshCaptcha('login'); return; }
     const user = JSON.parse(raw);
@@ -2339,7 +2549,7 @@ async function showReferralInfo(){
     const next = unclaimed[0];
     const claimNow = confirm(
       `You earned ${next.amount} Coins for reaching ${next.milestone} referrals!\n\n` +
-      `Tap OK to withdraw it now, or Cancel to claim it later (it'll stay saved for you).`
+      `Tap OK to claim it now, or Cancel to claim it later (it'll stay saved for you).`
     );
     if (claimNow) {
       const u2 = JSON.parse(await storageGet(userKey(currentUser.email), true));
@@ -2350,7 +2560,7 @@ async function showReferralInfo(){
         await storageSet(userKey(currentUser.email), JSON.stringify(u2), true);
         currentUser.leos = u2.leos;
         updateCoinsDisplay();
-        alert('Withdrawn! +' + reward.amount + ' Coins.');
+        alert('Claimed! +' + reward.amount + ' Coins.');
       }
     }
   }
@@ -2366,14 +2576,7 @@ async function showReferralInfo(){
 }
 
 function showRules(){
-  alert(
-    "Chat Me — Rules & Regulations\n\n" +
-    "1. No nudity or sexual content.\n" +
-    "2. No \"Yahoo\" — no scams, fraud, or begging for money.\n" +
-    "3. No bullying, hate speech, threats, or other bad behavior.\n\n" +
-    "This app is here for one reason: to have fun together. Keep it clean, be kind, and enjoy yourself.\n\n" +
-    "Breaking these rules can get your account deleted by an admin."
-  );
+  alert("Chat Me Rules & Regulations\n\n1. Respect everyone. Treat users with respect. Do not insult, bully, harass, threaten, or provoke another person.\n2. No sexual content. Do not post, send, request, or promote nudity, sexual material, or inappropriate conversations. Keep Chat Me suitable.\n3. No scams or fraud. “Yahoo”, phishing, fake investment offers, impersonation, dishonest sales, or attempts to trick people are prohibited.\n4. No begging or financial pressure. Do not ask strangers for money, Coins, gifts, transfers, passwords, codes, or financial information.\n5. Protect privacy. Never publish another person’s private information, passwords, phone numbers, addresses, private messages, or documents without permission.\n6. No hate or threats. Do not attack people because of identity, background, beliefs, or disability. Threats and violence are prohibited.\n7. Use social media responsibly. WhatsApp, Facebook, Instagram, TikTok may be shared for legitimate purposes. Do not use Chat Me for scams, harassment, spam, or harmful activity.\n8. No spam. Do not flood chats, post advertisements, manipulate referrals, or use automated activity to disturb the community.\n9. Coins and purchases. Use Coins only for Chat Me features and Shop items. Do not duplicate, steal, or manipulate Coins or payment records. Trust only official payment instructions.\n10. Chatrooms and Groups. Creating a Chatroom or Group costs 1,000 Coins. Keep conversations respectful and follow these rules.\n11. Report problems. Use reporting or Customer Service for scams, abuse, rule-breaking, payment problems. Do not make false reports.\n12. Staff decisions. Admins and moderators may remove content, restrict features, suspend accounts, or delete accounts when rules are broken.\n13. Account responsibility. Keep login details secure. Never share your password or verification codes. You are responsible for activity.\n14. Have fun. Chat Me is for friendship, conversation, sharing, games, and community. Keep it clean, respect others, and help make the platform welcoming together.");
 }
 
 /* ---------------- ANNOUNCEMENTS (admin only can post; everyone can read) ---------------- */
@@ -2858,28 +3061,6 @@ async function loadAdminPage(){
     `;
   }
 
-  /* ---- Pending Coins purchases (any admin can approve/reject) ---- */
-  const purchaseKeys = await storageListKeys('purchase:', true);
-  const pendingPurchases = [];
-  const purchaseRaws = await Promise.all(purchaseKeys.map(k => storageGet(k, true)));
-  for (const raw of purchaseRaws) {
-    if (!raw) continue;
-    try { const p = JSON.parse(raw); if (p.status === 'pending') pendingPurchases.push(p); } catch (e) {}
-  }
-  pendingPurchases.sort((a, b) => b.time - a.time);
-  const purchaseSection = `
-    <div class="section-divider"><strong>Pending Coins purchases</strong><span>Only approve once you've actually confirmed the money arrived in your account.</span></div>
-    ${pendingPurchases.length ? pendingPurchases.map(p => `
-      <div class="user-result" style="max-width:560px;">
-        <div class="info">
-          <div class="name">${escapeHtml(p.buyerName)} <span style="color:#888;font-weight:400;">@${escapeHtml(p.username)}</span></div>
-          <div class="uname">${p.leos} Coins for ₦${p.priceNaira.toLocaleString()} &middot; ref: ${escapeHtml(p.reference)} &middot; ${timeAgo(p.time)}</div>
-        </div>
-        <button onclick="approvePurchase('${p.id}')">Approve</button>
-        <button style="background:#d32f2f;" onclick="rejectPurchase('${p.id}')">Reject</button>
-      </div>`).join('') : '<div class="empty-feed">No pending purchases.</div>'}
-  `;
-
   /* ---- System notifications (staff only) ---- */
   const systemNotificationSection = (iAmAdmin || iAmModerator) ? `
     <div class="section-divider"><strong>🔔 Send System Notification</strong><span>Send a notification to one user or to everyone.</span></div>
@@ -2947,7 +3128,7 @@ async function loadAdminPage(){
   ` : '';
 
   document.getElementById('adminUserList').innerHTML = staffRoleSection + verifySection + unverifySection + leaderboardSection + adminAnnouncementSection + postModerationSection + banSection + reportsSection
-    + (iAmAdmin ? (adminSection + moderatorsSection + purchaseSection + systemNotificationSection + giveCoinsSection + deleteSection + dangerSection) : '');
+    + (iAmAdmin ? (adminSection + moderatorsSection + systemNotificationSection + giveCoinsSection + deleteSection + dangerSection) : '');
 }
 
 async function adminDeletePost(postId){
@@ -3001,181 +3182,16 @@ async function giveCoins(username, amountStr){
   loadAdminPage();
 }
 
-/* ---------------- BUY COINS (manual bank transfer + admin confirmation) ---------------- */
+/* ---------------- BUY COINS ----------------
+   Purchases are intentionally disabled until the legal/business and payment
+   requirements have been reviewed and a proper payment integration exists. */
 async function loadBuyCoinsPage(){
-  if (!PAYMENT_DETAILS.bankName || !PAYMENT_DETAILS.accountNumber || !PAYMENT_DETAILS.accountName) {
-    const host = document.getElementById('buyPackages');
-    if (host) host.innerHTML = '<div class="profile-card" style="max-width:620px;"><strong>Coin purchases are temporarily unavailable.</strong><div style="margin-top:6px;color:#666;">Official payment details have not been configured yet. Please use Customer Service for help.</div><button onclick="switchTab(\'supportPage\')" style="margin-top:10px;background:#146c43;color:#fff;border:0;padding:9px 14px;border-radius:6px;cursor:pointer;">Contact Customer Service</button></div>';
-    const confirmArea = document.getElementById('buyConfirmArea');
-    if (confirmArea) confirmArea.innerHTML = '';
-    return;
-  }
-  const packagesEl = document.getElementById('buyPackages');
+  const host = document.getElementById('buyPackages');
+  if (host) host.innerHTML = '';
+  const confirmArea = document.getElementById('buyConfirmArea');
+  if (confirmArea) confirmArea.innerHTML = '';
   const cooldownEl = document.getElementById('buyCooldownNote');
-  document.getElementById('buyConfirmArea').innerHTML = '';
-  cooldownEl.textContent = '';
-
-  const lastRaw = await storageGet(lastPurchaseKey(currentUser.username), true);
-  const lastTime = lastRaw ? parseInt(lastRaw, 10) : 0;
-  const remaining = PURCHASE_COOLDOWN_MS - (Date.now() - lastTime);
-  const onCooldown = remaining > 0;
-  if (onCooldown) {
-    const mins = Math.ceil(remaining / 60000);
-    cooldownEl.textContent = `You can submit another purchase in about ${mins} minute${mins===1?'':'s'}.`;
-  }
-
-  packagesEl.innerHTML = COINS_PACKAGES.map((pkg, i) => `
-    <div class="profile-card" style="max-width:180px;text-align:center;">
-      <div style="font-size:24px;font-weight:700;color:#2b3a8f;">${pkg.leos}</div>
-      <div style="font-size:12.5px;color:#888;margin-bottom:8px;">Coins</div>
-      <div style="font-size:17px;font-weight:700;color:#25a244;margin-bottom:10px;">₦${pkg.priceNaira.toLocaleString()}</div>
-      <button ${onCooldown ? 'disabled' : ''} onclick="selectPackage(${i})" style="background:${onCooldown ? '#bbb' : '#2b6ee0'};color:#fff;border:none;padding:9px 18px;border-radius:6px;cursor:${onCooldown ? 'default' : 'pointer'};font-weight:600;">Buy</button>
-    </div>
-  `).join('');
-}
-
-function selectPackage(i){
-  const pkg = COINS_PACKAGES[i];
-  if (!pkg) return;
-  document.getElementById('buyConfirmArea').innerHTML = `
-    <div class="profile-card" style="max-width:480px;">
-      <div style="font-weight:700;color:#2b3a8f;margin-bottom:8px;">You're buying ${pkg.leos} Coins for ₦${pkg.priceNaira.toLocaleString()}</div>
-      <div style="font-size:13.5px;color:#333;line-height:1.6;margin-bottom:10px;">
-        Bank: <b>${escapeHtml(PAYMENT_DETAILS.bankName)}</b><br>
-        Account number: <b>${escapeHtml(PAYMENT_DETAILS.accountNumber)}</b><br>
-        Account name: <b>${escapeHtml(PAYMENT_DETAILS.accountName)}</b>
-      </div>
-      <div style="font-size:12.5px;color:#888;margin-bottom:10px;">${escapeHtml(PAYMENT_DETAILS.contactNote)}</div>
-      <label class="auth-label">Your payment reference / sender name:</label>
-      <div class="field-block"><input type="text" id="buyReference" placeholder="e.g. transfer reference or the name it was sent from"></div>
-      <div class="auth-error" id="buyError"></div>
-      <div class="auth-status" id="buyStatus"></div>
-      <button onclick="submitPurchaseRequest(${i})" style="background:#25a244;color:#fff;border:none;padding:10px 20px;border-radius:6px;cursor:pointer;font-weight:600;">I've Sent the Payment</button>
-    </div>
-  `;
-}
-
-async function submitPurchaseRequest(i){
-  const errEl = document.getElementById('buyError');
-  const statusEl = document.getElementById('buyStatus');
-  errEl.textContent = ''; statusEl.textContent = '';
-  const pkg = COINS_PACKAGES[i];
-  if (!pkg) return;
-  const reference = document.getElementById('buyReference').value.trim();
-  if (!reference) { errEl.textContent = 'Enter your payment reference or sender name first.'; return; }
-
-  const lastRaw = await storageGet(lastPurchaseKey(currentUser.username), true);
-  const lastTime = lastRaw ? parseInt(lastRaw, 10) : 0;
-  if (Date.now() - lastTime < PURCHASE_COOLDOWN_MS) {
-    errEl.textContent = 'Please wait before submitting another purchase request.';
-    return;
-  }
-
-  showLoading(true);
-  try {
-    const id = Date.now() + '-' + Math.random().toString(36).slice(2, 8);
-    const purchase = {
-      id, username: currentUser.username,
-      buyerName: currentUser.firstName + ' ' + currentUser.lastName,
-      leos: pkg.leos, priceNaira: pkg.priceNaira, reference,
-      status: 'pending', time: Date.now()
-    };
-    await storageSet('purchase:' + id, JSON.stringify(purchase), true);
-    await storageSet(lastPurchaseKey(currentUser.username), String(Date.now()), true);
-
-    // notify every admin so they can go confirm and approve it
-    const userKeys = await storageListKeys('user:', true);
-    const userRaws = await Promise.all(userKeys.map(k => storageGet(k, true)));
-    const admins = [];
-    for (const raw of userRaws) {
-      if (!raw) continue;
-      let u; try { u = JSON.parse(raw); } catch (e) { continue; }
-      if (isAdminUser(u)) admins.push(u);
-    }
-    await Promise.all(admins.map(async (u) => {
-      const notifRaw = await storageGet(notifsKey(u.username), true);
-      const notifs = notifRaw ? JSON.parse(notifRaw) : [];
-      notifs.push({
-        id: Date.now() + '-' + Math.random().toString(36).slice(2, 8),
-        type: 'purchase_request', from: currentUser.username,
-        fromName: currentUser.firstName + ' ' + currentUser.lastName,
-        leos: pkg.leos, priceNaira: pkg.priceNaira, time: Date.now(), read: false, handled: true
-      });
-      await storageSet(notifsKey(u.username), JSON.stringify(notifs), true);
-    }));
-
-    statusEl.textContent = 'Submitted! Your Coins will be added once an admin confirms the payment.';
-    setTimeout(() => loadBuyCoinsPage(), 1200);
-  } catch (e) {
-    errEl.textContent = 'Could not submit your request. Please try again.';
-  } finally {
-    showLoading(false);
-  }
-}
-
-async function approvePurchase(id){
-  showLoading(true);
-  try {
-    const raw = await storageGet('purchase:' + id, true);
-    if (!raw) { alert('That request no longer exists.'); return; }
-    const purchase = JSON.parse(raw);
-    if (purchase.status !== 'pending') { alert('That request was already handled.'); return; }
-
-    const email = await storageGet(usernameKey(purchase.username), true);
-    if (!email) { alert('That buyer account no longer exists.'); return; }
-    const userRaw = await storageGet(userKey(email), true);
-    if (!userRaw) { alert('Could not load that account.'); return; }
-    const u = JSON.parse(userRaw);
-    u.leos = (typeof u.leos === 'number' ? u.leos : 0) + purchase.leos;
-    await storageSet(userKey(email), JSON.stringify(u), true);
-
-    purchase.status = 'approved';
-    await storageSet('purchase:' + id, JSON.stringify(purchase), true);
-
-    const notifRaw = await storageGet(notifsKey(purchase.username), true);
-    const notifs = notifRaw ? JSON.parse(notifRaw) : [];
-    notifs.push({
-      id: Date.now() + '-' + Math.random().toString(36).slice(2, 8),
-      type: 'coins_topup', from: currentUser.username,
-      fromName: currentUser.firstName + ' ' + currentUser.lastName,
-      amount: purchase.leos, newBalance: u.leos, time: Date.now(), read: false, handled: true
-    });
-    await storageSet(notifsKey(purchase.username), JSON.stringify(notifs), true);
-
-    loadAdminPage();
-  } catch (e) {
-    alert('Something went wrong approving that purchase.');
-  } finally {
-    showLoading(false);
-  }
-}
-
-async function rejectPurchase(id){
-  if (!confirm('Reject this purchase request? The buyer will be notified.')) return;
-  showLoading(true);
-  try {
-    const raw = await storageGet('purchase:' + id, true);
-    if (!raw) return;
-    const purchase = JSON.parse(raw);
-    purchase.status = 'rejected';
-    await storageSet('purchase:' + id, JSON.stringify(purchase), true);
-
-    const notifRaw = await storageGet(notifsKey(purchase.username), true);
-    const notifs = notifRaw ? JSON.parse(notifRaw) : [];
-    notifs.push({
-      id: Date.now() + '-' + Math.random().toString(36).slice(2, 8),
-      type: 'purchase_rejected', from: currentUser.username,
-      fromName: currentUser.firstName + ' ' + currentUser.lastName,
-      leos: purchase.leos, priceNaira: purchase.priceNaira, time: Date.now(), read: false, handled: true
-    });
-    await storageSet(notifsKey(purchase.username), JSON.stringify(notifs), true);
-
-    loadAdminPage();
-  } catch (e) {
-    alert('Something went wrong rejecting that purchase.');
-  } finally {
-    showLoading(false);
-  }
+  if (cooldownEl) cooldownEl.textContent = '';
 }
 
 async function showAdminEditForm(username){
@@ -4179,27 +4195,6 @@ function isModeratorUser(u){
   return !!u.isModerator;
 }
 
-/* ====== COINS PURCHASE SETUP ======
-   Fill in YOUR real payment details below (bank transfer, or a mobile money /
-   payment link — whatever you actually want people sending money to). This
-   is not a real payment gateway - there is no card processing here. People
-   submit a package + a payment reference after transferring manually, and it
-   sits as a pending request until you (the admin) confirm the money arrived
-   and approve it from the Admin page, which credits their Coins. Never
-   approve a request you have not actually been paid for. */
-const PAYMENT_DETAILS = {
-  bankName: '',
-  accountNumber: '',
-  accountName: '',
-  contactNote: 'Payment details are not configured yet. Please use Customer Service for payment instructions; never send money until staff confirms the official payment details.'
-};
-const COINS_PACKAGES = [
-  { leos: 20, priceNaira: 500 },
-  { leos: 50, priceNaira: 1000 },
-  { leos: 100, priceNaira: 2000 }
-];
-const PURCHASE_COOLDOWN_MS = 10 * 60 * 1000; // once every 10 minutes
-function lastPurchaseKey(username){ return 'lastpurchase:' + username.toLowerCase(); }
 function verifiedBadgeHtml(verified){
   return verified ? '<span title="Verified">\uD83C\uDF10</span>' : '';
 }
@@ -4390,19 +4385,17 @@ function renderPostCard(p, infoMap){
 
   const commentsBlock = comments.map((c, ci) => {
     const cInfo = infoMap[c.author] || {};
-    const isMyComment = !!currentUser && String(c.author || '').toLowerCase() === String(currentUser.username || '').toLowerCase();
-    const canDeleteComment = isMyComment || isAdminUser(currentUser);
-    const commentId = String(c.id || ci).replace(/'/g, "\\'");
-    const author = String(c.author || '').replace(/'/g, "\\'");
-    const actions = [];
-    if (isMyComment) actions.push(`<button type="button" onclick="editComment('${p.id}','${commentId}')" style="border:0;background:none;padding:0;color:#555;text-decoration:underline;cursor:pointer;font-size:11px;">Edit</button>`);
-    if (canDeleteComment) actions.push(`<button type="button" onclick="deleteComment('${p.id}','${commentId}')" style="border:0;background:none;padding:0;color:#d32f2f;text-decoration:underline;cursor:pointer;font-size:11px;">Delete</button>`);
-    if (currentUser) actions.push(`<button type="button" onclick="reportComment('${p.id}','${commentId}')" style="border:0;background:none;padding:0;color:#777;text-decoration:underline;cursor:pointer;font-size:11px;">Report</button>`);
+    const mine = currentUser && c.author === currentUser.username;
+    const canDeleteComment = mine || (currentUser && isAdminUser(currentUser));
+    const links = [];
+    if (mine) links.push(`<span style="cursor:pointer;text-decoration:underline;" onclick="editComment('${p.id}',${ci})">Edit</span>`);
+    if (canDeleteComment) links.push(`<span style="cursor:pointer;text-decoration:underline;" onclick="deleteComment('${p.id}',${ci})">Delete</span>`);
+    if (!mine) links.push(`<span style="cursor:pointer;text-decoration:underline;color:#b42318;" onclick="reportComment('${p.id}',${ci})">Report</span>`);
     return `
     <div style="padding:6px 0;border-top:1px solid #f2f2f2;font-size:13.5px;">
-      <span style="font-weight:600;color:#2b3a8f;cursor:pointer;" onclick="viewProfile('${author}')">${displayNameWithNickname(c.authorName || c.author, cInfo.nickname)} ${roleBadgeHtml(cInfo)}</span>
-      <span style="color:#333;"> ${escapeHtml(c.text)}</span>${c.edited ? ' <span style="color:#aaa;font-size:10px;">(edited)</span>' : ''}
-      <div style="color:#aaa;font-size:11px;">${timeAgo(c.time)}${actions.length ? ' · ' + actions.join(' · ') : ''}</div>
+      <span style="font-weight:600;color:#2b3a8f;cursor:pointer;" onclick="viewProfile('${(c.author||'').replace(/'/g,"\\'")}')">${displayNameWithNickname(c.authorName || c.author, cInfo.nickname)} ${roleBadgeHtml(cInfo)}</span>
+      <span style="color:#333;"> ${escapeHtml(c.text)}${c.edited ? ' <span style="font-size:10px;color:#999;">(edited)</span>' : ''}</span>
+      <div style="color:#aaa;font-size:11px;display:flex;gap:8px;align-items:center;">${timeAgo(c.time)}${links.length ? '<span style="display:flex;gap:8px;">' + links.join('') + '</span>' : ''}</div>
     </div>
   `;
   }).join('');
@@ -4557,79 +4550,6 @@ async function toggleLike(postId){
   loadHome();
 }
 
-async function editComment(postId, commentId){
-  if (!currentUser) return;
-  if (isCurrentlyBanned(currentUser)) { alert(banBlockMessage(currentUser)); return; }
-  const raw = await storageGet('post:' + postId, true);
-  if (!raw) return;
-  let p; try { p = JSON.parse(raw); } catch(e) { return; }
-  p.comments = Array.isArray(p.comments) ? p.comments : [];
-  const idx = p.comments.findIndex((c,i) => String(c.id || i) === String(commentId));
-  if (idx < 0) return;
-  const c = p.comments[idx];
-  if (String(c.author || '').toLowerCase() !== String(currentUser.username || '').toLowerCase()) {
-    alert('You can only edit your own comment.'); return;
-  }
-  const next = prompt('Edit your comment:', String(c.text || ''));
-  if (next === null) return;
-  const text = next.trim();
-  if (!text) { alert('Comment cannot be empty.'); return; }
-  if (text.length > 5000) { alert('Comment is too long.'); return; }
-  c.text = text; c.edited = true; c.editedAt = Date.now();
-  try { await storageSet('post:' + postId, JSON.stringify(p), true); _cacheClear('post:' + postId); loadHome(); }
-  catch(e) { alert('Could not edit the comment right now.'); }
-}
-
-async function deleteComment(postId, commentId){
-  if (!currentUser) return;
-  if (isCurrentlyBanned(currentUser)) { alert(banBlockMessage(currentUser)); return; }
-  const raw = await storageGet('post:' + postId, true);
-  if (!raw) return;
-  let p; try { p = JSON.parse(raw); } catch(e) { return; }
-  p.comments = Array.isArray(p.comments) ? p.comments : [];
-  const idx = p.comments.findIndex((c,i) => String(c.id || i) === String(commentId));
-  if (idx < 0) return;
-  const c = p.comments[idx];
-  const mine = String(c.author || '').toLowerCase() === String(currentUser.username || '').toLowerCase();
-  if (!mine && !isAdminUser(currentUser)) { alert('Only the comment author, or an admin, can delete this comment.'); return; }
-  if (!confirm('Delete this comment?')) return;
-  p.comments.splice(idx, 1);
-  try { await storageSet('post:' + postId, JSON.stringify(p), true); _cacheClear('post:' + postId); loadHome(); }
-  catch(e) { alert('Could not delete the comment right now.'); }
-}
-
-async function reportComment(postId, commentId){
-  if (!currentUser) return;
-  if (isCurrentlyBanned(currentUser)) { alert(banBlockMessage(currentUser)); return; }
-  const raw = await storageGet('post:' + postId, true);
-  if (!raw) return;
-  let p; try { p = JSON.parse(raw); } catch(e) { return; }
-  const comments = Array.isArray(p.comments) ? p.comments : [];
-  const idx = comments.findIndex((c,i) => String(c.id || i) === String(commentId));
-  if (idx < 0) return;
-  const c = comments[idx];
-  if (String(c.author || '').toLowerCase() === String(currentUser.username || '').toLowerCase()) {
-    alert('You cannot report your own comment.'); return;
-  }
-  const reportKey = 'commentreport:' + currentUser.username.toLowerCase() + ':' + postId + ':' + String(commentId);
-  if (await storageGet(reportKey, true)) { alert('You already reported this comment.'); return; }
-  const reason = prompt('Why are you reporting this comment?', '');
-  if (reason === null || !reason.trim()) return;
-  const report = {
-    id: Date.now() + '-' + Math.random().toString(36).slice(2,8),
-    type:'comment', reporterUsername:currentUser.username,
-    reporterName:(currentUser.firstName || '') + ' ' + (currentUser.lastName || ''),
-    description:reason.trim(), postId, commentId:String(commentId),
-    commentAuthor:c.author || '', commentAuthorName:c.authorName || '', commentText:c.text || '',
-    time:Date.now(), status:'open', adminReply:null
-  };
-  try {
-    await storageSet('report:' + report.id, JSON.stringify(report), true);
-    await storageSet(reportKey, '1', true);
-    alert('Comment reported. Staff will review it.');
-  } catch(e) { alert('Could not send the report right now.'); }
-}
-
 async function addComment(postId){
   if (isCurrentlyBanned(currentUser)) { alert(banBlockMessage(currentUser)); return; }
   const input = document.getElementById('commentInput_' + postId);
@@ -4645,6 +4565,46 @@ async function addComment(postId){
   await storageSet(key, JSON.stringify(p), true);
   if (p.author && p.author !== currentUser.username) cmPushSocialNotification(p.author, 'comment', `${currentUser.firstName || currentUser.username} commented on your post.`);
   loadHome();
+}
+
+async function editComment(postId, commentId){
+  const key='post:'+postId;
+  const raw=await storageGet(key,true);
+  if(!raw) return;
+  let p; try{p=JSON.parse(raw);}catch(e){return;}
+  const comments=p.comments||[]; const i=Number(commentId);
+  if(!Number.isInteger(i)||i<0||i>=comments.length) return;
+  if(!currentUser || comments[i].author!==currentUser.username){ alert('You can only edit your own comments.'); return; }
+  const updated=prompt('Edit your comment:',comments[i].text||'');
+  if(updated===null) return; const trimmed=updated.trim();
+  if(!trimmed){ alert('Comment cannot be empty.'); return; }
+  comments[i].text=trimmed; comments[i].edited=true;
+  await storageSet(key,JSON.stringify(p),true); loadHome();
+}
+
+async function deleteComment(postId, commentId){
+  const key='post:'+postId;
+  const raw=await storageGet(key,true);
+  if(!raw) return;
+  let p; try{p=JSON.parse(raw);}catch(e){return;}
+  const comments=p.comments||[]; const i=Number(commentId);
+  if(!Number.isInteger(i)||i<0||i>=comments.length) return;
+  if(!currentUser || (comments[i].author!==currentUser.username && !isAdminUser(currentUser))){ alert('Only the comment author, or an admin, can delete this.'); return; }
+  if(!confirm('Delete this comment?')) return;
+  comments.splice(i,1); await storageSet(key,JSON.stringify(p),true); loadHome();
+}
+
+async function reportComment(postId, commentId){
+  const key='post:'+postId; const raw=await storageGet(key,true);
+  if(!raw) return; let p; try{p=JSON.parse(raw);}catch(e){return;}
+  const comments=p.comments||[]; const i=Number(commentId);
+  if(!Number.isInteger(i)||i<0||i>=comments.length) return;
+  const c=comments[i];
+  const reason=prompt('Why are you reporting this comment?');
+  if(reason===null || !reason.trim()) return;
+  const report={id:Date.now()+'-'+Math.random().toString(36).slice(2,8),type:'comment',postId:String(postId),commentId:i,reportedBy:currentUser.username,reportedUser:c.author||'',reason:reason.trim(),time:Date.now(),status:'open'};
+  await storageSet('report:'+report.id,JSON.stringify(report),true);
+  alert('Thank you. The report has been submitted for review.');
 }
 
 async function deletePost(postId){
@@ -4776,7 +4736,8 @@ async function loadCurrentUserFull(){
   try { return JSON.parse(raw); } catch(e) { return null; }
 }
 async function saveCurrentUserFull(u){
-  await storageSet(userKey(currentUser.email), JSON.stringify(u), true);
+  const saved = await storageSet(userKey(currentUser.email), JSON.stringify(u), true);
+  if (!saved) return false;
   currentUser.leos = u.leos;
   currentUser.activeTheme = u.activeTheme;
   currentUser.activeFrame = u.activeFrame;
@@ -4796,6 +4757,7 @@ async function saveCurrentUserFull(u){
   currentUser.hasPremiumReactions = !!u.hasPremiumReactions;
   currentUser.hasStoryInsights = !!u.hasStoryInsights;
   updateCoinsDisplay();
+  return true;
 }
 
 async function buyShopItem(category, itemId){
@@ -4994,7 +4956,7 @@ async function loadShopPage(){
       u.hasProfileMusic ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Unlocked</button>`
       : `<button onclick="buyFixedShopItem('profileMusic')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`));
 
-  html += section('🔒 Private Rooms', 'Unlock private chatroom creation (1,250 Coins).',
+  html += section('🔒 Private Rooms', 'Unlock Private Room access for private chatroom creation (1,250 Coins). Creating a chatroom itself costs 1,000 Coins.',
     itemCard('Private Room', SHOP_FIXED_PRICES.privateRoom + ' Coins', `<div style="font-size:28px;">🔒</div>`,
       u.hasPrivateRoom ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Unlocked</button>`
       : `<button onclick="buyFixedShopItem('privateRoom')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`));
@@ -5977,11 +5939,6 @@ async function loadNotifications(){
       actions = `<div class="notif-actions"><button class="open-btn" onclick="switchTab('announcementsPage')">Read announcements</button></div>`;
     } else if (n.type === 'system') {
       text = `🔔 <strong>${escapeHtml(n.title || 'System notification')}</strong><br>${escapeHtml(n.text || '')}`;
-    } else if (n.type === 'purchase_request') {
-      text = `${escapeHtml(n.fromName)} wants to buy ${n.leos} Coins for ₦${(n.priceNaira||0).toLocaleString()}.`;
-      actions = `<div class="notif-actions"><button class="open-btn" onclick="switchTab('adminPage')">Review in Admin</button></div>`;
-    } else if (n.type === 'purchase_rejected') {
-      text = `Your request to buy ${n.leos} Coins for ₦${(n.priceNaira||0).toLocaleString()} was declined. Contact an admin if you believe this is a mistake.`;
     } else if (n.type === 'welcome') {
       text = `👋 ${escapeHtml(n.text || '')}`;
     } else if (n.type === 'like' || n.type === 'comment' || n.type === 'reaction') {
@@ -6453,7 +6410,7 @@ async function sendMessage(){
 /* ---------------- GROUPS & CHATROOMS ----------------
    Both are the same "circle" concept under the hood, distinguished by `kind`
    ('group' or 'room'), just with a different Coins requirement to create one. */
-const CIRCLE_MIN_COINS = { group: 100, room: 300 };
+const CIRCLE_MIN_COINS = { group: 1000, room: 1000 };
 const CIRCLE_LABEL = { group: 'Group', room: 'Chatroom' };
 function circleKey(kind, id){ return kind + ':' + id; }
 function circleChatKey(kind, id){ return kind + 'chat:' + id; }
@@ -6580,7 +6537,19 @@ async function createCircle(kind){
     const privateToggle = document.getElementById('createRoomPrivateToggle');
     if (privateToggle) privateToggle.checked = false;
   }
-  await storageSet(circleKey(kind, id), JSON.stringify(circle), true);
+  const circleSaved = await storageSet(circleKey(kind, id), JSON.stringify(circle), true);
+  if (!circleSaved) { errEl.textContent = 'Could not create it right now. Please try again.'; return; }
+  if (!isAdminUser(currentUser)) {
+    const u = await loadCurrentUserFull();
+    if (!u) { await storageRemove(circleKey(kind, id), true); errEl.textContent = 'Could not update your Coins balance. Please try again.'; return; }
+    u.leos = (typeof u.leos === 'number' ? u.leos : 0) - minCoins;
+    const balanceSaved = await saveCurrentUserFull(u);
+    if (!balanceSaved) {
+      await storageRemove(circleKey(kind, id), true);
+      errEl.textContent = 'Could not charge the creation fee. Nothing was created.';
+      return;
+    }
+  }
   input.value = '';
   if (kind === 'group') loadGroupListPage(); else loadRoomListPage();
 }
@@ -7677,11 +7646,13 @@ function loadMenuPage(){
     { label: 'Groups', page: 'groupsPage' },
     { label: 'Coins', page: 'leosPage' },
     { label: 'Games', page: 'gamesPage' },
-    { label: '💰 Buy Coins', page: 'buyCoinsPage' },
-    { label: '🔍 Search', page: 'searchPage' },
+        { label: '🔍 Search', page: 'searchPage' },
     { label: '🚩 Report', page: 'reportPage' },
     { label: '🎧 Customer Service', page: 'supportPage' },
     { label: '⚙ Settings & Privacy', page: 'settingsPage' },
+    { label: 'Terms of Service', page: 'tosPage' },
+    { label: 'Privacy Policy', page: 'privacyPolicyPage' },
+    { label: 'Refund Policy', page: 'refundPolicyPage' },
   ];
   if (currentUser && (currentUserHasTrustedRole('admin') || currentUserHasTrustedRole('moderator'))) items.push({ label: '⚙ Admin', page: 'adminPage' });
   items.push({ label: 'Log Out', page: null, action: 'logout' });
@@ -7757,34 +7728,12 @@ async function migrateLegacyCloudData(){
   } catch(e) { alert('Migration could not start: ' + e.message); }
 }
 
-/* ---------------- PRODUCTION BACKEND READINESS ---------------- */
-async function checkChatMeBackendReady(){
-  try {
-    const res = await fetch(RECAPTCHA_BACKEND_URL.replace(/\/$/, '') + '/health', { method:'GET', cache:'no-store' });
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    const data = await res.json().catch(()=>({}));
-    return data && data.ok === true;
-  } catch (e) {
-    return false;
-  }
-}
-function showBackendUnavailableBanner(){
-  if (document.getElementById('cmBackendBanner')) return;
-  const banner=document.createElement('div');
-  banner.id='cmBackendBanner';
-  banner.style.cssText='position:fixed;left:10px;right:10px;bottom:12px;background:#fff3cd;color:#664d03;border:1px solid #ffe69c;border-radius:10px;padding:10px 12px;font-size:12px;line-height:1.4;z-index:9999;box-shadow:0 3px 14px rgba(0,0,0,.12);';
-  banner.textContent='Chat Me secure backend is temporarily unavailable. Please try again shortly.';
-  banner.onclick=()=>banner.remove();
-  document.body.appendChild(banner);
-}
-
 /* ---------------- INIT ---------------- */
 populateDobSelects();
 refreshCaptcha('login');
 refreshCaptcha('signup');
 applyDarkModePreference();
 applyLanguage();
-checkChatMeBackendReady().then(ok => { if (!ok) console.warn('Chat Me secure backend is not ready yet.'); });
 storageRemove(SESSION_KEY); // one-time cleanup: delete the old shared cloud session doc from before this was made tab-local, so no leftover email sits in the shared store
 applySpecialGrantsOnce().then(restoreSession);
 
