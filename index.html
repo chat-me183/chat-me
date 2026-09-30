@@ -1836,6 +1836,7 @@ async function doSignup(){
       return;
     }
 
+    loginStage = 'firebase-auth';
     if (!firebaseAuth || !firebaseDb || !firebaseConfigLooksReal) { errEl.textContent = 'Secure account creation is unavailable right now.'; return; }
     let firebaseCredential;
     try { firebaseCredential = await withTimeout(firebaseAuth.createUserWithEmailAndPassword(email, password), 8000); }
@@ -2280,6 +2281,7 @@ async function doLogin(){
 
   const email = document.getElementById('loginEmail').value.trim();
   const password = document.getElementById('loginPassword').value;
+  let loginStage = 'starting';
 
   if (!email || !password) {
     errEl.textContent = 'Please enter your email and password.';
@@ -2299,10 +2301,12 @@ async function doLogin(){
   loginBtn.textContent = 'Logging in...';
   showLoading(true);
   try {
+    loginStage = 'firebase-auth';
     if (!firebaseAuth || !firebaseDb || !firebaseConfigLooksReal) { errEl.textContent='Secure Firebase Authentication is unavailable. Please try again later.'; refreshCaptcha('login'); return; }
     let fbUser;
     try { fbUser = await ensureFirebaseSession(email,password); }
     catch(e) { errEl.textContent = e.code==='auth/too-many-requests' ? 'Too many login attempts. Please wait and try again.' : 'Invalid email or password.'; refreshCaptcha('login'); return; }
+    loginStage = 'profile-read';
     // The secure Worker is now authoritative, but existing Chat Me accounts
     // may still have their profile in the legacy Firestore kv collection.
     // After Firebase authentication succeeds, recover only this user's own
@@ -2333,8 +2337,10 @@ async function doLogin(){
     delete user.salt; delete user.passwordHash; delete user.pendingResetCode; delete user.pendingResetCodeAt;
     // Write the sanitized profile to the secure Worker. This also completes
     // the one-time migration when the profile came from legacy Firestore.
+    loginStage = 'profile-write';
     await storageSet(userKey(email), JSON.stringify(user), true);
     if (loadedFromLegacy) console.info('Chat Me: migrated this account profile to secure Worker storage.');
+    loginStage = 'trusted-claims';
     const trustedClaims = await refreshTrustedAuthClaims();
     applyTrustedClaimsToUser(user, trustedClaims);
     // A profile document can say 'admin', but that value is untrusted client data.
@@ -2343,6 +2349,7 @@ async function doLogin(){
       console.warn('This profile has a staff flag but no trusted Firebase staff claim. Staff privileges are disabled for this session.');
     }
 
+    loginStage = 'app-start';
     statusEl.textContent = 'Logged in! Loading your account...';
     try {
       await loginSuccess(publicUser(user));
@@ -2351,7 +2358,9 @@ async function doLogin(){
       errEl.textContent = 'Login succeeded but something went wrong opening the app. Please try again.';
     }
   } catch (e) {
-    errEl.textContent = 'Something went wrong logging you in. Please try again.';
+    console.error('Chat Me login failure:', e);
+    const detail = e && e.message ? String(e.message) : String(e || 'Unknown error');
+    errEl.textContent = 'Login failed at ' + loginStage + ': ' + detail.slice(0, 180);
   } finally {
     loginBtn.disabled = false;
     loginBtn.textContent = 'Login';
