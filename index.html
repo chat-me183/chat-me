@@ -2303,13 +2303,38 @@ async function doLogin(){
     let fbUser;
     try { fbUser = await ensureFirebaseSession(email,password); }
     catch(e) { errEl.textContent = e.code==='auth/too-many-requests' ? 'Too many login attempts. Please wait and try again.' : 'Invalid email or password.'; refreshCaptcha('login'); return; }
-    const raw = await storageGet(userKey(email), true);
+    // The secure Worker is now authoritative, but existing Chat Me accounts
+    // may still have their profile in the legacy Firestore kv collection.
+    // After Firebase authentication succeeds, recover only this user's own
+    // legacy profile once, then immediately copy the sanitized profile into
+    // the secure Worker/KV store so future logins use the secure backend.
+    let raw = null;
+    let loadedFromLegacy = false;
+    try {
+      raw = await storageGet(userKey(email), true);
+    } catch (storageErr) {
+      console.warn('Secure profile lookup failed; checking the authenticated user\'s legacy Firestore profile for one-time migration.', storageErr);
+    }
+    if (!raw && firebaseDb) {
+      try {
+        const legacySnap = await withTimeout(firebaseDb.collection('kv').doc(userKey(email)).get(), 5000);
+        if (legacySnap.exists) {
+          const legacyValue = legacySnap.data()?.value;
+          if (typeof legacyValue === 'string') { raw = legacyValue; loadedFromLegacy = true; }
+        }
+      } catch (legacyErr) {
+        console.warn('Legacy profile lookup failed.', legacyErr);
+      }
+    }
     if (!raw) { errEl.textContent='Your Firebase account exists, but your Chat Me profile could not be found. Please contact support.'; refreshCaptcha('login'); return; }
     const user = JSON.parse(raw);
     if (user.uid && user.uid !== fbUser.user.uid) { errEl.textContent='This account is linked to a different secure identity.'; await firebaseAuth.signOut(); refreshCaptcha('login'); return; }
     user.uid = fbUser.user.uid;
     delete user.salt; delete user.passwordHash; delete user.pendingResetCode; delete user.pendingResetCodeAt;
+    // Write the sanitized profile to the secure Worker. This also completes
+    // the one-time migration when the profile came from legacy Firestore.
     await storageSet(userKey(email), JSON.stringify(user), true);
+    if (loadedFromLegacy) console.info('Chat Me: migrated this account profile to secure Worker storage.');
     const trustedClaims = await refreshTrustedAuthClaims();
     applyTrustedClaimsToUser(user, trustedClaims);
     // A profile document can say 'admin', but that value is untrusted client data.
