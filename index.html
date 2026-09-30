@@ -317,6 +317,17 @@
   }
   .back-btn { display: none; cursor: pointer; font-size: 18px; }
   .loading-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.35); display: none; align-items: center; justify-content: center; z-index: 100; color: #fff; font-size: 15px; }
+
+  .cm-update-banner{margin:0 0 12px;padding:10px 13px;border:1px solid #cfe0ff;border-radius:10px;background:#eef5ff;color:#1769d1;font-size:12.5px;line-height:1.45;font-weight:600}
+  .cm-featured-card{margin:0 0 14px;padding:14px;border:1px solid #d8e2ff;border-radius:14px;background:linear-gradient(135deg,#f7faff,#fff);box-shadow:0 6px 18px rgba(24,39,75,.05)}
+  .cm-featured-label{font-size:11px;font-weight:800;color:#2b6ee0;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}
+  .cm-featured-title{font-size:15px;font-weight:800;color:#24316f;margin-bottom:5px}
+  .cm-featured-meta{font-size:11px;color:#7a8393;margin-bottom:8px}
+  .cm-featured-text{font-size:13px;color:#424b5b;line-height:1.55;white-space:pre-wrap;word-break:break-word}
+  .cm-rules-card{background:#fff;border:1px solid #e4e8f0;border-radius:14px;padding:16px;margin-bottom:10px}
+  .cm-rules-card h3{margin:0 0 6px;color:#2b3a8f;font-size:14px}
+  .cm-rules-card p,.cm-rules-card li{font-size:12.5px;color:#555f70;line-height:1.55}
+  .cm-rules-card ul{margin:6px 0 0 18px;padding:0}
 </style>
 <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
 
@@ -535,19 +546,17 @@ body.dark-mode .cm-reaction-menu button{background:#2a2d32;color:#eee}
       <div class="field-block"><input type="email" id="suEmail" placeholder="Enter your email" oninput="clearFieldError('suEmail')"></div>
       <div class="field-msg" id="msgEmail"></div>
 
-      <div style="display:none">
-      <label class="auth-label">First Name:</label>
-      <div class="field-block"><input type="text" id="suFirst" placeholder="First name" oninput="clearFieldError('suFirst')"></div>
+      <label class="auth-label">First Name: <span aria-hidden="true">*</span></label>
+      <div class="field-block"><input type="text" id="suFirst" placeholder="First name" autocomplete="given-name" required oninput="clearFieldError('suFirst')"></div>
+      <div class="field-msg" id="msgFirst"></div>
 
-      <label class="auth-label">Last Name:</label>
-      <div class="field-block"><input type="text" id="suLast" placeholder="Last name" oninput="clearFieldError('suLast')"></div>
-      </div>
+      <label class="auth-label">Last Name: <span aria-hidden="true">*</span></label>
+      <div class="field-block"><input type="text" id="suLast" placeholder="Last name" autocomplete="family-name" required oninput="clearFieldError('suLast')"></div>
+      <div class="field-msg" id="msgLast"></div>
 
-      <div style="display:none">
-      <label class="auth-label">Phone Number:</label>
-      <div class="field-block"><input type="tel" id="suPhone" placeholder="Phone number" oninput="clearFieldError('suPhone')"></div>
+      <label class="auth-label">Phone Number: <span aria-hidden="true">*</span></label>
+      <div class="field-block"><input type="tel" id="suPhone" placeholder="Phone number" autocomplete="tel" required oninput="clearFieldError('suPhone')"></div>
       <div class="field-msg" id="msgPhone"></div>
-      </div>
 
       <div class="section-divider">
         <strong>Quick setup</strong>
@@ -563,13 +572,11 @@ body.dark-mode .cm-reaction-menu button{background:#2a2d32;color:#eee}
       <div class="auth-hint-small">You must be at least 13 years old. Your age will not be public.</div>
       <div class="field-msg" id="msgDob"></div>
 
-      <div style="display:none">
-      <label class="auth-label">Country:</label>
-      <div class="field-block"><input type="text" id="suCountry" placeholder="Enter your country" oninput="clearFieldError('suCountry')"></div>
-      </div>
+      <label class="auth-label">Country: <span aria-hidden="true">*</span></label>
+      <div class="field-block"><input type="text" id="suCountry" placeholder="Enter your country" autocomplete="country-name" required oninput="clearFieldError('suCountry')"></div>
+      <div class="field-msg" id="msgCountry"></div>
 
-      <div style="display:none">
-      <label class="auth-label">Gender:</label>
+      <label class="auth-label">Gender: <span style="font-weight:400;color:#888;">(optional)</span></label>
       <div class="field-block">
         <select id="suGender">
           <option value="">Select your gender</option>
@@ -578,7 +585,6 @@ body.dark-mode .cm-reaction-menu button{background:#2a2d32;color:#eee}
           <option value="Other">Other</option>
           <option value="Prefer not to say">Prefer not to say</option>
         </select>
-      </div>
       </div>
 
       <div class="section-divider">
@@ -644,6 +650,13 @@ body.dark-mode .cm-reaction-menu button{background:#2a2d32;color:#eee}
     </div>
 
     <div class="page active" id="homePage">
+      <div class="cm-update-banner" role="status">🔵 Updates loading — more updates and improvements are still coming to Chat Me.</div>
+      <div class="cm-featured-card" id="cmFeaturedPost" aria-live="polite">
+        <div class="cm-featured-label">📌 Featured community post</div>
+        <div class="cm-featured-title">Loading featured post…</div>
+        <div class="cm-featured-meta">Chat Me community</div>
+        <div class="cm-featured-text">Checking for the latest staff announcement.</div>
+      </div>
       <div style="display:flex;justify-content:flex-end;align-items:center;gap:8px;margin-bottom:6px;font-size:13px;color:#555;">
         <span>🌙 Dark mode</span>
         <label class="dm-switch"><input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()"><span class="dm-slider"></span></label>
@@ -1131,13 +1144,16 @@ body.dark-mode .cm-reaction-menu button{background:#2a2d32;color:#eee}
     <div class="page" id="tosPage" style="padding:16px;overflow-y:auto;">
       <h2 style="color:#2b3a8f;margin-bottom:6px;">Terms of Service</h2>
       <div class="profile-card" style="max-width:650px;line-height:1.6;font-size:14px;">
-        <p>Welcome to Chat Me. By using this app, you agree to the following:</p>
-        <p><b>1. Community app.</b> Chat Me is a free community app for chatting, posting, and playing games with friends.</p>
-        <p><b>2. Be respectful.</b> No harassment, hate speech, illegal content, or impersonation. Accounts that break the rules can be warned, restricted, or removed by staff.</p>
-        <p><b>3. Coins are virtual.</b> Coins have no cash value outside the app and cannot be exchanged, sold, or withdrawn for real money. Coin purchases are currently disabled.</p>
-        <p><b>4. Your content.</b> You're responsible for what you post. Don't post anything you don't have the right to share.</p>
-        <p><b>5. Changes.</b> These terms may be updated as the app grows. Continued use means you accept the current version.</p>
-        <p><b>6. No warranty.</b> This app is provided "as is," for community and entertainment use, without guarantees of uptime or data retention.</p>
+        <p>Welcome to Chat Me. By creating an account or using the service, you agree to these Terms of Service and the Community Rules &amp; Safety policy.</p>
+        <p><b>1. Account and eligibility.</b> Provide accurate registration information, use your own account, protect your password and verification codes, and do not create deceptive or impersonating accounts. Chat Me is not intended for children under 13.</p>
+        <p><b>2. Community behavior.</b> Do not harass, threaten, bully, impersonate, scam, spam, expose private information, or post unlawful or seriously harmful material. Detailed rules are in Community Rules &amp; Safety.</p>
+        <p><b>3. Posts and sharing.</b> You are responsible for content you submit. Only share material you have permission or a legal right to share. Posts, comments, images and other public activity may be visible to other users.</p>
+        <p><b>4. Friends and messaging.</b> Friend requests, private messages, groups and chatrooms are provided for communication. Do not use them for harassment, fraud, spam, or attempts to obtain passwords, codes or sensitive information.</p>
+        <p><b>5. Reports and moderation.</b> Users may report accounts or content. Chat Me staff may review reports and may remove content, restrict features, suspend accounts, or delete accounts when the rules or applicable requirements are violated.</p>
+        <p><b>6. Account controls.</b> You may use available settings to change profile information, privacy preferences and security settings. Where the service provides account deletion, deletion may permanently remove associated content and data.</p>
+        <p><b>7. Coins and virtual features.</b> Coins are virtual only, have no cash value, and cannot be withdrawn or exchanged for money. Coin purchases are currently disabled. Never send money to anyone claiming to sell Chat Me Coins unless an official purchase system is later published.</p>
+        <p><b>8. Service availability.</b> Chat Me may change, add, pause, or remove features as the service develops. The service is provided on an "as is" basis and uninterrupted availability is not guaranteed.</p>
+        <p><b>9. Policy changes.</b> These terms, privacy information and community rules may be updated when the service or applicable requirements change. The latest version displayed in Chat Me applies to continued use.</p>
       </div>
     </div>
 
@@ -1149,6 +1165,8 @@ body.dark-mode .cm-reaction-menu button{background:#2a2d32;color:#eee}
         <p><b>Privacy and support contact:</b> <span style="color:#b42318;">adegboyeabdulrahmanl@gmail.com</span></p>
         <p>Chat Me is a community service. The controller/owner and privacy/support contact listed above are the project contact details provided for this Privacy Policy.</p>
         <p><b>What we collect:</b> account information such as name, username, email address, date of birth/age-eligibility information, profile information, profile picture, posts, comments, messages, reports, support requests, moderation records, and information needed to operate security and authentication. Technical information may also be processed by service providers used to operate the site.</p>
+        <p><b>Account and activity information:</b> depending on the features you use, this can include friend requests and connections, reactions, saved posts, stories and story interactions, group/chatroom membership, notifications, support tickets, reports, moderation actions, and settings such as privacy and message preferences.</p>
+        <p><b>Account controls:</b> Chat Me aims to provide controls for changing profile information, privacy preferences and account security. If account deletion is available in Settings, using it may permanently remove account-associated content and data subject to security, dispute, backup and legal-retention needs.</p>
         <p><b>Why we process it:</b> to create and secure accounts; provide chats, posts, groups, stories, notifications and other requested features; prevent abuse and fraud; respond to reports and support requests; enforce community rules; maintain security; and comply with applicable legal obligations.</p>
         <p><b>Lawful basis:</b> depending on the activity, processing may rely on performance of a contract/service requested by the user, compliance with legal obligations, legitimate interests such as security and abuse prevention, or consent where consent is required.</p>
         <p><b>Who processes or receives data:</b> Chat Me may use service providers such as Firebase/Google services for authentication and related infrastructure, Cloudflare for backend/security infrastructure, and Google reCAPTCHA for anti-abuse verification. Providers should receive only the information needed for their services and remain subject to their own applicable terms and privacy notices.</p>
@@ -1172,6 +1190,45 @@ body.dark-mode .cm-reaction-menu button{background:#2a2d32;color:#eee}
         <p><b>No cash-out.</b> Coins cannot be converted, withdrawn, exchanged, or cashed out to Naira or any other currency, under any circumstances.</p>
         <p><b>Purchases:</b> Coin purchases are currently disabled. No manual bank-transfer, OPay/PalmPay, payment-reference, "manual payment confirmation", or admin approval purchase flow is offered. If paid Coins are introduced later, separate purchase terms will be published after the payment method and applicable legal/platform requirements are reviewed.</p>
         <p><b>Currently:</b> Coin purchases are disabled. Do not send money to anyone claiming to sell Chat Me Coins.</p>
+      </div>
+    </div>
+
+    <div class="page" id="communityRulesPage" style="padding:20px;overflow-y:auto;">
+      <h2 style="color:#2b3a8f;margin-bottom:4px;">📜 Community Rules &amp; Safety</h2>
+      <div style="color:#777;font-size:12.5px;line-height:1.5;margin-bottom:14px;">These rules help keep Chat Me welcoming, useful and safer for everyone. They apply to posts, comments, messages, groups and chatrooms.</div>
+      <div class="cm-rules-card"><h3>1. Be respectful</h3><p>Do not harass, threaten, bully, or deliberately target other members. Disagreements are okay; personal attacks are not.</p></div>
+      <div class="cm-rules-card"><h3>2. No spam or abuse</h3><p>Do not flood chats, repeatedly post unwanted promotions, manipulate engagement, or use automated activity to disrupt the community.</p></div>
+      <div class="cm-rules-card"><h3>3. Protect privacy</h3><p>Do not share another person's private information without permission. Respect requests to remove personal information from posts or messages.</p></div>
+      <div class="cm-rules-card"><h3>4. Be authentic</h3><p>Do not impersonate another person, staff member, or organization. Do not use deceptive accounts to mislead people.</p></div>
+      <div class="cm-rules-card"><h3>5. Share appropriate content</h3><p>Keep content suitable for a general community environment and follow applicable laws and platform safety requirements.</p></div>
+      <div class="cm-rules-card"><h3>6. Use reporting tools</h3><p>If something breaks these rules, use Chat Me's reporting or customer-service tools rather than escalating the conflict yourself.</p></div>
+      <div class="cm-rules-card"><h3>7. Keep your account secure</h3><p>Use your own account, keep your login information private, and contact support if you believe your account has been compromised.</p></div>
+      <div class="cm-rules-card"><h3>8. Moderation</h3><p>Staff may review reports and take proportionate action on content or accounts that violate the rules. Staff access is controlled by trusted backend roles.</p></div>
+      <div class="cm-rules-card"><h3>9. Featured posts</h3><p>Staff may feature an important community announcement at the top of Home. A featured post is a visibility feature, not an endorsement of a member's personal views.</p></div>
+      <div class="cm-rules-card"><h3>10. Account safety</h3><p>Use your own account and keep passwords and verification codes private. Do not attempt to access another person's account or bypass security controls.</p></div>
+      <div class="cm-rules-card"><h3>11. Content ownership and sharing</h3><p>Only upload or share content you have the right to use. Do not copy, distribute, or repost another person's private material without permission.</p></div>
+      <div class="cm-rules-card"><h3>12. Friends, messages and groups</h3><p>Friend requests, private messages, groups and chatrooms must not be used for harassment, fraud, spam, unwanted bulk promotion, or attempts to collect passwords, codes or sensitive information.</p></div>
+      <div class="cm-rules-card"><h3>13. Reporting and enforcement</h3><p>Use Report or Customer Service for problems. Do not abuse the reporting system with knowingly false reports. Staff may remove content or restrict accounts when necessary to enforce these rules and protect the community.</p></div>
+      <div class="cm-rules-card"><h3>14. Changes</h3><p>These rules may be updated as Chat Me grows. The latest version shown here applies to use of the service.</p></div>
+    </div>
+
+    <div class="page" id="helpPage" style="padding:20px;overflow-y:auto;">
+      <h2 style="color:#2b3a8f;margin-bottom:6px;">🎧 Help &amp; Safety Center</h2>
+      <div class="profile-card" style="max-width:700px;line-height:1.65;font-size:14px;">
+        <h3>Getting started</h3>
+        <p>Create an account with your username, email, name, date of birth, country, gender, password and security check. After registration, use your login details to sign in.</p>
+        <h3>Profile &amp; settings</h3>
+        <p>Use Settings &amp; Privacy to manage available profile, privacy, notification and messaging preferences. Keep your account credentials private.</p>
+        <h3>Posts &amp; media</h3>
+        <p>Create posts, add supported media where available, react, comment, save posts and use the available sharing features. You remain responsible for content you submit.</p>
+        <h3>Friends &amp; messages</h3>
+        <p>Send and manage friend requests, communicate through private messages, and participate in groups and chatrooms. Respect other members and their privacy.</p>
+        <h3>Reporting</h3>
+        <p>Use the Report button or Customer Service when you see rule-breaking content, account problems, scams, abuse or technical issues. Staff can review reports and take action under the Community Rules.</p>
+        <h3>Account deletion</h3>
+        <p>If an account-deletion control is available in Settings, read its confirmation carefully before using it because deletion may be permanent.</p>
+        <h3>Need more help?</h3>
+        <p>Use Customer Service to create a support ticket. For privacy requests, use the privacy contact listed in the Privacy Policy.</p>
       </div>
     </div>
 
@@ -1736,7 +1793,7 @@ function markFieldError(id, msgId, msg){
 }
 function clearAllFieldErrors(ids){
   ids.forEach(id => { document.getElementById(id).classList.remove('field-invalid'); });
-  ['msgUsername','msgEmail','msgPhone','msgDob','msgPwConfirm'].forEach(m => { document.getElementById(m).textContent = ''; });
+  ['msgUsername','msgEmail','msgFirst','msgLast','msgPhone','msgCountry','msgDob','msgPwConfirm'].forEach(m => { document.getElementById(m).textContent = ''; });
 }
 
 /* ---------------- SIGN UP ---------------- */
@@ -1770,8 +1827,10 @@ async function doSignup(){
     markFieldError('suEmail', 'msgEmail', 'Enter a valid email address.');
     firstErrorField = firstErrorField || 'suEmail';
   }
-  // First/last name, phone, country and gender are optional profile fields.
-  // Keeping them out of the initial signup makes registration much shorter.
+  if (!first) { markFieldError('suFirst', 'msgFirst', 'Enter your first name.'); firstErrorField = firstErrorField || 'suFirst'; }
+  if (!last) { markFieldError('suLast', 'msgLast', 'Enter your last name.'); firstErrorField = firstErrorField || 'suLast'; }
+  if (!phone || !/[0-9]{7,}/.test(phone.replace(/\D/g, ''))) { markFieldError('suPhone', 'msgPhone', 'Enter a valid phone number.'); firstErrorField = firstErrorField || 'suPhone'; }
+  if (!country) { markFieldError('suCountry', 'msgCountry', 'Enter your country.'); firstErrorField = firstErrorField || 'suCountry'; }
 
   let age = null;
   if (!month || !day || !year) {
@@ -1836,7 +1895,6 @@ async function doSignup(){
       return;
     }
 
-    loginStage = 'firebase-auth';
     if (!firebaseAuth || !firebaseDb || !firebaseConfigLooksReal) { errEl.textContent = 'Secure account creation is unavailable right now.'; return; }
     let firebaseCredential;
     try { firebaseCredential = await withTimeout(firebaseAuth.createUserWithEmailAndPassword(email, password), 8000); }
@@ -2281,7 +2339,6 @@ async function doLogin(){
 
   const email = document.getElementById('loginEmail').value.trim();
   const password = document.getElementById('loginPassword').value;
-  let loginStage = 'starting';
 
   if (!email || !password) {
     errEl.textContent = 'Please enter your email and password.';
@@ -2301,12 +2358,10 @@ async function doLogin(){
   loginBtn.textContent = 'Logging in...';
   showLoading(true);
   try {
-    loginStage = 'firebase-auth';
     if (!firebaseAuth || !firebaseDb || !firebaseConfigLooksReal) { errEl.textContent='Secure Firebase Authentication is unavailable. Please try again later.'; refreshCaptcha('login'); return; }
     let fbUser;
     try { fbUser = await ensureFirebaseSession(email,password); }
     catch(e) { errEl.textContent = e.code==='auth/too-many-requests' ? 'Too many login attempts. Please wait and try again.' : 'Invalid email or password.'; refreshCaptcha('login'); return; }
-    loginStage = 'profile-read';
     // The secure Worker is now authoritative, but existing Chat Me accounts
     // may still have their profile in the legacy Firestore kv collection.
     // After Firebase authentication succeeds, recover only this user's own
@@ -2337,10 +2392,8 @@ async function doLogin(){
     delete user.salt; delete user.passwordHash; delete user.pendingResetCode; delete user.pendingResetCodeAt;
     // Write the sanitized profile to the secure Worker. This also completes
     // the one-time migration when the profile came from legacy Firestore.
-    loginStage = 'profile-write';
     await storageSet(userKey(email), JSON.stringify(user), true);
     if (loadedFromLegacy) console.info('Chat Me: migrated this account profile to secure Worker storage.');
-    loginStage = 'trusted-claims';
     const trustedClaims = await refreshTrustedAuthClaims();
     applyTrustedClaimsToUser(user, trustedClaims);
     // A profile document can say 'admin', but that value is untrusted client data.
@@ -2349,7 +2402,6 @@ async function doLogin(){
       console.warn('This profile has a staff flag but no trusted Firebase staff claim. Staff privileges are disabled for this session.');
     }
 
-    loginStage = 'app-start';
     statusEl.textContent = 'Logged in! Loading your account...';
     try {
       await loginSuccess(publicUser(user));
@@ -2358,9 +2410,7 @@ async function doLogin(){
       errEl.textContent = 'Login succeeded but something went wrong opening the app. Please try again.';
     }
   } catch (e) {
-    console.error('Chat Me login failure:', e);
-    const detail = e && e.message ? String(e.message) : String(e || 'Unknown error');
-    errEl.textContent = 'Login failed at ' + loginStage + ': ' + detail.slice(0, 180);
+    errEl.textContent = 'Something went wrong logging you in. Please try again.';
   } finally {
     loginBtn.disabled = false;
     loginBtn.textContent = 'Login';
@@ -2787,6 +2837,34 @@ function toggleDarkMode(){
 }
 
 /* ---------------- TAB SWITCHING ---------------- */
+async function loadFeaturedPost(){
+  const host = document.getElementById('cmFeaturedPost');
+  if (!host || !currentUser) return;
+  try {
+    const keys = await storageListKeys('post:', true);
+    const raws = await Promise.all(keys.slice(0, 80).map(k => storageGet(k, true)));
+    const announcements = [];
+    for (const raw of raws) {
+      if (!raw) continue;
+      try { const p = JSON.parse(raw); if (p && p.type === 'Announcement' && p.text) announcements.push(p); } catch (e) {}
+    }
+    announcements.sort((a,b)=>(b.time||0)-(a.time||0));
+    const p = announcements[0];
+    if (!p) {
+      host.innerHTML = '<div class="cm-featured-label">📌 Featured community post</div><div class="cm-featured-title">No featured announcement yet</div><div class="cm-featured-meta">Chat Me community</div><div class="cm-featured-text">Important staff and community announcements will appear here when they are published.</div>';
+      return;
+    }
+    host.innerHTML =
+      '<div class="cm-featured-label">📌 Featured community post</div>' +
+      '<div class="cm-featured-title">📢 ' + escapeHtml(String(p.text || '').slice(0,90)) + (String(p.text || '').length > 90 ? '…' : '') + '</div>' +
+      '<div class="cm-featured-meta">Posted by @' + escapeHtml(p.author || 'Chat Me staff') + (p.time ? ' · ' + escapeHtml(new Date(p.time).toLocaleString()) : '') + '</div>' +
+      '<div class="cm-featured-text">' + escapeHtml(String(p.text || '')) + '</div>' +
+      '<button onclick="switchTab(\'announcementsPage\')" style="margin-top:10px;background:#2b6ee0;color:#fff;border:0;padding:8px 12px;border-radius:7px;cursor:pointer;font-size:12px;font-weight:600;">View announcements</button>';
+  } catch (e) {
+    host.innerHTML = '<div class="cm-featured-label">📌 Featured community post</div><div class="cm-featured-title">Featured updates</div><div class="cm-featured-meta">Chat Me community</div><div class="cm-featured-text">Featured announcements will appear here when available.</div>';
+  }
+}
+
 function switchTab(pageId, fromHistory=false){
   if (!currentUser) return;
   storageSet(lastTabKey(currentUser.username), pageId);
@@ -2811,7 +2889,7 @@ function switchTab(pageId, fromHistory=false){
   const pageEl = document.getElementById(pageId);
   if (pageEl) pageEl.classList.add('active');
 
-  if (pageId === 'homePage') { loadHome(); applyDarkModePreference(); }
+  if (pageId === 'homePage') { loadHome(); loadFeaturedPost(); applyDarkModePreference(); }
   if (pageId === 'profilePage') loadProfile();
   if (pageId === 'chatsPage') loadFriendList();
   if (pageId === 'friendsPage') { document.getElementById('peopleResults').innerHTML = ''; loadMyFriendsList(); }
@@ -7683,7 +7761,9 @@ function loadMenuPage(){
         { label: '🔍 Search', page: 'searchPage' },
     { label: '🚩 Report', page: 'reportPage' },
     { label: '🎧 Customer Service', page: 'supportPage' },
+    { label: '🎧 Help & Safety', page: 'helpPage' },
     { label: '⚙ Settings & Privacy', page: 'settingsPage' },
+    { label: '📜 Community Rules & Safety', page: 'communityRulesPage' },
     { label: 'Terms of Service', page: 'tosPage' },
     { label: 'Privacy Policy', page: 'privacyPolicyPage' },
     { label: 'Refund Policy', page: 'refundPolicyPage' },
