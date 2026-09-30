@@ -374,6 +374,54 @@ body.dark-mode .cm-social-btn,body.dark-mode .cm-reaction-menu{background:#1d1f2
 body.dark-mode .cm-reaction-menu button{background:#2a2d32;color:#eee}
 </style>
 
+
+<style id="chatme-home-shortcuts-video-css">
+.cm-home-shortcuts{background:#fff;border:1px solid #e4e6eb;border-radius:12px;padding:8px;margin-bottom:12px;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.cm-home-shortcuts-title{font-size:12px;font-weight:700;color:#65676b;margin:0 4px 7px}
+.cm-shortcut-row{display:flex;gap:7px;overflow-x:auto;padding-bottom:2px;scrollbar-width:thin}
+.cm-shortcut-btn{flex:0 0 auto;border:1px solid #ddd;background:#f7f8fa;color:#333;border-radius:18px;padding:7px 11px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap}
+.cm-shortcut-btn.active{background:#eaf1ff;border-color:#2b6ee0;color:#2b6ee0}
+.cm-video-card{background:#fff;border:1px solid #e4e6eb;border-radius:12px;padding:10px;margin-bottom:12px;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.cm-video-card video{width:100%;max-height:480px;border-radius:9px;background:#000;display:block}
+.cm-video-author{font-size:13px;font-weight:700;margin-bottom:7px;cursor:pointer;color:#2b3a8f}
+.cm-post-meta-line{font-size:11.5px;color:#777;margin-top:5px;display:flex;gap:7px;flex-wrap:wrap}
+.cm-load-more-wrap{text-align:center;padding:14px 0}
+.cm-load-more-btn{border:1px solid #2b6ee0;background:#fff;color:#2b6ee0;border-radius:18px;padding:8px 14px;font-weight:700;cursor:pointer}
+.cm-latest-fab{position:fixed;right:14px;bottom:78px;z-index:40;border:0;border-radius:20px;background:#2b6ee0;color:#fff;padding:8px 13px;box-shadow:0 3px 12px rgba(0,0,0,.2);font-size:12px;font-weight:700;display:none;cursor:pointer}
+.cm-setting-option{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-top:1px solid #eee;cursor:pointer}
+.cm-setting-option small{display:block;color:#777;margin-top:2px}
+body.dark-mode .cm-home-shortcuts,body.dark-mode .cm-video-card{background:#1d1f23;border-color:#333;color:#eee}
+body.dark-mode .cm-shortcut-btn{background:#24262b;color:#eee;border-color:#444}
+body.dark-mode .cm-shortcut-btn.active{background:#1f2b3f;color:#9fc2ff;border-color:#2b6ee0}
+body.dark-mode .cm-latest-fab{box-shadow:0 3px 12px rgba(0,0,0,.45)}
+</style>
+
+
+<style id="chatme-welcome-dark-css">
+body.dark-mode #welcomeScreen{background:#121212;color:#e2e2e2}
+body.dark-mode .welcome-nav{background:#1b1b1b;border-bottom-color:#333}
+body.dark-mode .welcome-nav-brand{color:#e2e2e2}
+body.dark-mode .welcome-hero,body.dark-mode .welcome-card,body.dark-mode .welcome-login-card,body.dark-mode .welcome-quote,body.dark-mode .welcome-step,body.dark-mode .welcome-trust-card,body.dark-mode .welcome-note{background:#1d1f23;color:#e2e2e2;border-color:#333}
+body.dark-mode .welcome-copy p,body.dark-mode .welcome-step span,body.dark-mode .welcome-trust-card span{color:#aaa}
+body.dark-mode .welcome-nav-actions .nav-login{color:#9fc2ff;border-color:#444}
+.welcome-dark-toggle{border:1px solid #d7deed;background:#fff;color:#333;border-radius:9px;padding:8px 10px;cursor:pointer;font-weight:700;font-size:12px}
+body.dark-mode .welcome-dark-toggle{background:#24262b;color:#eee;border-color:#444}
+</style>
+
+<style id="chatme-network-resilience-css">
+.cm-network-banner{position:fixed;left:10px;right:10px;top:10px;z-index:10000;display:none;align-items:center;justify-content:space-between;gap:10px;background:#fff3cd;color:#664d03;border:1px solid #f0d98a;border-radius:10px;padding:9px 11px;box-shadow:0 3px 14px rgba(0,0,0,.12);font-size:12.5px}
+.cm-network-banner.show{display:flex}
+.cm-network-banner strong{display:block;font-size:13px}
+.cm-network-banner button{border:0;background:#2b6ee0;color:#fff;border-radius:7px;padding:6px 10px;font-weight:700;cursor:pointer;white-space:nowrap}
+.cm-network-block{max-width:560px;margin:35px auto;padding:24px 18px;text-align:center;background:#fff;border:1px solid #e4e6eb;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.cm-network-block h3{margin:0 0 8px;color:#2b3a8f}
+.cm-network-block p{margin:0 0 14px;color:#666;font-size:13px;line-height:1.5}
+body.dark-mode .cm-network-banner{background:#2b2819;color:#f4df9a;border-color:#5b4c20}
+body.dark-mode .cm-network-block{background:#1d1f23;border-color:#333;color:#eee}
+body.dark-mode .cm-network-block p{color:#aaa}
+body.cm-network-offline .app-footer{opacity:.75}
+</style>
+
 </head>
 <body>
 
@@ -387,6 +435,7 @@ body.dark-mode .cm-reaction-menu button{background:#2a2d32;color:#eee}
         <span>Chat Me</span>
       </div>
       <div class="welcome-nav-actions">
+        <button class="welcome-dark-toggle" id="welcomeDarkToggle" onclick="toggleWelcomeDarkMode()">🌙 Dark</button>
         <button class="nav-login" onclick="showAuth('login')">Log In</button>
         <button class="nav-signup" onclick="showAuth('signup')">Create account</button>
       </div>
@@ -636,6 +685,7 @@ body.dark-mode .cm-reaction-menu button{background:#2a2d32;color:#eee}
       <div class="nav-item" data-page="friendsPage" onclick="switchTab('friendsPage')"><span class="i18n" data-key="friends">Friends</span></div>
       <div class="nav-item" data-page="notificationsPage" onclick="switchTab('notificationsPage')"><span class="i18n" data-key="notifications">Notifications</span><span class="notif-dot" id="notifDot"></span></div>
       <div class="nav-item" data-page="chatroomsPage" onclick="switchTab('chatroomsPage')"><span class="i18n" data-key="chatrooms">Chatrooms</span></div>
+      <div class="nav-item" data-page="videosPage" onclick="switchTab('videosPage')">🎬 Videos</div>
       <div class="nav-item" data-page="statusbookPage" onclick="switchTab('statusbookPage')"><span class="i18n" data-key="statusbook">Statusbook</span></div>
       <div class="nav-item" data-page="aiPage" onclick="switchTab('aiPage')">Nova</div>
       <div class="nav-item" data-page="groupsPage" onclick="switchTab('groupsPage')"><span class="i18n" data-key="groups">Groups</span></div>
@@ -670,6 +720,10 @@ body.dark-mode .cm-reaction-menu button{background:#2a2d32;color:#eee}
         <div id="languageListArea" style="max-height:220px;overflow-y:auto;"></div>
       </div>
 
+      <div class="cm-home-shortcuts" id="cmHomeShortcuts">
+        <div class="cm-home-shortcuts-title">Quick shortcuts</div>
+        <div class="cm-shortcut-row" id="cmHomeShortcutRow"></div>
+      </div>
       <div class="cm-home-status" aria-label="Create a status">
         <div class="cm-status-head">
           <div id="homeStatusAvatar" class="cm-status-avatar">CM</div>
@@ -689,7 +743,7 @@ body.dark-mode .cm-reaction-menu button{background:#2a2d32;color:#eee}
       <div class="post-composer">
         <textarea id="postInput" placeholder="What's on your mind?"></textarea>
         <div class="composer-file-row">
-          <input type="file" id="postFile" accept="image/*" onchange="onPostFileChosen()">
+          <input type="file" id="postFile" accept="image/*,video/*" onchange="onPostFileChosen()">
           <span id="postFileName">No file chosen</span>
         </div>
         <div class="composer-type-row">
@@ -697,8 +751,19 @@ body.dark-mode .cm-reaction-menu button{background:#2a2d32;color:#eee}
             <option value="Normal Post">Normal Post</option>
             <option value="Feeling">Feeling / Activity</option>
             <option value="Question">Question</option>
+            <option value="Video">Video</option>
           </select>
         </div>
+        <div style="display:grid;gap:8px;margin-top:8px;">
+          <input id="postTitle" maxlength="120" placeholder="Post title (optional)" style="width:100%;padding:9px;border:1px solid #ccc;border-radius:7px;box-sizing:border-box;">
+          <input id="postTags" maxlength="300" placeholder="Tags, e.g. #Nigeria #ChatMe #Football" style="width:100%;padding:9px;border:1px solid #ccc;border-radius:7px;box-sizing:border-box;">
+          <select id="postVisibility" style="padding:9px;border:1px solid #ccc;border-radius:7px;background:#fff;">
+            <option value="public">🌍 Public — everyone can see it</option>
+            <option value="friends">👥 Friends — only your friends</option>
+            <option value="private">🔒 Only me — private</option>
+          </select>
+        </div>
+        <div id="postVideoHint" style="display:none;font-size:11.5px;color:#777;margin-top:5px;">Videos are shown in the Videos section with the poster's name.</div>
         <div id="homeColorPicker"></div>
         <div class="composer-extras">
           <span onclick="insertEmoji('postInput')">Use Emojis</span><span class="sep">|</span><span onclick="togglePollBuilder('postInput')">Create Poll</span><span class="sep">|</span><span onclick="showMentionPicker('postInput')">Mention</span>
@@ -710,6 +775,16 @@ body.dark-mode .cm-reaction-menu button{background:#2a2d32;color:#eee}
       </div>
       <div id="friendsBanner"></div>
       <div id="postList"></div>
+    </div>
+
+    <div class="page" id="videosPage" style="padding:16px;overflow-y:auto;">
+      <div style="max-width:760px;margin:0 auto;">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
+          <div><h2 style="margin:0;color:#2b3a8f;">🎬 Videos</h2><div style="font-size:12px;color:#777;margin-top:3px;">Videos posted by Chat Me members.</div></div>
+          <button onclick="document.getElementById('postFile').click();switchTab('homePage')" style="border:0;background:#2b6ee0;color:#fff;border-radius:18px;padding:8px 12px;font-weight:700;cursor:pointer;">Post video</button>
+        </div>
+        <div id="cmVideosList"></div>
+      </div>
     </div>
 
     <div class="page" id="statusbookPage">
@@ -759,6 +834,12 @@ body.dark-mode .cm-reaction-menu button{background:#2a2d32;color:#eee}
             <input type="checkbox" id="cmNotifSocial" onchange="cmSavePrivacy()">
             <span><strong>Social notifications</strong><br><small style="color:#777;">Likes, comments, friend activity and Story activity.</small></span>
           </label>
+        </div>
+
+        <div class="cm-setting-card">
+          <div style="font-weight:700;margin-bottom:4px;">🏠 Home top shortcuts</div>
+          <div style="font-size:12.5px;color:#777;margin-bottom:8px;">Choose exactly which buttons appear at the top of Home. Changes save automatically.</div>
+          <div id="cmHomeShortcutSettings"></div>
         </div>
 
         <div class="cm-setting-card">
@@ -1463,15 +1544,25 @@ const RECAPTCHA_BACKEND_URL = 'https://chat-me-backend.rahmanadegboye1.workers.d
 const SECURE_STORAGE_BACKEND_URL = RECAPTCHA_BACKEND_URL.replace(/\/$/, '') + '/storage';
 let secureStorageBackendState = 'unknown';
 async function secureStorageRequest(op, key, body) {
+  if (navigator.onLine === false || (window.cmNetworkReady && !window.cmNetworkReady())) {
+    const err = new Error('Network unavailable'); err.secureStorage = true; err.offline = true; throw err;
+  }
   if (!firebaseAuth || !firebaseAuth.currentUser || firebaseAuth.currentUser.isAnonymous) return { handled:false };
   try {
     const token = await firebaseAuth.currentUser.getIdToken();
     const url = SECURE_STORAGE_BACKEND_URL + '?op=' + encodeURIComponent(op) + '&key=' + encodeURIComponent(key || '');
-    const res = await fetch(url, {
-      method: body ? 'POST' : 'GET',
-      headers: { 'Authorization': 'Bearer ' + token, ...(body ? {'Content-Type':'application/json'} : {}) },
-      body: body ? JSON.stringify(body) : undefined
-    });
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), window.cmNetworkTimeout || 10000);
+    let res;
+    try {
+      res = await fetch(url, {
+        method: body ? 'POST' : 'GET',
+        headers: { 'Authorization': 'Bearer ' + token, ...(body ? {'Content-Type':'application/json'} : {}) },
+        body: body ? JSON.stringify(body) : undefined,
+        cache: 'no-store',
+        signal: controller.signal
+      });
+    } finally { clearTimeout(timeoutId); }
     if (res.status === 404 || res.status === 405) {
       secureStorageBackendState = 'legacy';
       return { handled:false };
@@ -1798,6 +1889,9 @@ function clearAllFieldErrors(ids){
 
 /* ---------------- SIGN UP ---------------- */
 async function doSignup(){
+  if (navigator.onLine === false || (window.cmNetworkReady && !window.cmNetworkReady())) {
+    const e=document.getElementById('signupError'); if(e)e.textContent='Registration needs an internet connection. Please reconnect and try again.'; return;
+  }
   const errEl = document.getElementById('signupError');
   const statusEl = document.getElementById('signupStatus');
   errEl.textContent = ''; statusEl.textContent = '';
@@ -2333,6 +2427,9 @@ async function resendVerificationEmail(){
 }
 
 async function doLogin(){
+  if (navigator.onLine === false || (window.cmNetworkReady && !window.cmNetworkReady())) {
+    const e=document.getElementById('loginError'); if(e)e.textContent='Login needs an internet connection. Please reconnect and try again.'; return;
+  }
   const errEl = document.getElementById('loginError');
   const statusEl = document.getElementById('loginStatus');
   errEl.textContent = ''; statusEl.textContent = '';
@@ -2822,12 +2919,22 @@ function selectLanguage(lang){
 }
 
 /* ---------------- DARK MODE ---------------- */
+function toggleWelcomeDarkMode(){
+  const on=!document.body.classList.contains('dark-mode');
+  document.body.classList.toggle('dark-mode',on);
+  try{localStorage.setItem('darkMode',on?'1':'0');}catch(e){}
+  const home=document.getElementById('darkModeToggle');if(home)home.checked=on;
+  const settings=document.getElementById('settingsDarkModeToggle');if(settings)settings.checked=on;
+  const b=document.getElementById('welcomeDarkToggle');if(b)b.textContent=on?'☀️ Light':'🌙 Dark';
+}
 function applyDarkModePreference(){
   let on = false;
   try { on = localStorage.getItem('darkMode') === '1'; } catch (e) {}
   document.body.classList.toggle('dark-mode', on);
   const toggle = document.getElementById('darkModeToggle');
   if (toggle) toggle.checked = on;
+  const welcome=document.getElementById('welcomeDarkToggle'); if(welcome) welcome.textContent=on?'☀️ Light':'🌙 Dark';
+  const settings=document.getElementById('settingsDarkModeToggle'); if(settings) settings.checked=on;
 }
 function toggleDarkMode(){
   const toggle = document.getElementById('darkModeToggle');
@@ -2867,6 +2974,17 @@ async function loadFeaturedPost(){
 
 function switchTab(pageId, fromHistory=false){
   if (!currentUser) return;
+  const cmCloudPages=['homePage','profilePage','chatsPage','friendsPage','notificationsPage','leosPage','statusbookPage','aiPage','menuPage','reportPage','searchPage','savedPostsPage','shopPage','groupsPage','chatroomsPage','adminPage','supportPage','announcementsPage','buyCoinsPage','settingsPage','videosPage'];
+  if (cmCloudPages.includes(pageId) && navigator.onLine === false) {
+    const pageEl=document.getElementById(pageId);
+    if(pageEl) {
+      pageEl.classList.add('active');
+      let box=pageEl.querySelector('.cm-network-block');
+      if(!box){ box=document.createElement('div'); box.className='cm-network-block'; box.innerHTML='<h3>📡 Connection needed</h3><p>Chat Me did not load cloud data because your internet connection is unavailable. Your data is safe. Reconnect, then tap Retry.</p><button type=\"button\" class=\"cm-shortcut-btn active\" onclick=\"cmNetworkRetry()\">Retry connection</button>'; pageEl.prepend(box); }
+    }
+    return;
+  }
+  if (cmCloudPages.includes(pageId) && window.cmNetworkReady && !window.cmNetworkReady()) return;
   storageSet(lastTabKey(currentUser.username), pageId);
   try {
     const targetHash = '#' + encodeURIComponent(pageId);
@@ -2909,6 +3027,7 @@ function switchTab(pageId, fromHistory=false){
   if (pageId === 'announcementsPage') loadAnnouncementsPage();
   if (pageId === 'buyCoinsPage') loadBuyCoinsPage();
   if (pageId === 'settingsPage') cmLoadSettings();
+  if (pageId === 'videosPage') loadVideosPage();
 }
 
 window.addEventListener('hashchange', function(){
@@ -4212,25 +4331,27 @@ function renderComingSoon(label){
 
 /* ---------------- HOME / POSTS ---------------- */
 let chosenFileDataUrl = null;
+let chosenFileKind = '';
 function onPostFileChosen(){
   const input = document.getElementById('postFile');
   const nameEl = document.getElementById('postFileName');
-  chosenFileDataUrl = null;
+  chosenFileDataUrl = null; chosenFileKind = '';
   if (!input.files || !input.files[0]) { nameEl.textContent = 'No file chosen'; return; }
   const file = input.files[0];
   nameEl.textContent = file.name;
-  if (file.size > 10 * 1024 * 1024) {
-    document.getElementById('postError').textContent = 'File is too large (max 10MB). It will be posted without the image.';
-    input.value = '';
-    nameEl.textContent = 'No file chosen';
-    return;
+  const isVideo = file.type.startsWith('video/');
+  const max = isVideo ? 12 * 1024 * 1024 : 10 * 1024 * 1024;
+  if (file.size > max) {
+    document.getElementById('postError').textContent = isVideo ? 'Video is too large (max 12MB).' : 'Image is too large (max 10MB).';
+    input.value = ''; nameEl.textContent = 'No file chosen'; return;
   }
+  chosenFileKind = isVideo ? 'video' : 'image';
+  if (isVideo) document.getElementById('postType').value = 'Video';
+  const hint = document.getElementById('postVideoHint'); if (hint) hint.style.display = isVideo ? 'block' : 'none';
   document.getElementById('postError').textContent = '';
   const reader = new FileReader();
   reader.onload = () => { chosenFileDataUrl = reader.result; };
-  reader.onerror = () => {
-    document.getElementById('postError').textContent = 'Could not read that file. Try a smaller one.';
-  };
+  reader.onerror = () => { document.getElementById('postError').textContent = 'Could not read that file. Try a smaller one.'; };
   reader.readAsDataURL(file);
 }
 const EMOJI_PICKER_LIST = ['👎🏻','👍🏻','🙏🏻','👉🏻','😀','😁','😂','😭','😍','😛','😜','😱','🤔','🥱','😧','🤬','😡','😯','😣','🤯','😇','🥵','⛄','👹','👺','😺','😻','🙈','⚡','💛','🤎','🎉','🤟🏻','👩🏻\u200d🦼','🚶🏻\u200d♀️','⛹🏻\u200d♀️','⛷️','🚴🏻\u200d♀️','👩🏻\u200d💻','👩🏻\u200d🎓','👩🏻\u200d🦳'];
@@ -4252,42 +4373,42 @@ function insertEmoji(targetId){
 async function createPost(){
   if (isCurrentlyBanned(currentUser)) { document.getElementById('postError').textContent = banBlockMessage(currentUser); return; }
   const text = document.getElementById('postInput').value.trim();
-  const errEl = document.getElementById('postError');
-  errEl.textContent = '';
+  const title = (document.getElementById('postTitle')?.value || '').trim();
+  const tags = (document.getElementById('postTags')?.value || '').trim();
+  const visibility = document.getElementById('postVisibility')?.value || 'public';
+  const errEl = document.getElementById('postError'); errEl.textContent = '';
   const poll = readPollBuilder('postInput');
-  if (!text && !chosenFileDataUrl && !poll) {
-    errEl.textContent = 'Write something or attach an image first.';
-    return;
-  }
+  if (!text && !title && !chosenFileDataUrl && !poll) { errEl.textContent = 'Write a description, add a title, attach media, or create a poll first.'; return; }
+  if (chosenFileKind === 'video' && visibility === 'private') { /* private videos remain visible only to their owner */ }
+  const normalizedTags = tags.split(/[\\s,]+/).filter(Boolean).map(t => t.startsWith('#') ? t : '#'+t).slice(0,20).join(' ');
   const post = {
     id: Date.now() + '-' + Math.random().toString(36).slice(2, 8),
     author: currentUser.username,
     authorName: currentUser.firstName + ' ' + currentUser.lastName,
-    text,
-    type: document.getElementById('postType').value,
+    title, text, tags: normalizedTags,
+    visibility,
+    type: chosenFileKind === 'video' ? 'Video' : document.getElementById('postType').value,
     color: (document.getElementById('postColor_home') || {}).value || '',
-    image: chosenFileDataUrl,
-    time: Date.now(),
-    likes: [],
-    comments: [],
-    shareCount: 0
+    image: chosenFileKind === 'image' ? chosenFileDataUrl : '',
+    video: chosenFileKind === 'video' ? chosenFileDataUrl : '',
+    time: Date.now(), likes: [], comments: [], shareCount: 0
   };
   if (poll) post.poll = poll;
   showLoading(true);
   try {
     const res = await storageSet('post:' + post.id, JSON.stringify(post), true);
     if (!res) { errEl.textContent = 'Could not publish your post. Please try again.'; return; }
-    document.getElementById('postInput').value = '';
-    document.getElementById('postFile').value = '';
+    ['postInput','postTitle','postTags'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+    const vis=document.getElementById('postVisibility'); if(vis) vis.value='public';
+    const pf=document.getElementById('postFile'); if(pf) pf.value='';
     document.getElementById('postFileName').textContent = 'No file chosen';
-    chosenFileDataUrl = null;
+    chosenFileDataUrl = null; chosenFileKind = '';
+    const hint=document.getElementById('postVideoHint'); if(hint) hint.style.display='none';
     if (text) notifyMentions(text, post.id);
     await loadHome();
-  } catch (e) {
-    errEl.textContent = 'Could not publish your post. Please try again.';
-  } finally {
-    showLoading(false);
-  }
+    if (post.video) loadVideosPage();
+  } catch (e) { errEl.textContent = 'Could not publish your post. Please try again.'; }
+  finally { showLoading(false); }
 }
 
 function timeAgo(ts){
@@ -4404,51 +4525,53 @@ function displayNameWithNickname(name, nickname){
   return nickname ? `${escapeHtml(name)} <span style="color:#888;font-weight:400;">(${escapeHtml(nickname)})</span>` : escapeHtml(name);
 }
 
+let cmHomePageSize = 200;
+let cmHomeOffset = 0;
+let cmHomePostsCache = [];
+let cmHomeInfoMap = {};
+let cmHomeFriends = [];
+
+function cmCanViewPost(p){
+  if (!p) return false;
+  const vis = p.visibility || 'public';
+  if (vis === 'public') return true;
+  if (!currentUser) return false;
+  if (String(p.author).toLowerCase() === String(currentUser.username).toLowerCase()) return true;
+  if (vis === 'friends') return cmHomeFriends.map(String).map(x=>x.toLowerCase()).includes(String(p.author).toLowerCase());
+  return false;
+}
+
+function cmRenderHomePage(){
+  const listEl=document.getElementById('postList'); if(!listEl)return;
+  const end=Math.min(cmHomeOffset+cmHomePageSize,cmHomePostsCache.length);
+  const shown=cmHomePostsCache.slice(0,end);
+  if(!shown.length){listEl.innerHTML='<div class="empty-feed">No posts yet. Be the first to share something!</div>';return;}
+  listEl.innerHTML=shown.map(p=>renderPostCard(p,cmHomeInfoMap)).join('')+
+    `<div class="cm-load-more-wrap">${end<cmHomePostsCache.length?`<button class="cm-load-more-btn" onclick="cmLoadMoreHomePosts()">Load next 200 posts</button>`:'<div style="font-size:12px;color:#888;">You have reached the end of the available posts.</div>'}</div>`;
+  cmEnhancePostCards();
+}
+function cmLoadMoreHomePosts(){ cmHomeOffset += cmHomePageSize; cmRenderHomePage(); setTimeout(()=>{document.getElementById('cmHomeLatestBtn')?.scrollIntoView({block:'nearest'});},50); }
+
 async function loadHome(){
   refreshHomeStatusHeader();
-  const listEl = document.getElementById('postList');
-  listEl.innerHTML = '<div class="empty-feed">Loading posts...</div>';
-  const bannerEl = document.getElementById('friendsBanner');
-  const friendsRaw = await storageGet(friendsKey(currentUser.username), true);
-  const friends = friendsRaw ? JSON.parse(friendsRaw) : [];
-  if (friends.length < 5) {
-    bannerEl.innerHTML = `<div class="friends-banner">Add more friends! You have ${friends.length} friend${friends.length===1?'':'s'}. Add at least 5 for a better experience. <a onclick="switchTab('friendsPage')">Find Friends</a></div>`;
-  } else {
-    bannerEl.innerHTML = '';
-  }
-
-  const keys = await storageListKeys('post:', true);
-  if (!keys.length) { listEl.innerHTML = '<div class="empty-feed">No posts yet. Be the first to share something!</div>'; return; }
-  const rawPosts = await Promise.all(keys.map(k => storageGet(k, true)));
-  const posts = [];
-  for (const raw of rawPosts) {
-    if (!raw) continue;
-    try {
-      const p = JSON.parse(raw);
-      if (p.type !== 'Announcement') posts.push(p);
-    } catch(e){}
-  }
-  if (!posts.length) { listEl.innerHTML = '<div class="empty-feed">No posts yet. Be the first to share something!</div>'; return; }
-
-  const usernames = new Set();
-  posts.forEach(p => {
-    if (p.author) usernames.add(p.author);
-    if (p.sharedFrom && p.sharedFrom.author) usernames.add(p.sharedFrom.author);
-    (p.comments || []).forEach(c => { if (c.author) usernames.add(c.author); });
-  });
-  const infoMap = await buildUserInfoMap(usernames);
-
-  // Admin posts always float to the top; everything else stays newest-first.
-  posts.sort((a, b) => {
-    const aAdmin = !!(infoMap[a.author] && infoMap[a.author].isAdmin);
-    const bAdmin = !!(infoMap[b.author] && infoMap[b.author].isAdmin);
-    if (aAdmin !== bAdmin) return aAdmin ? -1 : 1;
-    return b.time - a.time;
-  });
-
-  const shown = posts.slice(0, 50);
-  listEl.innerHTML = shown.map(p => renderPostCard(p, infoMap)).join('');
-  cmEnhancePostCards();
+  const listEl=document.getElementById('postList');
+  listEl.innerHTML='<div class="empty-feed">Loading posts...</div>';
+  cmHomeOffset=0; cmHomePostsCache=[]; cmHomeInfoMap={};
+  try { const friendsRaw=await storageGet(friendsKey(currentUser.username),true); cmHomeFriends=friendsRaw?JSON.parse(friendsRaw):[]; } catch(e){cmHomeFriends=[];}
+  const bannerEl=document.getElementById('friendsBanner');
+  if(cmHomeFriends.length<5) bannerEl.innerHTML=`<div class="friends-banner">Add more friends! You have ${cmHomeFriends.length} friend${cmHomeFriends.length===1?'':'s'}. Add at least 5 for a better experience. <a onclick="switchTab('friendsPage')">Find Friends</a></div>`; else bannerEl.innerHTML='';
+  const keys=await storageListKeys('post:',true);
+  if(!keys.length){cmRenderHomePage();return;}
+  const rawPosts=await Promise.all(keys.map(k=>storageGet(k,true)));
+  const posts=[];
+  for(const raw of rawPosts){if(!raw)continue;try{const p=JSON.parse(raw);if(p.type!=='Announcement'&&cmCanViewPost(p))posts.push(p);}catch(e){}}
+  const usernames=new Set();
+  posts.forEach(p=>{if(p.author)usernames.add(p.author);if(p.sharedFrom?.author)usernames.add(p.sharedFrom.author);(p.comments||[]).forEach(c=>c.author&&usernames.add(c.author));});
+  cmHomeInfoMap=await buildUserInfoMap(usernames);
+  posts.sort((a,b)=>{const aa=!!cmHomeInfoMap[a.author]?.isAdmin,bb=!!cmHomeInfoMap[b.author]?.isAdmin;if(aa!==bb)return aa?-1:1;return (b.time||0)-(a.time||0);});
+  cmHomePostsCache=posts;
+  cmRenderHomePage();
+  cmLoadVideosPreview();
 }
 
 /* Wall posts on a profile page - shows only that person's own posts */
@@ -4537,8 +4660,12 @@ function renderPostCard(p, infoMap){
         ${canDelete ? `<span title="Delete post" style="cursor:pointer;color:#d32f2f;font-size:16px;" onclick="deletePost('${p.id}')">🗑</span>` : ''}
       </div>
       ${p.type === 'Shared Post' ? '<div style="font-size:12.5px;color:#888;margin-bottom:4px;">shared a post</div>' : ''}
+      ${p.title ? `<div style="font-weight:700;font-size:16px;margin:5px 0;">${escapeHtml(p.title)}</div>` : ''}
       ${p.text ? `<div class="post-text">${escapeHtml(p.text)}</div>` : ''}
+      ${p.tags ? `<div class="cm-post-meta-line">${escapeHtml(p.tags)}</div>` : ''}
+      ${p.visibility && p.visibility !== 'public' ? `<div class="cm-post-meta-line">${p.visibility === 'friends' ? '👥 Friends only' : '🔒 Only me'}</div>` : ''}
       ${p.image ? `<img class="post-img" src="${p.image}">` : ''}
+      ${p.video ? `<div class="cm-video-card" style="margin-top:8px;"><video controls playsinline preload="metadata" src="${p.video}"></video><div style="font-size:11.5px;color:#777;margin-top:5px;">🎬 Video · Posted by @${escapeHtml(p.author||'')}</div></div>` : ''}
       ${pollBlock}
       ${sharedBlock}
       <div class="post-time">${timeAgo(p.time)}</div>
@@ -7847,6 +7974,8 @@ populateDobSelects();
 refreshCaptcha('login');
 refreshCaptcha('signup');
 applyDarkModePreference();
+cmRenderHomeShortcuts();
+cmSetupHomeLatestButton();
 applyLanguage();
 storageRemove(SESSION_KEY); // one-time cleanup: delete the old shared cloud session doc from before this was made tab-local, so no leftover email sits in the shared store
 applySpecialGrantsOnce().then(restoreSession);
@@ -7867,7 +7996,10 @@ async function cmLoadSettings(){
   const map = { cmPrivateProfile:'privateProfile', cmShowOnline:'showOnline', cmMessageRequests:'messageRequests', cmNotifMessages:'notifMessages', cmNotifSocial:'notifSocial' };
   Object.keys(map).forEach(id => { const el=document.getElementById(id); if(el) el.checked=!!cfg[map[id]]; });
   cmShowBlockedUsers();
+  cmRenderShortcutSettings();
+  cmRenderHomeShortcuts();
 }
+
 function toggleDarkModeFromSettings(){
   const el=document.getElementById('settingsDarkModeToggle');
   const on=!!el?.checked;
@@ -8084,6 +8216,50 @@ function cmSetupHomeSocialScroll(){const list=document.getElementById('postList'
 
 const _cmHomeSocialBaseLoader=window.loadHome;if(typeof _cmHomeSocialBaseLoader==='function'){window.loadHome=async function(){const result=await _cmHomeSocialBaseLoader.apply(this,arguments);await cmLoadPinnedAnnouncement();await cmLoadPeopleYouMayKnow();await cmLoadTrendingTopics();cmSetupHomeSocialScroll();return result;};}
 
+
+/* ================= HOME SHORTCUTS + VIDEOS + PAGINATION ================= */
+const CM_HOME_SHORTCUTS = [
+  ['profilePage','👤 Profile'],['chatsPage','💬 Messages'],['friendsPage','👥 Friends'],['notificationsPage','🔔 Notifications'],
+  ['chatroomsPage','🏠 Chatrooms'],['videosPage','🎬 Videos'],['statusbookPage','📖 Statusbook'],['aiPage','🤖 Nova'],['groupsPage','👨‍👩‍👧 Groups'],
+  ['searchPage','🔎 Search'],['savedPostsPage','🔖 Saved'],['gamesPage','🎮 Games'],['shopPage','🛍️ Shop'],['leosPage','🪙 Coins'],
+  ['announcementsPage','📢 Announcements'],['menuPage','☰ Menu'],['settingsPage','⚙ Settings'],['supportPage','🎧 Support'],['adminPage','🛡️ Admin']
+];
+const CM_HOME_SHORTCUT_DEFAULTS=['profilePage','videosPage','statusbookPage','friendsPage','notificationsPage','chatsPage','searchPage','chatroomsPage'];
+function cmGetShortcutPrefs(){try{const x=JSON.parse(localStorage.getItem('homeShortcuts')||'null');return Array.isArray(x)?x:CM_HOME_SHORTCUT_DEFAULTS.slice();}catch(e){return CM_HOME_SHORTCUT_DEFAULTS.slice();}}
+function cmSaveShortcutPrefs(list){try{localStorage.setItem('homeShortcuts',JSON.stringify(list));}catch(e){}}
+function cmRenderHomeShortcuts(){
+  const row=document.getElementById('cmHomeShortcutRow'); if(!row)return;
+  const prefs=cmGetShortcutPrefs();
+  row.innerHTML=prefs.map(id=>{const item=CM_HOME_SHORTCUTS.find(x=>x[0]===id);if(!item)return '';if((id==='adminPage'&&!currentUserHasTrustedRole('admin')&&!currentUserHasTrustedRole('owner'))||(id==='supportPage'&&!currentUserHasTrustedRole('moderator')&&!currentUserHasTrustedRole('admin')&&!currentUserHasTrustedRole('owner')))return '';return `<button class="cm-shortcut-btn" onclick="switchTab('${id}')">${item[1]}</button>`}).join('');
+}
+function cmRenderShortcutSettings(){
+  const host=document.getElementById('cmHomeShortcutSettings');if(!host)return;const prefs=cmGetShortcutPrefs();
+  host.innerHTML=CM_HOME_SHORTCUTS.map(([id,label])=>`<label class="cm-setting-option"><input type="checkbox" ${prefs.includes(id)?'checked':''} onchange="cmToggleHomeShortcut('${id}',this.checked)"><span><strong>${label}</strong><small>Show this button at the top of Home.</small></span></label>`).join('');
+}
+function cmToggleHomeShortcut(id,on){let list=cmGetShortcutPrefs();if(on&&!list.includes(id))list.push(id);if(!on)list=list.filter(x=>x!==id);cmSaveShortcutPrefs(list);cmRenderHomeShortcuts();}
+function cmScrollHomeLatest(){const home=document.getElementById('homePage');if(home)home.scrollTo({top:home.scrollHeight,behavior:'smooth'});}
+function cmSetupHomeLatestButton(){
+  const home=document.getElementById('homePage'),btn=document.getElementById('cmHomeLatestBtn');if(!home||!btn||home.__cmLatestReady)return;home.__cmLatestReady=true;
+  home.addEventListener('scroll',()=>{const far=home.scrollHeight-home.scrollTop-home.clientHeight>450;btn.style.display=(document.getElementById('homePage')?.classList.contains('active')&&far)?'block':'none';});
+}
+function cmVideoVisible(p){return cmCanViewPost(p);}
+async function loadVideosPage(){
+  const el=document.getElementById('cmVideosList');if(!el||!currentUser)return;el.innerHTML='<div class="empty-feed">Loading videos...</div>';
+  let friends=[];try{const raw=await storageGet(friendsKey(currentUser.username),true);friends=raw?JSON.parse(raw):[];}catch(e){}
+  const old=cmHomeFriends;cmHomeFriends=friends;
+  try{
+    const keys=await storageListKeys('post:',true);const raws=await Promise.all(keys.map(k=>storageGet(k,true)));const videos=[];const names=new Set();
+    raws.forEach(raw=>{if(!raw)return;try{const p=JSON.parse(raw);if(p&&p.video&&cmVideoVisible(p)){videos.push(p);names.add(p.author);}}catch(e){}});
+    videos.sort((a,b)=>(b.time||0)-(a.time||0));const info=await buildUserInfoMap(names);
+    if(!videos.length){el.innerHTML='<div class="empty-feed">No public or available member videos yet. Post the first one from Home.</div>';return;}
+    el.innerHTML=videos.slice(0,200).map(p=>`<div class="cm-video-card"><div class="cm-video-author" onclick="viewProfile('${String(p.author||'').replace(/'/g,"\\'")}')">${escapeHtml(p.authorName||p.author||'Member')} ${roleBadgeHtml(info[p.author]||{})} <span style="font-weight:400;color:#999;">@${escapeHtml(p.author||'')}</span></div>${p.title?`<div style="font-weight:700;margin-bottom:5px;">${escapeHtml(p.title)}</div>`:''}${p.text?`<div style="font-size:13.5px;margin-bottom:7px;white-space:pre-wrap;">${escapeHtml(p.text)}</div>`:''}<video controls playsinline preload="metadata" src="${p.video}"></video><div class="cm-post-meta-line">🎬 Video · ${timeAgo(p.time)}${p.tags?' · '+escapeHtml(p.tags):''}</div></div>`).join('');
+  }finally{cmHomeFriends=old;}
+}
+async function cmLoadVideosPreview(){
+  const row=document.getElementById('cmHomeShortcutRow'); if(!row)return;
+  // Keep Home light: the actual full video feed lives in Videos.
+}
+
 /* ================= CUSTOMER SERVICE + ADMIN OPERATIONS ================= */
 function cmTicketKey(id){ return 'supportTicket:' + id; }
 function cmAuditKey(id){ return 'audit:' + id; }
@@ -8219,5 +8395,111 @@ cmLoadSupportPage=async function(){ await _cmOldLoadSupportPage.apply(this,argum
 <script>
 window.addEventListener('load', function(){ refreshWelcomeStats(); });
 </script>
+<button id="cmHomeLatestBtn" class="cm-latest-fab" type="button" onclick="cmScrollHomeLatest()">↓ Latest</button>
+
+<script id="chatme-network-resilience-js">
+/* ============================================================
+   NETWORK RESILIENCE
+   - Cloud-backed pages/actions wait for a usable connection.
+   - Offline state is visible instead of showing endless spinners.
+   - Worker requests time out and can retry when connectivity returns.
+   - Images/videos are lazy-loaded to reduce mobile data usage.
+   ============================================================ */
+(function(){
+  const WORKER_HEALTH='https://chat-me-backend.rahmanadegboye1.workers.dev/health';
+  const PROBE_TIMEOUT=6000;
+  const REQUEST_TIMEOUT=10000;
+  let cmNetworkUsable = navigator.onLine !== false;
+  let cmNetworkChecking = false;
+  let cmLastNetworkError = '';
+
+  function cmEnsureNetworkBanner(){
+    let b=document.getElementById('cmNetworkBanner');
+    if(b)return b;
+    b=document.createElement('div');
+    b.id='cmNetworkBanner';
+    b.className='cm-network-banner';
+    b.innerHTML='<div><strong id="cmNetworkBannerTitle">Network unavailable</strong><span id="cmNetworkBannerText">Chat Me is waiting for your connection.</span></div><button type="button" id="cmNetworkRetry">Retry</button>';
+    document.body.appendChild(b);
+    b.querySelector('#cmNetworkRetry').addEventListener('click',function(){cmCheckNetwork(true);});
+    return b;
+  }
+  function cmSetNetworkUI(usable,reason){
+    cmNetworkUsable=!!usable;
+    document.body.classList.toggle('cm-network-offline',!cmNetworkUsable);
+    const b=cmEnsureNetworkBanner();
+    const title=b.querySelector('#cmNetworkBannerTitle');
+    const txt=b.querySelector('#cmNetworkBannerText');
+    if(cmNetworkUsable){b.classList.remove('show');return;}
+    b.classList.add('show');
+    if(navigator.onLine===false){
+      title.textContent='You are offline';
+      txt.textContent='Chat Me will not load cloud data until your internet connection returns.';
+    }else{
+      title.textContent='Connection unavailable';
+      txt.textContent=reason||'The Chat Me server could not be reached. Tap Retry to try again.';
+    }
+  }
+  async function cmCheckNetwork(force){
+    if(cmNetworkChecking && !force)return cmNetworkUsable;
+    if(navigator.onLine===false){cmSetNetworkUI(false,'');return false;}
+    cmNetworkChecking=true;
+    try{
+      const c=new AbortController();
+      const timer=setTimeout(()=>c.abort(),PROBE_TIMEOUT);
+      const r=await fetch(WORKER_HEALTH,{method:'GET',cache:'no-store',signal:c.signal});
+      clearTimeout(timer);
+      if(!r.ok)throw new Error('Health check '+r.status);
+      cmLastNetworkError='';
+      cmSetNetworkUI(true,'');
+      return true;
+    }catch(e){
+      cmLastNetworkError=e?.message||'Network check failed';
+      cmSetNetworkUI(false,cmLastNetworkError);
+      return false;
+    }finally{cmNetworkChecking=false;}
+  }
+  window.cmNetworkReady=function(){return navigator.onLine!==false && cmNetworkUsable;};
+  window.cmRequireNetwork=function(message){
+    if(window.cmNetworkReady())return true;
+    cmSetNetworkUI(false,message||'A working internet connection is required for this part of Chat Me.');
+    return false;
+  };
+  window.cmNetworkRetry=async function(){
+    const ok=await cmCheckNetwork(true);
+    if(ok && window.currentUser){
+      const active=document.querySelector('.page.active')?.id;
+      if(active && typeof window.switchTab==='function') window.switchTab(active,true);
+    }
+    return ok;
+  };
+  window.cmNetworkTimeout=REQUEST_TIMEOUT;
+  window.cmNetworkAbortableFetch=async function(url,options){
+    if(!window.cmRequireNetwork())throw new Error('Network unavailable');
+    const controller=new AbortController();
+    const timer=setTimeout(()=>controller.abort(),REQUEST_TIMEOUT);
+    try{return await fetch(url,{...(options||{}),cache:(options&&options.cache)||'no-store',signal:controller.signal});}
+    finally{clearTimeout(timer);}
+  };
+
+  window.addEventListener('offline',function(){cmSetNetworkUI(false,'');});
+  window.addEventListener('online',function(){
+    cmSetNetworkUI(false,'Checking your connection…');
+    setTimeout(()=>cmCheckNetwork(true),500);
+  });
+  document.addEventListener('visibilitychange',function(){
+    if(document.visibilityState==='visible' && navigator.onLine!==false)cmCheckNetwork(false);
+  });
+  window.addEventListener('load',function(){
+    cmCheckNetwork(false);
+    // Save mobile data: browser loads media only when it is near the viewport.
+    document.querySelectorAll('img').forEach(img=>{if(!img.hasAttribute('loading'))img.setAttribute('loading','lazy');});
+    document.querySelectorAll('video').forEach(v=>{v.setAttribute('preload','none');});
+  });
+
+  // The original switchTab is patched below; this block intentionally does not replace page HTML.
+})();
+</script>
+
 </body>
 </html>
