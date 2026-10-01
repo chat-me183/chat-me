@@ -474,6 +474,195 @@ body.cm-network-offline .app-footer{opacity:.75}
 .cm-profile-progress{height:8px;background:#edf0f4;border-radius:99px;overflow:hidden}.cm-profile-progress>i{display:block;height:100%;width:0;background:#2b6ee0;border-radius:99px}
 @media(max-width:600px){.cm-explore-grid{grid-template-columns:1fr}.cm-explore-card{border-radius:12px}}
 body.dark-mode .cm-explore-card,body.dark-mode .cm-explore-chip{background:#171a20;border-color:#2b3039;color:#eee}body.dark-mode .cm-explore-head h3,body.dark-mode .cm-explore-chip strong{color:#dbe4ff}body.dark-mode .cm-suggest-row{border-color:#2b3039}
+
+/* ================= CHAT ME VISUAL REDESIGN — preserves existing feature IDs/functions ================= */
+:root{
+  --cm-navy:#082a50;
+  --cm-navy-2:#0b3768;
+  --cm-blue:#087ff5;
+  --cm-blue-2:#2d8cff;
+  --cm-bg:#f4f7fb;
+  --cm-line:#dbe4ef;
+  --cm-text:#14233a;
+  --cm-muted:#738095;
+}
+html,body{background:var(--cm-bg);}
+body{color:var(--cm-text);}
+
+/* Landing page: dark, chat-focused, like the approved storyboard while keeping all existing content. */
+#welcomeScreen{
+  background:
+    radial-gradient(circle at 15% 18%,rgba(45,140,255,.30),transparent 28%),
+    radial-gradient(circle at 86% 20%,rgba(32,90,150,.45),transparent 32%),
+    linear-gradient(145deg,#061a34 0%,#0a315d 52%,#0a2442 100%);
+  color:#fff;
+}
+.welcome-nav{
+  background:rgba(5,25,49,.92);
+  border-bottom:1px solid rgba(255,255,255,.12);
+  color:#fff;
+  backdrop-filter:blur(12px);
+}
+.welcome-nav-brand{color:#fff;}
+.welcome-nav-actions .nav-login{color:#fff;border-color:rgba(255,255,255,.32);background:rgba(255,255,255,.05);}
+.welcome-nav-actions .nav-signup{background:var(--cm-blue);box-shadow:0 7px 20px rgba(0,127,255,.28);}
+.welcome-main{min-height:calc(100vh - 68px);}
+.welcome-copy h1{color:#fff;text-shadow:0 8px 28px rgba(0,0,0,.18);}
+.welcome-copy h1 span{color:#58a8ff;}
+.welcome-copy>p{color:#d7e5f5;}
+.welcome-badge{background:rgba(45,140,255,.15);color:#7ec0ff;border-color:rgba(126,192,255,.28);}
+.welcome-cta{background:var(--cm-blue);border-radius:999px;}
+.welcome-secondary{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.22);border-radius:999px;}
+.welcome-point,.welcome-login-card,.about-card,.welcome-quote,.welcome-step,.welcome-trust-card{
+  background:rgba(255,255,255,.97);border-color:rgba(255,255,255,.16);
+}
+.welcome-login-card{border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,.25);}
+.welcome-section{color:#fff;}
+.welcome-section h2{color:#fff;}
+.welcome-section>p{color:#d1deed;}
+.welcome-note{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.16);color:#d4e1ef;}
+.welcome-stat{background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.15);color:#fff;}
+.welcome-trust-card b,.welcome-trust-card span{color:inherit;}
+.welcome-trust-card span{color:#667085;}
+.welcome-section .welcome-about,.welcome-section .welcome-testimonials,.welcome-section .welcome-steps,.welcome-section .welcome-trust{margin-bottom:4px;}
+
+/* Auth: mobile-app style header + compact cards. Existing fields/IDs/reCAPTCHA remain unchanged. */
+.auth-screen{
+  background:linear-gradient(180deg,#082a50 0 92px,#eef3f8 92px 100%);
+  align-items:center;
+  justify-content:flex-start;
+  padding:0 12px 28px;
+  overflow-y:auto;
+}
+.auth-box{
+  width:min(100%,430px);
+  margin-top:0;
+  border-radius:0 0 18px 18px;
+  border:1px solid #d9e3ee;
+  border-top:0;
+  box-shadow:0 12px 35px rgba(5,31,61,.14);
+  padding:22px 20px 20px;
+  position:relative;
+}
+.auth-box::before{
+  content:"💬  Chat Me";
+  display:block;
+  height:54px;
+  margin:-22px -20px 18px;
+  padding:0 20px;
+  background:linear-gradient(90deg,#082a50,#0b3768);
+  color:#fff;
+  font-size:21px;
+  font-weight:800;
+  line-height:54px;
+}
+.auth-brand{display:none;}
+.auth-title{color:#14233a;font-size:24px;font-weight:800;text-align:left;}
+.auth-sub{color:#738095;text-align:left;}
+.auth-divider{border-color:#e2e8f0;}
+.auth-label{color:#334155;font-weight:700;}
+.field-block input,.field-block select{
+  border:1px solid #d7e1ec !important;
+  border-radius:12px !important;
+  min-height:46px;
+  padding:0 13px !important;
+  box-shadow:0 2px 7px rgba(20,35,58,.035);
+}
+.primary-btn{
+  background:linear-gradient(90deg,#087ff5,#2d8cff) !important;
+  border-radius:999px !important;
+  min-height:46px;
+  box-shadow:0 7px 18px rgba(8,127,245,.20);
+}
+.auth-links .row{color:#738095;}
+.auth-links a{color:#087ff5;font-weight:700;}
+.section-divider{border-color:#e2e8f0;background:#f7f9fc;border-radius:10px;}
+.pw-requirements{background:#f7f9fc;border-radius:10px;border:1px solid #e4eaf2;padding:10px;}
+#recaptchaLogin,#recaptchaSignup{overflow:hidden;border-radius:8px;}
+
+/* Main app: navy social-app header and clean chat-list surfaces. */
+#app{background:var(--cm-bg);}
+.cm-social-topbar{
+  background:linear-gradient(90deg,#082a50,#0b3768) !important;
+  color:#fff !important;
+  border-bottom:0 !important;
+  box-shadow:0 2px 10px rgba(5,31,61,.20);
+  min-height:58px;
+}
+.cm-brand-mini{color:#fff !important;}
+.cm-social-search input{border-radius:999px !important;background:rgba(255,255,255,.12) !important;color:#fff !important;border-color:rgba(255,255,255,.20) !important;}
+.cm-social-search input::placeholder{color:#d7e5f5 !important;}
+.cm-social-search button,.cm-top-action,.cm-nav-more{color:#fff !important;}
+.cm-top-action:hover,.cm-nav-more:hover{background:rgba(255,255,255,.10) !important;}
+.page{background:var(--cm-bg);}
+#homePage{background:#f4f7fb;}
+.cm-update-banner{border-radius:12px !important;}
+.cm-featured-card{border-radius:16px !important;}
+#chatsPage,#friendsPage,#notificationsPage,#groupsPage,#chatroomsPage{background:#f4f7fb;}
+#chatsPage .friend-item,#friendsPage .friend-item{background:#fff;border-bottom:1px solid #e7edf4;}
+.friend-name{color:#172b45;}
+.friend-status{color:#7b8798;}
+
+/* Approved storyboard bottom navigation. Top remains limited to Home/Profile/Messages/Notifications + More. */
+.cm-bottom-nav{
+  display:none;
+  position:fixed;
+  left:0;right:0;bottom:0;
+  height:62px;
+  background:#fff;
+  border-top:1px solid #dce5ef;
+  z-index:999;
+  box-shadow:0 -4px 18px rgba(20,35,58,.08);
+  grid-template-columns:repeat(5,1fr);
+}
+.cm-bottom-nav button{
+  border:0;background:transparent;color:#718096;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:3px;font-size:11px;font-weight:700;cursor:pointer;
+}
+.cm-bottom-nav button span:first-child{font-size:20px;line-height:20px;}
+.cm-bottom-nav button.active{color:#087ff5;}
+@media (max-width:760px){
+  .welcome-nav{height:60px;padding:0 12px;}
+  .welcome-nav-brand{font-size:18px;}
+  .welcome-main{display:block;width:92%;padding:30px 0 22px;min-height:auto;}
+  .welcome-copy{text-align:center;}
+  .welcome-copy h1{font-size:34px;letter-spacing:-1px;}
+  .welcome-copy>p{font-size:14px;}
+  .welcome-actions{justify-content:center;}
+  .welcome-points{grid-template-columns:repeat(2,1fr);}
+  .welcome-login-card{margin:18px auto 0;max-width:none;}
+  .welcome-section{width:92%;padding-bottom:80px;}
+  .welcome-about,.welcome-testimonials{grid-template-columns:1fr;}
+  .welcome-steps{grid-template-columns:repeat(2,1fr);}
+  .welcome-trust{grid-template-columns:repeat(2,1fr);}
+  .auth-screen{background:linear-gradient(180deg,#082a50 0 78px,#eef3f8 78px 100%);padding:0 8px 20px;}
+  .auth-box{width:100%;border-radius:0 0 16px 16px;padding:20px 16px;}
+  .auth-box::before{margin:-20px -16px 17px;padding:0 16px;height:50px;line-height:50px;font-size:19px;}
+  .cm-social-topbar{min-height:56px;}
+  .cm-social-search{display:none !important;}
+  .cm-bottom-nav{display:grid;}
+  #app{padding-bottom:62px;}
+}
+@media (min-width:761px){
+  .cm-bottom-nav{display:none !important;}
+}
+
+/* Private chat header: the call controls are visible but clearly marked Coming Soon. */
+.chat-header .cm-call-btn{
+  border:1px solid #d7e1ec;background:#fff;color:#163252;
+  border-radius:9px;padding:7px 9px;cursor:pointer;font-size:15px;font-weight:700;
+}
+.chat-header .cm-call-btn:hover{background:#f2f7fc;}
+.chat-header .cm-call-btn.cm-soon{opacity:.92;}
+.cm-coming-soon-toast{
+  position:fixed;left:50%;bottom:82px;transform:translateX(-50%);
+  background:#082a50;color:#fff;padding:10px 14px;border-radius:999px;
+  z-index:1200;font-size:12px;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.22);
+}
+
+/* Keep all existing pages/features available through More / Settings. */
+#menuPage,#settingsPage{background:#f4f7fb;}
 </style>
 
 </head>
@@ -745,6 +934,13 @@ body.dark-mode .cm-explore-card,body.dark-mode .cm-explore-chip{background:#171a
     <div class="cm-mobile-search" id="cmMobileSearch" style="display:none;">
       <input type="text" id="cmMobileSearchInput" placeholder="Search people..." onkeydown="if(event.key==='Enter'){document.getElementById('friendSearch').value=this.value;runFriendSearch();cmToggleMobileSearch();}">
       <button type="button" onclick="document.getElementById('friendSearch').value=document.getElementById('cmMobileSearchInput').value;runFriendSearch();cmToggleMobileSearch();">Search</button>
+    </div>
+    <div class="cm-bottom-nav" id="cmBottomNav" aria-label="Chat Me quick navigation">
+      <button type="button" data-page="chatsPage" onclick="switchTab('chatsPage');cmSetBottomActive(this)"><span>💬</span><span>Chats</span></button>
+      <button type="button" data-page="friendsPage" onclick="switchTab('friendsPage');cmSetBottomActive(this)"><span>👥</span><span>People</span></button>
+      <button type="button" data-page="explorePage" onclick="switchTab('explorePage');cmSetBottomActive(this)"><span>✦</span><span>Explore</span></button>
+      <button type="button" data-page="gamesPage" onclick="switchTab('gamesPage');cmSetBottomActive(this)"><span>🎮</span><span>Games</span></button>
+      <button type="button" data-page="menuPage" onclick="switchTab('menuPage');cmSetBottomActive(this)"><span>•••</span><span>More</span></button>
     </div>
     <div class="navbar" aria-hidden="true" style="display:none!important;">
       <div class="nav-item" data-page="homePage"></div><div class="nav-item" data-page="profilePage"></div><div class="nav-item" data-page="chatsPage"></div><div class="nav-item" data-page="notificationsPage"></div>
@@ -6606,6 +6802,8 @@ async function openChat(username, display){
         </span>
       </span>
       <span style="font-size:11.5px;color:#888;margin-left:auto;">0.20 Coins / message</span>
+      <button class="cm-call-btn cm-soon" onclick="cmComingSoon('Voice calls')" title="Voice calls — coming soon" aria-label="Voice calls — coming soon">📞</button>
+      <button class="cm-call-btn cm-soon" onclick="cmComingSoon('Video calls')" title="Video calls — coming soon" aria-label="Video calls — coming soon">🎥</button>
       <button onclick="toggleWallpaperPicker()" title="Chat themes" style="background:#2b6ee0;color:#fff;border:none;padding:6px 8px;border-radius:6px;cursor:pointer;font-size:12px;">🎨 Theme</button>
       <button onclick="switchTab('shopPage')" title="Open Shop" style="background:#e8622d;color:#fff;border:none;padding:6px 8px;border-radius:6px;cursor:pointer;font-size:12px;">🛍 Shop</button>
     </div>
@@ -6631,6 +6829,24 @@ async function openChat(username, display){
   updateChatPresence();
   if (chatPollTimer) clearInterval(chatPollTimer);
   chatPollTimer = setInterval(() => { loadMessages(); updateChatPresence(); }, 4000);
+}
+function cmComingSoon(feature){
+  const old=document.querySelector('.cm-coming-soon-toast');
+  if(old) old.remove();
+  const el=document.createElement('div');
+  el.className='cm-coming-soon-toast';
+  el.textContent=feature+' are coming soon.';
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),2200);
+}
+function cmSetBottomActive(btn){
+  document.querySelectorAll('#cmBottomNav button').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+}
+function cmSyncBottomNav(pageId){
+  const map={chatsPage:'chatsPage',friendsPage:'friendsPage',explorePage:'explorePage',gamesPage:'gamesPage',menuPage:'menuPage'};
+  const target=map[pageId];
+  document.querySelectorAll('#cmBottomNav button').forEach(b=>b.classList.toggle('active', b.dataset.page===target));
 }
 function typingKey(chatKeyStr, username){ return 'typing:' + chatKeyStr + ':' + username.toLowerCase(); }
 let lastTypingSentAt = 0;
@@ -8704,5 +8920,17 @@ window.addEventListener('load', function(){ refreshWelcomeStats(); });
   setInterval(syncTopBadges,1200);
 })();
 </script>
+
+<script>if(typeof switchTab==='function' && !window.__cmBottomNavWrapped){
+  const __cmOriginalSwitchTab=switchTab;
+  window.switchTab=async function(pageId){
+    const r=await __cmOriginalSwitchTab.apply(this,arguments);
+    try{cmSyncBottomNav(pageId);}catch(e){}
+    return r;
+  };
+  window.__cmBottomNavWrapped=true;
+}
+</script>
 </body>
 </html>
+
