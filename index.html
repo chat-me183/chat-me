@@ -513,6 +513,8 @@ body.cm-network-offline .app-footer{opacity:.75}
         <h2>🔒 Privacy &amp; Policies</h2>
         <p><b>Chat Me is currently a free community service.</b> Coin purchases are disabled. Coins have no cash value and cannot be exchanged or withdrawn for real money.</p>
         <p><b>Privacy &amp; support:</b> adegboyeabdulrahmanl@gmail.com</p>
+        <p><b>Verification:</b> Members can request verification after paying the 20,000-Coin verification fee. A request is reviewed by an authorized Chat Me admin or moderator; the badge is not granted automatically. If no reviewer is available, the request remains pending until an authorized staff member reviews it.</p>
+        <p><b>Need a verification review?</b> Contact Chat Me support using the support contact above and clearly state that you are requesting verification review. Never send your password, recovery code, or other secret login information.</p>
         <p>Our policies explain account information, community content, security, reporting/moderation, service providers, user rights and how privacy requests can be made.</p>
         <p style="font-size:12px;color:#7a8190;">The full policy pages are available inside Chat Me after login.</p>
         <div class="public-policy-actions">
@@ -691,7 +693,6 @@ body.cm-network-offline .app-footer{opacity:.75}
       <div class="nav-item" data-page="groupsPage" onclick="switchTab('groupsPage')"><span class="i18n" data-key="groups">Groups</span></div>
       <div class="nav-item points" data-page="leosPage" id="pointsNavItem" onclick="switchTab('leosPage')"><span class="i18n" data-key="leos">Coins</span>: <span id="leosNavAmount">0.00</span></div>
       <div class="nav-item" data-page="gamesPage" onclick="switchTab('gamesPage')"><span class="i18n" data-key="games">Games</span></div>
-      <div class="nav-item" data-page="buyCoinsPage" style="display:none;" aria-hidden="true"></div>
       <div class="nav-item" data-page="shopPage" onclick="switchTab('shopPage')">🛍️ Shop</div>
       <div class="nav-item" data-page="menuPage" onclick="switchTab('menuPage')"><span class="i18n" data-key="menu">Menu</span></div>
       <div class="nav-item" data-page="settingsPage" onclick="switchTab('settingsPage')">⚙ Settings</div>
@@ -887,7 +888,7 @@ body.cm-network-offline .app-footer{opacity:.75}
             <span id="groupBackgroundFileName" style="font-size:12px;color:#888;">Shop unlock required</span>
           </div>
           <div class="field-msg" id="groupCreateError" style="min-height:14px;"></div>
-          <button onclick="createCircle('group')" style="width:100%;background:#25a244;color:#fff;border:none;padding:9px;border-radius:6px;cursor:pointer;font-size:13.5px;font-weight:600;">Create Group (needs 1,000 Coins)</button>
+          <button onclick="createCircle('group')" style="width:100%;background:#25a244;color:#fff;border:none;padding:9px;border-radius:6px;cursor:pointer;font-size:13.5px;font-weight:600;">Create Group (needs 8,000 Coins)</button>
         </div>
         <div id="groupListItems"></div>
       </div>
@@ -921,7 +922,7 @@ body.cm-network-offline .app-footer{opacity:.75}
             <span id="roomPicFileName" style="font-size:12px;color:#888;">No file chosen</span>
           </div>
           <div class="field-msg" id="roomCreateError" style="min-height:14px;"></div>
-          <button onclick="createCircle('room')" style="width:100%;background:#25a244;color:#fff;border:none;padding:9px;border-radius:6px;cursor:pointer;font-size:13.5px;font-weight:600;">Create Chatroom (needs 1,000 Coins)</button>
+          <button onclick="createCircle('room')" style="width:100%;background:#25a244;color:#fff;border:none;padding:9px;border-radius:6px;cursor:pointer;font-size:13.5px;font-weight:600;">Create Chatroom (needs 10,000 Coins)</button>
         </div>
         <div id="roomListItems"></div>
       </div>
@@ -1154,20 +1155,9 @@ body.cm-network-offline .app-footer{opacity:.75}
       </div>
     </div>
 
-    <div class="page" id="buyCoinsPage" style="padding:16px;overflow-y:auto;">
-      <h2 style="color:#2b3a8f;margin-bottom:6px;">💰 Buy Coins</h2>
-      <div class="profile-card" style="max-width:650px;line-height:1.6;font-size:14px;">
-        <p><b>Coin purchases are currently disabled.</b></p>
-        <p>Chat Me does not accept manual bank transfers, OPay/PalmPay transfers, payment references, or manual payment confirmations.</p>
-        <p>No money should be sent to Chat Me for Coins at this time. Coins remain virtual in-app items and cannot be cashed out, exchanged for Naira, or withdrawn.</p>
-        <p>Paid Coin purchases will only be enabled after the business/legal structure, payment provider, consumer terms, privacy/compliance requirements, and applicable app-store requirements have been reviewed and the proper payment integration is implemented.</p>
-        <button onclick="switchTab('leosPage')" style="margin-top:10px;background:#2b6ee0;color:#fff;border:0;padding:9px 14px;border-radius:6px;cursor:pointer;">Back to Coins</button>
-      </div>
-    </div>
-
     <div class="page" id="shopPage" style="padding:16px;overflow-y:auto;">
       <h2 style="color:#2b3a8f;margin-bottom:2px;">🛍️ Coins Shop</h2>
-      <div style="font-size:13px;color:#888;margin-bottom:10px;">Your balance: <strong id="shopBalance">0.00 Coins</strong></div>
+      <div style="font-size:13px;color:#888;margin-bottom:10px;">Your balance: <strong id="shopBalance">0.00 Coins</strong></div><div style="font-size:12px;color:#666;margin-bottom:12px;">Basic Chat Me use stays free. Premium items and creation features require Coins. No premium item is granted for free.</div>
       <div id="shopContent"></div>
     </div>
 
@@ -1326,7 +1316,7 @@ body.cm-network-offline .app-footer{opacity:.75}
           <div style="font-size:26px;font-weight:700;color:#2b3a8f;" id="adminTotalPosts">-</div>
         </div>
         <div class="profile-card" style="max-width:180px;">
-          <div style="font-size:12px;color:#888;">Verified (1,000+ Coins)</div>
+          <div style="font-size:12px;color:#888;">Verified (20,000-Coin purchase)</div>
           <div style="font-size:26px;font-weight:700;color:#2b3a8f;" id="adminTotalVerified">-</div>
         </div>
         <div class="profile-card" style="max-width:180px;">
@@ -1350,7 +1340,6 @@ body.cm-network-offline .app-footer{opacity:.75}
       <span onclick="switchTab('profilePage')">👤<br>Profile</span>
       <span onclick="switchTab('chatsPage')">💬<br>Message</span>
       <span onclick="switchTab('gamesPage')">🎮<br>Game</span>
-      <span style="display:none;" aria-hidden="true">💰<br>Buy Coins</span>
     </div>
 
     <div class="footer-tiles">
@@ -1544,7 +1533,7 @@ const RECAPTCHA_BACKEND_URL = 'https://chat-me-backend.rahmanadegboye1.workers.d
 const SECURE_STORAGE_BACKEND_URL = RECAPTCHA_BACKEND_URL.replace(/\/$/, '') + '/storage';
 let secureStorageBackendState = 'unknown';
 async function secureStorageRequest(op, key, body) {
-  if (navigator.onLine === false || (window.cmNetworkReady && !window.cmNetworkReady())) {
+  if (navigator.onLine === false) {
     const err = new Error('Network unavailable'); err.secureStorage = true; err.offline = true; throw err;
   }
   if (!firebaseAuth || !firebaseAuth.currentUser || firebaseAuth.currentUser.isAnonymous) return { handled:false };
@@ -1889,7 +1878,7 @@ function clearAllFieldErrors(ids){
 
 /* ---------------- SIGN UP ---------------- */
 async function doSignup(){
-  if (navigator.onLine === false || (window.cmNetworkReady && !window.cmNetworkReady())) {
+  if (navigator.onLine === false) {
     const e=document.getElementById('signupError'); if(e)e.textContent='Registration needs an internet connection. Please reconnect and try again.'; return;
   }
   const errEl = document.getElementById('signupError');
@@ -2016,7 +2005,7 @@ async function doSignup(){
       id: Date.now() + '-' + Math.random().toString(36).slice(2, 8),
       type: 'system', time: Date.now() + 1, read: false, handled: true,
       title: 'What can I use my Coins for?',
-      text: 'Your Coins can be used to create a Chatroom (1,000 Coins) or Group (1,000 Coins), and to buy items and features in the Shop: profile themes, profile frames, name effects, sticker packs, premium chat themes, virtual gifts, special badges, Featured Profile, Profile Music, Private Room access, Group Background access, Premium Message Pins, Premium Reactions, and Story Insights. You can also earn 50 Coins by inviting 3 friends who actually sign up with your referral link. Check the Shop before spending your Coins so you can see the current prices.'
+      text: 'Your Coins can be used to create a Chatroom (10,000 Coins) or Group (8,000 Coins), and to buy items and features in the Shop: profile themes, profile frames, name effects, sticker packs, premium chat themes, virtual gifts, special badges, Featured Profile, Profile Music, Private Room access, Group Background access, Premium Message Pins, Premium Reactions, and Story Insights. You can also earn 50 Coins by inviting 3 friends who actually sign up with your referral link. Check the Shop before spending your Coins so you can see the current prices.'
     }]), true);
 
     // Referral tracking: ?ref=someusername in the URL that brought them here.
@@ -2427,7 +2416,7 @@ async function resendVerificationEmail(){
 }
 
 async function doLogin(){
-  if (navigator.onLine === false || (window.cmNetworkReady && !window.cmNetworkReady())) {
+  if (navigator.onLine === false) {
     const e=document.getElementById('loginError'); if(e)e.textContent='Login needs an internet connection. Please reconnect and try again.'; return;
   }
   const errEl = document.getElementById('loginError');
@@ -2757,7 +2746,7 @@ async function showReferralInfo(){
 }
 
 function showRules(){
-  alert("Chat Me Rules & Regulations\n\n1. Respect everyone. Treat users with respect. Do not insult, bully, harass, threaten, or provoke another person.\n2. No sexual content. Do not post, send, request, or promote nudity, sexual material, or inappropriate conversations. Keep Chat Me suitable.\n3. No scams or fraud. “Yahoo”, phishing, fake investment offers, impersonation, dishonest sales, or attempts to trick people are prohibited.\n4. No begging or financial pressure. Do not ask strangers for money, Coins, gifts, transfers, passwords, codes, or financial information.\n5. Protect privacy. Never publish another person’s private information, passwords, phone numbers, addresses, private messages, or documents without permission.\n6. No hate or threats. Do not attack people because of identity, background, beliefs, or disability. Threats and violence are prohibited.\n7. Use social media responsibly. WhatsApp, Facebook, Instagram, TikTok may be shared for legitimate purposes. Do not use Chat Me for scams, harassment, spam, or harmful activity.\n8. No spam. Do not flood chats, post advertisements, manipulate referrals, or use automated activity to disturb the community.\n9. Coins and purchases. Use Coins only for Chat Me features and Shop items. Do not duplicate, steal, or manipulate Coins or payment records. Trust only official payment instructions.\n10. Chatrooms and Groups. Creating a Chatroom or Group costs 1,000 Coins. Keep conversations respectful and follow these rules.\n11. Report problems. Use reporting or Customer Service for scams, abuse, rule-breaking, payment problems. Do not make false reports.\n12. Staff decisions. Admins and moderators may remove content, restrict features, suspend accounts, or delete accounts when rules are broken.\n13. Account responsibility. Keep login details secure. Never share your password or verification codes. You are responsible for activity.\n14. Have fun. Chat Me is for friendship, conversation, sharing, games, and community. Keep it clean, respect others, and help make the platform welcoming together.");
+  alert("Chat Me Rules & Regulations\n\n1. Respect everyone. Treat users with respect. Do not insult, bully, harass, threaten, or provoke another person.\n2. No sexual content. Do not post, send, request, or promote nudity, sexual material, or inappropriate conversations. Keep Chat Me suitable.\n3. No scams or fraud. “Yahoo”, phishing, fake investment offers, impersonation, dishonest sales, or attempts to trick people are prohibited.\n4. No begging or financial pressure. Do not ask strangers for money, Coins, gifts, transfers, passwords, codes, or financial information.\n5. Protect privacy. Never publish another person’s private information, passwords, phone numbers, addresses, private messages, or documents without permission.\n6. No hate or threats. Do not attack people because of identity, background, beliefs, or disability. Threats and violence are prohibited.\n7. Use social media responsibly. WhatsApp, Facebook, Instagram, TikTok may be shared for legitimate purposes. Do not use Chat Me for scams, harassment, spam, or harmful activity.\n8. No spam. Do not flood chats, post advertisements, manipulate referrals, or use automated activity to disturb the community.\n9. Coins and purchases. Use Coins only for Chat Me features and Shop items. Do not duplicate, steal, or manipulate Coins or payment records. Trust only official payment instructions.\n10. Chatrooms and Groups. Creating a Chatroom costs 10,000 Coins and creating a Group costs 8,000 Coins. Keep conversations respectful and follow these rules.\n11. Report problems. Use reporting or Customer Service for scams, abuse, rule-breaking, payment problems. Do not make false reports.\n12. Staff decisions. Admins and moderators may remove content, restrict features, suspend accounts, or delete accounts when rules are broken.\n13. Account responsibility. Keep login details secure. Never share your password or verification codes. You are responsible for activity.\n14. Have fun. Chat Me is for friendship, conversation, sharing, games, and community. Keep it clean, respect others, and help make the platform welcoming together.");
 }
 
 /* ---------------- ANNOUNCEMENTS (admin only can post; everyone can read) ---------------- */
@@ -2871,13 +2860,13 @@ const LANGUAGE_LIST = [
   'Zulu','Shona','Afrikaans','Tagalog'
 ];
 const TRANSLATIONS = {
-  'English': { home:'Home', profile:'Profile', message:'Message', friends:'Friends', notifications:'Notifications', chatrooms:'Chatrooms', statusbook:'Statusbook', groups:'Groups', leos:'Coins', games:'Games', buy:'Buy Coins', menu:'Menu', admin:'Admin', login:'Log In', signup:'Sign Up' },
+  'English': { home:'Home', profile:'Profile', message:'Message', friends:'Friends', notifications:'Notifications', chatrooms:'Chatrooms', statusbook:'Statusbook', groups:'Groups', leos:'Coins', games:'Games', menu:'Menu', admin:'Admin', login:'Log In', signup:'Sign Up' },
   'French': { home:'Accueil', profile:'Profil', message:'Message', friends:'Amis', notifications:'Notifications', chatrooms:'Salons', statusbook:'Statuts', groups:'Groupes', leos:'Coins', games:'Jeux', buy:'Acheter des Coins', menu:'Menu', admin:'Admin', login:'Connexion', signup:"S'inscrire" },
   'Spanish': { home:'Inicio', profile:'Perfil', message:'Mensaje', friends:'Amigos', notifications:'Notificaciones', chatrooms:'Salas', statusbook:'Estados', groups:'Grupos', leos:'Coins', games:'Juegos', buy:'Comprar Coins', menu:'Menú', admin:'Admin', login:'Iniciar sesión', signup:'Registrarse' },
   'Yoruba': { home:'Ile', profile:'Profaili', message:'Ifiranṣẹ', friends:'Ọ̀rẹ́', notifications:'Ìkéde', chatrooms:'Yàrá ìjíròrò', statusbook:'Ìwé ipò', groups:'Àwùjọ', leos:'Coins', games:'Eré', buy:'Ra Coins', menu:'Àkójọ', admin:'Alábòójútó', login:'Wọlé', signup:'Forúkọsílẹ̀' },
   'Hausa': { home:'Gida', profile:'Bayani', message:'Saƙo', friends:'Abokai', notifications:'Sanarwa', chatrooms:'Ɗakunan hira', statusbook:'Littafin matsayi', groups:'Ƙungiyoyi', leos:'Coins', games:'Wasanni', buy:'Saya Coins', menu:'Menu', admin:'Admin', login:'Shiga', signup:'Yi rijista' },
   'Igbo': { home:'Ụlọ', profile:'Profaịlụ', message:'Ozi', friends:'Ndị enyi', notifications:'Ọkwa', chatrooms:'Ụlọ nkata', statusbook:'Akwụkwọ ọnọdụ', groups:'Òtù', leos:'Coins', games:'Egwuregwu', buy:'Zụta Coins', menu:'Menu', admin:'Onye nlekọta', login:'Banye', signup:'Debanye aha' },
-  'Nigerian Pidgin': { home:'Home', profile:'Profile', message:'Message', friends:'Padi dem', notifications:'Notification', chatrooms:'Chatroom', statusbook:'Statusbook', groups:'Group', leos:'Coins', games:'Game', buy:'Buy Coins', menu:'Menu', admin:'Admin', login:'Enter', signup:'Register' }
+  'Nigerian Pidgin': { home:'Home', profile:'Profile', message:'Message', friends:'Padi dem', notifications:'Notification', chatrooms:'Chatroom', statusbook:'Statusbook', groups:'Group', leos:'Coins', games:'Game', menu:'Menu', admin:'Admin', login:'Enter', signup:'Register' }
 };
 function currentLangCode(){
   let lang = 'English';
@@ -2974,7 +2963,7 @@ async function loadFeaturedPost(){
 
 function switchTab(pageId, fromHistory=false){
   if (!currentUser) return;
-  const cmCloudPages=['homePage','profilePage','chatsPage','friendsPage','notificationsPage','leosPage','statusbookPage','aiPage','menuPage','reportPage','searchPage','savedPostsPage','shopPage','groupsPage','chatroomsPage','adminPage','supportPage','announcementsPage','buyCoinsPage','settingsPage','videosPage'];
+  const cmCloudPages=['homePage','profilePage','chatsPage','friendsPage','notificationsPage','leosPage','statusbookPage','aiPage','menuPage','reportPage','searchPage','savedPostsPage','shopPage','groupsPage','chatroomsPage','adminPage','supportPage','announcementsPage','settingsPage','videosPage'];
   if (cmCloudPages.includes(pageId) && navigator.onLine === false) {
     const pageEl=document.getElementById(pageId);
     if(pageEl) {
@@ -2984,7 +2973,6 @@ function switchTab(pageId, fromHistory=false){
     }
     return;
   }
-  if (cmCloudPages.includes(pageId) && window.cmNetworkReady && !window.cmNetworkReady()) return;
   storageSet(lastTabKey(currentUser.username), pageId);
   try {
     const targetHash = '#' + encodeURIComponent(pageId);
@@ -3025,7 +3013,6 @@ function switchTab(pageId, fromHistory=false){
   if (pageId === 'adminPage') loadAdminPage();
   if (pageId === 'supportPage') cmLoadSupportPage();
   if (pageId === 'announcementsPage') loadAnnouncementsPage();
-  if (pageId === 'buyCoinsPage') loadBuyCoinsPage();
   if (pageId === 'settingsPage') cmLoadSettings();
   if (pageId === 'videosPage') loadVideosPage();
 }
@@ -3138,35 +3125,20 @@ async function loadAdminPage(){
   `;
 
   /* ---- Verification requests (admin or moderator can act) ---- */
-  const eligible = rows.filter(u => !u.verified && typeof u.leos === 'number' && u.leos >= VERIFIED_COINS_THRESHOLD);
+  const eligible = rows.filter(u => !u.verified && !!u.pendingVerification);
   const canVerify = iAmAdmin || iAmModerator;
   const verifySection = `
-    <div class="section-divider"><strong>Verification requests</strong><span>Accounts that reached ${VERIFIED_COINS_THRESHOLD} Coins and are eligible for the 🌐 badge.</span></div>
+    <div class="section-divider"><strong>Verification requests</strong><span>Members who paid the 20,000-Coin verification fee and are waiting for staff review.</span></div>
     ${eligible.length ? eligible.map(u => `
       <div class="user-result" style="max-width:560px;">
         ${avatarHtml(u.firstName, u.lastName, u.profilePic, 'avatar')}
         <div class="info">
           <div class="name">${escapeHtml(u.firstName)} ${escapeHtml(u.lastName)}</div>
-          <div class="uname">@${escapeHtml(u.username)} &middot; Coins: ${u.leos.toFixed(2)}</div>
+          <div class="uname">@${escapeHtml(u.username)} &middot; Verification fee paid: 20,000 Coins</div>
         </div>
-        ${canVerify ? `<button onclick="verifyUser('${u.username.replace(/'/g,"\\'")}')">Verify</button>` : `<span style="color:#aaa;font-size:12.5px;">Only staff can verify</span>`}
+        ${canVerify ? `<button onclick="verifyUser('${u.username.replace(/'/g,"\\'")}')">Approve Verification</button>` : `<span style="color:#aaa;font-size:12.5px;">Only staff can verify</span>`}
       </div>`).join('') : '<div class="empty-feed">No one is currently eligible.</div>'}
   `;
-
-  /* ---- Verified accounts that fell back below the threshold - staff can remove the badge ---- */
-  const droppedBelow = rows.filter(u => u.verified && !(typeof u.leos === 'number' && u.leos >= VERIFIED_COINS_THRESHOLD));
-  const unverifySection = droppedBelow.length ? `
-    <div class="section-divider"><strong>Verified but below ${VERIFIED_COINS_THRESHOLD} Coins</strong><span>Their balance dropped back down - staff can remove their 🌐 badge.</span></div>
-    ${droppedBelow.map(u => `
-      <div class="user-result" style="max-width:560px;">
-        ${avatarHtml(u.firstName, u.lastName, u.profilePic, 'avatar')}
-        <div class="info">
-          <div class="name">${escapeHtml(u.firstName)} ${escapeHtml(u.lastName)}</div>
-          <div class="uname">@${escapeHtml(u.username)} &middot; Coins: ${(u.leos||0).toFixed(2)}</div>
-        </div>
-        ${canVerify ? `<button style="background:#e8622d;" onclick="unverifyUser('${u.username.replace(/'/g,"\\'")}')">Remove Verification</button>` : ''}
-      </div>`).join('')}
-  ` : '';
 
   /* ---- Coins leaderboard - top 20, visible to admins and moderators ---- */
   const top20 = rows.slice().sort((a,b) => (b.leos||0) - (a.leos||0)).slice(0, 20);
@@ -3413,18 +3385,6 @@ async function giveCoins(username, amountStr){
   loadAdminPage();
 }
 
-/* ---------------- BUY COINS ----------------
-   Purchases are intentionally disabled until the legal/business and payment
-   requirements have been reviewed and a proper payment integration exists. */
-async function loadBuyCoinsPage(){
-  const host = document.getElementById('buyPackages');
-  if (host) host.innerHTML = '';
-  const confirmArea = document.getElementById('buyConfirmArea');
-  if (confirmArea) confirmArea.innerHTML = '';
-  const cooldownEl = document.getElementById('buyCooldownNote');
-  if (cooldownEl) cooldownEl.textContent = '';
-}
-
 async function showAdminEditForm(username){
   if (!isAdminUser(currentUser)) return;
   const email = await storageGet(usernameKey(username), true);
@@ -3490,8 +3450,10 @@ async function verifyUser(username){
   if (!raw) return;
   try {
     const u = JSON.parse(raw);
-    if (!(typeof u.leos === 'number' && u.leos >= VERIFIED_COINS_THRESHOLD)) { alert('This account has not reached ' + VERIFIED_COINS_THRESHOLD + ' Coins yet.'); return; }
+    if (!u.pendingVerification) { alert('This account has no pending verification request.'); return; }
     u.verified = true;
+    u.pendingVerification = false;
+    u.verifiedAt = Date.now();
     await storageSet(userKey(email), JSON.stringify(u), true);
   } catch(e){}
   loadAdminPage();
@@ -4419,7 +4381,8 @@ function timeAgo(ts){
   return Math.floor(diff/86400) + ' day' + (Math.floor(diff/86400)===1?'':'s') + ' ago';
 }
 
-const VERIFIED_COINS_THRESHOLD = 10000;
+const VERIFIED_COINS_THRESHOLD = 20000;
+const VERIFICATION_PRICE_COINS = 20000;
 const MAX_ADMINS = 2;
 const MAX_MODERATORS = 3;
 function isModeratorUser(u){
@@ -4957,9 +4920,9 @@ const SHOP_CATALOG = {
     {id:'emeraldChat',label:'Emerald Chat',price:1750,css:'#d1fae5'},{id:'cosmicChat',label:'Cosmic Chat',price:2100,css:'#312e81'}
   ],
   gifts: [
-    {id:'rose',label:'Rose',price:350,emoji:'🌹'},{id:'cake',label:'Cake',price:500,emoji:'🎂'},{id:'crown',label:'Crown',price:700,emoji:'👑'},
-    {id:'rocket',label:'Rocket',price:900,emoji:'🚀'},{id:'trophy',label:'Trophy',price:1100,emoji:'🏆'},{id:'diamondGift',label:'Diamond Gift',price:1350,emoji:'💎'},
-    {id:'starGift',label:'Star Gift',price:1600,emoji:'🌟'},{id:'fireGift',label:'Fire Gift',price:1850,emoji:'🔥'},{id:'unicorn',label:'Unicorn',price:2200,emoji:'🦄'},{id:'galaxyGift',label:'Galaxy Gift',price:2800,emoji:'🌌'}
+    {id:'rose',label:'Rose',price:10000,emoji:'🌹'},{id:'cake',label:'Cake',price:12000,emoji:'🎂'},{id:'crown',label:'Crown',price:15000,emoji:'👑'},
+    {id:'rocket',label:'Rocket',price:18000,emoji:'🚀'},{id:'trophy',label:'Trophy',price:22000,emoji:'🏆'},{id:'diamondGift',label:'Diamond Gift',price:26000,emoji:'💎'},
+    {id:'starGift',label:'Star Gift',price:30000,emoji:'🌟'},{id:'fireGift',label:'Fire Gift',price:35000,emoji:'🔥'},{id:'unicorn',label:'Unicorn',price:40000,emoji:'🦄'},{id:'galaxyGift',label:'Galaxy Gift',price:50000,emoji:'🌌'}
   ],
   badges: [
     {id:'legend',label:'Legend',price:7000,emoji:'🏆'},{id:'vip',label:'VIP',price:8500,emoji:'💎'},{id:'creator',label:'Creator',price:10000,emoji:'🎨'},
@@ -4967,7 +4930,7 @@ const SHOP_CATALOG = {
     {id:'diamondBadge',label:'Diamond',price:16000,emoji:'💠'},{id:'champion',label:'Champion',price:17500,emoji:'🥇'},{id:'master',label:'Master',price:19000,emoji:'🛡️'},{id:'ultimateBadge',label:'Ultimate',price:20000,emoji:'🌟'}
   ]
 };
-const SHOP_FIXED_PRICES = { featuredProfile:850, profileMusic:950, privateRoom:1250, groupBackground:1100, pinMessage:650, premiumReactions:450, storyInsights:600 };
+const SHOP_FIXED_PRICES = { featuredProfile:850, profileMusic:950, privateRoom:1250, groupBackground:1100, pinMessage:650, premiumReactions:450, storyInsights:600, verification:20000 };
 
 async function loadCurrentUserFull(){
   const raw = await storageGet(userKey(currentUser.email), true);
@@ -5005,7 +4968,7 @@ async function buyShopItem(category, itemId){
   const u = await loadCurrentUserFull();
   if (!u) return;
   if (category === 'badges' && !u.verified) {
-    alert('Only verified users can buy badges. Reach 10,000 Coins and complete verification first.');
+    alert('Only verified users can buy badges. Complete the 20,000-Coin verification process and receive admin approval first.');
     return;
   }
   // Map category -> the exact field name used on the user record.
@@ -5040,7 +5003,16 @@ async function buyFixedShopItem(kind){
   const balance = typeof u.leos === 'number' ? u.leos : 20;
   if (balance < price) { alert('You need ' + price + ' Coins for this. Your balance: ' + balance.toFixed(2)); return; }
 
-  if (kind === 'featuredProfile') {
+  if (kind === 'verification') {
+    if (u.verified) { alert('Your account is already verified.'); return; }
+    if (u.pendingVerification) { alert('Your verification request is already waiting for admin review.'); return; }
+    u.leos = balance - VERIFICATION_PRICE_COINS;
+    u.pendingVerification = true;
+    u.verificationRequestedAt = Date.now();
+    u.verified = false;
+    await saveCurrentUserFull(u);
+    alert('20,000 Coins have been used for your verification request. An admin must review and approve it before your verified badge is activated.');
+  } else if (kind === 'featuredProfile') {
     u.leos = balance - price;
     u.featuredUntil = Date.now() + 24 * 60 * 60 * 1000;
     await saveCurrentUserFull(u);
@@ -5167,6 +5139,10 @@ async function loadShopPage(){
         : `<button onclick="buyShopItem('chatThemes','${c.id}')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`);
     }).join('') + '<div style="font-size:11.5px;color:#888;width:100%;">Pick your active chat theme from inside any chat (🎨 icon).</div>');
 
+  html += section('🌐 Verification', 'Request the Chat Me verified badge for 20,000 Coins. An admin must review and approve the request.', [
+    `<div style=\"padding:10px;border:1px solid #ddd;border-radius:8px;\"><strong>Verified Badge</strong><div style=\"font-size:12px;color:#777;margin:5px 0 8px;\">20,000 Coins</div>${u.verified ? '<span style=\"color:#198754;font-weight:700;\">Already verified</span>' : `<button onclick=\"buyFixedShopItem('verification')\" style=\"background:#2b6ee0;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;\">Request verification for 20,000 Coins</button>`}</div>`
+  ]);
+
   html += section('🎁 Virtual Gifts', 'Buy gifts here, then send them from the Gift button at the top of a private chat.',
     SHOP_CATALOG.gifts.map(g => {
       const ownedCount = (u.ownedGifts || []).filter(id => id === g.id).length;
@@ -5195,7 +5171,7 @@ async function loadShopPage(){
       u.hasProfileMusic ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Unlocked</button>`
       : `<button onclick="buyFixedShopItem('profileMusic')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`));
 
-  html += section('🔒 Private Rooms', 'Unlock Private Room access for private chatroom creation (1,250 Coins). Creating a chatroom itself costs 1,000 Coins.',
+  html += section('🔒 Private Rooms', 'Unlock Private Room access for private chatroom creation (1,250 Coins). Creating a chatroom itself costs 10,000 Coins.',
     itemCard('Private Room', SHOP_FIXED_PRICES.privateRoom + ' Coins', `<div style="font-size:28px;">🔒</div>`,
       u.hasPrivateRoom ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Unlocked</button>`
       : `<button onclick="buyFixedShopItem('privateRoom')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`));
@@ -5681,7 +5657,7 @@ function showChangePasswordForm(){
   const u = currentUser;
   if (!canChangePassword(u)) {
     if (!u.verified) {
-      alert('Only verified users and admins can change their password. Get verified by reaching 10,000 Coins.');
+      alert('Only verified users and admins can change their password. Verification costs 20,000 Coins.');
     } else {
       const daysLeft = Math.ceil(PASSWORD_COOLDOWN_DAYS - daysSincePasswordChange(u));
       alert('You can only change your password once every ' + PASSWORD_COOLDOWN_DAYS + ' days. Try again in ' + daysLeft + ' day' + (daysLeft===1?'':'s') + '.');
@@ -6649,7 +6625,7 @@ async function sendMessage(){
 /* ---------------- GROUPS & CHATROOMS ----------------
    Both are the same "circle" concept under the hood, distinguished by `kind`
    ('group' or 'room'), just with a different Coins requirement to create one. */
-const CIRCLE_MIN_COINS = { group: 1000, room: 1000 };
+const CIRCLE_MIN_COINS = { group: 8000, room: 10000 };
 const CIRCLE_LABEL = { group: 'Group', room: 'Chatroom' };
 function circleKey(kind, id){ return kind + ':' + id; }
 function circleChatKey(kind, id){ return kind + 'chat:' + id; }
@@ -6748,6 +6724,8 @@ async function createCircle(kind){
     creator: currentUser.username,
     members: [currentUser.username],
     admins: [],
+    postingMode: 'everyone',
+    approvedPosters: [currentUser.username],
     isPrivate: privateRequested,
     createdAt: Date.now(),
     lastActivityAt: Date.now()
@@ -7010,6 +6988,53 @@ async function showRoomSettings(id){
   `;
 }
 
+async function removeCircleMember(kind, id, username){
+  const raw = await storageGet(circleKey(kind, id), true);
+  if (!raw) return;
+  let c; try { c = JSON.parse(raw); } catch(e) { return; }
+  const me = currentUser.username.toLowerCase();
+  const isCreator = (c.creator || '').toLowerCase() === me;
+  const isCircleAdmin = (c.admins || []).some(a => a.toLowerCase() === me);
+  if (!isCreator && !isCircleAdmin && !isAdminUser(currentUser)) { alert('Only the room/group admin can remove members.'); return; }
+  const target = String(username || '').toLowerCase();
+  if (target === (c.creator || '').toLowerCase()) { alert('The owner cannot be removed.'); return; }
+  c.members = (c.members || []).filter(m => m.toLowerCase() !== target);
+  c.admins = (c.admins || []).filter(a => a.toLowerCase() !== target);
+  c.approvedPosters = (c.approvedPosters || []).filter(a => a.toLowerCase() !== target);
+  await storageSet(circleKey(kind, id), JSON.stringify(c), true);
+  if (kind === 'room') showRoomSettings(id); else showGroupSettings(id);
+}
+
+async function setCirclePostingMode(kind, id, mode){
+  const raw = await storageGet(circleKey(kind, id), true);
+  if (!raw) return;
+  let c; try { c = JSON.parse(raw); } catch(e) { return; }
+  const me = currentUser.username.toLowerCase();
+  const isCreator = (c.creator || '').toLowerCase() === me;
+  const isCircleAdmin = (c.admins || []).some(a => a.toLowerCase() === me);
+  if (!isCreator && !isCircleAdmin && !isAdminUser(currentUser)) { alert('Only the room/group admin can change posting permissions.'); return; }
+  c.postingMode = mode === 'approved' ? 'approved' : 'everyone';
+  c.approvedPosters = Array.isArray(c.approvedPosters) ? c.approvedPosters : [c.creator];
+  if (!c.approvedPosters.some(a => a.toLowerCase() === c.creator.toLowerCase())) c.approvedPosters.push(c.creator);
+  await storageSet(circleKey(kind, id), JSON.stringify(c), true);
+  if (kind === 'room') showRoomSettings(id); else showGroupSettings(id);
+}
+
+async function toggleCirclePosterApproval(kind, id, username){
+  const raw = await storageGet(circleKey(kind, id), true);
+  if (!raw) return;
+  let c; try { c = JSON.parse(raw); } catch(e) { return; }
+  const me = currentUser.username.toLowerCase();
+  const isCreator = (c.creator || '').toLowerCase() === me;
+  const isCircleAdmin = (c.admins || []).some(a => a.toLowerCase() === me);
+  if (!isCreator && !isCircleAdmin && !isAdminUser(currentUser)) { alert('Only the room/group admin can approve posters.'); return; }
+  c.approvedPosters = Array.isArray(c.approvedPosters) ? c.approvedPosters : [c.creator];
+  const idx = c.approvedPosters.findIndex(a => a.toLowerCase() === username.toLowerCase());
+  if (idx >= 0) c.approvedPosters.splice(idx, 1); else c.approvedPosters.push(username);
+  await storageSet(circleKey(kind, id), JSON.stringify(c), true);
+  if (kind === 'room') showRoomSettings(id); else showGroupSettings(id);
+}
+
 async function toggleCirclePrivacy(kind, id, checked){
   const raw = await storageGet(circleKey(kind, id), true);
   if (!raw) return;
@@ -7193,6 +7218,16 @@ async function sendCircleMessage(){
   if (isCurrentlyBanned(currentUser)) { alert(banBlockMessage(currentUser)); return; }
   if (!activeCircle) return;
   const { kind, id } = activeCircle;
+  const circleRawForPermission = await storageGet(circleKey(kind, id), true);
+  if (circleRawForPermission) {
+    try {
+      const pc = JSON.parse(circleRawForPermission);
+      const me = currentUser.username.toLowerCase();
+      const isAdminHere = (pc.creator || '').toLowerCase() === me || (pc.admins || []).some(a => a.toLowerCase() === me) || isAdminUser(currentUser);
+      const approvedHere = (pc.approvedPosters || []).some(a => a.toLowerCase() === me);
+      if (pc.postingMode === 'approved' && !isAdminHere && !approvedHere) { alert('Only approved members can post in this chatroom.'); return; }
+    } catch(e){}
+  }
   const input = document.getElementById('circleChatInput');
   const text = input.value.trim();
   if (!text) return;
@@ -7273,7 +7308,7 @@ async function openGroup(id){
       </div>
       <div id="groupExtraPanel"></div>
       <div style="padding:0 14px 14px;">
-        <div style="font-weight:700;margin-bottom:8px;">Create Post</div>
+        <div style="font-weight:700;margin-bottom:4px;">Create Post</div><div id="groupPostingPermissionHint" style="font-size:12px;color:#777;margin-bottom:8px;">Posting permission is controlled by the group admins.</div>
         <textarea id="groupPostInput" placeholder="Share something with the group..." style="width:100%;min-height:60px;padding:10px;border:1px solid #ccc;border-radius:6px;font-size:14px;margin-bottom:6px;resize:vertical;box-sizing:border-box;"></textarea>
         <div style="font-size:12.5px;color:#888;margin-bottom:6px;">
           <label style="cursor:pointer;color:#2b6ee0;">Choose file<input type="file" id="groupPostFile" accept="image/*" style="display:none;" onchange="onGroupPostFileChosen()"></label>
@@ -7570,6 +7605,16 @@ async function deleteGroupComment(groupId, postId, index){
 }
 
 async function createGroupPost(id){
+  const circleRawForPermission = await storageGet(circleKey('group', id), true);
+  if (circleRawForPermission) {
+    try {
+      const pc = JSON.parse(circleRawForPermission);
+      const me = currentUser.username.toLowerCase();
+      const isAdminHere = (pc.creator || '').toLowerCase() === me || (pc.admins || []).some(a => a.toLowerCase() === me) || isAdminUser(currentUser);
+      const approvedHere = (pc.approvedPosters || []).some(a => a.toLowerCase() === me);
+      if (pc.postingMode === 'approved' && !isAdminHere && !approvedHere) { const e=document.getElementById('groupPostError'); if(e)e.textContent='Only approved members can post in this group.'; return; }
+    } catch(e){}
+  }
   const input = document.getElementById('groupPostInput');
   const errEl = document.getElementById('groupPostError');
   const text = input.value.trim();
@@ -7598,6 +7643,16 @@ function togglePollForm(){
 }
 
 async function createGroupPoll(id){
+  const circleRawForPermission = await storageGet(circleKey('group', id), true);
+  if (circleRawForPermission) {
+    try {
+      const pc = JSON.parse(circleRawForPermission);
+      const me = currentUser.username.toLowerCase();
+      const isAdminHere = (pc.creator || '').toLowerCase() === me || (pc.admins || []).some(a => a.toLowerCase() === me) || isAdminUser(currentUser);
+      const approvedHere = (pc.approvedPosters || []).some(a => a.toLowerCase() === me);
+      if (pc.postingMode === 'approved' && !isAdminHere && !approvedHere) { const e=document.getElementById('pollError'); if(e)e.textContent='Only approved members can post in this group.'; return; }
+    } catch(e){}
+  }
   const errEl = document.getElementById('pollError');
   errEl.textContent = '';
   const question = document.getElementById('pollQuestion').value.trim();
@@ -8400,104 +8455,37 @@ window.addEventListener('load', function(){ refreshWelcomeStats(); });
 <script id="chatme-network-resilience-js">
 /* ============================================================
    NETWORK RESILIENCE
-   - Cloud-backed pages/actions wait for a usable connection.
-   - Offline state is visible instead of showing endless spinners.
-   - Worker requests time out and can retry when connectivity returns.
+   - Login/registration do not depend on a Cloudflare health probe.
+   - Only a real browser offline state blocks cloud actions.
+   - Worker requests can still use a timeout.
    - Images/videos are lazy-loaded to reduce mobile data usage.
    ============================================================ */
 (function(){
-  const WORKER_HEALTH='https://chat-me-backend.rahmanadegboye1.workers.dev/health';
-  const PROBE_TIMEOUT=6000;
   const REQUEST_TIMEOUT=10000;
   let cmNetworkUsable = navigator.onLine !== false;
-  let cmNetworkChecking = false;
-  let cmLastNetworkError = '';
-
   function cmEnsureNetworkBanner(){
     let b=document.getElementById('cmNetworkBanner');
     if(b)return b;
-    b=document.createElement('div');
-    b.id='cmNetworkBanner';
-    b.className='cm-network-banner';
-    b.innerHTML='<div><strong id="cmNetworkBannerTitle">Network unavailable</strong><span id="cmNetworkBannerText">Chat Me is waiting for your connection.</span></div><button type="button" id="cmNetworkRetry">Retry</button>';
+    b=document.createElement('div'); b.id='cmNetworkBanner'; b.className='cm-network-banner';
+    b.innerHTML='<div><strong id="cmNetworkBannerTitle">You are offline</strong><span id="cmNetworkBannerText">Chat Me will pause cloud loading until your internet connection returns.</span></div><button type="button" id="cmNetworkRetry">Retry</button>';
     document.body.appendChild(b);
-    b.querySelector('#cmNetworkRetry').addEventListener('click',function(){cmCheckNetwork(true);});
+    b.querySelector('#cmNetworkRetry').addEventListener('click',function(){cmNetworkRetry();});
     return b;
   }
   function cmSetNetworkUI(usable,reason){
-    cmNetworkUsable=!!usable;
-    document.body.classList.toggle('cm-network-offline',!cmNetworkUsable);
-    const b=cmEnsureNetworkBanner();
-    const title=b.querySelector('#cmNetworkBannerTitle');
-    const txt=b.querySelector('#cmNetworkBannerText');
+    cmNetworkUsable=!!usable; document.body.classList.toggle('cm-network-offline',!cmNetworkUsable);
+    const b=cmEnsureNetworkBanner(); const title=b.querySelector('#cmNetworkBannerTitle'); const txt=b.querySelector('#cmNetworkBannerText');
     if(cmNetworkUsable){b.classList.remove('show');return;}
-    b.classList.add('show');
-    if(navigator.onLine===false){
-      title.textContent='You are offline';
-      txt.textContent='Chat Me will not load cloud data until your internet connection returns.';
-    }else{
-      title.textContent='Connection unavailable';
-      txt.textContent=reason||'The Chat Me server could not be reached. Tap Retry to try again.';
-    }
+    b.classList.add('show'); title.textContent='You are offline'; txt.textContent=reason||'Chat Me will pause cloud loading until your internet connection returns.';
   }
-  async function cmCheckNetwork(force){
-    if(cmNetworkChecking && !force)return cmNetworkUsable;
-    if(navigator.onLine===false){cmSetNetworkUI(false,'');return false;}
-    cmNetworkChecking=true;
-    try{
-      const c=new AbortController();
-      const timer=setTimeout(()=>c.abort(),PROBE_TIMEOUT);
-      const r=await fetch(WORKER_HEALTH,{method:'GET',cache:'no-store',signal:c.signal});
-      clearTimeout(timer);
-      if(!r.ok)throw new Error('Health check '+r.status);
-      cmLastNetworkError='';
-      cmSetNetworkUI(true,'');
-      return true;
-    }catch(e){
-      cmLastNetworkError=e?.message||'Network check failed';
-      cmSetNetworkUI(false,cmLastNetworkError);
-      return false;
-    }finally{cmNetworkChecking=false;}
-  }
-  window.cmNetworkReady=function(){return navigator.onLine!==false && cmNetworkUsable;};
-  window.cmRequireNetwork=function(message){
-    if(window.cmNetworkReady())return true;
-    cmSetNetworkUI(false,message||'A working internet connection is required for this part of Chat Me.');
-    return false;
-  };
-  window.cmNetworkRetry=async function(){
-    const ok=await cmCheckNetwork(true);
-    if(ok && window.currentUser){
-      const active=document.querySelector('.page.active')?.id;
-      if(active && typeof window.switchTab==='function') window.switchTab(active,true);
-    }
-    return ok;
-  };
+  window.cmNetworkReady=function(){return navigator.onLine!==false;};
+  window.cmRequireNetwork=function(message){if(navigator.onLine!==false){cmSetNetworkUI(true,'');return true;} cmSetNetworkUI(false,message||'A working internet connection is required for this part of Chat Me.');return false;};
+  window.cmNetworkRetry=function(){const ok=navigator.onLine!==false;cmSetNetworkUI(ok,ok?'':'A working internet connection is required.');if(ok&&window.currentUser){const active=document.querySelector('.page.active')?.id;if(active&&typeof window.switchTab==='function')window.switchTab(active,true);}return ok;};
   window.cmNetworkTimeout=REQUEST_TIMEOUT;
-  window.cmNetworkAbortableFetch=async function(url,options){
-    if(!window.cmRequireNetwork())throw new Error('Network unavailable');
-    const controller=new AbortController();
-    const timer=setTimeout(()=>controller.abort(),REQUEST_TIMEOUT);
-    try{return await fetch(url,{...(options||{}),cache:(options&&options.cache)||'no-store',signal:controller.signal});}
-    finally{clearTimeout(timer);}
-  };
-
+  window.cmNetworkAbortableFetch=async function(url,options){if(!window.cmRequireNetwork())throw new Error('Network unavailable');const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),REQUEST_TIMEOUT);try{return await fetch(url,{...(options||{}),cache:(options&&options.cache)||'no-store',signal:controller.signal});}finally{clearTimeout(timer);}};
   window.addEventListener('offline',function(){cmSetNetworkUI(false,'');});
-  window.addEventListener('online',function(){
-    cmSetNetworkUI(false,'Checking your connection…');
-    setTimeout(()=>cmCheckNetwork(true),500);
-  });
-  document.addEventListener('visibilitychange',function(){
-    if(document.visibilityState==='visible' && navigator.onLine!==false)cmCheckNetwork(false);
-  });
-  window.addEventListener('load',function(){
-    cmCheckNetwork(false);
-    // Save mobile data: browser loads media only when it is near the viewport.
-    document.querySelectorAll('img').forEach(img=>{if(!img.hasAttribute('loading'))img.setAttribute('loading','lazy');});
-    document.querySelectorAll('video').forEach(v=>{v.setAttribute('preload','none');});
-  });
-
-  // The original switchTab is patched below; this block intentionally does not replace page HTML.
+  window.addEventListener('online',function(){cmSetNetworkUI(true,'');});
+  window.addEventListener('load',function(){cmSetNetworkUI(navigator.onLine!==false,'');document.querySelectorAll('img').forEach(img=>{if(!img.hasAttribute('loading'))img.setAttribute('loading','lazy');});document.querySelectorAll('video').forEach(v=>{v.setAttribute('preload','none');});});
 })();
 </script>
 
