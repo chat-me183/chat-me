@@ -107,8 +107,8 @@
   @media(max-width:480px){.welcome-nav{padding:0 14px}.welcome-nav-brand{font-size:18px}.welcome-nav-actions .nav-login{padding:8px 11px}.welcome-nav-actions .nav-signup{padding:9px 12px}.welcome-main{width:92%;padding-top:28px}.welcome-login-card{padding:22px}.welcome-copy h1{font-size:34px;letter-spacing:-1px}}
 
   /* ---- Auth screens (login / signup) ---- */
-  .auth-screen { position: fixed; inset: 0; background: #f4f5f7; display: none; align-items: flex-start; justify-content: center; z-index: 50; overflow-y: auto; padding: 24px 16px; }
-  .auth-box { background: #fff; padding: 28px 24px; border-radius: 8px; width: 100%; max-width: 420px; border: 1px solid #e2e2e2; margin-bottom: 40px; }
+  .auth-screen { position: fixed; inset: 0; background: linear-gradient(160deg,#062b55 0%,#0b3f78 48%,#061f3d 100%); display: none; align-items: flex-start; justify-content: center; z-index: 50; overflow-y: auto; padding: 18px 12px 34px; }
+  .auth-box { background: #fff; padding: 0 24px 26px; border-radius: 14px; width: 100%; max-width: 430px; border: 1px solid rgba(255,255,255,.28); box-shadow: 0 18px 45px rgba(0,0,0,.28); margin: 10px 0 30px; overflow:hidden; }
   .auth-brand { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 4px; flex-wrap: wrap; }
   .auth-title { font-size: 22px; font-weight: 700; color: #2b2d6e; text-align: center; }
   .auth-logo { width: 26px; height: 26px; flex-shrink: 0; }
@@ -330,8 +330,8 @@
   .cm-rules-card ul{margin:6px 0 0 18px;padding:0}
 
   /* Chat Me 2026 social-app shell: familiar patterns, original branding */
-  .cm-social-topbar{height:58px;background:#fff;border-bottom:1px solid #e4e7ec;display:flex;align-items:center;gap:10px;padding:0 12px;position:sticky;top:0;z-index:100;box-shadow:0 1px 3px rgba(16,24,40,.06)}
-  .cm-brand-mini{display:flex;align-items:center;gap:7px;min-width:118px;font-weight:800;color:#182230;font-size:19px;letter-spacing:-.4px}
+  .cm-social-topbar{height:58px;background:#062b55;border-bottom:1px solid #e4e7ec;display:flex;align-items:center;gap:10px;padding:0 12px;position:sticky;top:0;z-index:100;box-shadow:0 1px 3px rgba(16,24,40,.06)}
+  .cm-brand-mini{display:flex;align-items:center;gap:7px;min-width:118px;font-weight:800;color:#fff;font-size:19px;letter-spacing:-.4px}
   .cm-brand-mini svg{width:30px;height:30px;flex:0 0 auto}
   .cm-social-search{flex:1;max-width:520px;display:flex;align-items:center;background:#f1f3f5;border-radius:999px;overflow:hidden}
   .cm-social-search input{border:0!important;background:transparent!important;box-shadow:none!important;padding:9px 13px;font-size:13px;min-width:0;flex:1;color:#222!important}
@@ -367,6 +367,18 @@
   body.dark-mode .cm-social-topbar,body.dark-mode .cm-navigation-card{background:#1d1f23;border-color:#343840;color:#eee}body.dark-mode .cm-social-search{background:#2a2d32}body.dark-mode .cm-social-search input{color:#eee!important}body.dark-mode .cm-top-action,body.dark-mode .cm-nav-more,body.dark-mode .cm-nav-grid button{background:#292d33;color:#eee;border-color:#3a3f48}body.dark-mode .cm-navigation-card p{color:#a9b0bb}body.dark-mode #app,body.dark-mode .page{background:#111315}
   body.cm-data-saver-on img.post-img{content-visibility:auto} body.cm-data-saver-on .cm-stories-strip img{visibility:hidden} body.cm-data-saver-on video{background:#e9edf2;}
   @media(max-width:480px){#cmCreatorAnalytics{grid-template-columns:1fr 1fr!important}}
+
+  /* Final auth/landing polish */
+  .auth-screen { background: radial-gradient(circle at 15% 15%, rgba(22,119,255,.28), transparent 28%), radial-gradient(circle at 85% 25%, rgba(72,94,255,.22), transparent 26%), linear-gradient(135deg,#061b34,#092d52 48%,#06182e); padding:28px 16px 42px; }
+  .auth-screen:before { content:""; position:fixed; inset:0; background:radial-gradient(ellipse at center,transparent 18%,rgba(0,0,0,.28) 100%); pointer-events:none; }
+  .auth-screen .auth-box { position:relative; z-index:1; box-shadow:0 22px 60px rgba(0,0,0,.28); border-radius:16px; }
+  .auth-screen .auth-brandbar { display:flex; align-items:center; gap:10px; justify-content:flex-start; margin:0 -24px 22px; padding:12px 16px; min-height:58px; background:#062b55; border-bottom:1px solid rgba(255,255,255,.12); }
+  .auth-screen .auth-brandbar .auth-logo { width:36px; height:36px; }
+  .auth-screen .auth-brandbar .auth-brandname { font-size:21px; font-weight:800; color:#fff; }
+  .auth-screen .auth-back { color:#fff!important; background:rgba(255,255,255,.12)!important; border-color:rgba(255,255,255,.25)!important; }
+  .auth-screen .remember-row { display:flex; align-items:center; gap:8px; margin:-2px 0 14px; font-size:13px; color:#4b5563; }
+  .auth-screen .remember-row input { width:17px !important; height:17px; margin:0 !important; padding:0 !important; accent-color:#1677ff; }
+  @media(max-width:600px){ .auth-screen{padding:10px 8px 26px;} .auth-box{max-width:520px;padding:0 16px 22px;margin:0 0 24px;border-radius:12px;} .auth-brandbar{margin:0 -16px 20px;padding:11px 13px;} }
 </style>
 <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
 
@@ -741,6 +753,219 @@ body{color:var(--cm-text);}
   }
 </style>
 
+<style id="chatme-final-reference-layout">
+  .auth-screen{align-items:flex-start;justify-content:center;}
+  .auth-box{padding:0;overflow:hidden;max-width:520px;background:#fff;border:0;border-radius:16px;}
+  .auth-screen .auth-brandbar{justify-content:flex-start;position:relative;margin:0;padding:12px 16px;background:linear-gradient(135deg,#062b55,#0a3f76);border:0;color:#fff;}
+  .auth-screen .auth-brandbar .auth-brandname{color:#fff;font-size:21px;}
+  .auth-screen .auth-brandbar .auth-logo{width:34px;height:34px;}
+  .auth-back{border:0;background:transparent;color:#fff;font-size:25px;line-height:1;padding:4px 7px;cursor:pointer;margin-right:2px;}
+  .auth-box>.auth-title,.auth-box>.auth-sub,.auth-box>.auth-divider,
+  .auth-box>label,.auth-box>.field-block,.auth-box>.auth-hint-small,.auth-box>.field-msg,
+  .auth-box>.section-divider,.auth-box>.pw-requirements,.auth-box>#recaptchaLogin,
+  .auth-box>#recaptchaSignup,.auth-box>.primary-btn,.auth-box>.auth-error,.auth-box>.auth-status,
+  .auth-box>.auth-links,.auth-box>#forgotPasswordPanel{margin-left:22px;margin-right:22px;}
+  .auth-box>.auth-title{margin-top:20px;}
+  .auth-box>.auth-divider{margin-bottom:20px;}
+  .auth-box>.auth-links{margin-bottom:20px;}
+  .cm-user-avatar-button{overflow:hidden;font-size:18px;}
+  .cm-user-avatar-button img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
+  #menuButtonGrid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));max-width:680px!important;}
+  #menuButtonGrid button{min-height:48px;}
+  @media(max-width:720px){
+    .friend-list{width:100%;border-right:0;min-height:100%;display:block;}
+    #chatsPage{position:relative;}
+    #chatsPage .private-chat{position:absolute;inset:0;background:#fff;z-index:4;}
+    #chatsPage .private-chat.active{display:flex;}
+    .chat-header{padding:10px 12px;min-height:58px;}
+    .messages{padding:12px 10px 16px;}
+    .msg-row{max-width:82%;}
+    .input-bar{padding:8px 9px;gap:6px;}
+    .input-bar input{min-width:0;padding:11px 13px;}
+    #menuButtonGrid{grid-template-columns:1fr!important;}
+    .auth-screen{padding:14px 8px 30px;}
+    .auth-box{width:100%;max-width:560px;border-radius:14px;}
+  }
+</style>
+
+<style id="chatme-picture-1-to-8-patch">
+/* Reference storyboard polish: preserves existing feature IDs and functionality. */
+.cm-chat-brand-dot{width:30px;height:30px;border-radius:50%;background:#1677ff;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 2px 5px rgba(22,119,255,.25)}
+.cm-chat-list-shell{width:340px;display:flex;flex-direction:column;background:#fff;border-right:1px solid #dfe6ef;min-width:0;overflow:hidden}
+.cm-chat-list-titlebar{height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;border-bottom:1px solid #edf0f4;background:#fff;color:#14233a}
+.cm-chat-list-titlebar strong{font-size:20px}.cm-chat-list-titlebar span{font-size:12px;color:#7a8798}.cm-chat-list-titlebar button{width:34px;height:34px;border:0;border-radius:50%;background:#f1f4f8;font-size:20px;cursor:pointer}
+.cm-chat-stories{display:flex;gap:8px;overflow-x:auto;padding:10px 10px 8px;border-bottom:1px solid #eef1f5;background:#fff;scrollbar-width:none}
+.cm-chat-stories::-webkit-scrollbar{display:none}
+.cm-story-card{flex:0 0 62px;border:0;background:transparent;padding:0;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;color:#536173;font-size:10px}
+.cm-story-card span{max-width:62px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cm-story-avatar{width:52px!important;height:52px!important;border-radius:50%;border:3px solid #8cc7ff!important;background:#edf5ff!important;display:flex;align-items:center;justify-content:center;overflow:hidden;font-size:18px;font-weight:800;color:#1677ff;flex:0 0 52px}
+.cm-story-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.cm-story-add{background:#1677ff!important;color:#fff!important;border-color:#1677ff!important}
+.cm-story-create .cm-story-avatar{box-shadow:0 0 0 2px #fff,0 0 0 3px #1677ff}
+.cm-chat-list-shell .friend-list{width:auto;border-right:0;flex:1;overflow-y:auto}
+.cm-chat-row{width:100%;box-sizing:border-box;text-align:left;background:#fff;border:0;border-bottom:1px solid #eef1f5;padding:10px 13px;gap:10px}
+.cm-chat-row:hover,.cm-chat-row:focus{background:#f7faff}
+.cm-chat-avatar-wrap{position:relative;flex:0 0 auto}.cm-chat-avatar-wrap .avatar{margin:0;width:48px;height:48px}
+.cm-online-dot{position:absolute;right:-1px;bottom:1px;width:12px;height:12px;background:#27c46a;border:2px solid #fff;border-radius:50%}
+.cm-chat-row-main{min-width:0;flex:1}.cm-chat-row-top,.cm-chat-row-bottom{display:flex;align-items:center;gap:8px;min-width:0}.cm-chat-row-top{justify-content:space-between}.cm-chat-row-bottom{margin-top:4px}
+.cm-chat-row .friend-name{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cm-chat-row .friend-status{font-size:12px;color:#718096;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1}.cm-chat-time{font-size:10.5px;color:#98a2b3;white-space:nowrap}.cm-unread-badge{min-width:18px;height:18px;border-radius:50%;background:#1677ff;color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center;padding:0 4px;box-sizing:border-box}
+.chat-header{background:#062b55!important;color:#fff!important;border-bottom:0!important;padding:9px 12px!important;min-height:58px;gap:8px!important}
+.chat-header .cm-call-btn{background:rgba(255,255,255,.12)!important;color:#fff!important;border-color:rgba(255,255,255,.25)!important;width:36px;height:36px;padding:0!important;display:flex;align-items:center;justify-content:center;border-radius:50%!important}
+.chat-header .cm-call-btn:hover{background:rgba(255,255,255,.2)!important}
+.chat-header .cm-call-btn:first-of-type{margin-left:auto}
+.chat-header span[onclick="closeChat()"]{color:#fff!important;text-decoration:none!important;font-size:24px!important}
+.chat-header .avatar{width:38px!important;height:38px!important;margin-right:0!important;border:2px solid #fff}
+.chat-header .chat-header-name{font-size:13px}
+.messages{background:#f5f7fb!important;background-image:none!important;padding:14px!important}
+.msg-row{max-width:76%!important}.msg-row .bubble{border-radius:16px!important;padding:9px 12px!important}
+.msg-row.received .bubble{background:#fff!important;border:1px solid #e5eaf1!important}.msg-row.sent .bubble{background:#1677ff!important;color:#fff!important}.msg-row.sent .bubble .time{color:#dcecff!important}
+.input-bar{background:#fff!important;border-top:1px solid #e4e8ef;padding:8px 10px!important}
+.input-bar input{background:#f1f4f8!important}.send-btn{background:#1677ff!important}
+.cm-profile-reference-head{height:54px;margin:-16px -16px 10px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;background:#062b55;color:#fff}
+.cm-profile-reference-head button{border:0;background:transparent;color:#fff;font-size:21px;cursor:pointer;width:36px;height:36px}
+.cm-profile-reference-head strong{font-size:18px}
+.cm-profile-avatar-center{width:max-content;margin:-46px auto 8px;position:relative;z-index:2;border-radius:50%;background:#fff;padding:3px}
+.cm-profile-avatar-center .avatar-lg{margin:0;width:82px;height:82px;border:3px solid #fff}
+.cm-profile-name-block{text-align:center;margin-bottom:8px}.cm-profile-name-block h2{margin:0;color:#14233a;font-size:20px}.cm-profile-name-block>div{color:#738095;font-size:12.5px;margin-top:2px}.cm-profile-name-block small{display:block;color:#59677a;margin-top:6px}
+.cm-profile-stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #edf0f4;border-bottom:1px solid #edf0f4;margin:8px 0 0}
+.cm-profile-stats button{border:0;background:#fff;padding:10px 5px;cursor:pointer}.cm-profile-stats strong{display:block;font-size:16px;color:#14233a}.cm-profile-stats span{display:block;font-size:11px;color:#7a8798;margin-top:2px}
+.cm-profile-tabs{display:grid;grid-template-columns:repeat(3,1fr);margin-bottom:12px;border-bottom:1px solid #e4e8ef}.cm-profile-tabs span{text-align:center;padding:10px 5px;font-size:12px;color:#738095}.cm-profile-tabs .active{color:#1677ff;font-weight:800;border-bottom:2px solid #1677ff}
+#menuPage{background:linear-gradient(180deg,#062b55,#0b3768)!important;color:#fff}
+#menuPage>h2{color:#fff!important;margin:0 0 12px!important}
+#menuButtonGrid{display:flex!important;flex-direction:column;gap:0!important;max-width:760px!important;width:100%}
+.cm-menu-ref-item{min-height:52px!important;border:0!important;border-bottom:1px solid rgba(255,255,255,.12)!important;border-radius:0!important;background:transparent!important;color:#fff!important;padding:10px 12px!important;display:flex!important;align-items:center!important;gap:12px!important;text-align:left!important;font-size:14px!important;font-weight:600!important;cursor:pointer}
+.cm-menu-ref-item:hover{background:rgba(255,255,255,.08)!important}.cm-menu-ref-icon{width:30px;text-align:center;font-size:18px}.cm-menu-ref-arrow{margin-left:auto;color:#9fc4ec;font-size:22px}.cm-menu-ref-item.logout{color:#ffb4b4!important;margin-top:8px;border:1px solid rgba(255,100,100,.35)!important;border-radius:10px!important;background:rgba(190,30,30,.18)!important}
+@media(max-width:720px){
+  .cm-chat-list-shell{width:100%;border-right:0}.cm-chat-list-titlebar{height:54px}.cm-chat-stories{padding-left:12px;padding-right:12px}
+  #chatsPage{flex-direction:column!important}.cm-chat-list-shell{min-height:100%}
+  #chatsPage .private-chat{position:absolute;inset:0;background:#fff;z-index:4}.chat-header{min-height:58px}
+  #chatsPage .private-chat.active{display:flex}
+  #profilePage{padding:12px!important}.profile-card{max-width:none!important;width:100%!important}
+  #menuPage{padding:12px!important}
+}
+@media(min-width:721px){
+  #chatsPage{flex-direction:row!important}.cm-chat-list-shell{height:100%}
+}
+body.dark-mode .cm-chat-list-shell,body.dark-mode .cm-chat-list-titlebar,body.dark-mode .cm-chat-stories,body.dark-mode .cm-chat-row{background:#111a27;color:#fff;border-color:#283548}
+body.dark-mode .cm-chat-row:hover{background:#18263a}body.dark-mode .cm-chat-row .friend-name{color:#fff}body.dark-mode .cm-chat-row .friend-status,body.dark-mode .cm-chat-time{color:#9aa8ba}
+body.dark-mode .cm-profile-name-block h2,body.dark-mode .cm-profile-stats strong{color:#fff}body.dark-mode .cm-profile-stats button{background:#111315}body.dark-mode .cm-profile-tabs{border-color:#343840}
+</style>
+
+<style id="chatme-topbar-reference-patch">
+.cm-social-topbar{background:#062b55!important;color:#fff!important}
+.cm-brand-mini{color:#fff!important}.cm-brand-mini span{display:inline!important}
+.cm-social-search{background:rgba(255,255,255,.12)!important}.cm-social-search input{color:#fff!important}
+.cm-social-search input::placeholder{color:#d7e5f5!important}
+.cm-top-action,.cm-nav-more{background:rgba(255,255,255,.10)!important;color:#fff!important}
+.cm-top-action:hover,.cm-top-action.active,.cm-nav-more:hover{background:rgba(255,255,255,.18)!important;color:#fff!important}
+@media(max-width:720px){.cm-brand-mini span{display:inline!important;font-size:18px}.cm-brand-mini{min-width:auto;flex:1}.cm-top-actions{gap:2px}}
+</style>
+
+<style id="chatme-final-storyboard-polish">
+/* Final storyboard polish: visual-only changes; existing IDs and handlers stay intact. */
+.auth-screen{
+  min-height:100vh!important;
+  background:linear-gradient(180deg,#061b34 0%,#092d52 55%,#06182e 100%)!important;
+  padding:0 10px 34px!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+}
+.auth-box{
+  width:min(100%,520px)!important;
+  margin:0 auto!important;
+  border-radius:0 0 18px 18px!important;
+  box-shadow:0 18px 55px rgba(0,0,0,.30)!important;
+}
+.auth-screen .auth-brandbar{
+  min-height:64px!important;
+  padding:10px 14px!important;
+  background:linear-gradient(90deg,#062b55,#0b3768)!important;
+}
+.auth-screen .auth-brandbar .auth-logo{width:38px!important;height:38px!important;flex:0 0 38px;border-radius:50%}
+.auth-screen .auth-brandbar .auth-brandname{font-size:22px!important;font-weight:800!important}
+.auth-screen .auth-title{font-size:24px!important;font-weight:800!important}
+.auth-screen .auth-sub{font-size:13px!important}
+.auth-screen .remember-row{margin-top:2px!important;margin-bottom:14px!important}
+.auth-screen .primary-btn{width:100%!important}
+
+/* Storyboard 4: Chat list */
+#chatsPage{background:#f7f9fc!important}
+.cm-chat-list-titlebar{background:#fff!important}
+.cm-chat-list-titlebar strong{font-size:19px!important}
+.cm-chat-stories{background:#fff!important}
+.cm-chat-row{min-height:70px!important}
+.cm-chat-row .avatar{width:50px!important;height:50px!important}
+.cm-chat-row .friend-name{font-size:14px!important;font-weight:800!important}
+.cm-chat-row .friend-status{font-size:12px!important}
+
+/* Storyboard 5: Private conversation */
+#chatsPage .private-chat.active{background:#f5f7fb!important}
+.chat-header{background:linear-gradient(90deg,#062b55,#0b3768)!important}
+.chat-header > span:nth-child(2){color:#fff!important}
+.chat-header > span:nth-child(2) div{color:#fff!important}
+.messages{background:#f5f7fb!important}
+.msg-row.sent .bubble{background:#1677ff!important;color:#fff!important}
+.msg-row.received .bubble{background:#fff!important;color:#172b45!important}
+
+/* Storyboard 6: Profile */
+#profilePage{background:#f4f7fb!important}
+#profilePage>.profile-card{max-width:760px!important;margin:0 auto!important;background:#fff!important;border-radius:16px!important;overflow:hidden!important;padding:16px!important;box-shadow:0 8px 28px rgba(20,35,58,.08)!important}
+.cm-profile-cover-wrap{height:155px!important}
+.cm-profile-avatar-center .avatar-lg{width:88px!important;height:88px!important}
+.cm-profile-name-block h2{font-size:21px!important}
+.cm-profile-stats{max-width:560px;margin-left:auto!important;margin-right:auto!important}
+
+/* Storyboard 7: Menu */
+#menuPage{min-height:100%!important;background:linear-gradient(180deg,#062b55,#0b3768)!important}
+#menuPage>h2{font-size:22px!important}
+#menuButtonGrid{grid-template-columns:1fr!important;max-width:760px!important;margin:0 auto!important}
+.cm-menu-ref-item{min-height:54px!important;font-size:14px!important}
+
+/* Mobile: keep the bottom navigation visible like storyboard 8. */
+@media(max-width:720px){
+  .auth-screen{padding:0 8px 26px!important}
+  .auth-box{width:100%!important;border-radius:0 0 16px 16px!important}
+  #profilePage{padding:8px!important}
+  #profilePage>.profile-card{border-radius:12px!important;padding:12px!important}
+  .cm-profile-cover-wrap{height:145px!important}
+  .cm-profile-avatar-center .avatar-lg{width:82px!important;height:82px!important}
+  .cm-chat-list-shell{width:100%!important}
+  .cm-chat-row{padding:10px 12px!important}
+}
+</style>
+
+<style id="chatme-reference-responsive">
+@media(max-width:700px){
+  #chatsPage{min-height:calc(100vh - 58px);padding:0!important;}
+  #chatsPage .cm-chat-list-shell{width:100%;border-right:0;}
+  #chatsPage .private-chat{position:absolute;inset:58px 0 58px 0;z-index:120;background:#fff;display:none;}
+  #chatsPage .private-chat.active{display:flex;}
+  #profilePage{padding:0!important;background:#f5f7fb;}
+  #profilePage .profile-card{max-width:none!important;margin:0!important;border-radius:0!important;border-left:0!important;border-right:0!important;}
+  #menuPage{padding:12px!important;}
+}
+</style>
+
+<style id="chatme-final-reference-fix">
+/* Final pass for the supplied 1–8 reference: mobile top bar order + valid stylesheet closure. */
+.cm-mobile-search-trigger{display:none!important}
+.cm-mobile-people-action{display:none!important}
+@media(max-width:720px){
+  .cm-social-topbar{display:flex!important;align-items:center!important;gap:6px!important;padding:0 8px!important}
+  .cm-brand-mini{order:1!important;flex:1!important;min-width:0!important}
+  .cm-brand-mini span{display:inline!important;font-size:18px!important}
+  .cm-mobile-search-trigger{display:flex!important;order:2!important;flex:0 0 38px!important;width:38px!important;height:38px!important;align-items:center;justify-content:center}
+  .cm-social-search{display:none!important}
+  .cm-top-actions{order:3!important;display:flex!important;gap:3px!important;margin-left:0!important}
+  .cm-top-actions .cm-topnav-item,.cm-top-actions .cm-user-avatar-button{display:none!important}
+  .cm-top-actions .cm-mobile-people-action{display:flex!important;width:38px!important;height:38px!important;align-items:center;justify-content:center}
+  .cm-top-actions > .cm-nav-more:last-child{display:flex!important;width:38px!important;height:38px!important;align-items:center;justify-content:center}
+}
+@media(min-width:721px){
+  .cm-mobile-search-trigger{display:none!important}
+  .cm-mobile-people-action{display:none!important}
+}
+</style>
 </head>
 <body>
 
@@ -790,7 +1015,8 @@ body{color:var(--cm-text);}
             <div><span>1</span><div><b>Tap Register</b><small>Choose “Register” or “Get Started”.</small></div></div>
             <div><span>2</span><div><b>Enter your details</b><small>Add your name, username, email and password.</small></div></div>
             <div><span>3</span><div><b>Verify and create</b><small>Complete the security check and create your account.</small></div></div>
-            <div><span>4</span><div><b>Start chatting</b><small>Enter Chat Me and explore your community.</small></div></div>
+            <div><span>4</span><div><b>Complete your profile</b><small>Add your profile picture and finish your profile setup.</small></div></div>
+            <div><span>5</span><div><b>Start chatting</b><small>Enter Chat Me and explore your community.</small></div></div>
           </div>
         </section>
 
@@ -811,7 +1037,10 @@ body{color:var(--cm-text);}
             <h2 id="chatme-policy-title">Privacy &amp; Policies</h2>
             <p>Your privacy and account safety matter. Read the public privacy and terms information before creating an account.</p>
           </div>
-          <button type="button" onclick="showPublicPolicy()">Read Privacy &amp; Policies</button>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;">
+            <button type="button" onclick="showPublicPolicy()">Privacy &amp; Policies</button>
+            <button type="button" onclick="showPublicPolicy();setTimeout(function(){var b=document.getElementById('publicPolicyModal');if(b){var h=b.querySelector('h2');if(h)h.scrollIntoView({block:'start'});}},0)" style="background:#fff;color:#2b6ee0;border:1px solid #d8e2f2;">Community Rules &amp; Safety</button>
+          </div>
         </section>
       </div>
     </section>
@@ -828,6 +1057,8 @@ body{color:var(--cm-text);}
         <p><b>Chat Me is currently a free community service.</b> Coin purchases are disabled. Coins have no cash value and cannot be exchanged or withdrawn for real money.</p>
         <p><b>Privacy &amp; support:</b> adegboyeabdulrahmanl@gmail.com</p>
         <p><b>Safety:</b> Use Chat Me respectfully. Do not share passwords, recovery codes or other private login information.</p>
+        <p><b>Community Rules &amp; Safety:</b> No harassment, threats, bullying, scams, impersonation, spam, privacy violations, or harmful/sexual content. Respect other users and use reporting/support tools when something goes wrong.</p>
+        <p><b>Terms of Service:</b> By creating an account or using Chat Me, you agree to follow the service rules, protect your account, and use the features lawfully and responsibly.</p>
         <p style="font-size:12px;color:#7a8190;">The full policy pages are available inside Chat Me after login.</p>
         <button onclick="closePublicPolicy()" style="width:100%;padding:10px;border:0;border-radius:9px;background:#1677ff;color:#fff;font-weight:700;cursor:pointer;">Close</button>
       </div>
@@ -836,10 +1067,12 @@ body{color:var(--cm-text);}
 
   <div class="auth-screen" id="loginScreen">
     <div class="auth-box">
-      <div class="auth-brand">
-        <svg class="auth-logo" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><circle cx="22" cy="30" r="16" fill="#2b3a8f"/><circle cx="38" cy="30" r="16" fill="#e8622d"/><circle cx="30" cy="30" r="8" fill="#6a4fb8"/></svg>
-        <span class="auth-title">Login - Chat Me</span>
+      <div class="auth-brandbar">
+        <button type="button" class="auth-back" onclick="showWelcome()" aria-label="Back to home">←</button>
+        <svg class="auth-logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="100" cy="100" r="96" fill="#1677ff"/><path d="M62 60 Q48 60 48 74 L48 96 Q48 110 62 110 L70 110 L70 122 L86 110 L138 110 Q152 110 152 96 L152 74 Q152 60 138 60 Z" fill="white"/><circle cx="75" cy="85" r="4" fill="#1677ff"/><circle cx="100" cy="85" r="4" fill="#1677ff"/><circle cx="125" cy="85" r="4" fill="#1677ff"/></svg>
+        <span class="auth-brandname">Chat Me</span>
       </div>
+      <div class="auth-title" style="font-size:24px;margin-bottom:4px;">Welcome Back</div>
       <div class="auth-sub">Enter your credentials</div>
       <div class="auth-divider"></div>
 
@@ -847,7 +1080,9 @@ body{color:var(--cm-text);}
       <div class="field-block"><input type="email" id="loginEmail" placeholder="Enter your email" onkeydown="if(event.key==='Enter') doLogin()"></div>
 
       <label class="auth-label">Password:</label>
-      <div class="field-block"><input type="password" id="loginPassword" placeholder="Enter password" onkeydown="if(event.key==='Enter') doLogin()"></div>
+      <div class="field-block"><input type="password" id="loginPassword" placeholder="Enter password" autocomplete="current-password" onkeydown="if(event.key==='Enter') doLogin()"></div>
+
+      <label class="remember-row"><input type="checkbox" id="rememberMe" checked> <span>Remember me on this device</span></label>
 
       <label class="auth-label">Verify you're not a robot:</label>
       <div id="recaptchaLogin" style="margin-bottom:10px;"></div>
@@ -892,8 +1127,13 @@ body{color:var(--cm-text);}
   <!-- ============ SIGN UP ============ -->
   <div class="auth-screen" id="signupScreen">
     <div class="auth-box">
-      <div class="auth-title">Create Account</div>
-      <div class="auth-sub">Join Chat Me today</div>
+      <div class="auth-brandbar">
+        <button type="button" class="auth-back" onclick="showWelcome()" aria-label="Back to home">←</button>
+        <svg class="auth-logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="100" cy="100" r="96" fill="#1677ff"/><path d="M62 60 Q48 60 48 74 L48 96 Q48 110 62 110 L70 110 L70 122 L86 110 L138 110 Q152 110 152 96 L152 74 Q152 60 138 60 Z" fill="white"/><circle cx="75" cy="85" r="4" fill="#1677ff"/><circle cx="100" cy="85" r="4" fill="#1677ff"/><circle cx="125" cy="85" r="4" fill="#1677ff"/></svg>
+        <span class="auth-brandname">Chat Me</span>
+      </div>
+      <div class="auth-title" style="font-size:24px;margin-bottom:4px;">Create Your Account</div>
+      <div class="auth-sub">Join Chat Me and be part of our community.</div>
       <div class="auth-divider"></div>
 
       <label class="auth-label">Username:</label>
@@ -980,10 +1220,10 @@ body{color:var(--cm-text);}
   <!-- ============ MAIN APP ============ -->
   <div id="app">
     <div class="cm-social-topbar">
-      <button class="cm-nav-more" type="button" onclick="cmToggleMobileSearch()" aria-label="Search">⌕</button>
       <div class="cm-brand-mini">
         <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><circle cx="22" cy="30" r="16" fill="#2b6ee0"/><circle cx="38" cy="30" r="16" fill="#e8622d"/><circle cx="30" cy="30" r="8" fill="#6a4fb8"/></svg><span>Chat Me</span>
       </div>
+      <button class="cm-nav-more cm-mobile-search-trigger" type="button" onclick="cmToggleMobileSearch()" aria-label="Search">⌕</button>
       <div class="cm-social-search">
         <input type="text" id="friendSearch" placeholder="Search people, posts or chatrooms..." onkeydown="if(event.key==='Enter') runFriendSearch()">
         <button type="button" onclick="runFriendSearch()" aria-label="Search">⌕</button>
@@ -993,6 +1233,8 @@ body{color:var(--cm-text);}
         <button class="cm-top-action cm-topnav-item" data-page="profilePage" onclick="switchTab('profilePage')" aria-label="Profile">👤</button>
         <button class="cm-top-action cm-topnav-item" data-page="chatsPage" onclick="switchTab('chatsPage')" aria-label="Messages">💬<span class="cm-top-badge" id="msgTopBadge" style="display:none;"></span></button>
         <button class="cm-top-action cm-topnav-item" data-page="notificationsPage" onclick="switchTab('notificationsPage')" aria-label="Notifications">🔔<span class="cm-top-badge" id="notifTopBadge" style="display:none;"></span></button>
+        <button class="cm-top-action cm-mobile-people-action" type="button" onclick="switchTab('friendsPage')" aria-label="People">👥</button>
+        <button class="cm-nav-more cm-user-avatar-button" id="cmTopUserAvatar" type="button" onclick="switchTab('profilePage')" aria-label="Profile picture">👤</button>
         <button class="cm-nav-more" type="button" onclick="switchTab('menuPage')" aria-label="More">☰</button>
       </div>
     </div>
@@ -1219,7 +1461,21 @@ body{color:var(--cm-text);}
     </div>
 
     <div class="page" id="chatsPage" style="flex-direction: row;">
-      <div class="friend-list" id="friendList"></div>
+      <div class="cm-chat-list-shell">
+        <div class="cm-chat-list-titlebar" style="height:58px;">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="cm-chat-brand-dot" aria-hidden="true">💬</span>
+            <strong style="font-size:19px;">Chat Me</strong><span id="cmChatListCount"></span>
+          </div>
+          <div style="display:flex;align-items:center;gap:5px;">
+            <button type="button" onclick="cmToggleMobileSearch()" aria-label="Search chats">⌕</button>
+            <button type="button" onclick="switchTab('friendsPage')" aria-label="Find people">👥</button>
+            <button type="button" onclick="switchTab('menuPage')" aria-label="More">☰</button>
+          </div>
+        </div>
+        <div class="cm-chat-stories" id="cmChatStories" aria-label="Stories"></div>
+        <div class="friend-list" id="friendList"></div>
+      </div>
       <div class="private-chat" id="privateChat">
         <div id="cmChatSearchBar" style="display:none;padding:7px 10px;border-bottom:1px solid #e4e7ec;background:#fff;gap:6px;align-items:center;"><input id="cmMessageSearchInput" type="search" placeholder="Search messages in this chat..." oninput="cmFilterCurrentChatMessages()" style="flex:1;padding:8px 10px;border:1px solid #d9dde5;border-radius:999px;outline:none;font-size:12.5px;"><button type="button" onclick="cmClearCurrentChatSearch()" style="border:0;background:#eee;border-radius:999px;padding:7px 10px;cursor:pointer;">Clear</button></div>
         <div class="no-chat-selected">Select a friend to start chatting</div>
@@ -1507,7 +1763,7 @@ body{color:var(--cm-text);}
 
     <div class="page" id="shopPage" style="padding:16px;overflow-y:auto;">
       <h2 style="color:#2b3a8f;margin-bottom:2px;">🛍️ Coins Shop</h2>
-      <div style="font-size:13px;color:#888;margin-bottom:10px;">Your balance: <strong id="shopBalance">0.00 Coins</strong></div><div style="font-size:12px;color:#666;margin-bottom:12px;">Basic Chat Me use stays free. Premium items and creation features require Coins. No premium item is granted for free.</div>
+      <div style="font-size:13px;color:#888;margin-bottom:10px;">Your balance: <strong id="shopBalance">0.00 Coins</strong></div><div style="font-size:12px;color:#666;margin-bottom:12px;">Basic Chat Me use is free. No real-money payment is enabled yet. Starter shop items are FREE, and other optional items use Coins only.</div>
       <div id="shopContent"></div>
     </div>
 
@@ -1884,7 +2140,14 @@ function showAuth(type){
   document.getElementById('signupError').textContent = '';
   document.getElementById('signupStatus').textContent = '';
   document.getElementById('forgotPasswordPanel').style.display = 'none';
-  if (type === 'login') refreshCaptcha('login');
+  if (type === 'login') {
+    const remembered = rememberedEmailGet();
+    const emailEl = document.getElementById('loginEmail');
+    const rememberEl = document.getElementById('rememberMe');
+    if (emailEl && remembered) emailEl.value = remembered;
+    if (rememberEl) rememberEl.checked = !!remembered;
+    refreshCaptcha('login');
+  }
   if (type === 'signup') refreshCaptcha('signup');
 }
 
@@ -2175,6 +2438,10 @@ function sentRequestsKey(username){ return 'sentreq:' + username.toLowerCase(); 
 function notifsKey(username){ return 'notifs:' + username.toLowerCase(); }
 function seenCountKey(username, key){ return 'seen:' + username.toLowerCase() + ':' + key; }
 const SESSION_KEY = 'session:currentEmail';
+const REMEMBER_KEY = 'chatme:rememberedEmail';
+function rememberedEmailGet(){ try { return localStorage.getItem(REMEMBER_KEY); } catch(e) { return null; } }
+function rememberedEmailSet(email){ try { localStorage.setItem(REMEMBER_KEY, String(email || '').toLowerCase()); } catch(e) {} }
+function rememberedEmailClear(){ try { localStorage.removeItem(REMEMBER_KEY); } catch(e) {} }
 /* The logged-in session must NEVER go through storageGet/storageSet above -
    those sync to the shared Firestore "kv" collection, which every visitor
    reads from. Saving the session there means the most recent login
@@ -2184,6 +2451,21 @@ const SESSION_KEY = 'session:currentEmail';
    when the tab is closed. */
 function sessionLocalGet(){
   try { return sessionStorage.getItem(SESSION_KEY); } catch (e) { return null; }
+}
+function waitForFirebaseUser(timeoutMs=5000){
+  if (!firebaseAuth) return Promise.resolve(null);
+  if (firebaseAuth.currentUser) return Promise.resolve(firebaseAuth.currentUser);
+  return new Promise(resolve => {
+    let done = false;
+    let timer = setTimeout(() => { if(done) return; done=true; resolve(firebaseAuth.currentUser || null); }, timeoutMs);
+    let unsub = null;
+    try {
+      unsub = firebaseAuth.onAuthStateChanged(user => {
+        if (done) return;
+        if (user) { done=true; clearTimeout(timer); try{unsub&&unsub();}catch(e){} resolve(user); }
+      });
+    } catch(e) { done=true; clearTimeout(timer); resolve(firebaseAuth.currentUser || null); }
+  });
 }
 function sessionLocalSet(email){
   try { sessionStorage.setItem(SESSION_KEY, email); } catch (e) {}
@@ -2339,24 +2621,33 @@ async function doSignup(){
   signupBtn.textContent = 'Creating account...';
   showLoading(true);
   try {
-    const existingUname = await storageGet(usernameKey(username), true);
-    if (existingUname) {
-      markFieldError('suUsername', 'msgUsername', 'This username is already taken.');
-      errEl.textContent = 'Please fix the highlighted fields.';
-      return;
-    }
-    const existingUser = await storageGet(userKey(email), true);
-    if (existingUser) {
-      markFieldError('suEmail', 'msgEmail', 'An account with this email already exists.');
-      errEl.textContent = 'Please fix the highlighted fields.';
-      return;
-    }
-
     if (!firebaseAuth || !firebaseDb || !firebaseConfigLooksReal) { errEl.textContent = 'Secure account creation is unavailable right now.'; return; }
+
+    // Authenticate first. The secure Worker only permits a new user's first
+    // profile write after Firebase has issued a real ID token. This also makes
+    // email uniqueness authoritative through Firebase Auth instead of relying
+    // on a pre-authentication database read.
     let firebaseCredential;
     try { firebaseCredential = await withTimeout(firebaseAuth.createUserWithEmailAndPassword(email, password), 8000); }
     catch (e) { errEl.textContent = e.code === 'auth/email-already-in-use' ? 'An account with this email already exists.' : 'Secure account creation failed. Please try again.'; return; }
     const uid = firebaseCredential.user.uid;
+
+    // Username uniqueness is checked only after authentication, so the secure
+    // Worker can authorize the read. If it is already taken, roll back the
+    // just-created Firebase account so registration does not leave a ghost
+    // account behind.
+    try {
+      const existingUname = await storageGet(usernameKey(username), true);
+      if (existingUname) {
+        markFieldError('suUsername', 'msgUsername', 'This username is already taken.');
+        errEl.textContent = 'Please choose another username.';
+        try { await firebaseCredential.user.delete(); } catch (rollbackErr) { console.warn('Could not roll back duplicate-username Firebase account.', rollbackErr); }
+        return;
+      }
+    } catch (usernameCheckErr) {
+      try { await firebaseCredential.user.delete(); } catch (rollbackErr) { console.warn('Could not roll back after username-check failure.', rollbackErr); }
+      throw usernameCheckErr;
+    }
     // Staff roles and special Coin grants must come only from trusted backend
     // claims/operations. Never grant them from an email address in the browser.
     const user = {
@@ -2367,8 +2658,18 @@ async function doSignup(){
       verified: false, profileLocked: false,
       createdAt: Date.now()
     };
-    const setUserRes = await storageSet(userKey(email), JSON.stringify(user), true);
-    if (!setUserRes) { errEl.textContent = 'Could not create your account right now. Please try again.'; return; }
+    let setUserRes;
+    try {
+      setUserRes = await storageSet(userKey(email), JSON.stringify(user), true);
+    } catch (profileWriteErr) {
+      try { await firebaseCredential.user.delete(); } catch (rollbackErr) { console.warn('Could not roll back Firebase account after profile-write failure.', rollbackErr); }
+      throw profileWriteErr;
+    }
+    if (!setUserRes) {
+      try { await firebaseCredential.user.delete(); } catch (rollbackErr) { console.warn('Could not roll back Firebase account after profile-write failure.', rollbackErr); }
+      errEl.textContent = 'Could not create your account right now. Please try again.';
+      return;
+    }
     await storageSet(usernameKey(username), email, true);
     await storageSet(friendsKey(username), JSON.stringify([]), true);
     await storageSet(notifsKey(username), JSON.stringify([{
@@ -2799,6 +3100,7 @@ async function doLogin(){
 
   const email = document.getElementById('loginEmail').value.trim();
   const password = document.getElementById('loginPassword').value;
+  const rememberMe = !!document.getElementById('rememberMe')?.checked;
 
   if (!email || !password) {
     errEl.textContent = 'Please enter your email and password.';
@@ -2820,7 +3122,15 @@ async function doLogin(){
   try {
     if (!firebaseAuth || !firebaseDb || !firebaseConfigLooksReal) { errEl.textContent='Secure Firebase Authentication is unavailable. Please try again later.'; refreshCaptcha('login'); return; }
     let fbUser;
-    try { fbUser = await ensureFirebaseSession(email,password); }
+    try {
+      // Make the Remember me choice control Firebase's actual auth persistence.
+      // LOCAL keeps the account signed in after a browser restart; SESSION keeps
+      // it only for the current browser tab/session.
+      if (firebaseAuth && typeof firebaseAuth.setPersistence === 'function' && window.firebase?.auth?.Auth?.Persistence) {
+        await firebaseAuth.setPersistence(rememberMe ? firebase.auth.Auth.Persistence.LOCAL : firebase.auth.Auth.Persistence.SESSION);
+      }
+      fbUser = await ensureFirebaseSession(email,password);
+    }
     catch(e) { errEl.textContent = e.code==='auth/too-many-requests' ? 'Too many login attempts. Please wait and try again.' : 'Invalid email or password.'; refreshCaptcha('login'); return; }
     // The secure Worker is now authoritative, but existing Chat Me accounts
     // may still have their profile in the legacy Firestore kv collection.
@@ -2862,6 +3172,7 @@ async function doLogin(){
       console.warn('This profile has a staff flag but no trusted Firebase staff claim. Staff privileges are disabled for this session.');
     }
 
+    if (rememberMe) rememberedEmailSet(email); else rememberedEmailClear();
     statusEl.textContent = 'Logged in! Loading your account...';
     try {
       await loginSuccess(publicUser(user));
@@ -3006,6 +3317,15 @@ async function loginSuccess(user){
   document.getElementById('suDay').value = '';
   document.getElementById('suYear').value = '';
   document.getElementById('footerUserLabel').textContent = (user.firstName || '') + ' ' + (user.lastName || '') + ' (@' + user.username + ')';
+  const topAvatar = document.getElementById('cmTopUserAvatar');
+  if (topAvatar) {
+    const pic = user.profilePic ? escapeHtml(String(user.profilePic)) : '';
+    const initials = escapeHtml((((user.firstName||'?')[0] + (user.lastName||'?')[0]).toUpperCase()));
+    topAvatar.innerHTML = pic
+      ? `<img src="${pic}" alt="Your profile picture" loading="lazy" decoding="async" onerror="this.remove();this.parentElement.textContent='${initials}'">`
+      : initials;
+    topAvatar.title = (user.firstName || '') + ' ' + (user.lastName || '') + ' — Profile';
+  }
   updateCoinsDisplay();
   // Re-read trusted staff claims on every successful login/session restore.
   try { applyTrustedClaimsToUser(user, await refreshTrustedAuthClaims()); } catch(e) {}
@@ -3046,11 +3366,20 @@ async function restoreSession(){
   const email = sessionLocalGet();
   if (userHasNavigated) return; // they've already started signing up/logging in manually - don't interrupt them
   if (!email) {
+    const remembered = rememberedEmailGet();
+    const rememberedFirebaseUser = remembered ? await waitForFirebaseUser(5000) : null;
+    if (remembered && rememberedFirebaseUser?.email) {
+      const fbEmail = String(rememberedFirebaseUser.email).toLowerCase();
+      if (fbEmail === String(remembered).toLowerCase()) sessionLocalSet(fbEmail);
+    }
+  }
+  const activeEmail = sessionLocalGet();
+  if (!activeEmail) {
     if (userHasNavigated) return;
     showWelcome();
     return;
   }
-  const raw = await storageGet(userKey(email));
+  const raw = await storageGet(userKey(activeEmail));
   if (userHasNavigated) return;
   if (!raw) { sessionLocalClear(); showWelcome(); return; }
   let user;
@@ -4846,8 +5175,8 @@ function timeAgo(ts){
   return Math.floor(diff/86400) + ' day' + (Math.floor(diff/86400)===1?'':'s') + ' ago';
 }
 
-const VERIFIED_COINS_THRESHOLD = 20000;
-const VERIFICATION_PRICE_COINS = 20000;
+const VERIFIED_COINS_THRESHOLD = 50000;
+const VERIFICATION_PRICE_COINS = 50000;
 const MAX_ADMINS = 2;
 const MAX_MODERATORS = 3;
 function isModeratorUser(u){
@@ -5342,33 +5671,33 @@ function achievementsRowHtml(unlocked, purchasedBadges){
 /* ================= COINS SHOP ================= */
 const SHOP_CATALOG = {
   themes: [
-    {id:'sunset',label:'Sunset',price:450,css:'linear-gradient(135deg,#ff7e5f,#feb47b)'},
-    {id:'ocean',label:'Ocean',price:550,css:'linear-gradient(135deg,#2b6ee0,#4fc3f7)'},
-    {id:'forest',label:'Forest',price:650,css:'linear-gradient(135deg,#134e13,#25a244)'},
-    {id:'galaxy',label:'Galaxy',price:800,css:'linear-gradient(135deg,#2b0a4a,#6a4fb8)'},
-    {id:'royalNight',label:'Royal Night',price:950,css:'linear-gradient(135deg,#111827,#4c1d95)'},
-    {id:'aurora',label:'Aurora',price:1100,css:'linear-gradient(135deg,#0f766e,#7c3aed)'},
-    {id:'cherry',label:'Cherry',price:1250,css:'linear-gradient(135deg,#9f1239,#fb7185)'},
-    {id:'emerald',label:'Emerald',price:1400,css:'linear-gradient(135deg,#064e3b,#34d399)'},
-    {id:'sunrise',label:'Sunrise',price:1600,css:'linear-gradient(135deg,#f97316,#facc15)'},
-    {id:'midnight',label:'Midnight',price:1800,css:'linear-gradient(135deg,#020617,#1e3a8a)'}
+    {id:'sunset',label:'Sunset',price:250,css:'linear-gradient(135deg,#ff7e5f,#feb47b)'},
+    {id:'ocean',label:'Ocean',price:300,css:'linear-gradient(135deg,#2b6ee0,#4fc3f7)'},
+    {id:'forest',label:'Forest',price:350,css:'linear-gradient(135deg,#134e13,#25a244)'},
+    {id:'galaxy',label:'Galaxy',price:400,css:'linear-gradient(135deg,#2b0a4a,#6a4fb8)'},
+    {id:'royalNight',label:'Royal Night',price:425,css:'linear-gradient(135deg,#111827,#4c1d95)'},
+    {id:'aurora',label:'Aurora',price:450,css:'linear-gradient(135deg,#0f766e,#7c3aed)'},
+    {id:'cherry',label:'Cherry',price:475,css:'linear-gradient(135deg,#9f1239,#fb7185)'},
+    {id:'emerald',label:'Emerald',price:490,css:'linear-gradient(135deg,#064e3b,#34d399)'},
+    {id:'sunrise',label:'Sunrise',price:500,css:'linear-gradient(135deg,#f97316,#facc15)'},
+    {id:'midnight',label:'Midnight',price:500,css:'linear-gradient(135deg,#020617,#1e3a8a)'}
   ],
   frames: [
-    {id:'gold',label:'Gold',price:400,color:'#d4a017'},
-    {id:'diamond',label:'Diamond',price:525,color:'#4fc3f7'},
-    {id:'fire',label:'Fire',price:675,color:'#e8622d'},
-    {id:'royal',label:'Royal',price:800,color:'#8e5ce8'},
-    {id:'emerald',label:'Emerald',price:950,color:'#25a244'},
-    {id:'ruby',label:'Ruby',price:1100,color:'#c1121f'},
-    {id:'sapphire',label:'Sapphire',price:1250,color:'#2563eb'},
-    {id:'platinum',label:'Platinum',price:1450,color:'#94a3b8'},
-    {id:'aurora',label:'Aurora',price:1650,color:'#14b8a6'},
-    {id:'cosmic',label:'Cosmic',price:1900,color:'#7c3aed'}
+    {id:'gold',label:'Gold',price:300,color:'#d4a017'},
+    {id:'diamond',label:'Diamond',price:400,color:'#4fc3f7'},
+    {id:'fire',label:'Fire',price:500,color:'#e8622d'},
+    {id:'royal',label:'Royal',price:600,color:'#8e5ce8'},
+    {id:'emerald',label:'Emerald',price:700,color:'#25a244'},
+    {id:'ruby',label:'Ruby',price:800,color:'#c1121f'},
+    {id:'sapphire',label:'Sapphire',price:850,color:'#2563eb'},
+    {id:'platinum',label:'Platinum',price:900,color:'#94a3b8'},
+    {id:'aurora',label:'Aurora',price:950,color:'#14b8a6'},
+    {id:'cosmic',label:'Cosmic',price:1000,color:'#7c3aed'}
   ],
   nameEffects: [
-    {id:'glow',label:'Glow',price:425},{id:'rainbow',label:'Rainbow',price:600},{id:'shadow',label:'Shadow',price:750},
-    {id:'neon',label:'Neon',price:900},{id:'ice',label:'Ice',price:1050},{id:'fireText',label:'Fire Text',price:1200},
-    {id:'goldText',label:'Gold Text',price:1400},{id:'electric',label:'Electric',price:1600},{id:'sparkle',label:'Sparkle',price:1800},{id:'cosmicText',label:'Cosmic Text',price:2100}
+    {id:'glow',label:'Glow',price:300},{id:'rainbow',label:'Rainbow',price:400},{id:'shadow',label:'Shadow',price:500},
+    {id:'neon',label:'Neon',price:650},{id:'ice',label:'Ice',price:700},{id:'fireText',label:'Fire Text',price:750},
+    {id:'goldText',label:'Gold Text',price:800},{id:'electric',label:'Electric',price:850},{id:'sparkle',label:'Sparkle',price:900},{id:'cosmicText',label:'Cosmic Text',price:1000}
   ],
   stickers: [
     {id:'fun',label:'Fun Pack',price:350,emojis:['🥳','😎','🤩','🥶','😜']},{id:'love',label:'Love Pack',price:475,emojis:['😍','💘','😘','🥰','💖']},
@@ -5378,11 +5707,11 @@ const SHOP_CATALOG = {
     {id:'celebration',label:'Celebration Pack',price:1750,emojis:['🎉','🎊','🎈','🥳','🎁']},{id:'ultimate',label:'Ultimate Pack',price:2200,emojis:['👑','💎','🔥','⚡','🌟']}
   ],
   chatThemes: [
-    {id:'sunsetChat',label:'Sunset Chat',price:450,css:'#ffe0b3'},{id:'nightChat',label:'Night Chat',price:575,css:'#1a1a2e'},
-    {id:'roseChat',label:'Rose Chat',price:700,css:'#ffd9e8'},{id:'oceanChat',label:'Ocean Chat',price:850,css:'#dbeafe'},
-    {id:'forestChat',label:'Forest Chat',price:1000,css:'#dcfce7'},{id:'lavenderChat',label:'Lavender Chat',price:1150,css:'#ede9fe'},
-    {id:'peachChat',label:'Peach Chat',price:1300,css:'#ffedd5'},{id:'midnightChat',label:'Midnight Chat',price:1500,css:'#0f172a'},
-    {id:'emeraldChat',label:'Emerald Chat',price:1750,css:'#d1fae5'},{id:'cosmicChat',label:'Cosmic Chat',price:2100,css:'#312e81'}
+    {id:'sunsetChat',label:'Sunset Chat',price:500,css:'#ffe0b3'},{id:'nightChat',label:'Night Chat',price:700,css:'#1a1a2e'},
+    {id:'roseChat',label:'Rose Chat',price:850,css:'#ffd9e8'},{id:'oceanChat',label:'Ocean Chat',price:1000,css:'#dbeafe'},
+    {id:'forestChat',label:'Forest Chat',price:1200,css:'#dcfce7'},{id:'lavenderChat',label:'Lavender Chat',price:1400,css:'#ede9fe'},
+    {id:'peachChat',label:'Peach Chat',price:1550,css:'#ffedd5'},{id:'midnightChat',label:'Midnight Chat',price:1700,css:'#0f172a'},
+    {id:'emeraldChat',label:'Emerald Chat',price:1850,css:'#d1fae5'},{id:'cosmicChat',label:'Cosmic Chat',price:2000,css:'#312e81'}
   ],
   gifts: [
     {id:'rose',label:'Rose',price:10000,emoji:'🌹'},{id:'cake',label:'Cake',price:12000,emoji:'🎂'},{id:'crown',label:'Crown',price:15000,emoji:'👑'},
@@ -5390,12 +5719,12 @@ const SHOP_CATALOG = {
     {id:'starGift',label:'Star Gift',price:30000,emoji:'🌟'},{id:'fireGift',label:'Fire Gift',price:35000,emoji:'🔥'},{id:'unicorn',label:'Unicorn',price:40000,emoji:'🦄'},{id:'galaxyGift',label:'Galaxy Gift',price:50000,emoji:'🌌'}
   ],
   badges: [
-    {id:'legend',label:'Legend',price:7000,emoji:'🏆'},{id:'vip',label:'VIP',price:8500,emoji:'💎'},{id:'creator',label:'Creator',price:10000,emoji:'🎨'},
-    {id:'star',label:'Star',price:11500,emoji:'⭐'},{id:'royal',label:'Royal',price:13000,emoji:'👑'},{id:'elite',label:'Elite',price:14500,emoji:'⚡'},
-    {id:'diamondBadge',label:'Diamond',price:16000,emoji:'💠'},{id:'champion',label:'Champion',price:17500,emoji:'🥇'},{id:'master',label:'Master',price:19000,emoji:'🛡️'},{id:'ultimateBadge',label:'Ultimate',price:20000,emoji:'🌟'}
+    {id:'legend',label:'Legend',price:50000,emoji:'🏆'},{id:'vip',label:'VIP',price:60000,emoji:'💎'},{id:'creator',label:'Creator',price:70000,emoji:'🎨'},
+    {id:'star',label:'Star',price:80000,emoji:'⭐'},{id:'royal',label:'Royal',price:90000,emoji:'👑'},{id:'elite',label:'Elite',price:100000,emoji:'⚡'},
+    {id:'diamondBadge',label:'Diamond',price:110000,emoji:'💠'},{id:'champion',label:'Champion',price:120000,emoji:'🥇'},{id:'master',label:'Master',price:135000,emoji:'🛡️'},{id:'ultimateBadge',label:'Ultimate',price:150000,emoji:'🌟'}
   ]
 };
-const SHOP_FIXED_PRICES = { featuredProfile:850, profileMusic:950, privateRoom:1250, groupBackground:1100, pinMessage:650, premiumReactions:450, storyInsights:600, verification:20000 };
+const SHOP_FIXED_PRICES = { featuredProfile:0, profileMusic:0, privateRoom:0, groupBackground:0, pinMessage:0, premiumReactions:0, storyInsights:0, verification:50000 };
 
 async function loadCurrentUserFull(){
   const raw = await storageGet(userKey(currentUser.email), true);
@@ -5427,13 +5756,32 @@ async function saveCurrentUserFull(u){
   return true;
 }
 
+const SHOP_FREE_ITEMS = {
+  // Starter items are free while real-money payments are not enabled.
+  // All sticker packs are FREE until payment is available. Other catalog items remain Coin-only.
+  themes: new Set(['sunset','ocean','forest']),
+  frames: new Set(['gold','diamond','fire']),
+  nameEffects: new Set(['glow','shadow','rainbow']),
+  stickers: new Set(['fun','love','meme','animals','food','sports','space','magic','celebration','ultimate']),
+  chatThemes: new Set(['sunsetChat','oceanChat','roseChat']),
+  gifts: new Set(['rose','cake'])
+};
+function shopItemPrice(category, item){
+  if (SHOP_FREE_ITEMS[category] && SHOP_FREE_ITEMS[category].has(item.id)) return 0;
+  return Number(item.price) || 0;
+}
+function shopPriceLabel(category, item){
+  const p = shopItemPrice(category, item);
+  return p === 0 ? 'FREE' : p.toLocaleString() + ' Coins';
+}
+
 async function buyShopItem(category, itemId){
   const item = SHOP_CATALOG[category].find(i => i.id === itemId);
   if (!item) return;
   const u = await loadCurrentUserFull();
   if (!u) return;
   if (category === 'badges' && !u.verified) {
-    alert('Only verified users can buy badges. Complete the 20,000-Coin verification process and receive admin approval first.');
+    alert('Only verified users can buy badges. Complete the 50,000-Coin verification process and receive admin approval first.');
     return;
   }
   // Map category -> the exact field name used on the user record.
@@ -5441,12 +5789,13 @@ async function buyShopItem(category, itemId){
   const field = fieldMap[category];
   const owned = field ? (u[field] || []) : [];
   if (field && category !== 'gifts' && owned.includes(itemId)) { alert('You already own this.'); return; }
+  const price = shopItemPrice(category, item);
   const balance = typeof u.leos === 'number' ? u.leos : 20;
-  if (balance < item.price) { alert('You need ' + item.price + ' Coins for this. Your balance: ' + balance.toFixed(2)); return; }
-  u.leos = balance - item.price;
+  if (balance < price) { alert('You need ' + price + ' Coins for this. Your balance: ' + balance.toFixed(2)); return; }
+  u.leos = balance - price;
   if (field) { u[field] = [...owned, itemId]; }
   await saveCurrentUserFull(u);
-  alert('Purchased: ' + item.label + '!');
+  alert(price === 0 ? item.label + ' is free — added to your account.' : 'Purchased: ' + item.label + '!');
   loadShopPage();
 }
 
@@ -5462,7 +5811,7 @@ async function equipShopItem(category, itemId){
 }
 
 async function buyFixedShopItem(kind){
-  const price = SHOP_FIXED_PRICES[kind];
+  const price = Number(SHOP_FIXED_PRICES[kind] || 0);
   const u = await loadCurrentUserFull();
   if (!u) return;
   const balance = typeof u.leos === 'number' ? u.leos : 20;
@@ -5476,7 +5825,7 @@ async function buyFixedShopItem(kind){
     u.verificationRequestedAt = Date.now();
     u.verified = false;
     await saveCurrentUserFull(u);
-    alert('20,000 Coins have been used for your verification request. An admin must review and approve it before your verified badge is activated.');
+    alert('50,000 Coins have been used for your verification request. An admin must review and approve it before your verified badge is activated.');
   } else if (kind === 'featuredProfile') {
     u.leos = balance - price;
     u.featuredUntil = Date.now() + 24 * 60 * 60 * 1000;
@@ -5558,101 +5907,101 @@ async function loadShopPage(){
 
   let html = '';
 
-  html += section('🎨 Profile Themes', 'Applied behind your profile header (450-1,800 Coins).',
+  html += section('🎨 Profile Themes', 'Applied behind your profile header. One starter theme is FREE.',
     SHOP_CATALOG.themes.map(t => {
       const owned = (u.ownedThemes || []).includes(t.id);
       const active = u.activeTheme === t.id;
-      return itemCard(t.label, t.price + ' Coins', `<div style="height:40px;border-radius:6px;background:${t.css};"></div>`,
+      return itemCard(t.label, shopPriceLabel('themes', t), `<div style="height:40px;border-radius:6px;background:${t.css};"></div>`,
         active ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Active</button>`
         : owned ? `<button onclick="equipShopItem('themes','${t.id}')" style="background:#2b6ee0;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Equip</button>`
-        : `<button onclick="buyShopItem('themes','${t.id}')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`);
+        : `<button onclick="buyShopItem('themes','${t.id}')" style="background:${shopItemPrice('themes', t)===0?'#25a244':'#e8622d'};color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">${shopItemPrice('themes', t)===0?'FREE':'Buy'}</button>`);
     }).join(''));
 
-  html += section('🖼️ Profile Frames', 'A colored ring around your avatar (400-1,900 Coins).',
+  html += section('🖼️ Profile Frames', 'A colored ring around your avatar. One starter frame is FREE.',
     SHOP_CATALOG.frames.map(f => {
       const owned = (u.ownedFrames || []).includes(f.id);
       const active = u.activeFrame === f.id;
-      return itemCard(f.label, f.price + ' Coins', `<div style="width:40px;height:40px;margin:0 auto;border-radius:50%;border:4px solid ${f.color};background:#eee;"></div>`,
+      return itemCard(f.label, shopPriceLabel('frames', f), `<div style="width:40px;height:40px;margin:0 auto;border-radius:50%;border:4px solid ${f.color};background:#eee;"></div>`,
         active ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Active</button>`
         : owned ? `<button onclick="equipShopItem('frames','${f.id}')" style="background:#2b6ee0;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Equip</button>`
-        : `<button onclick="buyShopItem('frames','${f.id}')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`);
+        : `<button onclick="buyShopItem('frames','${f.id}')" style="background:${shopItemPrice('frames', f)===0?'#25a244':'#e8622d'};color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">${shopItemPrice('frames', f)===0?'FREE':'Buy'}</button>`);
     }).join(''));
 
-  html += section('✨ Name Effects', 'A special style applied to your name everywhere (425-2,100 Coins).',
+  html += section('✨ Name Effects', 'A special style applied to your name everywhere. One starter effect is FREE.',
     SHOP_CATALOG.nameEffects.map(n => {
       const owned = (u.ownedNameEffects || []).includes(n.id);
       const active = u.activeNameEffect === n.id;
-      return itemCard(n.label, n.price + ' Coins', `<div style="font-weight:700;${n.id==='glow'?'text-shadow:0 0 6px #4fc3f7,0 0 10px #4fc3f7;':n.id==='shadow'?'text-shadow:2px 2px 3px rgba(0,0,0,0.5);':'background:linear-gradient(90deg,#ff0040,#ff8c00,#ffee00,#00c853,#2979ff,#aa00ff);-webkit-background-clip:text;background-clip:text;color:transparent;'}">Name</div>`,
+      return itemCard(n.label, shopPriceLabel('nameEffects', n), `<div style="font-weight:700;${n.id==='glow'?'text-shadow:0 0 6px #4fc3f7,0 0 10px #4fc3f7;':n.id==='shadow'?'text-shadow:2px 2px 3px rgba(0,0,0,0.5);':'background:linear-gradient(90deg,#ff0040,#ff8c00,#ffee00,#00c853,#2979ff,#aa00ff);-webkit-background-clip:text;background-clip:text;color:transparent;'}">Name</div>`,
         active ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Active</button>`
         : owned ? `<button onclick="equipShopItem('nameEffects','${n.id}')" style="background:#2b6ee0;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Equip</button>`
-        : `<button onclick="buyShopItem('nameEffects','${n.id}')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`);
+        : `<button onclick="buyShopItem('nameEffects','${n.id}')" style="background:${shopItemPrice('nameEffects', n)===0?'#25a244':'#e8622d'};color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">${shopItemPrice('nameEffects', n)===0?'FREE':'Buy'}</button>`);
     }).join(''));
 
-  html += section('😎 Sticker Packs', 'Extra emojis to use when chatting (350-2,200 Coins).',
+  html += section('😎 Sticker Packs', 'Extra emojis to use when chatting. One starter sticker pack is FREE.',
     SHOP_CATALOG.stickers.map(s => {
       const owned = (u.ownedStickerPacks || []).includes(s.id);
-      return itemCard(s.label, s.price + ' Coins', `<div style="font-size:20px;">${s.emojis.join(' ')}</div>`,
+      return itemCard(s.label, shopPriceLabel('stickers', s), `<div style="font-size:20px;">${s.emojis.join(' ')}</div>`,
         owned ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Owned</button>`
-        : `<button onclick="buyShopItem('stickers','${s.id}')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`);
+        : `<button onclick="buyShopItem('stickers','${s.id}')" style="background:${shopItemPrice('stickers', s)===0?'#25a244':'#e8622d'};color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">${shopItemPrice('stickers', s)===0?'FREE':'Buy'}</button>`);
     }).join(''));
 
-  html += section('💬 Premium Chat Themes', 'Extra wallpaper colors for your private chats (450-2,100 Coins).',
+  html += section('💬 Premium Chat Themes', 'Extra wallpaper colors for your private chats. One starter theme is FREE.',
     SHOP_CATALOG.chatThemes.map(c => {
       const owned = (u.ownedChatThemes || []).includes(c.id);
-      return itemCard(c.label, c.price + ' Coins', `<div style="height:40px;border-radius:6px;background:${c.css};border:1px solid #ddd;"></div>`,
+      return itemCard(c.label, shopPriceLabel('chatThemes', c), `<div style="height:40px;border-radius:6px;background:${c.css};border:1px solid #ddd;"></div>`,
         owned ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Owned</button>`
-        : `<button onclick="buyShopItem('chatThemes','${c.id}')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`);
+        : `<button onclick="buyShopItem('chatThemes','${c.id}')" style="background:${shopItemPrice('chatThemes', c)===0?'#25a244':'#e8622d'};color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">${shopItemPrice('chatThemes', c)===0?'FREE':'Buy'}</button>`);
     }).join('') + '<div style="font-size:11.5px;color:#888;width:100%;">Pick your active chat theme from inside any chat (🎨 icon).</div>');
 
   html += section('🌐 Verification', 'Request the Chat Me verified badge for 20,000 Coins. An admin must review and approve the request.', [
     `<div style=\"padding:10px;border:1px solid #ddd;border-radius:8px;\"><strong>Verified Badge</strong><div style=\"font-size:12px;color:#777;margin:5px 0 8px;\">20,000 Coins</div>${u.verified ? '<span style=\"color:#198754;font-weight:700;\">Already verified</span>' : `<button onclick=\"buyFixedShopItem('verification')\" style=\"background:#2b6ee0;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;\">Request verification for 20,000 Coins</button>`}</div>`
   ]);
 
-  html += section('🎁 Virtual Gifts', 'Buy gifts here, then send them from the Gift button at the top of a private chat.',
+  html += section('🎁 Virtual Gifts', 'Buy gifts here, then send them from the Gift button at the top of a private chat. One starter gift is FREE.',
     SHOP_CATALOG.gifts.map(g => {
       const ownedCount = (u.ownedGifts || []).filter(id => id === g.id).length;
-      return itemCard(g.label, g.price + ' Coins', `<div style="font-size:32px;">${g.emoji}</div>`,
-        `<div style="font-size:11px;color:#777;margin-bottom:5px;">Owned: ${ownedCount}</div><button onclick="buyShopItem('gifts','${g.id}')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`);
+      return itemCard(g.label, shopPriceLabel('gifts', g), `<div style="font-size:32px;">${g.emoji}</div>`,
+        `<div style="font-size:11px;color:#777;margin-bottom:5px;">Owned: ${ownedCount}</div><button onclick="buyShopItem('gifts','${g.id}')" style="background:${shopItemPrice('gifts', g)===0?'#25a244':'#e8622d'};color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">${shopItemPrice('gifts', g)===0?'FREE':'Buy'}</button>`);
     }).join(''));
 
   html += section('🏆 Special Badges', 'Verified users only. Badge prices range from 7,000 to 20,000 Coins.',
     SHOP_CATALOG.badges.map(b => {
       const owned = (u.ownedBadges || []).includes(b.id);
       const locked = !u.verified;
-      return itemCard(b.label, b.price.toLocaleString() + ' Coins', `<div style="font-size:28px;">${b.emoji}</div>`,
+      return itemCard(b.label, shopPriceLabel('badges', b), `<div style="font-size:28px;">${b.emoji}</div>`,
         owned ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Owned</button>`
         : locked ? `<button disabled style="background:#aaa;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">🔒 Verified only</button>`
-        : `<button onclick="buyShopItem('badges','${b.id}')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`);
+        : `<button onclick="buyShopItem('badges','${b.id}')" style="background:${shopItemPrice('badges', b)===0?'#25a244':'#e8622d'};color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">${shopItemPrice('badges', b)===0?'FREE':'Buy'}</button>`);
     }).join(''));
 
   const featuredActive = u.featuredUntil && u.featuredUntil > Date.now();
-  html += section('📣 Featured Profile', 'Shown at the top of People search for 24 hours (850 Coins).',
-    itemCard('Featured', SHOP_FIXED_PRICES.featuredProfile + ' Coins', `<div style="font-size:28px;">⭐</div>`,
+  html += section('📣 Featured Profile', 'Shown at the top of People search for 24 hours — FREE starter access while real-money payments are not enabled.',
+    itemCard('Featured', SHOP_FIXED_PRICES.featuredProfile === 0 ? 'FREE' : SHOP_FIXED_PRICES.featuredProfile + ' Coins', `<div style="font-size:28px;">⭐</div>`,
       featuredActive ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Active</button>`
       : `<button onclick="buyFixedShopItem('featuredProfile')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`));
 
-  html += section('🎵 Profile Music', 'Add a track link that plays on your profile (950 Coins).',
-    itemCard('Music', SHOP_FIXED_PRICES.profileMusic + ' Coins', `<div style="font-size:28px;">🎵</div>`,
+  html += section('🎵 Profile Music', 'Add a track link that plays on your profile — FREE starter access while real-money payments are not enabled.',
+    itemCard('Music', SHOP_FIXED_PRICES.profileMusic === 0 ? 'FREE' : SHOP_FIXED_PRICES.profileMusic + ' Coins', `<div style="font-size:28px;">🎵</div>`,
       u.hasProfileMusic ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Unlocked</button>`
       : `<button onclick="buyFixedShopItem('profileMusic')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`));
 
-  html += section('🔒 Private Rooms', 'Unlock Private Room access for private chatroom creation (1,250 Coins). Creating a chatroom itself costs 10,000 Coins.',
-    itemCard('Private Room', SHOP_FIXED_PRICES.privateRoom + ' Coins', `<div style="font-size:28px;">🔒</div>`,
+  html += section('🔒 Private Rooms', 'Private Room access is FREE for now. Creating a chatroom is also free while real-money payments are not enabled.',
+    itemCard('Private Room', SHOP_FIXED_PRICES.privateRoom === 0 ? 'FREE' : SHOP_FIXED_PRICES.privateRoom + ' Coins', `<div style="font-size:28px;">🔒</div>`,
       u.hasPrivateRoom ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Unlocked</button>`
       : `<button onclick="buyFixedShopItem('privateRoom')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`));
 
-  html += section('🎨 Group Backgrounds', 'Unlock custom background images for groups (1,100 Coins).',
-    itemCard('Group Background', SHOP_FIXED_PRICES.groupBackground + ' Coins', `<div style="height:40px;border-radius:6px;background:linear-gradient(135deg,#2b6ee0,#6a4fb8);"></div>`,
+  html += section('🎨 Group Backgrounds', 'Custom group background access is FREE for now while real-money payments are not enabled.',
+    itemCard('Group Background', SHOP_FIXED_PRICES.groupBackground === 0 ? 'FREE' : SHOP_FIXED_PRICES.groupBackground + ' Coins', `<div style="height:40px;border-radius:6px;background:linear-gradient(135deg,#2b6ee0,#6a4fb8);"></div>`,
       u.hasGroupBackground ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Unlocked</button>`
       : `<button onclick="buyFixedShopItem('groupBackground')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`));
 
-  html += section('📌 Premium Message Pin', 'Pin one message in a chatroom for ' + SHOP_FIXED_PRICES.pinMessage + ' Coins. This is charged when you pin; it is not an owned item.',
-    itemCard('Pin Message', SHOP_FIXED_PRICES.pinMessage + ' Coins per pin', `<div style="font-size:28px;">📌</div>`, `<button onclick="switchTab('chatsPage')" style="background:#2b6ee0;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Open Chatrooms</button>`));
-  html += section('✨ Premium Reactions', 'Unlock Love, Haha, Wow and other reactions for 450 Coins.',
-    itemCard('Premium Reactions', SHOP_FIXED_PRICES.premiumReactions + ' Coins', `<div style="font-size:28px;">❤️😂😮</div>`,
-      u.hasPremiumReactions ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Unlocked</button>` : `<button onclick="buyFixedShopItem('premiumReactions')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`));
-  html += section('👀 Story Insights', 'Unlock the full list of people who viewed your current story for 600 Coins. The viewer count remains free.',
-    itemCard('Story Insights', SHOP_FIXED_PRICES.storyInsights + ' Coins', `<div style="font-size:28px;">👀</div>`,
+  html += section('📌 Premium Message Pin', 'Pin one message for FREE for now. This is a future Coin feature once payments are enabled.',
+    itemCard('Pin Message', SHOP_FIXED_PRICES.pinMessage === 0 ? 'FREE for now' : SHOP_FIXED_PRICES.pinMessage + ' Coins per pin', `<div style="font-size:28px;">📌</div>`, `<button onclick="switchTab('chatsPage')" style="background:#2b6ee0;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Open Chats</button>`));
+  html += section('✨ Premium Reactions', 'Unlock Love, Haha, Wow and other reactions — FREE for now.',
+    itemCard('Premium Reactions', SHOP_FIXED_PRICES.premiumReactions === 0 ? 'FREE' : SHOP_FIXED_PRICES.premiumReactions + ' Coins', `<div style="font-size:28px;">❤️😂😮</div>`,
+      u.hasPremiumReactions ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Unlocked</button>` : `<button onclick="buyFixedShopItem('premiumReactions')" style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">FREE</button>`));
+  html += section('👀 Story Insights', 'Unlock the full list of people who viewed your current story — FREE for now while payments are not enabled. The viewer count remains free.',
+    itemCard('Story Insights', SHOP_FIXED_PRICES.storyInsights === 0 ? 'FREE' : SHOP_FIXED_PRICES.storyInsights + ' Coins', `<div style="font-size:28px;">👀</div>`,
       u.hasStoryInsights ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Unlocked</button>` : `<button onclick="buyFixedShopItem('storyInsights')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`));
 
   document.getElementById('shopContent').innerHTML = html;
@@ -5685,13 +6034,21 @@ async function loadProfile(){
   const nameStyle = nameEffectStyle(u);
 
   document.getElementById('profileCard').innerHTML = `
-    <div style="position:relative;height:110px;margin:-16px -16px 16px;border-radius:8px 8px 0 0;overflow:hidden;background:${u.coverPhoto ? `url('${u.coverPhoto}') center/cover` : (themeCss || 'linear-gradient(135deg,#2b6ee0,#4fc3f7)')};">
+    <div class="cm-profile-reference-head"><button type="button" onclick="switchTab('homePage')" aria-label="Back to Home">←</button><strong>My Profile</strong><button type="button" onclick="switchTab('settingsPage')" aria-label="Profile settings">⚙</button></div>
+    <div class="cm-profile-cover-wrap" style="position:relative;height:150px;margin:-16px -16px 16px;border-radius:0;overflow:hidden;background:${u.coverPhoto ? `url('${u.coverPhoto}') center/cover` : (themeCss || 'linear-gradient(135deg,#2b6ee0,#4fc3f7)')};">
       <label style="position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,0.5);color:#fff;font-size:11.5px;padding:4px 9px;border-radius:12px;cursor:pointer;">
         📷 Change cover
         <input type="file" id="coverPhotoInput" accept="image/*" style="display:none;" onchange="onCoverPhotoChosen()">
       </label>
     </div>
-    <div style="${frameColor ? `display:inline-block;border-radius:50%;border:4px solid ${frameColor};` : ''}">${avatarHtml(u.firstName, u.lastName, u.profilePic, 'avatar-lg')}</div>
+    <div class="cm-profile-avatar-center" style="${frameColor ? `display:inline-block;border-radius:50%;border:4px solid ${frameColor};` : ''}">${avatarHtml(u.firstName, u.lastName, u.profilePic, 'avatar-lg')}</div>
+    <div class="cm-profile-name-block"><h2>${displayNameWithNickname(u.firstName + ' ' + u.lastName, u.nickname)} ${roleBadgeHtml(u)}</h2><div>@${escapeHtml(u.username)}</div><small>${u.bio ? escapeHtml(u.bio) : 'Good vibes only ✌️'}</small></div>
+    <div class="cm-profile-stats">
+      <button type="button" onclick="loadWallPosts('${escapeHtml(u.username).replace(/'/g,"\\'")}','profileCard',true)"><strong>${(typeof u.postCount==='number'?u.postCount:0)}</strong><span>Posts</span></button>
+      <button type="button" onclick="switchTab('friendsPage')"><strong>${friendsCount}</strong><span>Friends</span></button>
+      <button type="button" onclick="switchTab('friendsPage')"><strong>${friendsCount}</strong><span>Followers</span></button>
+    </div>
+    <div class="cm-profile-tabs" aria-label="Profile sections"><span class="active">Posts</span><span>Photos</span><span>About</span></div>
     <div style="margin:-6px 0 10px;">
       <label style="font-size:12.5px;color:#2b6ee0;cursor:pointer;">
         Choose file
@@ -6718,30 +7075,85 @@ async function updateOnlineDisplay(){
 /* ---------------- MESSAGE (chat with friends) ---------------- */
 async function loadFriendList(){
   const listEl = document.getElementById('friendList');
-  listEl.innerHTML = '<div class="empty-feed">Loading...</div>';
+  const storiesEl = document.getElementById('cmChatStories');
+  const countEl = document.getElementById('cmChatListCount');
+  if (listEl) listEl.innerHTML = '<div class="empty-feed">Loading...</div>';
+
   const raw = await storageGet(friendsKey(currentUser.username), true);
   const friends = raw ? JSON.parse(raw) : [];
+  if (countEl) countEl.textContent = friends.length ? ` · ${friends.length}` : '';
+
   if (!friends.length) {
-    listEl.innerHTML = '<div class="empty-feed">No friends yet.<br><a style="color:#2b6ee0;cursor:pointer;" onclick="switchTab(\'friendsPage\')">Find friends</a> to start chatting.</div>';
+    if (storiesEl) {
+      storiesEl.innerHTML = `<button type="button" class="cm-story-card cm-story-create" onclick="switchTab('statusbookPage')">
+        <div class="cm-story-avatar cm-story-add">+</div><span>Your Story</span>
+      </button>`;
+    }
+    if (listEl) listEl.innerHTML = '<div class="empty-feed">No friends yet.<br><a style="color:#2b6ee0;cursor:pointer;" onclick="switchTab(\'friendsPage\')">Find friends</a> to start chatting.</div>';
     return;
   }
+
   const items = await Promise.all(friends.map(async (f) => {
-    const uRaw = await storageGet('uname:' + f.toLowerCase(), true).then(email => email ? storageGet(userKey(email), true) : null);
+    const email = await storageGet('uname:' + f.toLowerCase(), true);
+    const uRaw = email ? await storageGet(userKey(email), true) : null;
     let u = null;
     try { u = uRaw ? JSON.parse(uRaw) : null; } catch(e){}
     const status = await getPresenceStatus(f);
-    return { username: f, display: u ? (u.firstName + ' ' + u.lastName) : f, status, user: u };
+    const key = chatKey(currentUser.username, f);
+    let msgs = [];
+    try {
+      const chatRaw = await storageGet(key, true);
+      msgs = chatRaw ? JSON.parse(chatRaw) : [];
+    } catch(e) {}
+    const seenRaw = await storageGet(seenCountKey(currentUser.username, key), true);
+    const seen = seenRaw ? parseInt(seenRaw, 10) || 0 : 0;
+    const unread = Math.max(0, msgs.length - seen);
+    const last = msgs.length ? msgs[msgs.length - 1] : null;
+    return {
+      username: f,
+      display: u ? ((u.firstName || '') + ' ' + (u.lastName || '')).trim() || f : f,
+      status,
+      user: u,
+      lastText: last ? String(last.text || '') : 'Start a conversation',
+      lastTime: last && last.time ? new Date(last.time) : null,
+      unread
+    };
   }));
-  listEl.innerHTML = items.map(f => {
-    const initials = f.display.split(' ').map(s=>s[0]).join('').slice(0,2).toUpperCase();
-    const uname = f.username.replace(/'/g,"\\'");
-    const disp = f.display.replace(/'/g,"\\'");
-    const isOnline = f.status === 'Online';
-    return `<div class="friend-item" onclick="openChat('${uname}', '${disp}')">
-      <div style="cursor:pointer;" onclick="event.stopPropagation(); viewProfile('${uname}')">${avatarHtml(f.user ? f.user.firstName : '', f.user ? f.user.lastName : '', f.user ? f.user.profilePic : null, 'avatar')}</div>
-      <div><div class="friend-name" style="cursor:pointer;" onclick="event.stopPropagation(); viewProfile('${uname}')">${escapeHtml(f.display)}</div><div class="friend-status" style="color:${isOnline?'#25d366':'#999'};">${isOnline ? '● Online' : f.status}</div></div>
-    </div>`;
-  }).join('');
+
+  if (storiesEl) {
+    const storyButtons = [`<button type="button" class="cm-story-card cm-story-create" onclick="switchTab('statusbookPage')">
+      <div class="cm-story-avatar cm-story-add">+</div><span>Your Story</span>
+    </button>`];
+    items.slice(0, 12).forEach(f => {
+      const uname = f.username.replace(/'/g,"\\\\'");
+      const avatar = avatarHtml(f.user ? f.user.firstName : '', f.user ? f.user.lastName : '', f.user ? f.user.profilePic : null, 'cm-story-avatar');
+      storyButtons.push(`<button type="button" class="cm-story-card" onclick="viewProfile('${uname}')">
+        ${avatar}<span>${escapeHtml(f.display.split(' ')[0] || f.username)}</span>
+      </button>`);
+    });
+    storiesEl.innerHTML = storyButtons.join('');
+  }
+
+  if (listEl) {
+    listEl.innerHTML = items.map(f => {
+      const initials = f.display.split(' ').map(x=>x[0]).join('').slice(0,2).toUpperCase();
+      const uname = f.username.replace(/'/g,"\\\\'");
+      const disp = f.display.replace(/'/g,"\\\\'");
+      const isOnline = f.status === 'Online';
+      const time = f.lastTime ? f.lastTime.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}) : '';
+      const preview = f.lastText.length > 46 ? f.lastText.slice(0,46) + '…' : f.lastText;
+      return `<button type="button" class="friend-item cm-chat-row" onclick="openChat('${uname}', '${disp}')">
+        <span class="cm-chat-avatar-wrap" onclick="event.stopPropagation();viewProfile('${uname}')">
+          ${avatarHtml(f.user ? f.user.firstName : '', f.user ? f.user.lastName : '', f.user ? f.user.profilePic : null, 'avatar')}
+          ${isOnline ? '<span class="cm-online-dot" aria-label="Online"></span>' : ''}
+        </span>
+        <span class="cm-chat-row-main">
+          <span class="cm-chat-row-top"><span class="friend-name">${escapeHtml(f.display)}</span><span class="cm-chat-time">${escapeHtml(time)}</span></span>
+          <span class="cm-chat-row-bottom"><span class="friend-status">${escapeHtml(preview)}</span>${f.unread ? `<span class="cm-unread-badge">${f.unread > 99 ? '99+' : f.unread}</span>` : ''}</span>
+        </span>
+      </button>`;
+    }).join('');
+  }
 }
 
 const WALLPAPER_COLORS = {
@@ -6758,7 +7170,7 @@ function wallpaperPickerHtml(){
     const isOwned = owned.has(t.id);
     const active = current === t.css;
     if (isOwned) return `<span onclick="setChatWallpaper('${t.css}')" title="${escapeHtml(t.label)}" style="display:inline-block;width:22px;height:22px;border-radius:50%;background:${t.css};margin-right:5px;cursor:pointer;border:2px solid ${active ? '#2b6ee0' : '#25a244'};vertical-align:middle;"></span>`;
-    return `<button onclick="buyChatThemeFromChat('${t.id}')" style="margin:0 5px 4px 0;background:#e8622d;color:#fff;border:none;padding:4px 7px;border-radius:5px;cursor:pointer;font-size:11px;">Buy ${escapeHtml(t.label)} (${t.price})</button>`;
+    return `<button onclick="buyChatThemeFromChat('${t.id}')" style="margin:0 5px 4px 0;background:${shopItemPrice('chatThemes', t)===0?'#25a244':'#e8622d'};color:#fff;border:none;padding:4px 7px;border-radius:5px;cursor:pointer;font-size:11px;">${shopItemPrice('chatThemes', t)===0?'FREE':'Buy'} ${escapeHtml(t.label)} (${shopPriceLabel('chatThemes', t)})</button>`;
   }).join('');
   return `<div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;"><span style="font-size:11.5px;color:#666;margin-right:2px;">Basic:</span>${basic}<span style="font-size:11.5px;color:#666;margin-left:5px;">Premium:</span>${premium}</div>`;
 }
@@ -6866,9 +7278,10 @@ async function openChat(username, display){
           <div id="chatPresence" style="font-size:11px;color:#999;"></div>
         </span>
       </span>
-      <span style="font-size:11.5px;color:#888;margin-left:auto;">0.20 Coins / message</span>
+      <span style="font-size:11.5px;color:#25a244;margin-left:auto;font-weight:700;">Free messages</span>
       <button class="cm-call-btn cm-soon" onclick="cmComingSoon('Voice calls')" title="Voice calls — coming soon" aria-label="Voice calls — coming soon">📞</button>
       <button class="cm-call-btn cm-soon" onclick="cmComingSoon('Video calls')" title="Video calls — coming soon" aria-label="Video calls — coming soon">🎥</button>
+      <button class="cm-call-btn" onclick="toggleCurrentChatSearch()" title="Search messages" aria-label="Search messages">⌕</button>
       <button onclick="toggleWallpaperPicker()" title="Chat themes" style="background:#2b6ee0;color:#fff;border:none;padding:6px 8px;border-radius:6px;cursor:pointer;font-size:12px;">🎨 Theme</button>
       <button onclick="switchTab('shopPage')" title="Open Shop" style="background:#e8622d;color:#fff;border:none;padding:6px 8px;border-radius:6px;cursor:pointer;font-size:12px;">🛍 Shop</button>
     </div>
@@ -6895,6 +7308,16 @@ async function openChat(username, display){
   if (chatPollTimer) clearInterval(chatPollTimer);
   chatPollTimer = setInterval(() => { loadMessages(); updateChatPresence(); }, 4000);
 }
+function toggleCurrentChatSearch(){
+  const bar=document.getElementById('cmChatSearchBar');
+  if(!bar) return;
+  bar.style.display = bar.style.display === 'none' ? 'flex' : 'none';
+  if(bar.style.display === 'flex'){
+    const input=document.getElementById('cmMessageSearchInput');
+    if(input) input.focus();
+  }
+}
+
 function cmComingSoon(feature){
   const old=document.querySelector('.cm-coming-soon-toast');
   if(old) old.remove();
@@ -7057,7 +7480,23 @@ async function deletePrivateMessage(index){
   loadMessages();
 }
 
-const MESSAGE_COST_COINS = 0.20;
+const MESSAGE_COST_COINS = 0.10;
+async function chargeMessageCoins(sender){
+  const balance = typeof sender.leos === 'number' ? sender.leos : 20;
+  if (balance < MESSAGE_COST_COINS) {
+    alert('You need at least ' + MESSAGE_COST_COINS.toFixed(2) + ' Coin to send a message. Your balance: ' + balance.toFixed(2));
+    return false;
+  }
+  sender.leos = Number((balance - MESSAGE_COST_COINS).toFixed(2));
+  const saved = await storageSet(userKey(sender.email), JSON.stringify(sender), true);
+  if (!saved) {
+    alert('Your message was not sent because the Coin charge could not be completed. Please try again.');
+    return false;
+  }
+  currentUser.leos = sender.leos;
+  updateCoinsDisplay();
+  return true;
+}
 async function sendMessage(){
   if (isCurrentlyBanned(currentUser)) { alert(banBlockMessage(currentUser)); return; }
   if (await isBlockedEitherWay(currentUser.username, activeChatFriend)) { alert("You can't message this person."); return; }
@@ -7075,15 +7514,7 @@ async function sendMessage(){
   const senderRaw = await storageGet(userKey(currentUser.email), true);
   if (!senderRaw) { alert('Could not load your account. Please try again.'); return; }
   let sender; try { sender = JSON.parse(senderRaw); } catch(e) { alert('Something went wrong. Please try again.'); return; }
-  const balance = typeof sender.leos === 'number' ? sender.leos : 20;
-  if (balance < MESSAGE_COST_COINS) {
-    alert('Sending a message costs ' + MESSAGE_COST_COINS.toFixed(2) + ' Coins and your balance is too low.');
-    return;
-  }
-  sender.leos = balance - MESSAGE_COST_COINS;
-  await storageSet(userKey(currentUser.email), JSON.stringify(sender), true);
-  currentUser.leos = sender.leos;
-  updateCoinsDisplay();
+  if (!(await chargeMessageCoins(sender))) return;
 
   input.value = '';
   const key = chatKey(currentUser.username, activeChatFriend);
@@ -7716,6 +8147,10 @@ async function sendCircleMessage(){
   const input = document.getElementById('circleChatInput');
   const text = input.value.trim();
   if (!text) return;
+  const senderRaw = await storageGet(userKey(currentUser.email), true);
+  if (!senderRaw) { alert('Could not load your account. Please try again.'); return; }
+  let sender; try { sender = JSON.parse(senderRaw); } catch(e) { alert('Something went wrong. Please try again.'); return; }
+  if (!(await chargeMessageCoins(sender))) return;
   input.value = '';
   const key = circleChatKey(kind, id);
   const raw = await storageGet(key, true);
@@ -8424,6 +8859,7 @@ function loadMenuPage(){
     { label: 'Nova', page: 'aiPage' },
     { label: 'Groups', page: 'groupsPage' },
     { label: 'Coins', page: 'leosPage' },
+    { label: '🛍 Shop', page: 'shopPage' },
     { label: 'Games', page: 'gamesPage' },
         { label: '🔍 Search', page: 'searchPage' },
     { label: '🚩 Report', page: 'reportPage' },
@@ -8438,12 +8874,21 @@ function loadMenuPage(){
   if (currentUser && (currentUserHasTrustedRole('admin') || currentUserHasTrustedRole('moderator'))) items.push({ label: '⚙ Admin', page: 'adminPage' });
   items.push({ label: 'Log Out', page: null, action: 'logout' });
 
-  document.getElementById('menuButtonGrid').innerHTML = items.map(i => `
-    <button onclick="${i.action === 'logout' ? 'logout()' : `switchTab('${i.page}')`}"
-      style="background:${i.action === 'logout' ? '#d32f2f' : '#2b6ee0'};color:#fff;border:none;
-             padding:12px 22px;border-radius:999px;cursor:pointer;font-size:14px;font-weight:600;">
-      ${escapeHtml(i.label)}
-    </button>`).join('');
+  const iconMap = {
+    Home:'⌂', Profile:'●', Message:'💬', Friends:'👥', Notifications:'🔔',
+    '📢 Announcements':'📢', Chatrooms:'💬', Statusbook:'▤', 'Saved Posts':'🔖',
+    Nova:'✦', Groups:'👥', Coins:'🪙', '🛍 Shop':'🛍', Games:'🎮',
+    '🔍 Search':'⌕', '🚩 Report':'🚩', '🎧 Customer Service':'🎧', '🎧 Help & Safety':'❔',
+    '⚙ Settings & Privacy':'⚙', '📜 Community Rules & Safety':'🛡', 'Terms of Service':'📄',
+    'Privacy Policy':'🔒', 'Refund Policy':'↩', '⚙ Admin':'⚙', 'Log Out':'↪'
+  };
+  document.getElementById('menuButtonGrid').innerHTML = items.map(i => {
+    const icon = iconMap[i.label] || '•';
+    const logout = i.action === 'logout';
+    return `<button class="cm-menu-ref-item ${logout ? 'logout' : ''}" type="button" onclick="${logout ? 'logout()' : `switchTab('${i.page}')`}">
+      <span class="cm-menu-ref-icon">${icon}</span><span>${escapeHtml(i.label.replace(/^[^A-Za-z0-9]+/,'').trim())}</span><span class="cm-menu-ref-arrow">›</span>
+    </button>`;
+  }).join('');
 }
 
 function loadAIPage(){
