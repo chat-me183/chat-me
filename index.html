@@ -328,6 +328,45 @@
   .cm-rules-card h3{margin:0 0 6px;color:#2b3a8f;font-size:14px}
   .cm-rules-card p,.cm-rules-card li{font-size:12.5px;color:#555f70;line-height:1.55}
   .cm-rules-card ul{margin:6px 0 0 18px;padding:0}
+
+  /* Chat Me 2026 social-app shell: familiar patterns, original branding */
+  .cm-social-topbar{height:58px;background:#fff;border-bottom:1px solid #e4e7ec;display:flex;align-items:center;gap:10px;padding:0 12px;position:sticky;top:0;z-index:100;box-shadow:0 1px 3px rgba(16,24,40,.06)}
+  .cm-brand-mini{display:flex;align-items:center;gap:7px;min-width:118px;font-weight:800;color:#182230;font-size:19px;letter-spacing:-.4px}
+  .cm-brand-mini svg{width:30px;height:30px;flex:0 0 auto}
+  .cm-social-search{flex:1;max-width:520px;display:flex;align-items:center;background:#f1f3f5;border-radius:999px;overflow:hidden}
+  .cm-social-search input{border:0!important;background:transparent!important;box-shadow:none!important;padding:9px 13px;font-size:13px;min-width:0;flex:1;color:#222!important}
+  .cm-social-search button{border:0;background:transparent;color:#5b6472;padding:8px 11px;cursor:pointer;font-size:15px}
+  .cm-top-actions{margin-left:auto;display:flex;align-items:center;gap:5px}
+  .cm-top-action{width:42px;height:42px;border:0;border-radius:50%;background:#f0f2f5;color:#3b4350;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;font-size:19px}
+  .cm-top-action:hover,.cm-top-action.active{background:#e7efff;color:#2b6ee0}
+  .cm-top-action .cm-top-label{display:none}
+  .cm-top-action .cm-top-badge{position:absolute;top:1px;right:1px;min-width:16px;height:16px;padding:0 4px;border-radius:999px;background:#e53935;color:#fff;font-size:9px;line-height:16px;text-align:center;border:2px solid #fff}
+  .cm-nav-more{width:42px;height:42px;border:0;border-radius:50%;background:#f0f2f5;color:#3b4350;cursor:pointer;font-size:20px}
+  .cm-nav-more:hover{background:#e7efff;color:#2b6ee0}
+  .cm-mobile-search{display:none}
+  .cm-navigation-card{background:#fff;border:1px solid #e4e7ec;border-radius:14px;padding:14px;margin-bottom:12px;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+  .cm-navigation-card h3{font-size:16px;color:#182230;margin-bottom:4px}.cm-navigation-card p{font-size:12px;color:#737b88;margin-bottom:11px}
+  .cm-nav-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .cm-nav-grid button{border:1px solid #e3e7ed;background:#f8f9fb;color:#27303d;border-radius:10px;padding:11px 10px;text-align:left;cursor:pointer;font-weight:650;font-size:12.5px}
+  .cm-nav-grid button:hover{background:#eef4ff;border-color:#cbdcff;color:#245cc0}
+  .cm-data-saver{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid #eee}
+  .cm-connection-pill{font-size:11px;padding:5px 8px;border-radius:999px;background:#edf8f0;color:#24733c;white-space:nowrap}
+  .cm-connection-pill.offline{background:#fff0f0;color:#b42318}
+  body.cm-social-shell{background:#f5f6f8}
+  body.cm-social-shell #app{max-width:1200px;margin:0 auto;background:#f5f6f8;min-height:100vh}
+  body.cm-social-shell .topbar{display:none}
+  body.cm-social-shell .navbar{display:none}
+  body.cm-social-shell .page{background:#f5f6f8}
+  body.cm-social-shell .page.active{min-height:calc(100vh - 58px)}
+  body.cm-social-shell .post-card,body.cm-social-shell .post-composer,body.cm-social-shell .cm-home-status,body.cm-social-shell .cm-home-social-card,body.cm-social-shell .cm-featured-card{box-shadow:0 1px 3px rgba(16,24,40,.07)}
+  @media(max-width:720px){
+    .cm-social-topbar{padding:0 8px;gap:7px}.cm-brand-mini{min-width:auto}.cm-brand-mini span{display:none}.cm-social-search{max-width:none}.cm-top-actions{gap:2px}.cm-top-action,.cm-nav-more{width:38px;height:38px;font-size:17px}
+    .cm-social-topbar .cm-social-search{display:none}.cm-mobile-search{display:flex;position:absolute;left:8px;right:8px;top:58px;background:#fff;padding:7px;border-bottom:1px solid #e4e7ec;box-shadow:0 2px 5px rgba(0,0,0,.08);z-index:99}.cm-mobile-search input{flex:1;border:1px solid #d9dde5;border-radius:999px;padding:9px 12px;outline:none}.cm-mobile-search button{border:0;background:#2b6ee0;color:#fff;border-radius:999px;padding:8px 12px;margin-left:6px}
+    .cm-nav-grid{grid-template-columns:1fr}.cm-brand-mini svg{width:28px;height:28px}
+  }
+  body.dark-mode .cm-social-topbar,body.dark-mode .cm-navigation-card{background:#1d1f23;border-color:#343840;color:#eee}body.dark-mode .cm-social-search{background:#2a2d32}body.dark-mode .cm-social-search input{color:#eee!important}body.dark-mode .cm-top-action,body.dark-mode .cm-nav-more,body.dark-mode .cm-nav-grid button{background:#292d33;color:#eee;border-color:#3a3f48}body.dark-mode .cm-navigation-card p{color:#a9b0bb}body.dark-mode #app,body.dark-mode .page{background:#111315}
+  body.cm-data-saver-on img.post-img{content-visibility:auto} body.cm-data-saver-on .cm-stories-strip img{visibility:hidden} body.cm-data-saver-on video{background:#e9edf2;}
+  @media(max-width:480px){#cmCreatorAnalytics{grid-template-columns:1fr 1fr!important}}
 </style>
 <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
 
@@ -420,6 +459,21 @@ body.dark-mode .cm-network-banner{background:#2b2819;color:#f4df9a;border-color:
 body.dark-mode .cm-network-block{background:#1d1f23;border-color:#333;color:#eee}
 body.dark-mode .cm-network-block p{color:#aaa}
 body.cm-network-offline .app-footer{opacity:.75}
+
+/* Chat Me launch-focused discovery */
+.cm-explore-card{background:#fff;border:1px solid #e4e7ec;border-radius:14px;padding:14px;margin:0 0 12px;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.cm-explore-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+.cm-explore-head h3{margin:0;font-size:16px;color:#24346b}
+.cm-explore-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.cm-explore-chip{border:1px solid #e2e5ea;border-radius:12px;padding:10px;background:#fafbfc;cursor:pointer;text-align:left;font:inherit}
+.cm-explore-chip strong{display:block;color:#24346b;font-size:14px}.cm-explore-chip span{display:block;color:#777;font-size:11px;margin-top:3px}
+.cm-suggest-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #eef0f3}.cm-suggest-row:last-child{border-bottom:0}
+.cm-suggest-avatar{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:#e8eefc;color:#2b4a9b;font-weight:700;flex:none;overflow:hidden}.cm-suggest-avatar img{width:100%;height:100%;object-fit:cover}
+.cm-suggest-info{min-width:0;flex:1}.cm-suggest-info strong{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cm-suggest-info span{font-size:11px;color:#777}
+.cm-explore-action{border:0;border-radius:9px;padding:7px 10px;background:#2b6ee0;color:#fff;font-weight:700;cursor:pointer;font-size:12px}
+.cm-profile-progress{height:8px;background:#edf0f4;border-radius:99px;overflow:hidden}.cm-profile-progress>i{display:block;height:100%;width:0;background:#2b6ee0;border-radius:99px}
+@media(max-width:600px){.cm-explore-grid{grid-template-columns:1fr}.cm-explore-card{border-radius:12px}}
+body.dark-mode .cm-explore-card,body.dark-mode .cm-explore-chip{background:#171a20;border-color:#2b3039;color:#eee}body.dark-mode .cm-explore-head h3,body.dark-mode .cm-explore-chip strong{color:#dbe4ff}body.dark-mode .cm-suggest-row{border-color:#2b3039}
 </style>
 
 </head>
@@ -671,33 +725,29 @@ body.cm-network-offline .app-footer{opacity:.75}
 
   <!-- ============ MAIN APP ============ -->
   <div id="app">
-    <div class="topbar">
-      <div class="topbar-brand">
-        <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><circle cx="22" cy="30" r="16" fill="#fff" opacity="0.9"/><circle cx="38" cy="30" r="16" fill="#e8622d"/><circle cx="30" cy="30" r="8" fill="#6a4fb8"/></svg>
+    <div class="cm-social-topbar">
+      <button class="cm-nav-more" type="button" onclick="cmToggleMobileSearch()" aria-label="Search">⌕</button>
+      <div class="cm-brand-mini">
+        <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><circle cx="22" cy="30" r="16" fill="#2b6ee0"/><circle cx="38" cy="30" r="16" fill="#e8622d"/><circle cx="30" cy="30" r="8" fill="#6a4fb8"/></svg><span>Chat Me</span>
       </div>
-      <div class="topbar-search">
-        <input type="text" id="friendSearch" placeholder="Search people..." onkeydown="if(event.key==='Enter') runFriendSearch()">
-        <button onclick="runFriendSearch()">Go</button>
+      <div class="cm-social-search">
+        <input type="text" id="friendSearch" placeholder="Search people, posts or chatrooms..." onkeydown="if(event.key==='Enter') runFriendSearch()">
+        <button type="button" onclick="runFriendSearch()" aria-label="Search">⌕</button>
+      </div>
+      <div class="cm-top-actions" aria-label="Main navigation">
+        <button class="cm-top-action cm-topnav-item active" data-page="homePage" onclick="switchTab('homePage')" aria-label="Home">🏠</button>
+        <button class="cm-top-action cm-topnav-item" data-page="profilePage" onclick="switchTab('profilePage')" aria-label="Profile">👤</button>
+        <button class="cm-top-action cm-topnav-item" data-page="chatsPage" onclick="switchTab('chatsPage')" aria-label="Messages">💬<span class="cm-top-badge" id="msgTopBadge" style="display:none;"></span></button>
+        <button class="cm-top-action cm-topnav-item" data-page="notificationsPage" onclick="switchTab('notificationsPage')" aria-label="Notifications">🔔<span class="cm-top-badge" id="notifTopBadge" style="display:none;"></span></button>
+        <button class="cm-nav-more" type="button" onclick="switchTab('menuPage')" aria-label="More">☰</button>
       </div>
     </div>
-    <div class="navbar">
-      <div class="nav-item active" data-page="homePage" onclick="switchTab('homePage')"><span class="i18n" data-key="home">Home</span></div>
-      <div class="nav-item" data-page="profilePage" onclick="switchTab('profilePage')"><span class="i18n" data-key="profile">Profile</span></div>
-      <div class="nav-item" data-page="chatsPage" onclick="switchTab('chatsPage')"><span class="i18n" data-key="message">Message</span><span class="notif-dot" id="msgDot"></span></div>
-      <div class="nav-item" data-page="friendsPage" onclick="switchTab('friendsPage')"><span class="i18n" data-key="friends">Friends</span></div>
-      <div class="nav-item" data-page="notificationsPage" onclick="switchTab('notificationsPage')"><span class="i18n" data-key="notifications">Notifications</span><span class="notif-dot" id="notifDot"></span></div>
-      <div class="nav-item" data-page="chatroomsPage" onclick="switchTab('chatroomsPage')"><span class="i18n" data-key="chatrooms">Chatrooms</span></div>
-      <div class="nav-item" data-page="videosPage" onclick="switchTab('videosPage')">🎬 Videos</div>
-      <div class="nav-item" data-page="statusbookPage" onclick="switchTab('statusbookPage')"><span class="i18n" data-key="statusbook">Statusbook</span></div>
-      <div class="nav-item" data-page="aiPage" onclick="switchTab('aiPage')">Nova</div>
-      <div class="nav-item" data-page="groupsPage" onclick="switchTab('groupsPage')"><span class="i18n" data-key="groups">Groups</span></div>
-      <div class="nav-item points" data-page="leosPage" id="pointsNavItem" onclick="switchTab('leosPage')"><span class="i18n" data-key="leos">Coins</span>: <span id="leosNavAmount">0.00</span></div>
-      <div class="nav-item" data-page="gamesPage" onclick="switchTab('gamesPage')"><span class="i18n" data-key="games">Games</span></div>
-      <div class="nav-item" data-page="shopPage" onclick="switchTab('shopPage')">🛍️ Shop</div>
-      <div class="nav-item" data-page="menuPage" onclick="switchTab('menuPage')"><span class="i18n" data-key="menu">Menu</span></div>
-      <div class="nav-item" data-page="settingsPage" onclick="switchTab('settingsPage')">⚙ Settings</div>
-      <div class="nav-item" data-page="supportPage" id="supportNavItem" onclick="switchTab('supportPage')" style="display:none;background:#e7f7ef;color:#146c43;">🎧 <span>Support</span></div>
-      <div class="nav-item" data-page="adminPage" id="adminNavItem" onclick="switchTab('adminPage')" style="display:none;background:#ffe0e0;color:#9c1c1c;">⚙ <span class="i18n" data-key="admin">Admin</span></div>
+    <div class="cm-mobile-search" id="cmMobileSearch" style="display:none;">
+      <input type="text" id="cmMobileSearchInput" placeholder="Search people..." onkeydown="if(event.key==='Enter'){document.getElementById('friendSearch').value=this.value;runFriendSearch();cmToggleMobileSearch();}">
+      <button type="button" onclick="document.getElementById('friendSearch').value=document.getElementById('cmMobileSearchInput').value;runFriendSearch();cmToggleMobileSearch();">Search</button>
+    </div>
+    <div class="navbar" aria-hidden="true" style="display:none!important;">
+      <div class="nav-item" data-page="homePage"></div><div class="nav-item" data-page="profilePage"></div><div class="nav-item" data-page="chatsPage"></div><div class="nav-item" data-page="notificationsPage"></div>
     </div>
 
     <div class="page active" id="homePage">
@@ -725,6 +775,7 @@ body.cm-network-offline .app-footer{opacity:.75}
         <div class="cm-home-shortcuts-title">Quick shortcuts</div>
         <div class="cm-shortcut-row" id="cmHomeShortcutRow"></div>
       </div>
+      <div id="cmProfileCompletion" class="cm-explore-card" style="margin-top:10px;"></div>
       <div class="cm-home-status" aria-label="Create a status">
         <div class="cm-status-head">
           <div id="homeStatusAvatar" class="cm-status-avatar">CM</div>
@@ -739,7 +790,7 @@ body.cm-network-offline .app-footer{opacity:.75}
       <div id="cmStoriesStrip" class="cm-stories-strip"></div>
       <div id="cmPinnedAnnouncement" class="cm-home-social-card" style="display:none;"></div>
       <div id="cmPeopleSuggestions" class="cm-home-social-card" style="display:none;"></div>
-      <div id="cmTrendingTopics" class="cm-home-social-card" style="display:none;"></div>
+      <div id="cmHomeTrendingTopics" class="cm-home-social-card" style="display:none;"></div>
       <div class="friends-banner" style="background:#eef6ff;border-color:#bfdcff;">💬 <strong>Live topic chatrooms</strong> — join a conversation and meet people around shared interests. <a onclick="switchTab('chatroomsPage')">Browse chatrooms</a><br><span style="font-size:12.5px;color:#555;">🎁 Invite 3 friends who sign up and earn 50 Coins.</span> <a onclick="showReferralInfo()">Invite friends</a></div>
       <div class="post-composer">
         <textarea id="postInput" placeholder="What's on your mind?"></textarea>
@@ -810,6 +861,22 @@ body.cm-network-offline .app-footer{opacity:.75}
       <div class="profile-card" id="viewProfileCard"></div>
     </div>
 
+    <div class="page" id="creatorToolsPage" style="padding:16px;overflow-y:auto;">
+      <div style="max-width:760px;margin:0 auto;">
+        <div class="cm-navigation-card">
+          <h3>📊 Creator Tools</h3>
+          <p>Lightweight on-device analytics for your Chat Me content. No new Cloudflare or Firebase setup is required.</p>
+          <div id="cmCreatorAnalytics" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;"></div>
+          <button type="button" onclick="cmLoadCreatorAnalytics()" style="margin-top:10px;background:#2b6ee0;color:#fff;border:0;border-radius:8px;padding:9px 14px;cursor:pointer;font-weight:700;">Refresh analytics</button>
+        </div>
+        <div class="cm-navigation-card">
+          <h3>🛡 Safer posting</h3>
+          <p>Chat Me can apply lightweight local cooldowns to repeated actions. Real server-side moderation and anti-spam still belong in the backend later.</p>
+          <div style="font-size:12.5px;color:#596273;line-height:1.55;">• Fast local feedback when an action is repeated too quickly<br>• No passwords, tokens, or private data are stored by these controls<br>• Works without changing your Cloudflare or Firebase configuration</div>
+        </div>
+      </div>
+    </div>
+
     <div class="page" id="settingsPage" style="padding:16px;overflow-y:auto;">
       <div style="max-width:760px;margin:0 auto;">
         <div class="cm-setting-card">
@@ -843,6 +910,27 @@ body.cm-network-offline .app-footer{opacity:.75}
           <div id="cmHomeShortcutSettings"></div>
         </div>
 
+        <div class="cm-navigation-card">
+          <h3>☰ All Chat Me features</h3>
+          <p>Home, Profile, Messages and Notifications stay on top. Everything else is organized here so the screen stays clean and fast.</p>
+          <div class="cm-nav-grid" id="cmAllNavigationGrid"></div>
+        </div>
+
+        <div class="cm-setting-card">
+          <div style="font-weight:700;margin-bottom:8px;">📶 Data Saver</div>
+          <div class="cm-data-saver">
+            <span><strong>Low-data mode</strong><br><small style="color:#777;">Reduce heavy previews and extra effects on slow connections. This is saved on this device.</small></span>
+            <input type="checkbox" id="cmDataSaverToggle" onchange="cmToggleDataSaver(this.checked)">
+          </div>
+        </div>
+
+        <div class="cm-setting-card">
+          <div style="font-weight:700;margin-bottom:8px;">🌐 Connection</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
+            <span style="font-size:12.5px;color:#666;">Current connection status</span><span id="cmConnectionStatus" class="cm-connection-pill">Online</span>
+          </div>
+        </div>
+
         <div class="cm-setting-card">
           <div style="font-weight:700;margin-bottom:8px;">🚫 Blocked accounts</div>
           <div id="cmBlockedList"></div>
@@ -872,6 +960,7 @@ body.cm-network-offline .app-footer{opacity:.75}
     <div class="page" id="chatsPage" style="flex-direction: row;">
       <div class="friend-list" id="friendList"></div>
       <div class="private-chat" id="privateChat">
+        <div id="cmChatSearchBar" style="display:none;padding:7px 10px;border-bottom:1px solid #e4e7ec;background:#fff;gap:6px;align-items:center;"><input id="cmMessageSearchInput" type="search" placeholder="Search messages in this chat..." oninput="cmFilterCurrentChatMessages()" style="flex:1;padding:8px 10px;border:1px solid #d9dde5;border-radius:999px;outline:none;font-size:12.5px;"><button type="button" onclick="cmClearCurrentChatSearch()" style="border:0;background:#eee;border-radius:999px;padding:7px 10px;cursor:pointer;">Clear</button></div>
         <div class="no-chat-selected">Select a friend to start chatting</div>
       </div>
     </div>
@@ -1164,6 +1253,30 @@ body.cm-network-offline .app-footer{opacity:.75}
     <div class="page" id="savedPostsPage" style="padding:16px;overflow-y:auto;">
       <h2 style="color:#2b3a8f;margin-bottom:6px;">🔖 Saved Posts</h2>
       <div id="savedPostsList"></div>
+    </div>
+
+    <div class="page" id="explorePage" style="padding:16px;overflow-y:auto;">
+      <div class="cm-explore-head">
+        <div><h2 style="margin:0;color:#2b3a8f;">✨ Explore Chat Me</h2><div style="font-size:12px;color:#777;margin-top:3px;">Find people and conversations worth discovering.</div></div>
+        <button class="cm-explore-action" type="button" onclick="cmLoadExplore()">Refresh</button>
+      </div>
+      <div class="cm-explore-card">
+        <div class="cm-explore-head"><h3>🔥 Trending topics</h3><span style="font-size:11px;color:#888;">From public posts</span></div>
+        <div id="cmTrendingTopics" class="cm-explore-grid"><div style="font-size:12px;color:#888;">Loading…</div></div>
+      </div>
+      <div class="cm-explore-card">
+        <div class="cm-explore-head"><h3>👥 People you may discover</h3><span style="font-size:11px;color:#888;">Public profiles</span></div>
+        <div id="cmSuggestedPeople"><div style="font-size:12px;color:#888;">Loading…</div></div>
+      </div>
+      <div class="cm-explore-card">
+        <div class="cm-explore-head"><h3>🧭 Quick discovery</h3></div>
+        <div class="cm-explore-grid">
+          <button class="cm-explore-chip" type="button" onclick="switchTab('videosPage')"><strong>🎬 Videos</strong><span>Discover visual posts</span></button>
+          <button class="cm-explore-chip" type="button" onclick="switchTab('chatroomsPage')"><strong>💬 Chatrooms</strong><span>Find conversations</span></button>
+          <button class="cm-explore-chip" type="button" onclick="switchTab('groupsPage')"><strong>👥 Groups</strong><span>Join communities</span></button>
+          <button class="cm-explore-chip" type="button" onclick="switchTab('searchPage')"><strong>🔎 Full search</strong><span>People, posts and rooms</span></button>
+        </div>
+      </div>
     </div>
 
     <div class="page" id="searchPage" style="padding:16px;overflow-y:auto;">
@@ -2961,9 +3074,49 @@ async function loadFeaturedPost(){
   }
 }
 
+const CM_NAV_ITEMS = [
+  ['explorePage','✨ Explore'],['friendsPage','👥 Friends'],['videosPage','🎬 Videos'],['statusbookPage','📝 Statusbook'],['chatroomsPage','💬 Chatrooms'],['groupsPage','👥 Groups'],['gamesPage','🎮 Games'],['shopPage','🛍 Shop'],['leosPage','🪙 Coins'],['searchPage','🔍 Search'],['savedPostsPage','🔖 Saved Posts'],['announcementsPage','📢 Announcements'],['aiPage','✨ Nova'],['creatorToolsPage','📊 Creator Tools'],['reportPage','🚩 Report'],['supportPage','🎧 Customer Service'],['helpPage','🛡 Help & Safety'],['settingsPage','⚙ Settings & Privacy'],['communityRulesPage','📜 Community Rules'],['tosPage','Terms of Service'],['privacyPolicyPage','Privacy Policy'],['refundPolicyPage','Refund Policy']
+];
+function cmRenderAllNavigation(){
+  const grid=document.getElementById('cmAllNavigationGrid'); if(!grid)return;
+  let items=CM_NAV_ITEMS.slice();
+  if(currentUser && (currentUserHasTrustedRole('admin')||currentUserHasTrustedRole('moderator'))) items.push(['adminPage','⚙ Admin']);
+  grid.innerHTML=items.map(([id,label])=>`<button type="button" onclick="switchTab('${id}')">${escapeHtml(label)}</button>`).join('');
+}
+function cmToggleMobileSearch(){
+  const el=document.getElementById('cmMobileSearch'); if(!el)return;
+  const show=el.style.display==='none'||!el.style.display; el.style.display=show?'flex':'none';
+  if(show){const i=document.getElementById('cmMobileSearchInput'); if(i){i.value='';setTimeout(()=>i.focus(),50);}}
+}
+function cmToggleDataSaver(on){
+  try{localStorage.setItem('chatMeDataSaver',on?'1':'0');}catch(e){}
+  document.body.classList.toggle('cm-data-saver-on',!!on);
+}
+function cmLoadDataSaver(){
+  let on=false;try{on=localStorage.getItem('chatMeDataSaver')==='1';}catch(e){}
+  document.body.classList.toggle('cm-data-saver-on',on);
+  const el=document.getElementById('cmDataSaverToggle');if(el)el.checked=on;
+}
+function cmUpdateConnectionStatus(){
+  const online=navigator.onLine!==false;
+  const el=document.getElementById('cmConnectionStatus'); if(el){el.textContent=online?'Online':'Offline';el.classList.toggle('offline',!online);}
+}
+window.addEventListener('online',cmUpdateConnectionStatus);window.addEventListener('offline',cmUpdateConnectionStatus);
+
+let cmMessageSearchTerm='';
+function cmFilterCurrentChatMessages(){ cmMessageSearchTerm=(document.getElementById('cmMessageSearchInput')?.value||'').trim().toLowerCase(); if(typeof loadMessages==='function') loadMessages(); }
+function cmClearCurrentChatSearch(){ const i=document.getElementById('cmMessageSearchInput'); if(i)i.value=''; cmMessageSearchTerm=''; if(typeof loadMessages==='function')loadMessages(); }
+function cmLoadCreatorAnalytics(){
+  const host=document.getElementById('cmCreatorAnalytics'); if(!host||!currentUser)return;
+  let posts=0,videos=0,likes=0,comments=0,shares=0,reactions=0;
+  try{const raw=localStorage.getItem('chatMePosts');if(raw){const a=JSON.parse(raw);if(Array.isArray(a)){for(const p of a){if(p.author===currentUser.username){posts++;if(p.type==='Video')videos++;likes+=Number(p.likesCount||p.likes?.length||0);comments+=Number(p.commentsCount||p.comments?.length||0);shares+=Number(p.shares||0);reactions+=Number(p.reactionsCount||0);}}}}}catch(e){}
+  const cards=[['Posts',posts],['Videos',videos],['Likes',likes],['Comments',comments],['Shares',shares],['Reactions',reactions]];
+  host.innerHTML=cards.map(([k,v])=>`<div style="background:#f8f9fb;border:1px solid #e4e7ec;border-radius:10px;padding:11px;"><div style="font-size:11px;color:#727b88;">${k}</div><div style="font-size:21px;font-weight:800;color:#182230;margin-top:2px;">${v}</div></div>`).join('');
+}
+
 function switchTab(pageId, fromHistory=false){
   if (!currentUser) return;
-  const cmCloudPages=['homePage','profilePage','chatsPage','friendsPage','notificationsPage','leosPage','statusbookPage','aiPage','menuPage','reportPage','searchPage','savedPostsPage','shopPage','groupsPage','chatroomsPage','adminPage','supportPage','announcementsPage','settingsPage','videosPage'];
+  const cmCloudPages=['homePage','profilePage','chatsPage','friendsPage','notificationsPage','leosPage','statusbookPage','aiPage','menuPage','reportPage','searchPage','savedPostsPage','shopPage','groupsPage','chatroomsPage','adminPage','supportPage','announcementsPage','settingsPage','videosPage','explorePage'];
   if (cmCloudPages.includes(pageId) && navigator.onLine === false) {
     const pageEl=document.getElementById(pageId);
     if(pageEl) {
@@ -2981,9 +3134,11 @@ function switchTab(pageId, fromHistory=false){
       else history.replaceState(null, '', targetHash);
     }
   } catch (e) {}
-  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.nav-item,.cm-topnav-item').forEach(el => el.classList.remove('active'));
   const navEl = document.querySelector(`.nav-item[data-page="${pageId}"]`);
+  const topEl = document.querySelector(`.cm-topnav-item[data-page="${pageId}"]`);
   if (navEl) navEl.classList.add('active');
+  if (topEl) topEl.classList.add('active');
 
   document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
 
@@ -2995,7 +3150,7 @@ function switchTab(pageId, fromHistory=false){
   const pageEl = document.getElementById(pageId);
   if (pageEl) pageEl.classList.add('active');
 
-  if (pageId === 'homePage') { loadHome(); loadFeaturedPost(); applyDarkModePreference(); }
+  if (pageId === 'homePage') { loadHome(); loadFeaturedPost(); applyDarkModePreference(); setTimeout(cmRenderProfileCompletion,80); }
   if (pageId === 'profilePage') loadProfile();
   if (pageId === 'chatsPage') loadFriendList();
   if (pageId === 'friendsPage') { document.getElementById('peopleResults').innerHTML = ''; loadMyFriendsList(); }
@@ -3003,7 +3158,7 @@ function switchTab(pageId, fromHistory=false){
   if (pageId === 'leosPage') loadCoinsPage();
   if (pageId === 'statusbookPage') loadStatusbookPage();
   if (pageId === 'aiPage') loadAIPage();
-  if (pageId === 'menuPage') loadMenuPage();
+  if (pageId === 'menuPage') { loadMenuPage(); cmRenderAllNavigation(); }
   if (pageId === 'reportPage') loadReportPage();
   if (pageId === 'searchPage') { document.getElementById('searchInput').value = ''; setSearchTab('users'); }
   if (pageId === 'savedPostsPage') cmLoadSavedPosts();
@@ -3013,8 +3168,10 @@ function switchTab(pageId, fromHistory=false){
   if (pageId === 'adminPage') loadAdminPage();
   if (pageId === 'supportPage') cmLoadSupportPage();
   if (pageId === 'announcementsPage') loadAnnouncementsPage();
-  if (pageId === 'settingsPage') cmLoadSettings();
+  if (pageId === 'settingsPage') { cmLoadSettings(); cmRenderAllNavigation(); cmLoadDataSaver(); cmUpdateConnectionStatus(); }
   if (pageId === 'videosPage') loadVideosPage();
+  if (pageId === 'explorePage') cmLoadExplore();
+  if (pageId === 'creatorToolsPage') cmLoadCreatorAnalytics();
 }
 
 window.addEventListener('hashchange', function(){
@@ -3022,6 +3179,53 @@ window.addEventListener('hashchange', function(){
   const id = decodeURIComponent(String(window.location.hash || '').replace(/^#/, ''));
   if (id && document.getElementById(id)) switchTab(id, true);
 });
+
+/* ---------------- EXPLORE / DISCOVERY ---------------- */
+async function cmLoadExplore(){
+  const topics=document.getElementById('cmTrendingTopics'), people=document.getElementById('cmSuggestedPeople');
+  if(!topics || !people || !currentUser) return;
+  topics.innerHTML='<div style="font-size:12px;color:#888;">Loading…</div>';
+  people.innerHTML='<div style="font-size:12px;color:#888;">Loading…</div>';
+  try{
+    const postKeys=await storageListKeys('post:', true);
+    const rawPosts=await Promise.all(postKeys.slice(0,120).map(k=>storageGet(k,true)));
+    const counts={};
+    for(const raw of rawPosts){
+      if(!raw) continue;
+      try{
+        const p=JSON.parse(raw); const text=String(p.text||'');
+        const tags=text.match(/#[\p{L}\p{N}_]+/gu)||[];
+        for(const tag of tags){ const key=tag.toLowerCase(); counts[key]=(counts[key]||0)+1; }
+      }catch(e){}
+    }
+    const top=Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,8);
+    topics.innerHTML=top.length ? top.map(([tag,n])=>`<button class="cm-explore-chip" type="button" onclick="document.getElementById('friendSearch').value='${escapeHtml(tag)}';runFriendSearch();"><strong>${escapeHtml(tag)}</strong><span>${n} public post${n===1?'':'s'}</span></button>`).join('') : '<div style="font-size:12px;color:#888;">Trending topics will appear as people create public posts with hashtags.</div>';
+
+    const userKeys=await storageListKeys('user:', true);
+    const raws=await Promise.all(userKeys.slice(0,80).map(k=>storageGet(k,true)));
+    const out=[]; const me=String(currentUser.username||'').toLowerCase();
+    for(const raw of raws){
+      if(!raw) continue; try{ const u=JSON.parse(raw); const name=String(u.username||u.name||''); if(!name||name.toLowerCase()===me) continue; out.push(u); }catch(e){}
+    }
+    out.sort((a,b)=>String(a.username||a.name).localeCompare(String(b.username||b.name)));
+    const selected=out.slice(0,6);
+    people.innerHTML=selected.length ? selected.map(u=>{
+      const name=String(u.username||u.name||'User'); const avatar=u.avatar||u.photoURL||'';
+      const av=avatar?`<img src="${escapeHtml(avatar)}" alt="">`:escapeHtml(name.slice(0,2).toUpperCase());
+      return `<div class="cm-suggest-row"><div class="cm-suggest-avatar">${av}</div><div class="cm-suggest-info"><strong>@${escapeHtml(name)}</strong><span>${escapeHtml(String(u.bio||'Chat Me member').slice(0,70))}</span></div><button class="cm-explore-action" type="button" onclick="viewProfile('${String(name).replace(/'/g,"\\'")}')">View</button></div>`;
+    }).join('') : '<div style="font-size:12px;color:#888;">New people will appear here as the community grows.</div>';
+  }catch(e){
+    topics.innerHTML='<div style="font-size:12px;color:#888;">Connect to the internet and try again.</div>';
+    people.innerHTML='<div style="font-size:12px;color:#888;">Connect to the internet and try again.</div>';
+  }
+}
+
+function cmRenderProfileCompletion(){
+  const host=document.getElementById('cmProfileCompletion'); if(!host||!currentUser) return;
+  const fields=[currentUser.username,currentUser.avatar||currentUser.photoURL,currentUser.bio,currentUser.country,currentUser.gender];
+  const done=fields.filter(Boolean).length; const pct=Math.round(done/fields.length*100);
+  host.innerHTML=`<div style="font-weight:700;margin-bottom:5px;">✨ Complete your profile</div><div style="font-size:12px;color:#666;margin-bottom:7px;">${done}/${fields.length} profile details added</div><div class="cm-profile-progress"><i style="width:${pct}%"></i></div><button type="button" class="cm-explore-action" style="margin-top:9px;" onclick="switchTab('profilePage')">Edit profile</button>`;
+}
 
 /* ---------------- ADMIN (owner only) ---------------- */
 let _cmAdminPostCache = [];
@@ -8489,5 +8693,16 @@ window.addEventListener('load', function(){ refreshWelcomeStats(); });
 })();
 </script>
 
+<script>
+(function(){
+  document.body.classList.add('cm-social-shell');
+  cmUpdateConnectionStatus(); cmLoadDataSaver();
+  const syncTopBadges=()=>{
+    const a=document.getElementById('notifDot'),b=document.getElementById('notifTopBadge');if(a&&b){b.style.display=getComputedStyle(a).display==='none'?'none':'block';}
+    const c=document.getElementById('msgDot'),d=document.getElementById('msgTopBadge');if(c&&d){d.style.display=getComputedStyle(c).display==='none'?'none':'block';}
+  };
+  setInterval(syncTopBadges,1200);
+})();
+</script>
 </body>
 </html>
