@@ -444,33 +444,7 @@ body.dark-mode .welcome-hero,body.dark-mode .welcome-card,body.dark-mode .welcom
 body.dark-mode .welcome-copy p,body.dark-mode .welcome-step span,body.dark-mode .welcome-trust-card span{color:#aaa}
 body.dark-mode .welcome-nav-actions .nav-login{color:#9fc2ff;border-color:#444}
 .welcome-dark-toggle{border:1px solid #d7deed;background:#fff;color:#333;border-radius:9px;padding:8px 10px;cursor:pointer;font-weight:700;font-size:12px}
-.welcome-blue-toggle{border-color:#bfdbfe;color:#1d4ed8}
 body.dark-mode .welcome-dark-toggle{background:#24262b;color:#eee;border-color:#444}
-body.blue-mode{background:#eaf3ff}
-body.blue-mode #welcomeScreen{background:#eef6ff;color:#102a43}
-body.blue-mode .welcome-nav{background:#0b3b73;border-bottom-color:#1d5fa7}
-body.blue-mode .welcome-nav-brand{color:#fff}
-body.blue-mode .welcome-nav-actions .nav-login{color:#dbeafe;border-color:#5aa0e8;background:transparent}
-body.blue-mode .welcome-dark-toggle{background:#0f4d91;color:#fff;border-color:#5aa0e8}
-body.blue-mode .welcome-blue-toggle{background:#1687ff;color:#fff;border-color:#8cc8ff}
-body.blue-mode .welcome-badge{background:#dbeafe;color:#0756a6;border-color:#93c5fd}
-body.blue-mode .welcome-copy h1{color:#0f2f55}
-body.blue-mode .welcome-copy h1 span{color:#0878e8}
-body.blue-mode .welcome-copy>p{color:#47627e}
-body.blue-mode .welcome-cta{background:#0878e8}
-body.blue-mode .welcome-secondary{background:#fff}
-body.blue-mode .welcome-point,body.blue-mode .welcome-login-card,body.blue-mode .about-card,body.blue-mode .welcome-quote,body.blue-mode .welcome-step,body.blue-mode .welcome-trust-card,body.blue-mode .welcome-note{border-color:#c9def5}
-body.blue-mode .welcome-section h2,body.blue-mode .welcome-point b,body.blue-mode .welcome-quote b,body.blue-mode .welcome-quote strong,body.blue-mode .welcome-step b,body.blue-mode .welcome-trust-card b{color:#124a83}
-body.blue-mode .welcome-step .num{background:#dbeafe;color:#0756a6}
-body.blue-mode #app{background:#edf6ff}
-body.blue-mode .page{background:#edf6ff}
-body.blue-mode .topbar{background:#0b3b73}
-body.blue-mode .navbar{background:#0f4d91}
-body.blue-mode .send-btn,body.blue-mode .cm-explore-action{background:#0878e8}
-body.blue-mode .app-footer{background:#062b52}
-body.blue-mode .welcome-stat{color:#124a83;border-color:#c9def5;background:#f5faff}
-body.blue-mode .welcome-quote{background:linear-gradient(135deg,#fff,#f1f7ff)}
-body.dark-mode .welcome-blue-toggle{background:#24262b;color:#eee;border-color:#444}
 </style>
 
 <style id="chatme-network-resilience-css">
@@ -502,6 +476,14 @@ body.cm-network-offline .app-footer{opacity:.75}
 body.dark-mode .cm-explore-card,body.dark-mode .cm-explore-chip{background:#171a20;border-color:#2b3039;color:#eee}body.dark-mode .cm-explore-head h3,body.dark-mode .cm-explore-chip strong{color:#dbe4ff}body.dark-mode .cm-suggest-row{border-color:#2b3039}
 </style>
 
+
+<style id="coinPageStyle">
+.coin-earn-row{display:flex;align-items:center;justify-content:space-between;padding:10px 2px;border-bottom:1px solid rgba(128,145,180,.13);gap:12px;}
+.coin-earn-row:last-child{border-bottom:0;}
+.coin-earn-row span{display:flex;align-items:center;gap:7px;font-size:13px;}
+.coin-earn-row small{display:block;font-size:10.5px;color:#8993a7;font-weight:400;}
+.coin-earn-row strong{color:#d7ef24;font-size:14px;white-space:nowrap;}
+</style>
 </head>
 <body>
 
@@ -516,7 +498,6 @@ body.dark-mode .cm-explore-card,body.dark-mode .cm-explore-chip{background:#171a
       </div>
       <div class="welcome-nav-actions">
         <button class="welcome-dark-toggle" id="welcomeDarkToggle" onclick="toggleWelcomeDarkMode()">🌙 Dark</button>
-        <button class="welcome-dark-toggle welcome-blue-toggle" id="welcomeBlueToggle" onclick="toggleWelcomeBlueMode()">🔵 Blue</button>
         <button class="nav-login" onclick="showAuth('login')">Log In</button>
         <button class="nav-signup" onclick="showAuth('signup')">Create account</button>
       </div>
@@ -561,23 +542,20 @@ body.dark-mode .cm-explore-card,body.dark-mode .cm-explore-chip{background:#171a
         <div class="about-card"><b>✨ Your space</b><span>Build your profile, personalize your experience and choose how you participate.</span></div>
       </div>
 
-      <h2 style="margin-top:34px;">What people say about Chat Me</h2>
-      <p>Sample testimonial cards for the landing-page design. Replace these with verified member feedback when real reviews are collected.</p>
-      <div class="welcome-testimonials" aria-label="Sample Chat Me testimonials">
-        <div class="welcome-quote"><b>💬 Amina</b><p>“I like having private chats and community conversations in one place.”</p><strong>★★★★★ 5/5 · Sample feedback</strong></div>
-        <div class="welcome-quote"><b>👥 Daniel</b><p>“The friends and group features make it easy to find conversations I enjoy.”</p><strong>★★★★☆ 4/5 · Sample feedback</strong></div>
-        <div class="welcome-quote"><b>📝 Sarah</b><p>“Statusbook gives me a simple way to share updates and keep up with friends.”</p><strong>★★★★★ 5/5 · Sample feedback</strong></div>
-        <div class="welcome-quote"><b>🎮 James</b><p>“I like that chatting, community features and games are together in the same app.”</p><strong>★★★★☆ 4/5 · Sample feedback</strong></div>
-        <div class="welcome-quote"><b>✨ Mia</b><p>“The profile and personalization options make the space feel more like my own.”</p><strong>★★★★★ 5/5 · Sample feedback</strong></div>
+      <h2 style="margin-top:34px;">What people can use Chat Me for</h2>
+      <p>Real features for staying connected, sharing updates and taking part in a community — without invented reviews or ratings.</p>
+      <div class="welcome-testimonials" aria-label="What people can use Chat Me for">
+        <div class="welcome-quote"><b>💬 Keep conversations going</b><p>Chat privately, take part in group conversations and stay connected with people you know.</p><strong>Everyday conversations</strong></div>
+        <div class="welcome-quote"><b>👥 Find your community</b><p>Join groups, discover shared interests and participate in community discussions.</p><strong>Community &amp; connections</strong></div>
+        <div class="welcome-quote"><b>📝 Share and discover</b><p>Post updates, react, comment, save posts and explore the features available to you.</p><strong>Social &amp; free-play features</strong></div>
       </div>
 
       <h2 style="margin-top:34px;">How Chat Me works</h2>
       <div class="welcome-steps" aria-label="How Chat Me works">
-        <div class="welcome-step"><div class="num">1</div><b>Create your account</b><span>Register with your details, complete the security check and set up your Chat Me profile.</span></div>
-        <div class="welcome-step"><div class="num">2</div><b>Log in securely</b><span>Use your email and password to return to your account and keep your session on your device.</span></div>
-        <div class="welcome-step"><div class="num">3</div><b>Connect</b><span>Find friends, send requests and start private or community conversations.</span></div>
-        <div class="welcome-step"><div class="num">4</div><b>Share &amp; discover</b><span>Post updates, join groups, follow conversations and use the features that interest you.</span></div>
-        <div class="welcome-step"><div class="num">5</div><b>Stay in control</b><span>Use privacy, reporting, blocking and moderation features when you need them.</span></div>
+        <div class="welcome-step"><div class="num">1</div><b>Create your account</b><span>Set up your profile and choose how you want to present yourself in the community.</span></div>
+        <div class="welcome-step"><div class="num">2</div><b>Connect</b><span>Find friends, send requests and start private or community conversations.</span></div>
+        <div class="welcome-step"><div class="num">3</div><b>Share &amp; discover</b><span>Post updates, join groups, follow conversations and use the features that interest you.</span></div>
+        <div class="welcome-step"><div class="num">4</div><b>Stay in control</b><span>Use privacy, reporting, blocking and moderation features when you need them.</span></div>
       </div>
       <div class="welcome-note"><b>Before you join:</b> Chat Me currently uses an age-eligibility check and is not intended for children under 13. Virtual Coins have no cash value, and coin purchases are currently disabled. Please read the Privacy &amp; Policies information before creating an account.</div>
 
@@ -590,9 +568,6 @@ body.dark-mode .cm-explore-card,body.dark-mode .cm-explore-chip{background:#171a
     </section>
     <div style="text-align:center;margin:8px 0 28px;font-size:12.5px;color:#667085;">
       <button onclick="showPublicPolicy()" style="background:none;border:0;color:#2b6ee0;text-decoration:underline;cursor:pointer;font-size:12.5px;">🔒 Privacy, Safety &amp; Policies</button>
-      <span style="margin:0 7px;color:#b4bac5;">•</span>
-      <button onclick="showPublicPolicy()" style="background:none;border:0;color:#2b6ee0;text-decoration:underline;cursor:pointer;font-size:12.5px;">Privacy Policy</button>
-      <div style="margin-top:10px;font-size:11.5px;color:#8a91a0;">© 2026 Chat Me. All rights reserved.</div>
     </div>
 
     <div class="public-policy-modal" id="publicPolicyModal" role="dialog" aria-modal="true" aria-label="Privacy and policies">
@@ -972,7 +947,7 @@ body.dark-mode .cm-explore-card,body.dark-mode .cm-explore-chip{background:#171a
         <div class="cm-setting-card">
           <div style="font-weight:700;margin-bottom:8px;">🎨 Appearance</div>
           <label style="display:flex;gap:10px;align-items:center;cursor:pointer;">
-            <button type="button" onclick="setAppColorTheme('blue')" style="border:1px solid #bfdbfe;background:#eef6ff;color:#1d4ed8;border-radius:7px;padding:6px 9px;cursor:pointer;font-weight:700;font-size:12px;">🔵 Blue</button> <input type="checkbox" id="settingsDarkModeToggle" onchange="toggleDarkModeFromSettings()">
+            <input type="checkbox" id="settingsDarkModeToggle" onchange="toggleDarkModeFromSettings()">
             <span>Dark mode</span>
           </label>
         </div>
@@ -1269,17 +1244,53 @@ body.dark-mode .cm-explore-card,body.dark-mode .cm-explore-chip{background:#171a
       </div>
     </div>
 
-    <div class="page" id="leosPage" style="padding:20px;">
-      <div class="profile-card" style="max-width:420px;">
-        <div style="font-size:15px;color:#888;margin-bottom:6px;">Your Coins balance</div>
-        <div style="font-size:34px;font-weight:700;color:#2b3a8f;" id="leosBig">0.00</div>
-        <div style="font-size:13px;color:#999;margin-top:10px;">This balance is private — other people can't see it, and you can't see anyone else's.</div>
+    
+    <div class="page" id="competitionPage" style="padding:20px;overflow-y:auto;">
+      <div id="competitionContent"></div>
+    </div>
+
+<div class="page" id="leosPage" style="padding:16px;overflow-y:auto;">
+      <div style="max-width:620px;margin:0 auto;">
+        <div style="border-radius:18px;padding:22px 18px;background:linear-gradient(135deg,#173d4b,#245f70);color:#fff;box-shadow:0 8px 24px rgba(0,0,0,.14);text-align:center;">
+          <div style="font-size:12px;letter-spacing:1.5px;opacity:.78;text-transform:uppercase;">Your Balance</div>
+          <div style="font-size:40px;font-weight:800;line-height:1.1;margin:8px 0 3px;" id="leosBig">0.00</div>
+          <div style="font-size:13px;letter-spacing:1px;opacity:.82;">🪙 COINS</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:12px;background:#111526;border:1px solid #252a3d;border-radius:12px;padding:4px;">
+          <button id="coinsTabButton" type="button" onclick="showCoinsTab('coins')" style="border:0;border-radius:9px;padding:10px;background:#19b8ae;color:#071315;font-weight:800;cursor:pointer;">🪙 Coins</button>
+          <button id="referCoinsButton" type="button" onclick="showCoinsTab('refer')" style="border:0;border-radius:9px;padding:10px;background:transparent;color:#dfe6f2;font-weight:700;cursor:pointer;">👥 Refer &amp; Earn</button>
+        </div>
+        <div id="coinsMainPanel">
+          <div style="margin-top:14px;background:var(--card-bg,#121624);border:1px solid rgba(128,145,180,.18);border-radius:15px;padding:14px;">
+            <h3 style="margin:0 0 10px;font-size:15px;">◆ How to Earn Coins</h3>
+            <div style="display:flex;flex-direction:column;gap:0;">
+              <div class="coin-earn-row"><span>🎁 <b>New account</b><small>Starting balance</small></span><strong>+20</strong></div>
+              <div class="coin-earn-row"><span>🌞 <b>Daily Login</b><small>Once per day</small></span><strong>+3</strong></div>
+              <div class="coin-earn-row"><span>👥 <b>Refer friends</b><small>3 friends who actually sign up</small></span><strong>+50</strong></div>
+              <div class="coin-earn-row"><span>🛡️ <b>Admin reward</b><small>Only when an authorized admin grants Coins</small></span><strong>Variable</strong></div>
+            </div>
+            <div style="font-size:11.5px;color:#7f899d;margin-top:10px;">Chat Me does not promise Coins for likes, posts or games unless the app specifically shows a reward. Free games do not use Coins.</div>
+          </div>
+          <div style="margin-top:14px;background:var(--card-bg,#121624);border:1px solid rgba(128,145,180,.18);border-radius:15px;padding:14px;">
+            <h3 style="margin:0 0 10px;font-size:15px;">↻ Recent Transactions</h3>
+            <div id="coinTransactionsList"><div style="font-size:12px;color:#888;padding:10px 0;">No Coin transactions yet.</div></div>
+          </div>
+          <div style="font-size:11.5px;color:#7f899d;margin:12px 2px 20px;">Your Coin balance and transaction history are private. Coins have no cash value and cannot be withdrawn.</div>
+        </div>
+        <div id="coinsReferPanel" style="display:none;margin-top:14px;">
+          <div style="background:var(--card-bg,#121624);border:1px solid rgba(128,145,180,.18);border-radius:15px;padding:16px;text-align:center;">
+            <div style="font-size:30px;">👥</div>
+            <h3 style="margin:7px 0;">Refer &amp; Earn</h3>
+            <p style="font-size:13px;color:#7f899d;margin:0 0 14px;">Invite 3 friends who actually create accounts through your referral link and you can claim 50 Coins.</p>
+            <button onclick="showReferralInfo()" style="border:0;border-radius:9px;padding:10px 16px;background:#2b6ee0;color:#fff;font-weight:800;cursor:pointer;">Invite friends</button>
+          </div>
+        </div>
       </div>
     </div>
 
     <div class="page" id="shopPage" style="padding:16px;overflow-y:auto;">
       <h2 style="color:#2b3a8f;margin-bottom:2px;">🛍️ Coins Shop</h2>
-      <div style="font-size:13px;color:#888;margin-bottom:10px;">Your balance: <strong id="shopBalance">0.00 Coins</strong></div><div style="font-size:12px;color:#666;margin-bottom:12px;">Basic Chat Me use stays free. Premium items and creation features require Coins. No premium item is granted for free.</div>
+      <div style="font-size:13px;color:#888;margin-bottom:10px;">Your balance: <strong id="shopBalance">0.00 Coins</strong></div><div style="font-size:12px;color:#666;margin-bottom:12px;">Basic Chat Me use stays free. Some premium items and creation features require Coins. Sticker packs are free.</div>
       <div id="shopContent"></div>
     </div>
 
@@ -1462,7 +1473,7 @@ body.dark-mode .cm-explore-card,body.dark-mode .cm-explore-chip{background:#171a
           <div style="font-size:26px;font-weight:700;color:#2b3a8f;" id="adminTotalPosts">-</div>
         </div>
         <div class="profile-card" style="max-width:180px;">
-          <div style="font-size:12px;color:#888;">Verified (20,000-Coin purchase)</div>
+          <div style="font-size:12px;color:#888;">Verified (50,000-Coin purchase)</div>
           <div style="font-size:26px;font-weight:700;color:#2b3a8f;" id="adminTotalVerified">-</div>
         </div>
         <div class="profile-card" style="max-width:180px;">
@@ -2089,21 +2100,20 @@ async function doSignup(){
     markFieldError('suPasswordConfirm', 'msgPwConfirm', 'Passwords do not match.');
     firstErrorField = firstErrorField || 'suPasswordConfirm';
   }
-  if (age === null && month && day && year) {
-    // already reported under msgDob (either incomplete or under 13)
-  }
-  if (firstErrorField || age === null) {
-    errEl.textContent = 'Please fix the highlighted fields.';
-    document.getElementById(firstErrorField || 'suUsername').focus();
-    return;
-  }
-
   const captchaResult = await recaptchaPassed('signup');
   if (!captchaResult.ok) {
     if (captchaResult.reason === 'unchecked') errEl.textContent = 'Please check the "I\'m not a robot" box first.';
     else if (captchaResult.reason === 'backend') { errEl.textContent = 'Captcha verification could not reach the verification server. Please try again.'; refreshCaptcha('signup'); }
     else if (captchaResult.reason === 'rejected') { errEl.textContent = 'Captcha verification failed. Please check the box again.'; refreshCaptcha('signup'); }
     else errEl.textContent = 'Captcha is still loading. Please wait a moment and try again.';
+    return;
+  }
+  if (age === null && month && day && year) {
+    // already reported under msgDob (either incomplete or under 13)
+  }
+  if (firstErrorField || age === null) {
+    errEl.textContent = 'Please fix the highlighted fields.';
+    document.getElementById(firstErrorField || 'suUsername').focus();
     return;
   }
 
@@ -2128,15 +2138,7 @@ async function doSignup(){
     if (!firebaseAuth || !firebaseDb || !firebaseConfigLooksReal) { errEl.textContent = 'Secure account creation is unavailable right now.'; return; }
     let firebaseCredential;
     try { firebaseCredential = await withTimeout(firebaseAuth.createUserWithEmailAndPassword(email, password), 8000); }
-    catch (e) {
-      const code = e && e.code;
-      if (code === 'auth/email-already-in-use') errEl.textContent = 'An account with this email already exists.';
-      else if (code === 'auth/invalid-email') errEl.textContent = 'Please enter a valid email address.';
-      else if (code === 'auth/weak-password') errEl.textContent = 'Your password is too weak. Please follow the password rules.';
-      else if (code === 'auth/operation-not-allowed') errEl.textContent = 'Email/password registration is not enabled in Firebase Authentication.';
-      else errEl.textContent = 'Secure account creation failed. Please try again.';
-      return;
-    }
+    catch (e) { errEl.textContent = e.code === 'auth/email-already-in-use' ? 'An account with this email already exists.' : 'Secure account creation failed. Please try again.'; return; }
     const uid = firebaseCredential.user.uid;
     // Staff roles and special Coin grants must come only from trusted backend
     // claims/operations. Never grant them from an email address in the browser.
@@ -2160,7 +2162,7 @@ async function doSignup(){
       id: Date.now() + '-' + Math.random().toString(36).slice(2, 8),
       type: 'system', time: Date.now() + 1, read: false, handled: true,
       title: 'What can I use my Coins for?',
-      text: 'Your Coins can be used to create a Chatroom (10,000 Coins) or Group (8,000 Coins), and to buy items and features in the Shop: profile themes (up to 500 Coins), profile frames (up to 1,000 Coins), name effects (up to 1,000 Coins), free sticker packs, premium chat themes (up to 2,000 Coins), virtual gifts, special badges (50,000-150,000 Coins), Featured Profile, Profile Music, Private Room access, Group Background access, Premium Message Pins, Premium Reactions, and Story Insights. You can also earn 50 Coins by inviting 3 friends who actually sign up with your referral link. Check the Shop before spending your Coins so you can see the current prices.'
+      text: 'Your Coins can be used to create a Chatroom (10,000 Coins) or Group (8,000 Coins), and to buy items and features in the Shop: profile themes, profile frames, name effects, sticker packs, premium chat themes, virtual gifts, special badges, Featured Profile, Profile Music, Private Room access, Group Background access, Premium Message Pins, Premium Reactions, and Story Insights. You can also earn 50 Coins by inviting 3 friends who actually sign up with your referral link. Check the Shop before spending your Coins so you can see the current prices.'
     }]), true);
 
     // Referral tracking: ?ref=someusername in the URL that brought them here.
@@ -2290,9 +2292,55 @@ if (!document.getElementById('confettiStyleTag')) {
   document.head.appendChild(styleTag);
 }
 
+function coinTransactionTime(ts){
+  try { return new Date(ts || Date.now()).toLocaleString([], {month:'short', day:'numeric', year:'numeric', hour:'numeric', minute:'2-digit'}); } catch(e){ return ''; }
+}
+function renderCoinTransactions(list){
+  const el = document.getElementById('coinTransactionsList');
+  if (!el) return;
+  if (!Array.isArray(list) || !list.length) { el.innerHTML = '<div style="font-size:12px;color:#888;padding:10px 0;">No Coin transactions yet.</div>'; return; }
+  el.innerHTML = list.slice(0,20).map(t => {
+    const positive = Number(t.amount) >= 0;
+    const sign = positive ? '+' : '';
+    const label = escapeHtml(t.label || 'Coin transaction');
+    const amount = Math.abs(Number(t.amount)||0).toFixed(2).replace(/\.00$/,'');
+    return `<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid rgba(128,145,180,.13);">
+      <div style="width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:${positive ? 'rgba(37,162,68,.14)' : 'rgba(232,98,45,.14)'};">${positive ? '↑' : '↓'}</div>
+      <div style="flex:1;min-width:0;"><div style="font-size:12.5px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${label}</div><div style="font-size:10.5px;color:#7f899d;">${coinTransactionTime(t.time)}</div></div>
+      <div style="font-weight:800;color:${positive ? '#35c76a' : '#e8622d'};white-space:nowrap;">${sign}${amount} 🪙</div>
+    </div>`;
+  }).join('');
+}
+function showCoinsTab(tab){
+  const main = document.getElementById('coinsMainPanel');
+  const refer = document.getElementById('coinsReferPanel');
+  const a = document.getElementById('coinsTabButton');
+  const b = document.getElementById('referCoinsButton');
+  const isRefer = tab === 'refer';
+  if (main) main.style.display = isRefer ? 'none' : 'block';
+  if (refer) refer.style.display = isRefer ? 'block' : 'none';
+  if (a) { a.style.background = isRefer ? 'transparent' : '#19b8ae'; a.style.color = isRefer ? '#dfe6f2' : '#071315'; }
+  if (b) { b.style.background = isRefer ? '#19b8ae' : 'transparent'; b.style.color = isRefer ? '#071315' : '#dfe6f2'; }
+}
+async function recordCoinTransaction(label, amount, balance){
+  try {
+    if (!currentUser) return;
+    const raw = await storageGet(userKey(currentUser.email), true);
+    if (!raw) return;
+    const u = JSON.parse(raw);
+    u.coinTransactions = Array.isArray(u.coinTransactions) ? u.coinTransactions : [];
+    u.coinTransactions.unshift({ id: Date.now() + '-' + Math.random().toString(36).slice(2,8), label, amount:Number(amount)||0, balance:typeof balance==='number'?balance:(typeof u.leos==='number'?u.leos:0), time:Date.now() });
+    u.coinTransactions = u.coinTransactions.slice(0,50);
+    await storageSet(userKey(currentUser.email), JSON.stringify(u), true);
+    currentUser.coinTransactions = u.coinTransactions;
+    renderCoinTransactions(u.coinTransactions);
+  } catch(e){}
+}
 function loadCoinsPage(){
   const amount = (typeof currentUser.leos === 'number' ? currentUser.leos : 20).toFixed(2);
   document.getElementById('leosBig').textContent = amount;
+  renderCoinTransactions(Array.isArray(currentUser.coinTransactions) ? currentUser.coinTransactions : []);
+  showCoinsTab('coins');
 }
 
 /* ---------------- VIEW SOMEONE ELSE'S PROFILE ---------------- */
@@ -2498,18 +2546,8 @@ async function isTrustedStaff(){
   } catch(e) { return false; }
 }
 
-async function resolveLoginEmail(identifier){
-  const value = String(identifier || '').trim().toLowerCase();
-  if (!value) throw new Error('Please enter your email or username.');
-  if (value.includes('@')) return value;
-  const mappedEmail = await storageGet(usernameKey(value));
-  if (!mappedEmail) { const err = new Error('Account not found'); err.code = 'auth/user-not-found'; throw err; }
-  return String(mappedEmail).trim().toLowerCase();
-}
-
-async function ensureFirebaseSession(identifier, password){
+async function ensureFirebaseSession(email, password){
   if (!firebaseAuth) throw new Error('Secure Firebase Authentication is unavailable.');
-  const email = await resolveLoginEmail(identifier);
   return withTimeout(firebaseAuth.signInWithEmailAndPassword(email, password), 7000);
 }
 
@@ -2588,11 +2626,11 @@ async function doLogin(){
   const statusEl = document.getElementById('loginStatus');
   errEl.textContent = ''; statusEl.textContent = '';
 
-  const identifier = document.getElementById('loginEmail').value.trim();
+  const email = document.getElementById('loginEmail').value.trim();
   const password = document.getElementById('loginPassword').value;
 
-  if (!identifier || !password) {
-    errEl.textContent = 'Please enter your email or username and password.';
+  if (!email || !password) {
+    errEl.textContent = 'Please enter your email and password.';
     return;
   }
   const captchaResult = await recaptchaPassed('login');
@@ -2610,19 +2648,9 @@ async function doLogin(){
   showLoading(true);
   try {
     if (!firebaseAuth || !firebaseDb || !firebaseConfigLooksReal) { errEl.textContent='Secure Firebase Authentication is unavailable. Please try again later.'; refreshCaptcha('login'); return; }
-    let email;
     let fbUser;
-    try {
-      email = await resolveLoginEmail(identifier);
-      fbUser = await ensureFirebaseSession(email,password);
-    }
-    catch(e) {
-      if (e.code === 'auth/too-many-requests') errEl.textContent = 'Too many login attempts. Please wait and try again.';
-      else if (e.code === 'auth/user-not-found') errEl.textContent = 'No Chat Me account was found for that email or username.';
-      else errEl.textContent = 'Invalid email or password.';
-      refreshCaptcha('login');
-      return;
-    }
+    try { fbUser = await ensureFirebaseSession(email,password); }
+    catch(e) { errEl.textContent = e.code==='auth/too-many-requests' ? 'Too many login attempts. Please wait and try again.' : 'Invalid email or password.'; refreshCaptcha('login'); return; }
     // The secure Worker is now authoritative, but existing Chat Me accounts
     // may still have their profile in the legacy Firestore kv collection.
     // After Firebase authentication succeeds, recover only this user's own
@@ -2765,6 +2793,7 @@ async function grantDailyBonusIfDue(){
     updateCoinsDisplay();
   } catch(e){ return; }
   await storageSet(dailyBonusKey(currentUser.username), today, true);
+  await recordCoinTransaction('Daily login bonus', DAILY_BONUS_AMOUNT, u.leos);
 
   const notifRaw = await storageGet(notifsKey(currentUser.username), true);
   const notifs = notifRaw ? JSON.parse(notifRaw) : [];
@@ -2903,6 +2932,7 @@ async function showReferralInfo(){
         reward.claimed = true;
         u2.leos = (typeof u2.leos === 'number' ? u2.leos : 20) + reward.amount;
         await storageSet(userKey(currentUser.email), JSON.stringify(u2), true);
+        await recordCoinTransaction('Referral reward', reward.amount, u2.leos);
         currentUser.leos = u2.leos;
         updateCoinsDisplay();
         alert('Claimed! +' + reward.amount + ' Coins.');
@@ -3086,45 +3116,25 @@ function selectLanguage(lang){
 function toggleWelcomeDarkMode(){
   const on=!document.body.classList.contains('dark-mode');
   document.body.classList.toggle('dark-mode',on);
-  if(on) document.body.classList.remove('blue-mode');
-  try{localStorage.setItem('darkMode',on?'1':'0');localStorage.setItem('colorTheme',on?'dark':'white');}catch(e){}
+  try{localStorage.setItem('darkMode',on?'1':'0');}catch(e){}
   const home=document.getElementById('darkModeToggle');if(home)home.checked=on;
   const settings=document.getElementById('settingsDarkModeToggle');if(settings)settings.checked=on;
   const b=document.getElementById('welcomeDarkToggle');if(b)b.textContent=on?'☀️ Light':'🌙 Dark';
 }
-function toggleWelcomeBlueMode(){
-  const on=!document.body.classList.contains('blue-mode');
-  document.body.classList.toggle('blue-mode',on);
-  if(on) document.body.classList.remove('dark-mode');
-  try{localStorage.setItem('colorTheme',on?'blue':'white');localStorage.setItem('darkMode','0');}catch(e){}
-  const home=document.getElementById('darkModeToggle');if(home)home.checked=false;
-  const settings=document.getElementById('settingsDarkModeToggle');if(settings)settings.checked=false;
-  const b=document.getElementById('welcomeDarkToggle');if(b)b.textContent='🌙 Dark';
-}
 function applyDarkModePreference(){
-  let theme = 'white';
-  try { theme = localStorage.getItem('colorTheme') || (localStorage.getItem('darkMode') === '1' ? 'dark' : 'white'); } catch (e) {}
-  document.body.classList.toggle('dark-mode', theme === 'dark');
-  document.body.classList.toggle('blue-mode', theme === 'blue');
+  let on = false;
+  try { on = localStorage.getItem('darkMode') === '1'; } catch (e) {}
+  document.body.classList.toggle('dark-mode', on);
   const toggle = document.getElementById('darkModeToggle');
-  if (toggle) toggle.checked = theme === 'dark';
-  const welcome=document.getElementById('welcomeDarkToggle'); if(welcome) welcome.textContent=theme==='dark'?'☀️ Light':'🌙 Dark';
-  const settings=document.getElementById('settingsDarkModeToggle'); if(settings) settings.checked = theme === 'dark';
+  if (toggle) toggle.checked = on;
+  const welcome=document.getElementById('welcomeDarkToggle'); if(welcome) welcome.textContent=on?'☀️ Light':'🌙 Dark';
+  const settings=document.getElementById('settingsDarkModeToggle'); if(settings) settings.checked=on;
 }
 function toggleDarkMode(){
   const toggle = document.getElementById('darkModeToggle');
   const on = toggle ? toggle.checked : false;
   document.body.classList.toggle('dark-mode', on);
-  if(on) document.body.classList.remove('blue-mode');
-  try { localStorage.setItem('darkMode', on ? '1' : '0'); localStorage.setItem('colorTheme', on ? 'dark' : 'white'); } catch (e) {}
-}
-function setAppColorTheme(theme){
-  theme = theme === 'blue' || theme === 'dark' ? theme : 'white';
-  document.body.classList.toggle('dark-mode', theme === 'dark');
-  document.body.classList.toggle('blue-mode', theme === 'blue');
-  try { localStorage.setItem('colorTheme', theme); localStorage.setItem('darkMode', theme === 'dark' ? '1' : '0'); } catch(e) {}
-  const t=document.getElementById('darkModeToggle'); if(t) t.checked=theme==='dark';
-  const w=document.getElementById('welcomeDarkToggle'); if(w) w.textContent=theme==='dark'?'☀️ Light':'🌙 Dark';
+  try { localStorage.setItem('darkMode', on ? '1' : '0'); } catch (e) {}
 }
 
 /* ---------------- TAB SWITCHING ---------------- */
@@ -3157,7 +3167,7 @@ async function loadFeaturedPost(){
 }
 
 const CM_NAV_ITEMS = [
-  ['explorePage','✨ Explore'],['friendsPage','👥 Friends'],['videosPage','🎬 Videos'],['statusbookPage','📝 Statusbook'],['chatroomsPage','💬 Chatrooms'],['groupsPage','👥 Groups'],['gamesPage','🎮 Games'],['shopPage','🛍 Shop'],['leosPage','🪙 Coins'],['searchPage','🔍 Search'],['savedPostsPage','🔖 Saved Posts'],['announcementsPage','📢 Announcements'],['aiPage','✨ Nova'],['creatorToolsPage','📊 Creator Tools'],['reportPage','🚩 Report'],['supportPage','🎧 Customer Service'],['helpPage','🛡 Help & Safety'],['settingsPage','⚙ Settings & Privacy'],['communityRulesPage','📜 Community Rules'],['tosPage','Terms of Service'],['privacyPolicyPage','Privacy Policy'],['refundPolicyPage','Refund Policy']
+  ['explorePage','✨ Explore'],['friendsPage','👥 Friends'],['videosPage','🎬 Videos'],['statusbookPage','📝 Statusbook'],['chatroomsPage','💬 Chatrooms'],['groupsPage','👥 Groups'],['gamesPage','🎮 Games'],['competitionPage','🏆 Competition'],['shopPage','🛍 Shop'],['leosPage','🪙 Coins'],['searchPage','🔍 Search'],['savedPostsPage','🔖 Saved Posts'],['announcementsPage','📢 Announcements'],['aiPage','✨ Nova'],['creatorToolsPage','📊 Creator Tools'],['reportPage','🚩 Report'],['supportPage','🎧 Customer Service'],['helpPage','🛡 Help & Safety'],['settingsPage','⚙ Settings & Privacy'],['communityRulesPage','📜 Community Rules'],['tosPage','Terms of Service'],['privacyPolicyPage','Privacy Policy'],['refundPolicyPage','Refund Policy']
 ];
 function cmRenderAllNavigation(){
   const grid=document.getElementById('cmAllNavigationGrid'); if(!grid)return;
@@ -3198,7 +3208,7 @@ function cmLoadCreatorAnalytics(){
 
 function switchTab(pageId, fromHistory=false){
   if (!currentUser) return;
-  const cmCloudPages=['homePage','profilePage','chatsPage','friendsPage','notificationsPage','leosPage','statusbookPage','aiPage','menuPage','reportPage','searchPage','savedPostsPage','shopPage','groupsPage','chatroomsPage','adminPage','supportPage','announcementsPage','settingsPage','videosPage','explorePage'];
+  const cmCloudPages=['homePage','profilePage','chatsPage','friendsPage','notificationsPage','leosPage','statusbookPage','aiPage','menuPage','reportPage','searchPage','savedPostsPage','shopPage','groupsPage','chatroomsPage','competitionPage','adminPage','supportPage','announcementsPage','settingsPage','videosPage','explorePage'];
   if (cmCloudPages.includes(pageId) && navigator.onLine === false) {
     const pageEl=document.getElementById(pageId);
     if(pageEl) {
@@ -3247,6 +3257,7 @@ function switchTab(pageId, fromHistory=false){
   if (pageId === 'shopPage') loadShopPage();
   if (pageId === 'groupsPage') loadGroupListPage();
   if (pageId === 'chatroomsPage') loadRoomListPage();
+  if (pageId === 'competitionPage') loadCompetitionPage();
   if (pageId === 'adminPage') loadAdminPage();
   if (pageId === 'supportPage') cmLoadSupportPage();
   if (pageId === 'announcementsPage') loadAnnouncementsPage();
@@ -3414,13 +3425,13 @@ async function loadAdminPage(){
   const eligible = rows.filter(u => !u.verified && !!u.pendingVerification);
   const canVerify = iAmAdmin || iAmModerator;
   const verifySection = `
-    <div class="section-divider"><strong>Verification requests</strong><span>Members who paid the 20,000-Coin verification fee and are waiting for staff review.</span></div>
+    <div class="section-divider"><strong>Verification requests</strong><span>Members who paid the 50,000-Coin verification fee and are waiting for staff review.</span></div>
     ${eligible.length ? eligible.map(u => `
       <div class="user-result" style="max-width:560px;">
         ${avatarHtml(u.firstName, u.lastName, u.profilePic, 'avatar')}
         <div class="info">
           <div class="name">${escapeHtml(u.firstName)} ${escapeHtml(u.lastName)}</div>
-          <div class="uname">@${escapeHtml(u.username)} &middot; Verification fee paid: 20,000 Coins</div>
+          <div class="uname">@${escapeHtml(u.username)} &middot; Verification fee paid: 50,000 Coins</div>
         </div>
         ${canVerify ? `<button onclick="verifyUser('${u.username.replace(/'/g,"\\'")}')">Approve Verification</button>` : `<span style="color:#aaa;font-size:12.5px;">Only staff can verify</span>`}
       </div>`).join('') : '<div class="empty-feed">No one is currently eligible.</div>'}
@@ -3550,6 +3561,27 @@ async function loadAdminPage(){
     `;
   }
 
+
+  /* ---- Competitions (admin/owner only) ---- */
+  const competitionSection = iAmAdmin ? `
+    <div class="section-divider"><strong>🏆 Competitions</strong><span>Create and publish the separate Speed Rounds competition whenever you choose. Each competition gets a fresh leaderboard.</span></div>
+    <div class="profile-card" style="max-width:650px;margin-bottom:12px;">
+      <div style="font-weight:700;color:#2b3a8f;margin-bottom:8px;">Create / Publish Competition</div>
+      <input id="cmCompTitle" placeholder="Competition name" maxlength="80" style="width:100%;box-sizing:border-box;padding:9px 10px;border:1px solid #ccc;border-radius:6px;margin-bottom:7px;">
+      <input id="cmCompStart" type="datetime-local" style="padding:9px 10px;border:1px solid #ccc;border-radius:6px;margin:0 6px 7px 0;max-width:230px;">
+      <input id="cmCompEnd" type="datetime-local" style="padding:9px 10px;border:1px solid #ccc;border-radius:6px;margin-bottom:7px;max-width:230px;">
+      <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:7px;">
+        <input id="cmCompPrize1" type="number" min="0" step="1" value="1000" placeholder="1st prize" style="width:120px;padding:9px 10px;border:1px solid #ccc;border-radius:6px;">
+        <input id="cmCompPrize2" type="number" min="0" step="1" value="500" placeholder="2nd prize" style="width:120px;padding:9px 10px;border:1px solid #ccc;border-radius:6px;">
+        <input id="cmCompPrize3" type="number" min="0" step="1" value="250" placeholder="3rd prize" style="width:120px;padding:9px 10px;border:1px solid #ccc;border-radius:6px;">
+      </div>
+      <div style="font-size:12px;color:#777;margin-bottom:8px;">Free entry. Players get one Speed Rounds attempt per competition. Higher score wins; ties are broken by completion time.</div>
+      <button onclick="adminCreateCompetition()" style="background:#2b6ee0;color:#fff;border:0;padding:9px 16px;border-radius:6px;font-weight:600;cursor:pointer;">Create &amp; Publish</button>
+      <div id="cmCompetitionAdminStatus" class="auth-status"></div>
+    </div>
+    <div id="cmCompetitionAdminList"></div>
+  ` : '';
+
   /* ---- System notifications (staff only) ---- */
   const systemNotificationSection = (iAmAdmin || iAmModerator) ? `
     <div class="section-divider"><strong>🔔 Send System Notification</strong><span>Send a notification to one user or to everyone.</span></div>
@@ -3617,7 +3649,8 @@ async function loadAdminPage(){
   ` : '';
 
   document.getElementById('adminUserList').innerHTML = staffRoleSection + verifySection + unverifySection + leaderboardSection + adminAnnouncementSection + postModerationSection + banSection + reportsSection
-    + (iAmAdmin ? (adminSection + moderatorsSection + systemNotificationSection + giveCoinsSection + deleteSection + dangerSection) : '');
+    + (iAmAdmin ? (adminSection + moderatorsSection + competitionSection + systemNotificationSection + giveCoinsSection + deleteSection + dangerSection) : '');
+  if (iAmAdmin) loadAdminCompetitions();
 }
 
 async function adminDeletePost(postId){
@@ -4165,6 +4198,117 @@ async function endWordGame(won, reason){
     document.getElementById('gamePicker').style.display = 'none';
     gameState = null;
   }, 2200);
+}
+
+
+/* ================= COMPETITION: SPEED ROUNDS ================= */
+const COMPETITION_ACTIVE_KEY = 'competition:active';
+const COMPETITION_SCORE_PREFIX = 'competitionScore:';
+const COMPETITION_WINNER_PREFIX = 'competitionWinner:';
+let competitionState = null;
+let competitionTickTimer = null;
+let competitionQuestionTimer = null;
+
+function competitionScoreKey(id, username){ return COMPETITION_SCORE_PREFIX + id + ':' + String(username || '').toLowerCase(); }
+function competitionWinnerKey(id){ return COMPETITION_WINNER_PREFIX + id; }
+async function addSystemNotificationToUser(username,title,text){ const u=String(username||'').trim(); if(!u)return false; const raw=await storageGet(notifsKey(u),true); let arr=[]; try{arr=raw?JSON.parse(raw):[];}catch(e){arr=[];} if(!Array.isArray(arr))arr=[]; arr.push({id:Date.now()+'-'+Math.random().toString(36).slice(2,8),type:'system',title:String(title||'Chat Me'),time:Date.now(),read:false,handled:true,text:String(text||'')}); return !!(await storageSet(notifsKey(u),JSON.stringify(arr),true)); }
+function competitionEscape(v){ return escapeHtml(String(v == null ? '' : v)); }
+
+function makeSpeedQuestion(round){
+  const r = Math.max(1, Number(round)||1);
+  const type = r % 4;
+  let a,b,answer,text;
+  if(type===1){ a=20+r*7+Math.floor(Math.random()*30); b=10+r*5+Math.floor(Math.random()*25); answer=a+b; text=a+' + '+b+' = ?'; }
+  else if(type===2){ a=60+r*9+Math.floor(Math.random()*35); b=15+r*4+Math.floor(Math.random()*20); answer=a-b; text=a+' − '+b+' = ?'; }
+  else if(type===3){ a=6+Math.floor(Math.random()*8)+Math.floor(r/3); b=4+Math.floor(Math.random()*7); answer=a*b; text=a+' × '+b+' = ?'; }
+  else { a=8+Math.floor(Math.random()*7)+Math.floor(r/2); b=2+Math.floor(Math.random()*5); answer=a*b+b; text='If '+a+' × '+b+' = '+(a*b)+', then '+a+' × '+b+' + '+b+' = ?'; }
+  return {text,answer};
+}
+
+async function loadCompetitionPage(){
+  const host=document.getElementById('competitionContent'); if(!host||!currentUser)return;
+  if(competitionTickTimer){clearInterval(competitionTickTimer);competitionTickTimer=null;}
+  const raw=await storageGet(COMPETITION_ACTIVE_KEY,true);
+  let c=null; try{c=raw?JSON.parse(raw):null;}catch(e){c=null;}
+  const now=Date.now();
+  if(!c || !c.id || c.status!=='published' || now<c.startAt || now>=c.endAt){
+    host.innerHTML=`<div class="profile-card" style="max-width:560px;text-align:center;padding:28px 18px;"><div style="font-size:48px;margin-bottom:8px;">🏆</div><h2 style="color:#2b3a8f;margin:0 0 8px;">Competition</h2><div style="color:#777;font-size:14px;">No competition is currently active.</div></div>`;
+    return;
+  }
+  const scoreRaw=await storageGet(competitionScoreKey(c.id,currentUser.username),true);
+  if(scoreRaw){
+    let sc=null;try{sc=JSON.parse(scoreRaw);}catch(e){}
+    host.innerHTML=`<div class="profile-card" style="max-width:560px;"><h2 style="color:#2b3a8f;margin:0 0 8px;">🏆 ${competitionEscape(c.title)}</h2><div style="font-size:13px;color:#777;margin-bottom:12px;">Your attempt is complete.</div><div style="font-size:34px;font-weight:800;color:#2b3a8f;">${Number(sc&&sc.score||0)}</div><div style="color:#666;margin-top:4px;">points</div><div style="margin-top:14px;font-size:13px;color:#777;">The leaderboard is live. Come back later to see the final results.</div><button onclick="loadCompetitionLeaderboard('${competitionEscape(c.id)}')" style="margin-top:12px;background:#2b6ee0;color:#fff;border:0;padding:9px 16px;border-radius:6px;cursor:pointer;">View Leaderboard</button></div>`;
+    return;
+  }
+  host.innerHTML=`<div class="profile-card" style="max-width:560px;"><h2 style="color:#2b3a8f;margin:0 0 6px;">🏆 ${competitionEscape(c.title)}</h2><div style="font-size:13px;color:#777;margin-bottom:10px;">Speed Rounds • 10 rounds • 5 seconds each</div><div id="competitionCountdown" style="font-weight:700;color:#e8622d;margin-bottom:12px;"></div><div style="background:#f5f7fb;border:1px solid #e1e5ec;border-radius:9px;padding:12px;margin-bottom:12px;"><strong>Prizes</strong><div style="font-size:13px;color:#666;margin-top:5px;">🥇 ${Number(c.prizes[0]||0).toLocaleString()} Coins &nbsp; 🥈 ${Number(c.prizes[1]||0).toLocaleString()} Coins &nbsp; 🥉 ${Number(c.prizes[2]||0).toLocaleString()} Coins</div></div><button onclick="startCompetitionSpeedRounds('${competitionEscape(c.id)}')" style="background:#2b6ee0;color:#fff;border:0;padding:11px 20px;border-radius:7px;font-weight:700;cursor:pointer;">Start Competition</button><div style="font-size:11.5px;color:#888;margin-top:8px;">One attempt only. Free entry.</div></div>`;
+  const count=document.getElementById('competitionCountdown');
+  const update=()=>{const left=Math.max(0,c.endAt-Date.now()); if(count)count.textContent='Ends in: '+Math.ceil(left/86400000)+' day(s)'; if(left<=0){clearInterval(competitionTickTimer);loadCompetitionPage();}};
+  update(); competitionTickTimer=setInterval(update,1000);
+}
+
+async function startCompetitionSpeedRounds(id){
+  if(!currentUser)return;
+  const raw=await storageGet(COMPETITION_ACTIVE_KEY,true); let c=null;try{c=raw?JSON.parse(raw):null;}catch(e){}
+  if(!c||c.id!==id||c.status!=='published'||Date.now()<c.startAt||Date.now()>=c.endAt){alert('This competition is not active.');return;}
+  const existing=await storageGet(competitionScoreKey(id,currentUser.username),true); if(existing){loadCompetitionPage();return;}
+  competitionState={id,round:1,score:0,correct:0,startedAt:Date.now(),question:null,locked:false};
+  renderCompetitionRound();
+}
+function renderCompetitionRound(){
+  if(!competitionState)return;
+  const host=document.getElementById('competitionContent'); if(!host)return;
+  const q=makeSpeedQuestion(competitionState.round); competitionState.question=q; competitionState.locked=false;
+  host.innerHTML=`<div class="profile-card" style="max-width:560px;"><div style="display:flex;justify-content:space-between;gap:8px;margin-bottom:8px;"><strong>🏆 Speed Rounds</strong><span id="compRoundLabel">Round ${competitionState.round}/10</span></div><div style="font-size:13px;color:#777;margin-bottom:8px;">Score: <strong id="compScore">${competitionState.score}</strong></div><div style="height:8px;background:#e8ebf0;border-radius:10px;overflow:hidden;margin-bottom:14px;"><div id="compTimeBar" style="height:100%;width:100%;background:#2b6ee0;transition:width .1s linear;"></div></div><div style="font-size:28px;font-weight:800;text-align:center;margin:18px 0;">${competitionEscape(q.text)}</div><input id="compAnswer" inputmode="numeric" autocomplete="off" placeholder="Your answer" style="width:100%;box-sizing:border-box;padding:12px;border:1px solid #ccc;border-radius:7px;font-size:17px;text-align:center;"><button onclick="submitCompetitionAnswer()" style="width:100%;margin-top:9px;background:#2b6ee0;color:#fff;border:0;padding:11px;border-radius:7px;font-weight:700;cursor:pointer;">Submit Answer</button><div id="compRoundResult" style="text-align:center;margin-top:9px;font-size:13px;font-weight:700;min-height:18px;"></div></div>`;
+  const input=document.getElementById('compAnswer'); if(input){input.focus();input.onkeydown=e=>{if(e.key==='Enter')submitCompetitionAnswer();};}
+  let left=5000; if(competitionQuestionTimer)clearInterval(competitionQuestionTimer);
+  const started=Date.now(); competitionQuestionTimer=setInterval(()=>{left=Math.max(0,5000-(Date.now()-started));const bar=document.getElementById('compTimeBar');if(bar)bar.style.width=(left/50)+'%';if(left<=0){clearInterval(competitionQuestionTimer);submitCompetitionAnswer(true);}},50);
+}
+async function submitCompetitionAnswer(timeout=false){
+  if(!competitionState||competitionState.locked)return; competitionState.locked=true; if(competitionQuestionTimer){clearInterval(competitionQuestionTimer);competitionQuestionTimer=null;}
+  const input=document.getElementById('compAnswer'); const given=Number(input&&input.value); const correct=!timeout&&Number.isFinite(given)&&given===Number(competitionState.question.answer); const result=document.getElementById('compRoundResult');
+  if(correct){const speedBonus=Math.max(1,Math.ceil((5000-Math.min(5000,Date.now()-competitionState.startedAt))/500)); competitionState.score+=10+Math.min(10,speedBonus);competitionState.correct++;if(result)result.textContent='Correct! +'+(10+Math.min(10,speedBonus))+' points';}
+  else if(result)result.textContent=timeout?'Time!':'Wrong answer';
+  if(input)input.disabled=true;
+  setTimeout(async()=>{if(!competitionState)return;if(competitionState.round>=10){await finishCompetitionAttempt();}else{competitionState.round++;renderCompetitionRound();}},500);
+}
+async function finishCompetitionAttempt(){
+  if(!competitionState)return; const id=competitionState.id; const key=competitionScoreKey(id,currentUser.username); const existing=await storageGet(key,true); if(existing){competitionState=null;loadCompetitionPage();return;}
+  const result={username:currentUser.username,score:Math.max(0,Math.floor(competitionState.score)),correct:competitionState.correct,completedAt:Date.now()};
+  await storageSet(key,JSON.stringify(result),true); competitionState=null; fireConfetti(); loadCompetitionPage();
+}
+async function loadCompetitionLeaderboard(id){
+  const host=document.getElementById('competitionContent'); if(!host)return; host.innerHTML='<div class="empty-feed">Loading leaderboard...</div>';
+  const keys=await storageListKeys(COMPETITION_SCORE_PREFIX+id+':',true); const rows=[];
+  for(const k of keys){const raw=await storageGet(k,true);if(!raw)continue;try{const x=JSON.parse(raw);rows.push(x);}catch(e){}}
+  rows.sort((a,b)=>(b.score-a.score)||(a.completedAt-b.completedAt));
+  host.innerHTML=`<div class="profile-card" style="max-width:560px;"><a onclick="loadCompetitionPage()" style="cursor:pointer;color:#2b6ee0;font-size:13px;">⬅ Back</a><h2 style="color:#2b3a8f;margin:10px 0;">🏆 Competition Leaderboard</h2>${rows.length?rows.slice(0,20).map((r,i)=>`<div class="user-result"><div class="info"><div class="name">${i<3?['🥇','🥈','🥉'][i]:'#'+(i+1)} @${competitionEscape(r.username)}</div><div class="uname">${r.correct}/10 correct</div></div><strong style="color:#2b3a8f;">${r.score}</strong></div>`).join(''):'<div class="empty-feed">No scores yet.</div>'}</div>`;
+}
+
+async function adminCreateCompetition(){
+  if(!currentUser||!isAdminUser(currentUser)){alert('Only admins can manage competitions.');return;}
+  const title=(document.getElementById('cmCompTitle')?.value||'').trim(); const start=new Date(document.getElementById('cmCompStart')?.value||'').getTime(); const end=new Date(document.getElementById('cmCompEnd')?.value||'').getTime();
+  const prizes=[1,2,3].map(n=>Math.max(0,Math.floor(Number(document.getElementById('cmCompPrize'+n)?.value)||0)));
+  const status=document.getElementById('cmCompetitionAdminStatus'); if(!title||!Number.isFinite(start)||!Number.isFinite(end)||end<=start||end<=Date.now()){if(status)status.textContent='Enter a valid name, start time and future end time.';return;}
+  const activeRaw=await storageGet(COMPETITION_ACTIVE_KEY,true); if(activeRaw){if(status)status.textContent='End the current competition before publishing another one.';return;}
+  const id='speed-'+Date.now().toString(36); const c={id,title,startAt:start,endAt:end,prizes,status:'published',createdAt:Date.now(),createdBy:currentUser.username};
+  const ok=await storageSet(COMPETITION_ACTIVE_KEY,JSON.stringify(c),true); if(!ok){if(status)status.textContent='Could not publish the competition.';return;}
+  if(status)status.textContent='Competition published.'; await loadAdminCompetitions();
+}
+async function loadAdminCompetitions(){
+  const host=document.getElementById('cmCompetitionAdminList'); if(!host)return; const raw=await storageGet(COMPETITION_ACTIVE_KEY,true); if(!raw){host.innerHTML='<div class="empty-feed">No competition is currently published.</div>';return;} let c=null;try{c=JSON.parse(raw);}catch(e){} if(!c){host.innerHTML='<div class="empty-feed">No competition is currently published.</div>';return;}
+  const keys=await storageListKeys(COMPETITION_SCORE_PREFIX+c.id+':',true); const rows=[]; for(const k of keys){const x=await storageGet(k,true);if(x)try{rows.push(JSON.parse(x));}catch(e){}} rows.sort((a,b)=>(b.score-a.score)||(a.completedAt-b.completedAt));
+  const three=rows.slice(0,3);
+  host.innerHTML=`<div class="profile-card" style="max-width:650px;"><div style="font-weight:700;color:#2b3a8f;">🏆 ${competitionEscape(c.title)}</div><div style="font-size:12px;color:#777;margin:4px 0 10px;">${new Date(c.startAt).toLocaleString()} → ${new Date(c.endAt).toLocaleString()}</div><div style="font-size:13px;margin-bottom:10px;">${rows.length} completed attempt(s)</div><div style="margin-bottom:10px;">${three.length?three.map((r,i)=>`<div class="user-result"><div class="info"><div class="name">${['🥇','🥈','🥉'][i]} @${competitionEscape(r.username)}</div><div class="uname">${r.score} points • ${r.correct}/10 correct</div></div><button onclick="adminAwardCompetitionPrize('${competitionEscape(c.id)}','${competitionEscape(r.username)}',${Number(c.prizes[i]||0)})">Award ${Number(c.prizes[i]||0).toLocaleString()} Coins</button></div>`).join(''):'<div class="empty-feed">No scores yet.</div>'}</div><button onclick="adminSendCompetitionReminder('${competitionEscape(c.id)}')" style="margin-right:6px;">📢 Send 3-day reminder</button><button onclick="adminEndCompetition('${competitionEscape(c.id)}')" style="background:#d32f2f;color:#fff;border:0;padding:9px 14px;border-radius:6px;cursor:pointer;">End &amp; Clear Competition</button></div>`;
+}
+async function adminSendCompetitionReminder(id){
+  if(!currentUser||!isAdminUser(currentUser))return; const raw=await storageGet(COMPETITION_ACTIVE_KEY,true);let c=null;try{c=raw?JSON.parse(raw):null;}catch(e){} if(!c||c.id!==id)return; const days=(c.endAt-Date.now())/86400000; if(days<2.5||days>3.5){alert('The reminder button is intended for when about 3 days remain.');return;} const users=await storageListKeys('user:',true); const msg='🏆 '+c.title+' has about 3 days remaining. Open Competition and complete your Speed Rounds attempt before it ends.'; for(const uk of users){const ur=await storageGet(uk,true);if(!ur)continue;try{const u=JSON.parse(ur);await addSystemNotificationToUser(u.username,'Competition reminder',msg);}catch(e){}} alert('3-day competition reminder sent.');
+}
+async function adminAwardCompetitionPrize(id,username,amount){
+  if(!currentUser||!isAdminUser(currentUser)||amount<=0)return; const confirmAward=confirm('Award '+amount.toLocaleString()+' Coins to @'+username+'?');if(!confirmAward)return; const email=await storageGet(usernameKey(username),true);if(!email){alert('User not found.');return;}const raw=await storageGet(userKey(email),true);if(!raw){alert('User record not found.');return;}let u;try{u=JSON.parse(raw);}catch(e){return;}u.leos=(Number(u.leos)||0)+amount;await storageSet(userKey(email),JSON.stringify(u),true);await addSystemNotificationToUser(username,'Competition prize','You received '+amount.toLocaleString()+' Coins for the Chat Me Competition.');alert('Prize awarded.');}
+async function adminEndCompetition(id){
+  if(!currentUser||!isAdminUser(currentUser))return; if(!confirm('End this competition and permanently clear its leaderboard data?'))return; const raw=await storageGet(COMPETITION_ACTIVE_KEY,true);let c=null;try{c=raw?JSON.parse(raw):null;}catch(e){} if(!c||c.id!==id)return;
+  const keys=await storageListKeys(COMPETITION_SCORE_PREFIX+id+':',true); for(const k of keys)await storageRemove(k,true); await storageRemove(COMPETITION_ACTIVE_KEY,true); await storageRemove(competitionWinnerKey(id),true); alert('Competition ended. The leaderboard data was cleared.'); await loadAdminPage();
 }
 
 /* ================= FRIEND CHALLENGES (free PvP) ================= */
@@ -5163,33 +5307,33 @@ function achievementsRowHtml(unlocked, purchasedBadges){
 /* ================= COINS SHOP ================= */
 const SHOP_CATALOG = {
   themes: [
-    {id:'sunset',label:'Sunset',price:250,css:'linear-gradient(135deg,#ff7e5f,#feb47b)'},
-    {id:'ocean',label:'Ocean',price:275,css:'linear-gradient(135deg,#2b6ee0,#4fc3f7)'},
-    {id:'forest',label:'Forest',price:300,css:'linear-gradient(135deg,#134e13,#25a244)'},
-    {id:'galaxy',label:'Galaxy',price:325,css:'linear-gradient(135deg,#2b0a4a,#6a4fb8)'},
+    {id:'sunset',label:'Sunset',price:150,css:'linear-gradient(135deg,#ff7e5f,#feb47b)'},
+    {id:'ocean',label:'Ocean',price:200,css:'linear-gradient(135deg,#2b6ee0,#4fc3f7)'},
+    {id:'forest',label:'Forest',price:250,css:'linear-gradient(135deg,#134e13,#25a244)'},
+    {id:'galaxy',label:'Galaxy',price:300,css:'linear-gradient(135deg,#2b0a4a,#6a4fb8)'},
     {id:'royalNight',label:'Royal Night',price:350,css:'linear-gradient(135deg,#111827,#4c1d95)'},
-    {id:'aurora',label:'Aurora',price:375,css:'linear-gradient(135deg,#0f766e,#7c3aed)'},
-    {id:'cherry',label:'Cherry',price:400,css:'linear-gradient(135deg,#9f1239,#fb7185)'},
-    {id:'emerald',label:'Emerald',price:425,css:'linear-gradient(135deg,#064e3b,#34d399)'},
+    {id:'aurora',label:'Aurora',price:400,css:'linear-gradient(135deg,#0f766e,#7c3aed)'},
+    {id:'cherry',label:'Cherry',price:425,css:'linear-gradient(135deg,#9f1239,#fb7185)'},
+    {id:'emerald',label:'Emerald',price:450,css:'linear-gradient(135deg,#064e3b,#34d399)'},
     {id:'sunrise',label:'Sunrise',price:475,css:'linear-gradient(135deg,#f97316,#facc15)'},
     {id:'midnight',label:'Midnight',price:500,css:'linear-gradient(135deg,#020617,#1e3a8a)'}
   ],
   frames: [
-    {id:'gold',label:'Gold',price:300,color:'#d4a017'},
-    {id:'diamond',label:'Diamond',price:400,color:'#4fc3f7'},
-    {id:'fire',label:'Fire',price:500,color:'#e8622d'},
-    {id:'royal',label:'Royal',price:600,color:'#8e5ce8'},
-    {id:'emerald',label:'Emerald',price:700,color:'#25a244'},
-    {id:'ruby',label:'Ruby',price:800,color:'#c1121f'},
-    {id:'sapphire',label:'Sapphire',price:850,color:'#2563eb'},
-    {id:'platinum',label:'Platinum',price:900,color:'#94a3b8'},
-    {id:'aurora',label:'Aurora',price:950,color:'#14b8a6'},
+    {id:'gold',label:'Gold',price:200,color:'#d4a017'},
+    {id:'diamond',label:'Diamond',price:300,color:'#4fc3f7'},
+    {id:'fire',label:'Fire',price:400,color:'#e8622d'},
+    {id:'royal',label:'Royal',price:500,color:'#8e5ce8'},
+    {id:'emerald',label:'Emerald',price:600,color:'#25a244'},
+    {id:'ruby',label:'Ruby',price:700,color:'#c1121f'},
+    {id:'sapphire',label:'Sapphire',price:800,color:'#2563eb'},
+    {id:'platinum',label:'Platinum',price:850,color:'#94a3b8'},
+    {id:'aurora',label:'Aurora',price:900,color:'#14b8a6'},
     {id:'cosmic',label:'Cosmic',price:1000,color:'#7c3aed'}
   ],
   nameEffects: [
-    {id:'glow',label:'Glow',price:250},{id:'rainbow',label:'Rainbow',price:350},{id:'shadow',label:'Shadow',price:450},
-    {id:'neon',label:'Neon',price:550},{id:'ice',label:'Ice',price:650},{id:'fireText',label:'Fire Text',price:700},
-    {id:'goldText',label:'Gold Text',price:750},{id:'electric',label:'Electric',price:800},{id:'sparkle',label:'Sparkle',price:900},{id:'cosmicText',label:'Cosmic Text',price:1000}
+    {id:'glow',label:'Glow',price:100},{id:'rainbow',label:'Rainbow',price:200},{id:'shadow',label:'Shadow',price:300},
+    {id:'neon',label:'Neon',price:400},{id:'ice',label:'Ice',price:500},{id:'fireText',label:'Fire Text',price:600},
+    {id:'goldText',label:'Gold Text',price:700},{id:'electric',label:'Electric',price:800},{id:'sparkle',label:'Sparkle',price:900},{id:'cosmicText',label:'Cosmic Text',price:1000}
   ],
   stickers: [
     {id:'fun',label:'Fun Pack',price:0,emojis:['🥳','😎','🤩','🥶','😜']},{id:'love',label:'Love Pack',price:0,emojis:['😍','💘','😘','🥰','💖']},
@@ -5199,11 +5343,11 @@ const SHOP_CATALOG = {
     {id:'celebration',label:'Celebration Pack',price:0,emojis:['🎉','🎊','🎈','🥳','🎁']},{id:'ultimate',label:'Ultimate Pack',price:0,emojis:['👑','💎','🔥','⚡','🌟']}
   ],
   chatThemes: [
-    {id:'sunsetChat',label:'Sunset Chat',price:450,css:'#ffe0b3'},{id:'nightChat',label:'Night Chat',price:600,css:'#1a1a2e'},
-    {id:'roseChat',label:'Rose Chat',price:750,css:'#ffd9e8'},{id:'oceanChat',label:'Ocean Chat',price:900,css:'#dbeafe'},
-    {id:'forestChat',label:'Forest Chat',price:1050,css:'#dcfce7'},{id:'lavenderChat',label:'Lavender Chat',price:1200,css:'#ede9fe'},
-    {id:'peachChat',label:'Peach Chat',price:1350,css:'#ffedd5'},{id:'midnightChat',label:'Midnight Chat',price:1500,css:'#0f172a'},
-    {id:'emeraldChat',label:'Emerald Chat',price:1750,css:'#d1fae5'},{id:'cosmicChat',label:'Cosmic Chat',price:2000,css:'#312e81'}
+    {id:'sunsetChat',label:'Sunset Chat',price:200,css:'#ffe0b3'},{id:'nightChat',label:'Night Chat',price:400,css:'#1a1a2e'},
+    {id:'roseChat',label:'Rose Chat',price:600,css:'#ffd9e8'},{id:'oceanChat',label:'Ocean Chat',price:800,css:'#dbeafe'},
+    {id:'forestChat',label:'Forest Chat',price:1000,css:'#dcfce7'},{id:'lavenderChat',label:'Lavender Chat',price:1200,css:'#ede9fe'},
+    {id:'peachChat',label:'Peach Chat',price:1400,css:'#ffedd5'},{id:'midnightChat',label:'Midnight Chat',price:1600,css:'#0f172a'},
+    {id:'emeraldChat',label:'Emerald Chat',price:1800,css:'#d1fae5'},{id:'cosmicChat',label:'Cosmic Chat',price:2000,css:'#312e81'}
   ],
   gifts: [
     {id:'rose',label:'Rose',price:10000,emoji:'🌹'},{id:'cake',label:'Cake',price:12000,emoji:'🎂'},{id:'crown',label:'Crown',price:15000,emoji:'👑'},
@@ -5213,10 +5357,10 @@ const SHOP_CATALOG = {
   badges: [
     {id:'legend',label:'Legend',price:50000,emoji:'🏆'},{id:'vip',label:'VIP',price:60000,emoji:'💎'},{id:'creator',label:'Creator',price:70000,emoji:'🎨'},
     {id:'star',label:'Star',price:80000,emoji:'⭐'},{id:'royal',label:'Royal',price:90000,emoji:'👑'},{id:'elite',label:'Elite',price:100000,emoji:'⚡'},
-    {id:'diamondBadge',label:'Diamond',price:110000,emoji:'💠'},{id:'champion',label:'Champion',price:120000,emoji:'🥇'},{id:'master',label:'Master',price:135000,emoji:'🛡️'},{id:'ultimateBadge',label:'Ultimate',price:150000,emoji:'🌟'}
+    {id:'diamondBadge',label:'Diamond',price:110000,emoji:'💠'},{id:'champion',label:'Champion',price:125000,emoji:'🥇'},{id:'master',label:'Master',price:140000,emoji:'🛡️'},{id:'ultimateBadge',label:'Ultimate',price:150000,emoji:'🌟'}
   ]
 };
-const SHOP_FIXED_PRICES = { featuredProfile:850, profileMusic:950, privateRoom:1250, groupBackground:1100, pinMessage:650, premiumReactions:450, storyInsights:600, verification:50000 };
+const SHOP_FIXED_PRICES = { featuredProfile:850, profileMusic:950, privateRoom:1250, groupBackground:1100, pinMessage:50, premiumReactions:450, storyInsights:600, verification:50000 };
 
 async function loadCurrentUserFull(){
   const raw = await storageGet(userKey(currentUser.email), true);
@@ -5264,11 +5408,12 @@ async function buyShopItem(category, itemId){
   if (field && category !== 'gifts' && owned.includes(itemId)) { alert('You already own this.'); return; }
   const balance = typeof u.leos === 'number' ? u.leos : 20;
   if (balance < item.price) { alert('You need ' + item.price + ' Coins for this. Your balance: ' + balance.toFixed(2)); return; }
-  if (item.price > 0) u.leos = balance - item.price;
+  u.leos = balance - item.price;
   if (field) { u[field] = [...owned, itemId]; }
   await saveCurrentUserFull(u);
-  alert('Purchased: ' + item.label + '!');
+  if (item.price > 0) await recordCoinTransaction('Shop: ' + item.label, -item.price, u.leos);
   loadShopPage();
+  alert('Purchased: ' + item.label + '!');
 }
 
 async function equipShopItem(category, itemId){
@@ -5333,6 +5478,7 @@ async function buyFixedShopItem(kind){
     await saveCurrentUserFull(u);
     alert('Story Insights unlocked! You can now see the people who viewed your stories.');
   }
+  if (['verification','featuredProfile','profileMusic','privateRoom','groupBackground','premiumReactions','storyInsights'].includes(kind) && price > 0) await recordCoinTransaction('Shop: ' + kind, -price, u.leos);
   loadShopPage();
 }
 
@@ -5369,6 +5515,7 @@ async function loadShopPage(){
     return `<div class="section-divider"><strong>${title}</strong><span>${desc}</span></div><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:16px;">${itemsHtml}</div>`;
   }
   function itemCard(label, priceLabel, inner, actionHtml){
+    priceLabel = priceLabel === '0 Coins' ? 'Free' : priceLabel;
     return `<div class="profile-card" style="width:auto;min-height:150px;text-align:center;display:flex;flex-direction:column;justify-content:space-between;">
       <div style="font-size:13px;font-weight:600;margin-bottom:6px;">${escapeHtml(label)}</div>
       ${inner}
@@ -5379,7 +5526,7 @@ async function loadShopPage(){
 
   let html = '';
 
-  html += section('🎨 Profile Themes', 'Applied behind your profile header (250-500 Coins).',
+  html += section('🎨 Profile Themes', 'Applied behind your profile header (150-500 Coins).',
     SHOP_CATALOG.themes.map(t => {
       const owned = (u.ownedThemes || []).includes(t.id);
       const active = u.activeTheme === t.id;
@@ -5389,7 +5536,7 @@ async function loadShopPage(){
         : `<button onclick="buyShopItem('themes','${t.id}')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`);
     }).join(''));
 
-  html += section('🖼️ Profile Frames', 'A colored ring around your avatar (300-1,000 Coins).',
+  html += section('🖼️ Profile Frames', 'A colored ring around your avatar (200-1,000 Coins).',
     SHOP_CATALOG.frames.map(f => {
       const owned = (u.ownedFrames || []).includes(f.id);
       const active = u.activeFrame === f.id;
@@ -5399,7 +5546,7 @@ async function loadShopPage(){
         : `<button onclick="buyShopItem('frames','${f.id}')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`);
     }).join(''));
 
-  html += section('✨ Name Effects', 'A special style applied to your name everywhere (250-1,000 Coins).',
+  html += section('✨ Name Effects', 'A special style applied to your name everywhere (100-1,000 Coins).',
     SHOP_CATALOG.nameEffects.map(n => {
       const owned = (u.ownedNameEffects || []).includes(n.id);
       const active = u.activeNameEffect === n.id;
@@ -5409,15 +5556,15 @@ async function loadShopPage(){
         : `<button onclick="buyShopItem('nameEffects','${n.id}')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`);
     }).join(''));
 
-  html += section('😎 Sticker Packs', 'Free sticker packs for the emoji picker (0 Coins).',
+  html += section('😎 Sticker Packs', 'Extra emojis to use when chatting (Free).',
     SHOP_CATALOG.stickers.map(s => {
       const owned = (u.ownedStickerPacks || []).includes(s.id);
-      return itemCard(s.label, 'Free', `<div style="font-size:20px;">${s.emojis.join(' ')}</div>`,
-      owned ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Owned</button>`
-      : `<button onclick="buyShopItem('stickers','${s.id}')" style="background:#2b6ee0;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Get Free</button>`);
+      return itemCard(s.label, s.price + ' Coins', `<div style="font-size:20px;">${s.emojis.join(' ')}</div>`,
+        owned ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Owned</button>`
+        : `<button onclick="buyShopItem('stickers','${s.id}')" style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Free</button>`);
     }).join(''));
 
-  html += section('💬 Premium Chat Themes', 'Premium wallpaper colors for your private chats (450-2,000 Coins).',
+  html += section('💬 Premium Chat Themes', 'Extra wallpaper colors for your private chats (200-2,000 Coins).',
     SHOP_CATALOG.chatThemes.map(c => {
       const owned = (u.ownedChatThemes || []).includes(c.id);
       return itemCard(c.label, c.price + ' Coins', `<div style="height:40px;border-radius:6px;background:${c.css};border:1px solid #ddd;"></div>`,
@@ -5943,7 +6090,7 @@ function showChangePasswordForm(){
   const u = currentUser;
   if (!canChangePassword(u)) {
     if (!u.verified) {
-      alert('Only verified users and admins can change their password. Verification costs 20,000 Coins.');
+      alert('Only verified users and admins can change their password. Verification costs 50,000 Coins.');
     } else {
       const daysLeft = Math.ceil(PASSWORD_COOLDOWN_DAYS - daysSincePasswordChange(u));
       alert('You can only change your password once every ' + PASSWORD_COOLDOWN_DAYS + ' days. Try again in ' + daysLeft + ' day' + (daysLeft===1?'':'s') + '.');
@@ -6687,7 +6834,7 @@ async function openChat(username, display){
           <div id="chatPresence" style="font-size:11px;color:#999;"></div>
         </span>
       </span>
-      <span style="font-size:11.5px;color:#888;margin-left:auto;">0.20 Coins / message</span>
+      <span style="font-size:11.5px;color:#888;margin-left:auto;">0.10 Coin / message</span>
       <button onclick="toggleWallpaperPicker()" title="Chat themes" style="background:#2b6ee0;color:#fff;border:none;padding:6px 8px;border-radius:6px;cursor:pointer;font-size:12px;">🎨 Theme</button>
       <button onclick="switchTab('shopPage')" title="Open Shop" style="background:#e8622d;color:#fff;border:none;padding:6px 8px;border-radius:6px;cursor:pointer;font-size:12px;">🛍 Shop</button>
     </div>
@@ -6878,11 +7025,12 @@ async function sendMessage(){
   let sender; try { sender = JSON.parse(senderRaw); } catch(e) { alert('Something went wrong. Please try again.'); return; }
   const balance = typeof sender.leos === 'number' ? sender.leos : 20;
   if (balance < MESSAGE_COST_COINS) {
-    alert('Sending a message costs ' + MESSAGE_COST_COINS.toFixed(2) + ' Coins and your balance is too low.');
+    alert('Sending a message costs ' + MESSAGE_COST_COINS.toFixed(2) + ' Coin and your balance is too low.');
     return;
   }
   sender.leos = balance - MESSAGE_COST_COINS;
   await storageSet(userKey(currentUser.email), JSON.stringify(sender), true);
+  await recordCoinTransaction('Private message', -MESSAGE_COST_COINS, sender.leos);
   currentUser.leos = sender.leos;
   updateCoinsDisplay();
 
@@ -7052,6 +7200,7 @@ async function createCircle(kind){
       errEl.textContent = 'Could not charge the creation fee. Nothing was created.';
       return;
     }
+    await recordCoinTransaction(kind === 'group' ? 'Create Group' : 'Create Chatroom', -minCoins, u.leos);
   }
   input.value = '';
   if (kind === 'group') loadGroupListPage(); else loadRoomListPage();
@@ -7403,6 +7552,7 @@ async function pinCircleMessage(index, paidByMember = false){
     if (balance < SHOP_FIXED_PRICES.pinMessage) { alert('You need ' + SHOP_FIXED_PRICES.pinMessage + ' Coins to pin this message.'); return; }
     u.leos = balance - SHOP_FIXED_PRICES.pinMessage;
     await saveCurrentUserFull(u);
+    await recordCoinTransaction('Pinned message', -SHOP_FIXED_PRICES.pinMessage, u.leos);
   }
   c.pinnedMessage = { text: m.text, from: m.from, time: m.time, pinnedBy: currentUser.username };
   await storageSet(circleKey(kind, id), JSON.stringify(c), true);
@@ -8344,7 +8494,8 @@ async function cmLoadSettings(){
 function toggleDarkModeFromSettings(){
   const el=document.getElementById('settingsDarkModeToggle');
   const on=!!el?.checked;
-  setAppColorTheme(on ? 'dark' : 'white');
+  document.body.classList.toggle('dark-mode',on);
+  try{ localStorage.setItem('darkMode',on?'1':'0'); }catch(e){}
   const homeToggle=document.getElementById('darkModeToggle');
   if(homeToggle) homeToggle.checked=on;
 }
@@ -8528,6 +8679,7 @@ async function submitStoryFromBook(){
     u.leos=balance-STORY_PRICE_COINS; u.status=text; u.statusUpdatedAt=Date.now();
     const ok=await storageSet(userKey(currentUser.email),JSON.stringify(u),true);
     if(!ok){if(errEl) errEl.textContent='Could not purchase the story right now. Please try again.';return;}
+    await recordCoinTransaction('Story post', -STORY_PRICE_COINS, u.leos);
     currentUser.leos=u.leos; currentUser.status=u.status; currentUser.statusUpdatedAt=u.statusUpdatedAt; updateCoinsDisplay();
     input.value=''; if(errEl){errEl.style.color='#1a8a3c';errEl.textContent='Story posted for 50 Coins. It will disappear after 24 hours.';}
     loadStatusbookPage(); if(typeof loadHome==='function') loadHome();
