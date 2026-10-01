@@ -107,8 +107,8 @@
   @media(max-width:480px){.welcome-nav{padding:0 14px}.welcome-nav-brand{font-size:18px}.welcome-nav-actions .nav-login{padding:8px 11px}.welcome-nav-actions .nav-signup{padding:9px 12px}.welcome-main{width:92%;padding-top:28px}.welcome-login-card{padding:22px}.welcome-copy h1{font-size:34px;letter-spacing:-1px}}
 
   /* ---- Auth screens (login / signup) ---- */
-  .auth-screen { position: fixed; inset: 0; background: linear-gradient(160deg,#062b55 0%,#0b3f78 48%,#061f3d 100%); display: none; align-items: flex-start; justify-content: center; z-index: 50; overflow-y: auto; padding: 18px 12px 34px; }
-  .auth-box { background: #fff; padding: 0 24px 26px; border-radius: 14px; width: 100%; max-width: 430px; border: 1px solid rgba(255,255,255,.28); box-shadow: 0 18px 45px rgba(0,0,0,.28); margin: 10px 0 30px; overflow:hidden; }
+  .auth-screen { position: fixed; inset: 0; background: #f4f5f7; display: none; align-items: flex-start; justify-content: center; z-index: 50; overflow-y: auto; padding: 24px 16px; }
+  .auth-box { background: #fff; padding: 28px 24px; border-radius: 8px; width: 100%; max-width: 420px; border: 1px solid #e2e2e2; margin-bottom: 40px; }
   .auth-brand { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 4px; flex-wrap: wrap; }
   .auth-title { font-size: 22px; font-weight: 700; color: #2b2d6e; text-align: center; }
   .auth-logo { width: 26px; height: 26px; flex-shrink: 0; }
@@ -330,8 +330,8 @@
   .cm-rules-card ul{margin:6px 0 0 18px;padding:0}
 
   /* Chat Me 2026 social-app shell: familiar patterns, original branding */
-  .cm-social-topbar{height:58px;background:#062b55;border-bottom:1px solid #e4e7ec;display:flex;align-items:center;gap:10px;padding:0 12px;position:sticky;top:0;z-index:100;box-shadow:0 1px 3px rgba(16,24,40,.06)}
-  .cm-brand-mini{display:flex;align-items:center;gap:7px;min-width:118px;font-weight:800;color:#fff;font-size:19px;letter-spacing:-.4px}
+  .cm-social-topbar{height:58px;background:#fff;border-bottom:1px solid #e4e7ec;display:flex;align-items:center;gap:10px;padding:0 12px;position:sticky;top:0;z-index:100;box-shadow:0 1px 3px rgba(16,24,40,.06)}
+  .cm-brand-mini{display:flex;align-items:center;gap:7px;min-width:118px;font-weight:800;color:#182230;font-size:19px;letter-spacing:-.4px}
   .cm-brand-mini svg{width:30px;height:30px;flex:0 0 auto}
   .cm-social-search{flex:1;max-width:520px;display:flex;align-items:center;background:#f1f3f5;border-radius:999px;overflow:hidden}
   .cm-social-search input{border:0!important;background:transparent!important;box-shadow:none!important;padding:9px 13px;font-size:13px;min-width:0;flex:1;color:#222!important}
@@ -367,18 +367,6 @@
   body.dark-mode .cm-social-topbar,body.dark-mode .cm-navigation-card{background:#1d1f23;border-color:#343840;color:#eee}body.dark-mode .cm-social-search{background:#2a2d32}body.dark-mode .cm-social-search input{color:#eee!important}body.dark-mode .cm-top-action,body.dark-mode .cm-nav-more,body.dark-mode .cm-nav-grid button{background:#292d33;color:#eee;border-color:#3a3f48}body.dark-mode .cm-navigation-card p{color:#a9b0bb}body.dark-mode #app,body.dark-mode .page{background:#111315}
   body.cm-data-saver-on img.post-img{content-visibility:auto} body.cm-data-saver-on .cm-stories-strip img{visibility:hidden} body.cm-data-saver-on video{background:#e9edf2;}
   @media(max-width:480px){#cmCreatorAnalytics{grid-template-columns:1fr 1fr!important}}
-
-  /* Final auth/landing polish */
-  .auth-screen { background: radial-gradient(circle at 15% 15%, rgba(22,119,255,.28), transparent 28%), radial-gradient(circle at 85% 25%, rgba(72,94,255,.22), transparent 26%), linear-gradient(135deg,#061b34,#092d52 48%,#06182e); padding:28px 16px 42px; }
-  .auth-screen:before { content:""; position:fixed; inset:0; background:radial-gradient(ellipse at center,transparent 18%,rgba(0,0,0,.28) 100%); pointer-events:none; }
-  .auth-screen .auth-box { position:relative; z-index:1; box-shadow:0 22px 60px rgba(0,0,0,.28); border-radius:16px; }
-  .auth-screen .auth-brandbar { display:flex; align-items:center; gap:10px; justify-content:flex-start; margin:0 -24px 22px; padding:12px 16px; min-height:58px; background:#062b55; border-bottom:1px solid rgba(255,255,255,.12); }
-  .auth-screen .auth-brandbar .auth-logo { width:36px; height:36px; }
-  .auth-screen .auth-brandbar .auth-brandname { font-size:21px; font-weight:800; color:#fff; }
-  .auth-screen .auth-back { color:#fff!important; background:rgba(255,255,255,.12)!important; border-color:rgba(255,255,255,.25)!important; }
-  .auth-screen .remember-row { display:flex; align-items:center; gap:8px; margin:-2px 0 14px; font-size:13px; color:#4b5563; }
-  .auth-screen .remember-row input { width:17px !important; height:17px; margin:0 !important; padding:0 !important; accent-color:#1677ff; }
-  @media(max-width:600px){ .auth-screen{padding:10px 8px 26px;} .auth-box{max-width:520px;padding:0 16px 22px;margin:0 0 24px;border-radius:12px;} .auth-brandbar{margin:0 -16px 20px;padding:11px 13px;} }
 </style>
 <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
 
@@ -448,39 +436,6 @@ body.dark-mode .cm-latest-fab{box-shadow:0 3px 12px rgba(0,0,0,.45)}
 </style>
 
 
-
-<style id="chatme-landing-bottom-css">
-.cm-landing-bottom{width:100%;background:#f5f7fb;padding:8px 6% 26px;color:#172033}
-.cm-landing-bottom-inner{width:min(1120px,100%);margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.cm-landing-info-card,.cm-landing-policy-strip{background:#fff;border:1px solid #e3e8f0;border-radius:18px;padding:22px;box-shadow:0 8px 24px rgba(21,45,85,.06)}
-.cm-landing-info-card h2,.cm-landing-policy-strip h2{margin:4px 0 7px;font-size:22px;color:#17224d}
-.cm-landing-info-card>p,.cm-landing-policy-strip p{margin:0 0 16px;color:#667085;line-height:1.55;font-size:14px}
-.cm-info-icon{width:42px;height:42px;border-radius:13px;background:#eaf1ff;display:flex;align-items:center;justify-content:center;font-size:20px}
-.cm-how-steps{display:grid;gap:10px}
-.cm-how-steps>div{display:flex;gap:10px;align-items:flex-start;padding:10px;border-radius:12px;background:#f7f9fc}
-.cm-how-steps>div>span{width:27px;height:27px;flex:0 0 27px;border-radius:50%;background:#2b6ee0;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px}
-.cm-how-steps b{display:block;font-size:14px;color:#24316f}
-.cm-how-steps small{display:block;margin-top:2px;color:#667085;font-size:12px;line-height:1.4}
-.cm-voice-note{font-size:12px!important;color:#7a8190!important}
-.cm-voice-grid{display:grid;gap:10px}
-.cm-voice-grid>div,.cm-voice-grid article{padding:13px;border-left:4px solid #2b6ee0;background:#f7f9fc;border-radius:10px}
-.cm-voice-grid b{display:block;color:#24316f;font-size:14px;margin-bottom:3px}
-.cm-voice-grid span{display:block;color:#667085;font-size:12px;line-height:1.45}
-.cm-voice-grid-five{grid-template-columns:repeat(2,minmax(0,1fr));}
-.cm-voice-card{min-width:0}
-.cm-voice-card:nth-child(5){grid-column:1/-1}
-.cm-stars{font-size:15px;letter-spacing:2px;color:#f5b301;margin-bottom:6px;line-height:1}
-.cm-voice-card small{display:block;margin-top:9px;color:#8a91a0;font-size:10.5px;}
-.cm-landing-policy-strip{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:20px}
-.cm-landing-policy-strip p{max-width:720px;margin-bottom:0}
-.cm-landing-policy-strip button{border:0;background:#2b6ee0;color:#fff;padding:11px 16px;border-radius:10px;font-weight:700;cursor:pointer;white-space:nowrap}
-body.dark-mode .cm-landing-bottom{background:#121212;color:#e2e2e2}
-body.dark-mode .cm-landing-info-card,body.dark-mode .cm-landing-policy-strip{background:#1d1f23;border-color:#333}
-body.dark-mode .cm-landing-info-card h2,body.dark-mode .cm-landing-policy-strip h2,body.dark-mode .cm-how-steps b,body.dark-mode .cm-voice-grid b{color:#e2e2e2}
-body.dark-mode .cm-how-steps>div,body.dark-mode .cm-voice-grid>div{background:#24262b}
-body.dark-mode .cm-landing-info-card>p,body.dark-mode .cm-landing-policy-strip p,body.dark-mode .cm-how-steps small,body.dark-mode .cm-voice-grid span{color:#aaa}
-@media(max-width:760px){.cm-landing-bottom{padding:8px 14px 22px}.cm-landing-bottom-inner{grid-template-columns:1fr}.cm-landing-policy-strip{grid-column:auto;display:block}.cm-landing-policy-strip button{width:100%;margin-top:15px}.cm-landing-info-card,.cm-landing-policy-strip{padding:18px;border-radius:15px}.cm-landing-info-card h2,.cm-landing-policy-strip h2{font-size:19px}.cm-voice-grid-five{grid-template-columns:1fr}.cm-voice-card:nth-child(5){grid-column:auto}}
-</style>
 <style id="chatme-welcome-dark-css">
 body.dark-mode #welcomeScreen{background:#121212;color:#e2e2e2}
 body.dark-mode .welcome-nav{background:#1b1b1b;border-bottom-color:#333}
@@ -489,7 +444,33 @@ body.dark-mode .welcome-hero,body.dark-mode .welcome-card,body.dark-mode .welcom
 body.dark-mode .welcome-copy p,body.dark-mode .welcome-step span,body.dark-mode .welcome-trust-card span{color:#aaa}
 body.dark-mode .welcome-nav-actions .nav-login{color:#9fc2ff;border-color:#444}
 .welcome-dark-toggle{border:1px solid #d7deed;background:#fff;color:#333;border-radius:9px;padding:8px 10px;cursor:pointer;font-weight:700;font-size:12px}
+.welcome-blue-toggle{border-color:#bfdbfe;color:#1d4ed8}
 body.dark-mode .welcome-dark-toggle{background:#24262b;color:#eee;border-color:#444}
+body.blue-mode{background:#eaf3ff}
+body.blue-mode #welcomeScreen{background:#eef6ff;color:#102a43}
+body.blue-mode .welcome-nav{background:#0b3b73;border-bottom-color:#1d5fa7}
+body.blue-mode .welcome-nav-brand{color:#fff}
+body.blue-mode .welcome-nav-actions .nav-login{color:#dbeafe;border-color:#5aa0e8;background:transparent}
+body.blue-mode .welcome-dark-toggle{background:#0f4d91;color:#fff;border-color:#5aa0e8}
+body.blue-mode .welcome-blue-toggle{background:#1687ff;color:#fff;border-color:#8cc8ff}
+body.blue-mode .welcome-badge{background:#dbeafe;color:#0756a6;border-color:#93c5fd}
+body.blue-mode .welcome-copy h1{color:#0f2f55}
+body.blue-mode .welcome-copy h1 span{color:#0878e8}
+body.blue-mode .welcome-copy>p{color:#47627e}
+body.blue-mode .welcome-cta{background:#0878e8}
+body.blue-mode .welcome-secondary{background:#fff}
+body.blue-mode .welcome-point,body.blue-mode .welcome-login-card,body.blue-mode .about-card,body.blue-mode .welcome-quote,body.blue-mode .welcome-step,body.blue-mode .welcome-trust-card,body.blue-mode .welcome-note{border-color:#c9def5}
+body.blue-mode .welcome-section h2,body.blue-mode .welcome-point b,body.blue-mode .welcome-quote b,body.blue-mode .welcome-quote strong,body.blue-mode .welcome-step b,body.blue-mode .welcome-trust-card b{color:#124a83}
+body.blue-mode .welcome-step .num{background:#dbeafe;color:#0756a6}
+body.blue-mode #app{background:#edf6ff}
+body.blue-mode .page{background:#edf6ff}
+body.blue-mode .topbar{background:#0b3b73}
+body.blue-mode .navbar{background:#0f4d91}
+body.blue-mode .send-btn,body.blue-mode .cm-explore-action{background:#0878e8}
+body.blue-mode .app-footer{background:#062b52}
+body.blue-mode .welcome-stat{color:#124a83;border-color:#c9def5;background:#f5faff}
+body.blue-mode .welcome-quote{background:linear-gradient(135deg,#fff,#f1f7ff)}
+body.dark-mode .welcome-blue-toggle{background:#24262b;color:#eee;border-color:#444}
 </style>
 
 <style id="chatme-network-resilience-css">
@@ -519,614 +500,125 @@ body.cm-network-offline .app-footer{opacity:.75}
 .cm-profile-progress{height:8px;background:#edf0f4;border-radius:99px;overflow:hidden}.cm-profile-progress>i{display:block;height:100%;width:0;background:#2b6ee0;border-radius:99px}
 @media(max-width:600px){.cm-explore-grid{grid-template-columns:1fr}.cm-explore-card{border-radius:12px}}
 body.dark-mode .cm-explore-card,body.dark-mode .cm-explore-chip{background:#171a20;border-color:#2b3039;color:#eee}body.dark-mode .cm-explore-head h3,body.dark-mode .cm-explore-chip strong{color:#dbe4ff}body.dark-mode .cm-suggest-row{border-color:#2b3039}
-
-/* ================= CHAT ME VISUAL REDESIGN — preserves existing feature IDs/functions ================= */
-:root{
-  --cm-navy:#082a50;
-  --cm-navy-2:#0b3768;
-  --cm-blue:#087ff5;
-  --cm-blue-2:#2d8cff;
-  --cm-bg:#f4f7fb;
-  --cm-line:#dbe4ef;
-  --cm-text:#14233a;
-  --cm-muted:#738095;
-}
-html,body{background:var(--cm-bg);}
-body{color:var(--cm-text);}
-
-/* Landing page: dark, chat-focused, like the approved storyboard while keeping all existing content. */
-#welcomeScreen{
-  background:
-    radial-gradient(circle at 15% 18%,rgba(45,140,255,.30),transparent 28%),
-    radial-gradient(circle at 86% 20%,rgba(32,90,150,.45),transparent 32%),
-    linear-gradient(145deg,#061a34 0%,#0a315d 52%,#0a2442 100%);
-  color:#fff;
-}
-.welcome-nav{
-  background:rgba(5,25,49,.92);
-  border-bottom:1px solid rgba(255,255,255,.12);
-  color:#fff;
-  backdrop-filter:blur(12px);
-}
-.welcome-nav-brand{color:#fff;}
-.welcome-nav-actions .nav-login{color:#fff;border-color:rgba(255,255,255,.32);background:rgba(255,255,255,.05);}
-.welcome-nav-actions .nav-signup{background:var(--cm-blue);box-shadow:0 7px 20px rgba(0,127,255,.28);}
-.welcome-main{min-height:calc(100vh - 68px);}
-.welcome-copy h1{color:#fff;text-shadow:0 8px 28px rgba(0,0,0,.18);}
-.welcome-copy h1 span{color:#58a8ff;}
-.welcome-copy>p{color:#d7e5f5;}
-.welcome-badge{background:rgba(45,140,255,.15);color:#7ec0ff;border-color:rgba(126,192,255,.28);}
-.welcome-cta{background:var(--cm-blue);border-radius:999px;}
-.welcome-secondary{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.22);border-radius:999px;}
-.welcome-point,.welcome-login-card,.about-card,.welcome-quote,.welcome-step,.welcome-trust-card{
-  background:rgba(255,255,255,.97);border-color:rgba(255,255,255,.16);
-}
-.welcome-login-card{border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,.25);}
-.welcome-section{color:#fff;}
-.welcome-section h2{color:#fff;}
-.welcome-section>p{color:#d1deed;}
-.welcome-note{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.16);color:#d4e1ef;}
-.welcome-stat{background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.15);color:#fff;}
-.welcome-trust-card b,.welcome-trust-card span{color:inherit;}
-.welcome-trust-card span{color:#667085;}
-.welcome-section .welcome-about,.welcome-section .welcome-testimonials,.welcome-section .welcome-steps,.welcome-section .welcome-trust{margin-bottom:4px;}
-
-/* Auth: mobile-app style header + compact cards. Existing fields/IDs/reCAPTCHA remain unchanged. */
-.auth-screen{
-  background:linear-gradient(180deg,#082a50 0 92px,#eef3f8 92px 100%);
-  align-items:center;
-  justify-content:flex-start;
-  padding:0 12px 28px;
-  overflow-y:auto;
-}
-.auth-box{
-  width:min(100%,430px);
-  margin-top:0;
-  border-radius:0 0 18px 18px;
-  border:1px solid #d9e3ee;
-  border-top:0;
-  box-shadow:0 12px 35px rgba(5,31,61,.14);
-  padding:22px 20px 20px;
-  position:relative;
-}
-.auth-box::before{
-  content:"💬  Chat Me";
-  display:block;
-  height:54px;
-  margin:-22px -20px 18px;
-  padding:0 20px;
-  background:linear-gradient(90deg,#082a50,#0b3768);
-  color:#fff;
-  font-size:21px;
-  font-weight:800;
-  line-height:54px;
-}
-.auth-brand{display:none;}
-.auth-title{color:#14233a;font-size:24px;font-weight:800;text-align:left;}
-.auth-sub{color:#738095;text-align:left;}
-.auth-divider{border-color:#e2e8f0;}
-.auth-label{color:#334155;font-weight:700;}
-.field-block input,.field-block select{
-  border:1px solid #d7e1ec !important;
-  border-radius:12px !important;
-  min-height:46px;
-  padding:0 13px !important;
-  box-shadow:0 2px 7px rgba(20,35,58,.035);
-}
-.primary-btn{
-  background:linear-gradient(90deg,#087ff5,#2d8cff) !important;
-  border-radius:999px !important;
-  min-height:46px;
-  box-shadow:0 7px 18px rgba(8,127,245,.20);
-}
-.auth-links .row{color:#738095;}
-.auth-links a{color:#087ff5;font-weight:700;}
-.section-divider{border-color:#e2e8f0;background:#f7f9fc;border-radius:10px;}
-.pw-requirements{background:#f7f9fc;border-radius:10px;border:1px solid #e4eaf2;padding:10px;}
-#recaptchaLogin,#recaptchaSignup{overflow:hidden;border-radius:8px;}
-
-/* Main app: navy social-app header and clean chat-list surfaces. */
-#app{background:var(--cm-bg);}
-.cm-social-topbar{
-  background:linear-gradient(90deg,#082a50,#0b3768) !important;
-  color:#fff !important;
-  border-bottom:0 !important;
-  box-shadow:0 2px 10px rgba(5,31,61,.20);
-  min-height:58px;
-}
-.cm-brand-mini{color:#fff !important;}
-.cm-social-search input{border-radius:999px !important;background:rgba(255,255,255,.12) !important;color:#fff !important;border-color:rgba(255,255,255,.20) !important;}
-.cm-social-search input::placeholder{color:#d7e5f5 !important;}
-.cm-social-search button,.cm-top-action,.cm-nav-more{color:#fff !important;}
-.cm-top-action:hover,.cm-nav-more:hover{background:rgba(255,255,255,.10) !important;}
-.page{background:var(--cm-bg);}
-#homePage{background:#f4f7fb;}
-.cm-update-banner{border-radius:12px !important;}
-.cm-featured-card{border-radius:16px !important;}
-#chatsPage,#friendsPage,#notificationsPage,#groupsPage,#chatroomsPage{background:#f4f7fb;}
-#chatsPage .friend-item,#friendsPage .friend-item{background:#fff;border-bottom:1px solid #e7edf4;}
-.friend-name{color:#172b45;}
-.friend-status{color:#7b8798;}
-
-/* Approved storyboard bottom navigation. Top remains limited to Home/Profile/Messages/Notifications + More. */
-.cm-bottom-nav{
-  display:none;
-  position:fixed;
-  left:0;right:0;bottom:0;
-  height:62px;
-  background:#fff;
-  border-top:1px solid #dce5ef;
-  z-index:999;
-  box-shadow:0 -4px 18px rgba(20,35,58,.08);
-  grid-template-columns:repeat(5,1fr);
-}
-.cm-bottom-nav button{
-  border:0;background:transparent;color:#718096;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:3px;font-size:11px;font-weight:700;cursor:pointer;
-}
-.cm-bottom-nav button span:first-child{font-size:20px;line-height:20px;}
-.cm-bottom-nav button.active{color:#087ff5;}
-@media (max-width:760px){
-  .welcome-nav{height:60px;padding:0 12px;}
-  .welcome-nav-brand{font-size:18px;}
-  .welcome-main{display:block;width:92%;padding:30px 0 22px;min-height:auto;}
-  .welcome-copy{text-align:center;}
-  .welcome-copy h1{font-size:34px;letter-spacing:-1px;}
-  .welcome-copy>p{font-size:14px;}
-  .welcome-actions{justify-content:center;}
-  .welcome-points{grid-template-columns:repeat(2,1fr);}
-  .welcome-login-card{margin:18px auto 0;max-width:none;}
-  .welcome-section{width:92%;padding-bottom:80px;}
-  .welcome-about,.welcome-testimonials{grid-template-columns:1fr;}
-  .welcome-steps{grid-template-columns:repeat(2,1fr);}
-  .welcome-trust{grid-template-columns:repeat(2,1fr);}
-  .auth-screen{background:linear-gradient(180deg,#082a50 0 78px,#eef3f8 78px 100%);padding:0 8px 20px;}
-  .auth-box{width:100%;border-radius:0 0 16px 16px;padding:20px 16px;}
-  .auth-box::before{margin:-20px -16px 17px;padding:0 16px;height:50px;line-height:50px;font-size:19px;}
-  .cm-social-topbar{min-height:56px;}
-  .cm-social-search{display:none !important;}
-  .cm-bottom-nav{display:grid;}
-  #app{padding-bottom:62px;}
-}
-@media (min-width:761px){
-  .cm-bottom-nav{display:none !important;}
-}
-
-/* Private chat header: the call controls are visible but clearly marked Coming Soon. */
-.chat-header .cm-call-btn{
-  border:1px solid #d7e1ec;background:#fff;color:#163252;
-  border-radius:9px;padding:7px 9px;cursor:pointer;font-size:15px;font-weight:700;
-}
-.chat-header .cm-call-btn:hover{background:#f2f7fc;}
-.chat-header .cm-call-btn.cm-soon{opacity:.92;}
-.cm-coming-soon-toast{
-  position:fixed;left:50%;bottom:82px;transform:translateX(-50%);
-  background:#082a50;color:#fff;padding:10px 14px;border-radius:999px;
-  z-index:1200;font-size:12px;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.22);
-}
-
-/* Keep all existing pages/features available through More / Settings. */
-#menuPage,#settingsPage{background:#f4f7fb;}
 </style>
 
-
-<style id="chatme-reference-landing-style">
-  #welcomeScreen.cm-reference-landing{min-height:100vh;background:#071d38;color:#fff;display:flex;flex-direction:column;overflow:hidden;}
-  .cm-landing-nav{height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:#06264a;position:relative;z-index:3;}
-  .cm-landing-brand{display:flex;align-items:center;gap:9px;font-size:21px;font-weight:800;letter-spacing:-.4px;}
-  .cm-landing-brand svg{width:34px;height:34px;}
-  .cm-landing-actions{display:flex;align-items:center;gap:8px;}
-  .cm-landing-actions button{border:1px solid rgba(255,255,255,.42);background:rgba(255,255,255,.04);color:#fff;border-radius:999px;padding:9px 16px;font-weight:700;cursor:pointer;}
-  .cm-landing-actions button.primary{background:#1677ff;border-color:#1677ff;}
-  .cm-landing-main{position:relative;flex:1;min-height:calc(100vh - 122px);display:flex;align-items:center;justify-content:center;text-align:center;background:
-    radial-gradient(circle at 15% 20%,rgba(0,143,255,.30),transparent 26%),
-    radial-gradient(circle at 82% 30%,rgba(70,110,255,.24),transparent 25%),
-    radial-gradient(circle at 50% 80%,rgba(0,206,255,.16),transparent 30%),
-    linear-gradient(135deg,#061b34,#092d52 48%,#06182e);}
-  .cm-landing-main:before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(0,0,0,.20),transparent 42%,rgba(0,0,0,.28));pointer-events:none;}
-  .cm-landing-people-bg{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;display:flex;align-items:flex-end;justify-content:center;}
-  .cm-landing-people-bg svg{width:100%;height:100%;display:block;}
-  .cm-landing-people-bg:after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(4,20,40,.18),rgba(4,20,40,.52) 72%,rgba(4,20,40,.76));}
-  .cm-landing-overlay{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 15%,rgba(2,12,25,.34) 100%);}
-  .cm-landing-hero{position:relative;z-index:1;width:min(760px,92%);padding:40px 0 34px;}
-  .cm-landing-hero h1{font-size:clamp(42px,9vw,70px);line-height:1;margin:0 0 5px;color:#1682ff;letter-spacing:-2px;text-shadow:0 7px 24px rgba(0,0,0,.28);}
-  .cm-landing-hero h2{font-size:clamp(23px,5vw,34px);line-height:1.1;margin:0 0 14px;color:#fff;letter-spacing:-.8px;}
-  .cm-landing-hero p{max-width:560px;margin:0 auto;color:#d9e8f8;font-size:15px;line-height:1.55;}
-  .cm-landing-features{display:grid;grid-template-columns:repeat(3,1fr);gap:18px 22px;margin:34px auto 34px;max-width:610px;}
-  .cm-landing-features div{display:flex;flex-direction:column;align-items:center;gap:7px;}
-  .cm-landing-features span{width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(9,91,170,.45);border:1px solid rgba(115,193,255,.20);font-size:25px;box-shadow:0 8px 24px rgba(0,0,0,.20);}
-  .cm-landing-features b{font-size:11.5px;color:#eef7ff;font-weight:700;}
-  .cm-landing-getstarted{width:min(430px,92%);border:0;border-radius:999px;background:#1677ff;color:#fff;padding:14px 24px;font-size:15px;font-weight:800;cursor:pointer;box-shadow:0 9px 24px rgba(0,119,255,.30);}
-  .cm-landing-login-line{margin-top:18px;color:#c9d9ea;font-size:12.5px;}
-  .cm-landing-login-line button{border:0;background:none;color:#58a8ff;font-weight:800;cursor:pointer;padding:0;}
-  .cm-landing-footer{min-height:54px;display:flex;align-items:center;justify-content:center;gap:18px;background:#061a31;color:#aebfd2;font-size:11px;position:relative;z-index:3;}
-  .cm-landing-footer button{border:0;background:none;color:#bcdcff;text-decoration:underline;cursor:pointer;font-size:11px;padding:0;}
-  #welcomeScreen.cm-reference-landing .public-policy-modal{z-index:1000;}
-  @media(max-width:600px){
-    .cm-landing-nav{height:60px;padding:0 12px;}
-    .cm-landing-brand{font-size:18px;}
-    .cm-landing-brand svg{width:31px;height:31px;}
-    .cm-landing-actions button{padding:8px 11px;font-size:11px;}
-    .cm-landing-main{min-height:calc(100vh - 114px);}
-    .cm-landing-hero{padding:26px 0 25px;}
-    .cm-landing-hero h1{font-size:42px;}
-    .cm-landing-hero h2{font-size:24px;}
-    .cm-landing-hero p{font-size:13px;max-width:330px;}
-    .cm-landing-features{gap:18px 10px;margin:27px auto 28px;max-width:330px;}
-    .cm-landing-features span{width:50px;height:50px;font-size:21px;}
-    .cm-landing-features b{font-size:9.5px;}
-    .cm-landing-footer{gap:11px;font-size:9.5px;}
-    .cm-landing-footer button{font-size:9.5px;}
-  }
-</style>
-
-<style id="chatme-final-reference-layout">
-  .auth-screen{align-items:flex-start;justify-content:center;}
-  .auth-box{padding:0;overflow:hidden;max-width:520px;background:#fff;border:0;border-radius:16px;}
-  .auth-screen .auth-brandbar{justify-content:flex-start;position:relative;margin:0;padding:12px 16px;background:linear-gradient(135deg,#062b55,#0a3f76);border:0;color:#fff;}
-  .auth-screen .auth-brandbar .auth-brandname{color:#fff;font-size:21px;}
-  .cm-full-name-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-left:22px;margin-right:22px;}
-  .cm-full-name-row .field-block{margin-left:0;margin-right:0;}
-  .cm-full-name-row + .field-msg{margin-left:22px;margin-right:22px;}
-  @media(max-width:520px){.cm-full-name-row{grid-template-columns:1fr 1fr;gap:8px;}}
-  .auth-screen .auth-brandbar .auth-logo{width:34px;height:34px;}
-  .auth-back{border:0;background:transparent;color:#fff;font-size:25px;line-height:1;padding:4px 7px;cursor:pointer;margin-right:2px;}
-  .auth-box>.auth-title,.auth-box>.auth-sub,.auth-box>.auth-divider,
-  .auth-box>label,.auth-box>.field-block,.auth-box>.auth-hint-small,.auth-box>.field-msg,
-  .auth-box>.section-divider,.auth-box>.pw-requirements,.auth-box>#recaptchaLogin,
-  .auth-box>#recaptchaSignup,.auth-box>.primary-btn,.auth-box>.auth-error,.auth-box>.auth-status,
-  .auth-box>.auth-links,.auth-box>#forgotPasswordPanel{margin-left:22px;margin-right:22px;}
-  .auth-box>.auth-title{margin-top:20px;}
-  .auth-box>.auth-divider{margin-bottom:20px;}
-  .auth-box>.auth-links{margin-bottom:20px;}
-  .cm-user-avatar-button{overflow:hidden;font-size:18px;}
-  .cm-user-avatar-button img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
-  #menuButtonGrid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));max-width:680px!important;}
-  #menuButtonGrid button{min-height:48px;}
-  @media(max-width:720px){
-    .friend-list{width:100%;border-right:0;min-height:100%;display:block;}
-    #chatsPage{position:relative;}
-    #chatsPage .private-chat{position:absolute;inset:0;background:#fff;z-index:4;}
-    #chatsPage .private-chat.active{display:flex;}
-    .chat-header{padding:10px 12px;min-height:58px;}
-    .messages{padding:12px 10px 16px;}
-    .msg-row{max-width:82%;}
-    .input-bar{padding:8px 9px;gap:6px;}
-    .input-bar input{min-width:0;padding:11px 13px;}
-    #menuButtonGrid{grid-template-columns:1fr!important;}
-    .auth-screen{padding:14px 8px 30px;}
-    .auth-box{width:100%;max-width:560px;border-radius:14px;}
-  }
-</style>
-
-<style id="chatme-picture-1-to-8-patch">
-/* Reference storyboard polish: preserves existing feature IDs and functionality. */
-.cm-chat-brand-dot{width:30px;height:30px;border-radius:50%;background:#1677ff;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 2px 5px rgba(22,119,255,.25)}
-.cm-chat-list-shell{width:340px;display:flex;flex-direction:column;background:#fff;border-right:1px solid #dfe6ef;min-width:0;overflow:hidden}
-.cm-chat-list-titlebar{height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;border-bottom:1px solid #edf0f4;background:#fff;color:#14233a}
-.cm-chat-list-titlebar strong{font-size:20px}.cm-chat-list-titlebar span{font-size:12px;color:#7a8798}.cm-chat-list-titlebar button{width:34px;height:34px;border:0;border-radius:50%;background:#f1f4f8;font-size:20px;cursor:pointer}
-.cm-chat-stories{display:flex;gap:8px;overflow-x:auto;padding:10px 10px 8px;border-bottom:1px solid #eef1f5;background:#fff;scrollbar-width:none}
-.cm-chat-stories::-webkit-scrollbar{display:none}
-.cm-story-card{flex:0 0 62px;border:0;background:transparent;padding:0;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;color:#536173;font-size:10px}
-.cm-story-card span{max-width:62px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.cm-story-avatar{width:52px!important;height:52px!important;border-radius:50%;border:3px solid #8cc7ff!important;background:#edf5ff!important;display:flex;align-items:center;justify-content:center;overflow:hidden;font-size:18px;font-weight:800;color:#1677ff;flex:0 0 52px}
-.cm-story-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
-.cm-story-add{background:#1677ff!important;color:#fff!important;border-color:#1677ff!important}
-.cm-story-create .cm-story-avatar{box-shadow:0 0 0 2px #fff,0 0 0 3px #1677ff}
-.cm-chat-list-shell .friend-list{width:auto;border-right:0;flex:1;overflow-y:auto}
-.cm-chat-row{width:100%;box-sizing:border-box;text-align:left;background:#fff;border:0;border-bottom:1px solid #eef1f5;padding:10px 13px;gap:10px}
-.cm-chat-row:hover,.cm-chat-row:focus{background:#f7faff}
-.cm-chat-avatar-wrap{position:relative;flex:0 0 auto}.cm-chat-avatar-wrap .avatar{margin:0;width:48px;height:48px}
-.cm-online-dot{position:absolute;right:-1px;bottom:1px;width:12px;height:12px;background:#27c46a;border:2px solid #fff;border-radius:50%}
-.cm-chat-row-main{min-width:0;flex:1}.cm-chat-row-top,.cm-chat-row-bottom{display:flex;align-items:center;gap:8px;min-width:0}.cm-chat-row-top{justify-content:space-between}.cm-chat-row-bottom{margin-top:4px}
-.cm-chat-row .friend-name{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cm-chat-row .friend-status{font-size:12px;color:#718096;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1}.cm-chat-time{font-size:10.5px;color:#98a2b3;white-space:nowrap}.cm-unread-badge{min-width:18px;height:18px;border-radius:50%;background:#1677ff;color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center;padding:0 4px;box-sizing:border-box}
-.chat-header{background:#062b55!important;color:#fff!important;border-bottom:0!important;padding:9px 12px!important;min-height:58px;gap:8px!important}
-.chat-header .cm-call-btn{background:rgba(255,255,255,.12)!important;color:#fff!important;border-color:rgba(255,255,255,.25)!important;width:36px;height:36px;padding:0!important;display:flex;align-items:center;justify-content:center;border-radius:50%!important}
-.chat-header .cm-call-btn:hover{background:rgba(255,255,255,.2)!important}
-.chat-header .cm-call-btn:first-of-type{margin-left:auto}
-.chat-header span[onclick="closeChat()"]{color:#fff!important;text-decoration:none!important;font-size:24px!important}
-.chat-header .avatar{width:38px!important;height:38px!important;margin-right:0!important;border:2px solid #fff}
-.chat-header .chat-header-name{font-size:13px}
-.messages{background:#f5f7fb!important;background-image:none!important;padding:14px!important}
-.msg-row{max-width:76%!important}.msg-row .bubble{border-radius:16px!important;padding:9px 12px!important}
-.msg-row.received .bubble{background:#fff!important;border:1px solid #e5eaf1!important}.msg-row.sent .bubble{background:#1677ff!important;color:#fff!important}.msg-row.sent .bubble .time{color:#dcecff!important}
-.input-bar{background:#fff!important;border-top:1px solid #e4e8ef;padding:8px 10px!important}
-.input-bar input{background:#f1f4f8!important}.send-btn{background:#1677ff!important}
-.cm-profile-reference-head{height:54px;margin:-16px -16px 10px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;background:#062b55;color:#fff}
-.cm-profile-reference-head button{border:0;background:transparent;color:#fff;font-size:21px;cursor:pointer;width:36px;height:36px}
-.cm-profile-reference-head strong{font-size:18px}
-.cm-profile-avatar-center{width:max-content;margin:-46px auto 8px;position:relative;z-index:2;border-radius:50%;background:#fff;padding:3px}
-.cm-profile-avatar-center .avatar-lg{margin:0;width:82px;height:82px;border:3px solid #fff}
-.cm-profile-name-block{text-align:center;margin-bottom:8px}.cm-profile-name-block h2{margin:0;color:#14233a;font-size:20px}.cm-profile-name-block>div{color:#738095;font-size:12.5px;margin-top:2px}.cm-profile-name-block small{display:block;color:#59677a;margin-top:6px}
-.cm-profile-stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #edf0f4;border-bottom:1px solid #edf0f4;margin:8px 0 0}
-.cm-profile-stats button{border:0;background:#fff;padding:10px 5px;cursor:pointer}.cm-profile-stats strong{display:block;font-size:16px;color:#14233a}.cm-profile-stats span{display:block;font-size:11px;color:#7a8798;margin-top:2px}
-.cm-profile-tabs{display:grid;grid-template-columns:repeat(3,1fr);margin-bottom:12px;border-bottom:1px solid #e4e8ef}.cm-profile-tabs span{text-align:center;padding:10px 5px;font-size:12px;color:#738095}.cm-profile-tabs .active{color:#1677ff;font-weight:800;border-bottom:2px solid #1677ff}
-#menuPage{background:linear-gradient(180deg,#062b55,#0b3768)!important;color:#fff}
-#menuPage>h2{color:#fff!important;margin:0 0 12px!important}
-#menuButtonGrid{display:flex!important;flex-direction:column;gap:0!important;max-width:760px!important;width:100%}
-.cm-menu-ref-item{min-height:52px!important;border:0!important;border-bottom:1px solid rgba(255,255,255,.12)!important;border-radius:0!important;background:transparent!important;color:#fff!important;padding:10px 12px!important;display:flex!important;align-items:center!important;gap:12px!important;text-align:left!important;font-size:14px!important;font-weight:600!important;cursor:pointer}
-.cm-menu-ref-item:hover{background:rgba(255,255,255,.08)!important}.cm-menu-ref-icon{width:30px;text-align:center;font-size:18px}.cm-menu-ref-arrow{margin-left:auto;color:#9fc4ec;font-size:22px}.cm-menu-ref-item.logout{color:#ffb4b4!important;margin-top:8px;border:1px solid rgba(255,100,100,.35)!important;border-radius:10px!important;background:rgba(190,30,30,.18)!important}
-@media(max-width:720px){
-  .cm-chat-list-shell{width:100%;border-right:0}.cm-chat-list-titlebar{height:54px}.cm-chat-stories{padding-left:12px;padding-right:12px}
-  #chatsPage{flex-direction:column!important}.cm-chat-list-shell{min-height:100%}
-  #chatsPage .private-chat{position:absolute;inset:0;background:#fff;z-index:4}.chat-header{min-height:58px}
-  #chatsPage .private-chat.active{display:flex}
-  #profilePage{padding:12px!important}.profile-card{max-width:none!important;width:100%!important}
-  #menuPage{padding:12px!important}
-}
-@media(min-width:721px){
-  #chatsPage{flex-direction:row!important}.cm-chat-list-shell{height:100%}
-}
-body.dark-mode .cm-chat-list-shell,body.dark-mode .cm-chat-list-titlebar,body.dark-mode .cm-chat-stories,body.dark-mode .cm-chat-row{background:#111a27;color:#fff;border-color:#283548}
-body.dark-mode .cm-chat-row:hover{background:#18263a}body.dark-mode .cm-chat-row .friend-name{color:#fff}body.dark-mode .cm-chat-row .friend-status,body.dark-mode .cm-chat-time{color:#9aa8ba}
-body.dark-mode .cm-profile-name-block h2,body.dark-mode .cm-profile-stats strong{color:#fff}body.dark-mode .cm-profile-stats button{background:#111315}body.dark-mode .cm-profile-tabs{border-color:#343840}
-</style>
-
-<style id="chatme-topbar-reference-patch">
-.cm-social-topbar{background:#062b55!important;color:#fff!important}
-.cm-brand-mini{color:#fff!important}.cm-brand-mini span{display:inline!important}
-.cm-social-search{background:rgba(255,255,255,.12)!important}.cm-social-search input{color:#fff!important}
-.cm-social-search input::placeholder{color:#d7e5f5!important}
-.cm-top-action,.cm-nav-more{background:rgba(255,255,255,.10)!important;color:#fff!important}
-.cm-top-action:hover,.cm-top-action.active,.cm-nav-more:hover{background:rgba(255,255,255,.18)!important;color:#fff!important}
-@media(max-width:720px){.cm-brand-mini span{display:inline!important;font-size:18px}.cm-brand-mini{min-width:auto;flex:1}.cm-top-actions{gap:2px}}
-</style>
-
-<style id="chatme-final-storyboard-polish">
-/* Final storyboard polish: visual-only changes; existing IDs and handlers stay intact. */
-.auth-screen{
-  min-height:100vh!important;
-  background:linear-gradient(180deg,#061b34 0%,#092d52 55%,#06182e 100%)!important;
-  padding:0 10px 34px!important;
-  align-items:center!important;
-  justify-content:flex-start!important;
-}
-.auth-box{
-  width:min(100%,520px)!important;
-  margin:0 auto!important;
-  border-radius:0 0 18px 18px!important;
-  box-shadow:0 18px 55px rgba(0,0,0,.30)!important;
-}
-.auth-screen .auth-brandbar{
-  min-height:64px!important;
-  padding:10px 14px!important;
-  background:linear-gradient(90deg,#062b55,#0b3768)!important;
-}
-.auth-screen .auth-brandbar .auth-logo{width:38px!important;height:38px!important;flex:0 0 38px;border-radius:50%}
-.auth-screen .auth-brandbar .auth-brandname{font-size:22px!important;font-weight:800!important}
-.auth-screen .auth-title{font-size:24px!important;font-weight:800!important}
-.auth-screen .auth-sub{font-size:13px!important}
-.auth-screen .remember-row{margin-top:2px!important;margin-bottom:14px!important}
-.auth-screen .primary-btn{width:100%!important}
-
-/* Storyboard 4: Chat list */
-#chatsPage{background:#f7f9fc!important}
-.cm-chat-list-titlebar{background:#fff!important}
-.cm-chat-list-titlebar strong{font-size:19px!important}
-.cm-chat-stories{background:#fff!important}
-.cm-chat-row{min-height:70px!important}
-.cm-chat-row .avatar{width:50px!important;height:50px!important}
-.cm-chat-row .friend-name{font-size:14px!important;font-weight:800!important}
-.cm-chat-row .friend-status{font-size:12px!important}
-
-/* Storyboard 5: Private conversation */
-#chatsPage .private-chat.active{background:#f5f7fb!important}
-.chat-header{background:linear-gradient(90deg,#062b55,#0b3768)!important}
-.chat-header > span:nth-child(2){color:#fff!important}
-.chat-header > span:nth-child(2) div{color:#fff!important}
-.messages{background:#f5f7fb!important}
-.msg-row.sent .bubble{background:#1677ff!important;color:#fff!important}
-.msg-row.received .bubble{background:#fff!important;color:#172b45!important}
-
-/* Storyboard 6: Profile */
-#profilePage{background:#f4f7fb!important}
-#profilePage>.profile-card{max-width:760px!important;margin:0 auto!important;background:#fff!important;border-radius:16px!important;overflow:hidden!important;padding:16px!important;box-shadow:0 8px 28px rgba(20,35,58,.08)!important}
-.cm-profile-cover-wrap{height:155px!important}
-.cm-profile-avatar-center .avatar-lg{width:88px!important;height:88px!important}
-.cm-profile-name-block h2{font-size:21px!important}
-.cm-profile-stats{max-width:560px;margin-left:auto!important;margin-right:auto!important}
-
-/* Storyboard 7: Menu */
-#menuPage{min-height:100%!important;background:linear-gradient(180deg,#062b55,#0b3768)!important}
-#menuPage>h2{font-size:22px!important}
-#menuButtonGrid{grid-template-columns:1fr!important;max-width:760px!important;margin:0 auto!important}
-.cm-menu-ref-item{min-height:54px!important;font-size:14px!important}
-
-/* Mobile: keep the bottom navigation visible like storyboard 8. */
-@media(max-width:720px){
-  .auth-screen{padding:0 8px 26px!important}
-  .auth-box{width:100%!important;border-radius:0 0 16px 16px!important}
-  #profilePage{padding:8px!important}
-  #profilePage>.profile-card{border-radius:12px!important;padding:12px!important}
-  .cm-profile-cover-wrap{height:145px!important}
-  .cm-profile-avatar-center .avatar-lg{width:82px!important;height:82px!important}
-  .cm-chat-list-shell{width:100%!important}
-  .cm-chat-row{padding:10px 12px!important}
-}
-</style>
-
-<style id="chatme-reference-responsive">
-@media(max-width:700px){
-  #chatsPage{min-height:calc(100vh - 58px);padding:0!important;}
-  #chatsPage .cm-chat-list-shell{width:100%;border-right:0;}
-  #chatsPage .private-chat{position:absolute;inset:58px 0 58px 0;z-index:120;background:#fff;display:none;}
-  #chatsPage .private-chat.active{display:flex;}
-  #profilePage{padding:0!important;background:#f5f7fb;}
-  #profilePage .profile-card{max-width:none!important;margin:0!important;border-radius:0!important;border-left:0!important;border-right:0!important;}
-  #menuPage{padding:12px!important;}
-}
-</style>
-
-<style id="chatme-final-reference-fix">
-/* Final pass for the supplied 1–8 reference: mobile top bar order + valid stylesheet closure. */
-.cm-mobile-search-trigger{display:none!important}
-.cm-mobile-people-action{display:none!important}
-@media(max-width:720px){
-  .cm-social-topbar{display:flex!important;align-items:center!important;gap:6px!important;padding:0 8px!important}
-  .cm-brand-mini{order:1!important;flex:1!important;min-width:0!important}
-  .cm-brand-mini span{display:inline!important;font-size:18px!important}
-  .cm-mobile-search-trigger{display:flex!important;order:2!important;flex:0 0 38px!important;width:38px!important;height:38px!important;align-items:center;justify-content:center}
-  .cm-social-search{display:none!important}
-  .cm-top-actions{order:3!important;display:flex!important;gap:3px!important;margin-left:0!important}
-  .cm-top-actions .cm-topnav-item,.cm-top-actions .cm-user-avatar-button{display:none!important}
-  .cm-top-actions .cm-mobile-people-action{display:flex!important;width:38px!important;height:38px!important;align-items:center;justify-content:center}
-  .cm-top-actions > .cm-nav-more:last-child{display:flex!important;width:38px!important;height:38px!important;align-items:center;justify-content:center}
-}
-@media(min-width:721px){
-  .cm-mobile-search-trigger{display:none!important}
-  .cm-mobile-people-action{display:none!important}
-}
-</style>
 </head>
 <body>
 
   <div class="loading-overlay" id="loadingOverlay" aria-live="polite"><span style="background:rgba(0,0,0,.72);padding:9px 14px;border-radius:8px;">Please wait…</span></div>
 
-  <!-- ============ WELCOME / LANDING PAGE ============ -->
-  <div id="welcomeScreen" class="cm-reference-landing">
-    <div class="cm-landing-nav">
-      <div class="cm-landing-brand">
-        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="100" cy="100" r="96" fill="#1677ff"/><path d="M62 60 Q48 60 48 74 L48 96 Q48 110 62 110 L70 110 L70 122 L86 110 L138 110 Q152 110 152 96 L152 74 Q152 60 138 60 Z" fill="white"/><circle cx="75" cy="85" r="4" fill="#1677ff"/><circle cx="100" cy="85" r="4" fill="#1677ff"/><circle cx="125" cy="85" r="4" fill="#1677ff"/></svg>
+  <!-- ============ WELCOME / HOME ============ -->
+  <div id="welcomeScreen">
+    <div class="welcome-nav">
+      <div class="welcome-nav-brand">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="96" fill="#2b6ee0" stroke="#4fc3f7" stroke-width="5"/><path d="M62 60 Q48 60 48 74 L48 96 Q48 110 62 110 L70 110 L70 122 L86 110 L138 110 Q152 110 152 96 L152 74 Q152 60 138 60 Z" fill="white"/><circle cx="75" cy="85" r="4" fill="#2b6ee0"/><circle cx="100" cy="85" r="4" fill="#2b6ee0"/><circle cx="125" cy="85" r="4" fill="#2b6ee0"/></svg>
         <span>Chat Me</span>
       </div>
-      <div class="cm-landing-actions">
-        <button onclick="showAuth('login')">Log In</button>
-        <button class="primary" onclick="showAuth('signup')">Register</button>
+      <div class="welcome-nav-actions">
+        <button class="welcome-dark-toggle" id="welcomeDarkToggle" onclick="toggleWelcomeDarkMode()">🌙 Dark</button>
+        <button class="welcome-dark-toggle welcome-blue-toggle" id="welcomeBlueToggle" onclick="toggleWelcomeBlueMode()">🔵 Blue</button>
+        <button class="nav-login" onclick="showAuth('login')">Log In</button>
+        <button class="nav-signup" onclick="showAuth('signup')">Create account</button>
       </div>
     </div>
 
-    <main class="cm-landing-main">
-      <div class="cm-landing-people-bg" aria-hidden="true">
-        <svg viewBox="0 0 1200 520" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-          <g opacity=".24" fill="#8fd0ff">
-            <circle cx="90" cy="270" r="42"/><path d="M18 510c5-105 25-160 72-160s67 55 72 160z"/>
-            <circle cx="220" cy="220" r="50"/><path d="M135 510c6-120 31-185 85-185s79 65 85 185z"/>
-            <circle cx="370" cy="275" r="40"/><path d="M300 510c5-100 25-155 70-155s65 55 70 155z"/>
-            <circle cx="505" cy="205" r="54"/><path d="M410 510c7-130 34-195 95-195s88 65 95 195z"/>
-            <circle cx="660" cy="255" r="46"/><path d="M580 510c6-112 29-173 80-173s74 61 80 173z"/>
-            <circle cx="810" cy="210" r="52"/><path d="M720 510c6-126 33-190 90-190s84 64 90 190z"/>
-            <circle cx="955" cy="270" r="40"/><path d="M885 510c5-100 25-155 70-155s65 55 70 155z"/>
-            <circle cx="1090" cy="225" r="49"/><path d="M1005 510c6-120 31-183 85-183s79 63 85 183z"/>
-          </g>
-          <g opacity=".16" fill="#1677ff">
-            <circle cx="150" cy="170" r="28"/><circle cx="295" cy="145" r="34"/>
-            <circle cx="440" cy="135" r="30"/><circle cx="590" cy="165" r="36"/>
-            <circle cx="745" cy="140" r="30"/><circle cx="900" cy="155" r="35"/>
-            <circle cx="1040" cy="145" r="30"/>
-          </g>
-        </svg>
-      </div>
-      <div class="cm-landing-overlay"></div>
-      <section class="cm-landing-hero" aria-label="Chat Me landing page">
-        <h1>Chat Me</h1>
-        <h2>Connect. Chat. Belong.</h2>
-        <p>Meet new people, join chatrooms, make friends and be part of a real community.</p>
-
-        <div class="cm-landing-features">
-          <div><span>💬</span><b>Private Chats</b></div>
-          <div><span>👥</span><b>Group Chatrooms</b></div>
-          <div><span>👤</span><b>Make Friends</b></div>
-          <div><span>📸</span><b>Share Moments</b></div>
-          <div><span>☷</span><b>Statusbook</b></div>
-          <div><span>🎮</span><b>Play Games</b></div>
+    <main class="welcome-main">
+      <section class="welcome-copy" aria-label="Chat Me introduction">
+        <div class="welcome-badge">💬 Connect • Chat • Share</div>
+        <h1>Your people. Your conversations. <span>One home.</span></h1>
+        <p>Chat with friends, discover community conversations, share updates, join group chats and enjoy Chat Me from one simple home page.</p>
+        <div class="welcome-actions">
+          <button class="welcome-cta" onclick="showAuth('signup')">Create your account</button>
+          <button class="welcome-secondary" onclick="showAuth('login')">Log in to Chat Me</button>
         </div>
+        <div class="welcome-stats" aria-label="Chat Me highlights">
+          <div class="welcome-stat"><strong id="welcomeRegisteredCount">—</strong><span>registered members</span></div>
+          <div class="welcome-stat"><strong>24/7</strong><span>chat access</span></div>
+          <div class="welcome-stat"><strong>Free</strong><span>to get started</span></div>
+        </div>
+        <div class="welcome-points">
+          <div class="welcome-point"><b>💬 Conversations</b><span>Keep private chats, group chats and community conversations together.</span></div>
+          <div class="welcome-point"><b>👥 Community</b><span>Find people, make friends and share your updates.</span></div>
+          <div class="welcome-point"><b>🎮 Free fun</b><span>Enjoy the community and free-play features built into Chat Me.</span></div>
+        </div>
+      </section>
 
-        <button class="cm-landing-getstarted" onclick="showAuth('signup')">Get Started</button>
-        <div class="cm-landing-login-line">Already have an account? <button onclick="showAuth('login')">Log In</button></div>
+      <section class="welcome-login-card" aria-label="Chat Me login">
+        <h2>Welcome back</h2>
+        <p>Already have a Chat Me account? Use the secure login screen to continue.</p>
+        <button class="welcome-login-option primary" onclick="showAuth('login')">Log in</button>
+        <button class="welcome-login-option" onclick="showAuth('signup')">New to Chat Me? Create an account</button>
+        <div class="welcome-login-note">Your existing login, password protection and reCAPTCHA flow are kept in the secure login screen.</div>
       </section>
     </main>
 
-    <section class="cm-landing-bottom" aria-label="More about Chat Me">
-      <div class="cm-landing-bottom-inner">
-        <section class="cm-landing-info-card" aria-labelledby="chatme-how-title">
-          <div class="cm-info-icon">✨</div>
-          <h2 id="chatme-how-title">How to create your Chat Me account</h2>
-          <p>Joining is simple and takes only a few steps.</p>
-          <div class="cm-how-steps">
-            <div><span>1</span><div><b>Tap Register</b><small>Choose “Register” or “Get Started”.</small></div></div>
-            <div><span>2</span><div><b>Enter your details</b><small>Add your name, username, email and password.</small></div></div>
-            <div><span>3</span><div><b>Verify and create</b><small>Complete the security check and create your account.</small></div></div>
-            <div><span>4</span><div><b>Complete your profile</b><small>Add your profile picture and finish your profile setup.</small></div></div>
-            <div><span>5</span><div><b>Start chatting</b><small>Enter Chat Me and explore your community.</small></div></div>
-          </div>
-        </section>
+    <section class="welcome-section" aria-label="Chat Me features">
+      <h2>More than a chat app — a place to belong</h2>
+      <p>Chat Me brings conversations, friends, community posts, groups, notifications and free-play features into one simple Nigerian community space.</p>
+      <div class="welcome-about">
+        <div class="about-card"><b>💬 Real conversations</b><span>Keep private chats, group conversations and community discussions close at hand.</span></div>
+        <div class="about-card"><b>🌍 Community first</b><span>Meet people, share updates, join groups and discover conversations around you.</span></div>
+        <div class="about-card"><b>✨ Your space</b><span>Build your profile, personalize your experience and choose how you participate.</span></div>
+      </div>
 
-        <section class="cm-landing-info-card" aria-labelledby="chatme-voices-title">
-          <div class="cm-info-icon">💬</div>
-          <h2 id="chatme-voices-title">What people like about Chat Me</h2>
-          <p class="cm-voice-note">Sample review-style content for the landing-page design. Replace these examples with verified member feedback when you collect real reviews.</p>
-          <div class="cm-voice-grid cm-voice-grid-five">
-            <article class="cm-voice-card">
-              <div class="cm-stars" aria-label="5 out of 5 stars">★★★★★</div>
-              <b>“Easy conversations.”</b><span>Private chats and group conversations in one place.</span>
-              <small>Sample community review</small>
-            </article>
-            <article class="cm-voice-card">
-              <div class="cm-stars" aria-label="4 out of 5 stars">★★★★☆</div>
-              <b>“A place to connect.”</b><span>Meet people, make friends and discover communities.</span>
-              <small>Sample community review</small>
-            </article>
-            <article class="cm-voice-card">
-              <div class="cm-stars" aria-label="5 out of 5 stars">★★★★★</div>
-              <b>“More than messaging.”</b><span>Share moments, use Statusbook and enjoy community features.</span>
-              <small>Sample community review</small>
-            </article>
-            <article class="cm-voice-card">
-              <div class="cm-stars" aria-label="4 out of 5 stars">★★★★☆</div>
-              <b>“Lots to explore.”</b><span>Chatrooms, friends, stories and games give the community more to do.</span>
-              <small>Sample community review</small>
-            </article>
-            <article class="cm-voice-card">
-              <div class="cm-stars" aria-label="5 out of 5 stars">★★★★★</div>
-              <b>“Simple to get started.”</b><span>The main tools are easy to find on phone and desktop layouts.</span>
-              <small>Sample community review</small>
-            </article>
-          </div>
-        </section>
+      <h2 style="margin-top:34px;">What people say about Chat Me</h2>
+      <p>Sample testimonial cards for the landing-page design. Replace these with verified member feedback when real reviews are collected.</p>
+      <div class="welcome-testimonials" aria-label="Sample Chat Me testimonials">
+        <div class="welcome-quote"><b>💬 Amina</b><p>“I like having private chats and community conversations in one place.”</p><strong>★★★★★ 5/5 · Sample feedback</strong></div>
+        <div class="welcome-quote"><b>👥 Daniel</b><p>“The friends and group features make it easy to find conversations I enjoy.”</p><strong>★★★★☆ 4/5 · Sample feedback</strong></div>
+        <div class="welcome-quote"><b>📝 Sarah</b><p>“Statusbook gives me a simple way to share updates and keep up with friends.”</p><strong>★★★★★ 5/5 · Sample feedback</strong></div>
+        <div class="welcome-quote"><b>🎮 James</b><p>“I like that chatting, community features and games are together in the same app.”</p><strong>★★★★☆ 4/5 · Sample feedback</strong></div>
+        <div class="welcome-quote"><b>✨ Mia</b><p>“The profile and personalization options make the space feel more like my own.”</p><strong>★★★★★ 5/5 · Sample feedback</strong></div>
+      </div>
 
-        <section class="cm-landing-policy-strip" aria-labelledby="chatme-policy-title">
-          <div>
-            <div class="cm-info-icon">🔒</div>
-            <h2 id="chatme-policy-title">Privacy &amp; Policies</h2>
-            <p>Your privacy and account safety matter. Read the public privacy and terms information before creating an account.</p>
-          </div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;">
-            <button type="button" onclick="showPublicPolicy()">Privacy &amp; Policies</button>
-            <button type="button" onclick="showPublicPolicy();setTimeout(function(){var b=document.getElementById('publicPolicyModal');if(b){var h=b.querySelector('h2');if(h)h.scrollIntoView({block:'start'});}},0)" style="background:#fff;color:#2b6ee0;border:1px solid #d8e2f2;">Community Rules &amp; Safety</button>
-          </div>
-        </section>
+      <h2 style="margin-top:34px;">How Chat Me works</h2>
+      <div class="welcome-steps" aria-label="How Chat Me works">
+        <div class="welcome-step"><div class="num">1</div><b>Create your account</b><span>Register with your details, complete the security check and set up your Chat Me profile.</span></div>
+        <div class="welcome-step"><div class="num">2</div><b>Log in securely</b><span>Use your email and password to return to your account and keep your session on your device.</span></div>
+        <div class="welcome-step"><div class="num">3</div><b>Connect</b><span>Find friends, send requests and start private or community conversations.</span></div>
+        <div class="welcome-step"><div class="num">4</div><b>Share &amp; discover</b><span>Post updates, join groups, follow conversations and use the features that interest you.</span></div>
+        <div class="welcome-step"><div class="num">5</div><b>Stay in control</b><span>Use privacy, reporting, blocking and moderation features when you need them.</span></div>
+      </div>
+      <div class="welcome-note"><b>Before you join:</b> Chat Me currently uses an age-eligibility check and is not intended for children under 13. Virtual Coins have no cash value, and coin purchases are currently disabled. Please read the Privacy &amp; Policies information before creating an account.</div>
+
+      <div class="welcome-trust" aria-label="Chat Me principles">
+        <div class="welcome-trust-card"><b>🔒 Privacy-aware</b><span>Clear privacy information and a dedicated privacy/support contact.</span></div>
+        <div class="welcome-trust-card"><b>🚩 Reporting</b><span>Users can report problems and staff tools support moderation.</span></div>
+        <div class="welcome-trust-card"><b>🪙 Virtual Coins</b><span>Coin purchases are disabled for now and Coins are not cashable.</span></div>
+        <div class="welcome-trust-card"><b>🛡️ Security</b><span>Authentication and protected backend controls are used to help protect accounts.</span></div>
       </div>
     </section>
-
-    <footer class="cm-landing-footer">
-      <span>© 2026 Chat Me. All rights reserved.</span>
-      <button onclick="showPublicPolicy()">Privacy Policy</button>
-      <button onclick="showPublicPolicy()">Terms of Service</button>
-    </footer>
+    <div style="text-align:center;margin:8px 0 28px;font-size:12.5px;color:#667085;">
+      <button onclick="showPublicPolicy()" style="background:none;border:0;color:#2b6ee0;text-decoration:underline;cursor:pointer;font-size:12.5px;">🔒 Privacy, Safety &amp; Policies</button>
+      <span style="margin:0 7px;color:#b4bac5;">•</span>
+      <button onclick="showPublicPolicy()" style="background:none;border:0;color:#2b6ee0;text-decoration:underline;cursor:pointer;font-size:12.5px;">Privacy Policy</button>
+      <div style="margin-top:10px;font-size:11.5px;color:#8a91a0;">© 2026 Chat Me. All rights reserved.</div>
+    </div>
 
     <div class="public-policy-modal" id="publicPolicyModal" role="dialog" aria-modal="true" aria-label="Privacy and policies">
       <div class="public-policy-box">
         <h2>🔒 Privacy &amp; Policies</h2>
         <p><b>Chat Me is currently a free community service.</b> Coin purchases are disabled. Coins have no cash value and cannot be exchanged or withdrawn for real money.</p>
         <p><b>Privacy &amp; support:</b> adegboyeabdulrahmanl@gmail.com</p>
-        <p><b>Safety:</b> Use Chat Me respectfully. Do not share passwords, recovery codes or other private login information.</p>
-        <p><b>Community Rules &amp; Safety:</b> No harassment, threats, bullying, scams, impersonation, spam, privacy violations, or harmful/sexual content. Respect other users and use reporting/support tools when something goes wrong.</p>
-        <p><b>Terms of Service:</b> By creating an account or using Chat Me, you agree to follow the service rules, protect your account, and use the features lawfully and responsibly.</p>
+        <p><b>Verification:</b> Members can request verification after paying the 50,000-Coin verification fee. A request is reviewed by an authorized Chat Me admin or moderator; the badge is not granted automatically. If no reviewer is available, the request remains pending until an authorized staff member reviews it.</p>
+        <p><b>Need a verification review?</b> Contact Chat Me support using the support contact above and clearly state that you are requesting verification review. Never send your password, recovery code, or other secret login information.</p>
+        <p>Our policies explain account information, community content, security, reporting/moderation, service providers, user rights and how privacy requests can be made.</p>
         <p style="font-size:12px;color:#7a8190;">The full policy pages are available inside Chat Me after login.</p>
-        <button onclick="closePublicPolicy()" style="width:100%;padding:10px;border:0;border-radius:9px;background:#1677ff;color:#fff;font-weight:700;cursor:pointer;">Close</button>
+        <div class="public-policy-actions">
+          <button class="public-policy-login" onclick="showAuth('login');closePublicPolicy();">Log in to read full policies</button>
+          <button class="public-policy-close" onclick="closePublicPolicy()">Close</button>
+        </div>
       </div>
     </div>
   </div>
 
+  <!-- ============ LOGIN ============ -->
   <div class="auth-screen" id="loginScreen">
     <div class="auth-box">
-      <div class="auth-brandbar">
-        <button type="button" class="auth-back" onclick="showWelcome()" aria-label="Back to home">←</button>
-        <svg class="auth-logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="100" cy="100" r="96" fill="#1677ff"/><path d="M62 60 Q48 60 48 74 L48 96 Q48 110 62 110 L70 110 L70 122 L86 110 L138 110 Q152 110 152 96 L152 74 Q152 60 138 60 Z" fill="white"/><circle cx="75" cy="85" r="4" fill="#1677ff"/><circle cx="100" cy="85" r="4" fill="#1677ff"/><circle cx="125" cy="85" r="4" fill="#1677ff"/></svg>
-        <span class="auth-brandname">Chat Me</span>
+      <div class="auth-brand">
+        <svg class="auth-logo" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><circle cx="22" cy="30" r="16" fill="#2b3a8f"/><circle cx="38" cy="30" r="16" fill="#e8622d"/><circle cx="30" cy="30" r="8" fill="#6a4fb8"/></svg>
+        <span class="auth-title">Login - Chat Me</span>
       </div>
-      <div class="auth-title" style="font-size:24px;margin-bottom:4px;">Welcome Back</div>
       <div class="auth-sub">Enter your credentials</div>
       <div class="auth-divider"></div>
 
@@ -1134,9 +626,7 @@ body.dark-mode .cm-profile-name-block h2,body.dark-mode .cm-profile-stats strong
       <div class="field-block"><input type="email" id="loginEmail" placeholder="Enter your email" onkeydown="if(event.key==='Enter') doLogin()"></div>
 
       <label class="auth-label">Password:</label>
-      <div class="field-block"><input type="password" id="loginPassword" placeholder="Enter password" autocomplete="current-password" onkeydown="if(event.key==='Enter') doLogin()"></div>
-
-      <label class="remember-row"><input type="checkbox" id="rememberMe" checked> <span>Remember me on this device</span></label>
+      <div class="field-block"><input type="password" id="loginPassword" placeholder="Enter password" onkeydown="if(event.key==='Enter') doLogin()"></div>
 
       <label class="auth-label">Verify you're not a robot:</label>
       <div id="recaptchaLogin" style="margin-bottom:10px;"></div>
@@ -1181,22 +671,9 @@ body.dark-mode .cm-profile-name-block h2,body.dark-mode .cm-profile-stats strong
   <!-- ============ SIGN UP ============ -->
   <div class="auth-screen" id="signupScreen">
     <div class="auth-box">
-      <div class="auth-brandbar">
-        <button type="button" class="auth-back" onclick="showWelcome()" aria-label="Back to home">←</button>
-        <svg class="auth-logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="100" cy="100" r="96" fill="#1677ff"/><path d="M62 60 Q48 60 48 74 L48 96 Q48 110 62 110 L70 110 L70 122 L86 110 L138 110 Q152 110 152 96 L152 74 Q152 60 138 60 Z" fill="white"/><circle cx="75" cy="85" r="4" fill="#1677ff"/><circle cx="100" cy="85" r="4" fill="#1677ff"/><circle cx="125" cy="85" r="4" fill="#1677ff"/></svg>
-        <span class="auth-brandname">Chat Me</span>
-      </div>
-      <div class="auth-title" style="font-size:24px;margin-bottom:4px;">Create Your Account</div>
-      <div class="auth-sub">Join Chat Me and be part of our community.</div>
+      <div class="auth-title">Create Account</div>
+      <div class="auth-sub">Join Chat Me today</div>
       <div class="auth-divider"></div>
-
-      <label class="auth-label">Full Name: <span aria-hidden="true">*</span></label>
-      <div class="cm-full-name-row">
-        <div class="field-block"><input type="text" id="suFirst" placeholder="First name" autocomplete="given-name" required oninput="clearFieldError('suFirst')"></div>
-        <div class="field-block"><input type="text" id="suLast" placeholder="Last name" autocomplete="family-name" required oninput="clearFieldError('suLast')"></div>
-      </div>
-      <div class="field-msg" id="msgFirst"></div>
-      <div class="field-msg" id="msgLast"></div>
 
       <label class="auth-label">Username:</label>
       <div class="field-block"><input type="text" id="suUsername" placeholder="Choose a username" oninput="clearFieldError('suUsername')"></div>
@@ -1207,27 +684,13 @@ body.dark-mode .cm-profile-name-block h2,body.dark-mode .cm-profile-stats strong
       <div class="field-block"><input type="email" id="suEmail" placeholder="Enter your email" oninput="clearFieldError('suEmail')"></div>
       <div class="field-msg" id="msgEmail"></div>
 
-      <div class="section-divider">
-        <strong>Account security</strong>
-      </div>
+      <label class="auth-label">First Name: <span aria-hidden="true">*</span></label>
+      <div class="field-block"><input type="text" id="suFirst" placeholder="First name" autocomplete="given-name" required oninput="clearFieldError('suFirst')"></div>
+      <div class="field-msg" id="msgFirst"></div>
 
-      <label class="auth-label">Password:</label>
-      <div class="field-block"><input type="password" id="suPassword" placeholder="Create a password" oninput="checkPasswordRules()"></div>
-      <div class="pw-requirements" id="pwRules">
-        <div id="ruleLen">• At least 8 characters long</div>
-        <div id="ruleUser">• Cannot be too similar to your username</div>
-        <div id="ruleCommon">• Cannot be a commonly used password</div>
-        <div id="ruleNumeric">• Cannot be entirely numeric</div>
-      </div>
-
-      <label class="auth-label">Confirm Password:</label>
-      <div class="field-block"><input type="password" id="suPasswordConfirm" placeholder="Enter the same password again" oninput="clearFieldError('suPasswordConfirm')"></div>
-      <div class="field-msg" id="msgPwConfirm"></div>
-
-      <div class="section-divider">
-        <strong>Profile details</strong>
-        <span>These details help keep your account secure and personalize your profile.</span>
-      </div>
+      <label class="auth-label">Last Name: <span aria-hidden="true">*</span></label>
+      <div class="field-block"><input type="text" id="suLast" placeholder="Last name" autocomplete="family-name" required oninput="clearFieldError('suLast')"></div>
+      <div class="field-msg" id="msgLast"></div>
 
       <label class="auth-label">Phone Number: <span aria-hidden="true">*</span></label>
       <div class="field-block"><input type="tel" id="suPhone" placeholder="Phone number" autocomplete="tel" required oninput="clearFieldError('suPhone')"></div>
@@ -1262,6 +725,23 @@ body.dark-mode .cm-profile-name-block h2,body.dark-mode .cm-profile-stats strong
         </select>
       </div>
 
+      <div class="section-divider">
+        <strong>Account security</strong>
+      </div>
+
+      <label class="auth-label">Password:</label>
+      <div class="field-block"><input type="password" id="suPassword" placeholder="Create a password" oninput="checkPasswordRules()"></div>
+      <div class="pw-requirements" id="pwRules">
+        <div id="ruleLen">• At least 8 characters long</div>
+        <div id="ruleUser">• Cannot be too similar to your username</div>
+        <div id="ruleCommon">• Cannot be a commonly used password</div>
+        <div id="ruleNumeric">• Cannot be entirely numeric</div>
+      </div>
+
+      <label class="auth-label">Confirm Password:</label>
+      <div class="field-block"><input type="password" id="suPasswordConfirm" placeholder="Enter the same password again" oninput="clearFieldError('suPasswordConfirm')"></div>
+      <div class="field-msg" id="msgPwConfirm"></div>
+
       <label class="auth-label">Verify you're not a robot:</label>
       <div id="recaptchaSignup" style="margin-bottom:10px;"></div>
 
@@ -1279,10 +759,10 @@ body.dark-mode .cm-profile-name-block h2,body.dark-mode .cm-profile-stats strong
   <!-- ============ MAIN APP ============ -->
   <div id="app">
     <div class="cm-social-topbar">
+      <button class="cm-nav-more" type="button" onclick="cmToggleMobileSearch()" aria-label="Search">⌕</button>
       <div class="cm-brand-mini">
         <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><circle cx="22" cy="30" r="16" fill="#2b6ee0"/><circle cx="38" cy="30" r="16" fill="#e8622d"/><circle cx="30" cy="30" r="8" fill="#6a4fb8"/></svg><span>Chat Me</span>
       </div>
-      <button class="cm-nav-more cm-mobile-search-trigger" type="button" onclick="cmToggleMobileSearch()" aria-label="Search">⌕</button>
       <div class="cm-social-search">
         <input type="text" id="friendSearch" placeholder="Search people, posts or chatrooms..." onkeydown="if(event.key==='Enter') runFriendSearch()">
         <button type="button" onclick="runFriendSearch()" aria-label="Search">⌕</button>
@@ -1292,21 +772,12 @@ body.dark-mode .cm-profile-name-block h2,body.dark-mode .cm-profile-stats strong
         <button class="cm-top-action cm-topnav-item" data-page="profilePage" onclick="switchTab('profilePage')" aria-label="Profile">👤</button>
         <button class="cm-top-action cm-topnav-item" data-page="chatsPage" onclick="switchTab('chatsPage')" aria-label="Messages">💬<span class="cm-top-badge" id="msgTopBadge" style="display:none;"></span></button>
         <button class="cm-top-action cm-topnav-item" data-page="notificationsPage" onclick="switchTab('notificationsPage')" aria-label="Notifications">🔔<span class="cm-top-badge" id="notifTopBadge" style="display:none;"></span></button>
-        <button class="cm-top-action cm-mobile-people-action" type="button" onclick="switchTab('friendsPage')" aria-label="People">👥</button>
-        <button class="cm-nav-more cm-user-avatar-button" id="cmTopUserAvatar" type="button" onclick="switchTab('profilePage')" aria-label="Profile picture">👤</button>
         <button class="cm-nav-more" type="button" onclick="switchTab('menuPage')" aria-label="More">☰</button>
       </div>
     </div>
     <div class="cm-mobile-search" id="cmMobileSearch" style="display:none;">
       <input type="text" id="cmMobileSearchInput" placeholder="Search people..." onkeydown="if(event.key==='Enter'){document.getElementById('friendSearch').value=this.value;runFriendSearch();cmToggleMobileSearch();}">
       <button type="button" onclick="document.getElementById('friendSearch').value=document.getElementById('cmMobileSearchInput').value;runFriendSearch();cmToggleMobileSearch();">Search</button>
-    </div>
-    <div class="cm-bottom-nav" id="cmBottomNav" aria-label="Chat Me quick navigation">
-      <button type="button" data-page="chatsPage" onclick="switchTab('chatsPage');cmSetBottomActive(this)"><span>💬</span><span>Chats</span></button>
-      <button type="button" data-page="friendsPage" onclick="switchTab('friendsPage');cmSetBottomActive(this)"><span>👥</span><span>People</span></button>
-      <button type="button" data-page="explorePage" onclick="switchTab('explorePage');cmSetBottomActive(this)"><span>✦</span><span>Explore</span></button>
-      <button type="button" data-page="gamesPage" onclick="switchTab('gamesPage');cmSetBottomActive(this)"><span>🎮</span><span>Games</span></button>
-      <button type="button" data-page="menuPage" onclick="switchTab('menuPage');cmSetBottomActive(this)"><span>•••</span><span>More</span></button>
     </div>
     <div class="navbar" aria-hidden="true" style="display:none!important;">
       <div class="nav-item" data-page="homePage"></div><div class="nav-item" data-page="profilePage"></div><div class="nav-item" data-page="chatsPage"></div><div class="nav-item" data-page="notificationsPage"></div>
@@ -1501,7 +972,7 @@ body.dark-mode .cm-profile-name-block h2,body.dark-mode .cm-profile-stats strong
         <div class="cm-setting-card">
           <div style="font-weight:700;margin-bottom:8px;">🎨 Appearance</div>
           <label style="display:flex;gap:10px;align-items:center;cursor:pointer;">
-            <input type="checkbox" id="settingsDarkModeToggle" onchange="toggleDarkModeFromSettings()">
+            <button type="button" onclick="setAppColorTheme('blue')" style="border:1px solid #bfdbfe;background:#eef6ff;color:#1d4ed8;border-radius:7px;padding:6px 9px;cursor:pointer;font-weight:700;font-size:12px;">🔵 Blue</button> <input type="checkbox" id="settingsDarkModeToggle" onchange="toggleDarkModeFromSettings()">
             <span>Dark mode</span>
           </label>
         </div>
@@ -1520,21 +991,7 @@ body.dark-mode .cm-profile-name-block h2,body.dark-mode .cm-profile-stats strong
     </div>
 
     <div class="page" id="chatsPage" style="flex-direction: row;">
-      <div class="cm-chat-list-shell">
-        <div class="cm-chat-list-titlebar" style="height:58px;">
-          <div style="display:flex;align-items:center;gap:8px;">
-            <span class="cm-chat-brand-dot" aria-hidden="true">💬</span>
-            <strong style="font-size:19px;">Chat Me</strong><span id="cmChatListCount"></span>
-          </div>
-          <div style="display:flex;align-items:center;gap:5px;">
-            <button type="button" onclick="cmToggleMobileSearch()" aria-label="Search chats">⌕</button>
-            <button type="button" onclick="switchTab('friendsPage')" aria-label="Find people">👥</button>
-            <button type="button" onclick="switchTab('menuPage')" aria-label="More">☰</button>
-          </div>
-        </div>
-        <div class="cm-chat-stories" id="cmChatStories" aria-label="Stories"></div>
-        <div class="friend-list" id="friendList"></div>
-      </div>
+      <div class="friend-list" id="friendList"></div>
       <div class="private-chat" id="privateChat">
         <div id="cmChatSearchBar" style="display:none;padding:7px 10px;border-bottom:1px solid #e4e7ec;background:#fff;gap:6px;align-items:center;"><input id="cmMessageSearchInput" type="search" placeholder="Search messages in this chat..." oninput="cmFilterCurrentChatMessages()" style="flex:1;padding:8px 10px;border:1px solid #d9dde5;border-radius:999px;outline:none;font-size:12.5px;"><button type="button" onclick="cmClearCurrentChatSearch()" style="border:0;background:#eee;border-radius:999px;padding:7px 10px;cursor:pointer;">Clear</button></div>
         <div class="no-chat-selected">Select a friend to start chatting</div>
@@ -1822,7 +1279,7 @@ body.dark-mode .cm-profile-name-block h2,body.dark-mode .cm-profile-stats strong
 
     <div class="page" id="shopPage" style="padding:16px;overflow-y:auto;">
       <h2 style="color:#2b3a8f;margin-bottom:2px;">🛍️ Coins Shop</h2>
-      <div style="font-size:13px;color:#888;margin-bottom:10px;">Your balance: <strong id="shopBalance">0.00 Coins</strong></div><div style="font-size:12px;color:#666;margin-bottom:12px;">Basic Chat Me use is free. No real-money payment is enabled yet. Starter shop items are FREE, and other optional items use Coins only.</div>
+      <div style="font-size:13px;color:#888;margin-bottom:10px;">Your balance: <strong id="shopBalance">0.00 Coins</strong></div><div style="font-size:12px;color:#666;margin-bottom:12px;">Basic Chat Me use stays free. Premium items and creation features require Coins. No premium item is granted for free.</div>
       <div id="shopContent"></div>
     </div>
 
@@ -2165,7 +1622,7 @@ function refreshHomeStatusHeader(){
   const last = currentUser.lastName || '';
   const initials = ((first[0] || '') + (last[0] || '')).toUpperCase() || 'CM';
   if (currentUser.profilePic) {
-    el.innerHTML = `<img loading="lazy" decoding="async" src="${escapeHtml(currentUser.profilePic)}" alt="Your profile picture" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;" onerror="this.remove();this.parentElement.textContent='${initials}'">`;
+    el.innerHTML = `<img src="${escapeHtml(currentUser.profilePic)}" alt="Your profile picture" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;" onerror="this.remove();this.parentElement.textContent='${initials}'">`;
   } else {
     el.textContent = initials;
   }
@@ -2199,14 +1656,7 @@ function showAuth(type){
   document.getElementById('signupError').textContent = '';
   document.getElementById('signupStatus').textContent = '';
   document.getElementById('forgotPasswordPanel').style.display = 'none';
-  if (type === 'login') {
-    const remembered = rememberedEmailGet();
-    const emailEl = document.getElementById('loginEmail');
-    const rememberEl = document.getElementById('rememberMe');
-    if (emailEl && remembered) emailEl.value = remembered;
-    if (rememberEl) rememberEl.checked = !!remembered;
-    refreshCaptcha('login');
-  }
+  if (type === 'login') refreshCaptcha('login');
   if (type === 'signup') refreshCaptcha('signup');
 }
 
@@ -2497,10 +1947,6 @@ function sentRequestsKey(username){ return 'sentreq:' + username.toLowerCase(); 
 function notifsKey(username){ return 'notifs:' + username.toLowerCase(); }
 function seenCountKey(username, key){ return 'seen:' + username.toLowerCase() + ':' + key; }
 const SESSION_KEY = 'session:currentEmail';
-const REMEMBER_KEY = 'chatme:rememberedEmail';
-function rememberedEmailGet(){ try { return localStorage.getItem(REMEMBER_KEY); } catch(e) { return null; } }
-function rememberedEmailSet(email){ try { localStorage.setItem(REMEMBER_KEY, String(email || '').toLowerCase()); } catch(e) {} }
-function rememberedEmailClear(){ try { localStorage.removeItem(REMEMBER_KEY); } catch(e) {} }
 /* The logged-in session must NEVER go through storageGet/storageSet above -
    those sync to the shared Firestore "kv" collection, which every visitor
    reads from. Saving the session there means the most recent login
@@ -2510,21 +1956,6 @@ function rememberedEmailClear(){ try { localStorage.removeItem(REMEMBER_KEY); } 
    when the tab is closed. */
 function sessionLocalGet(){
   try { return sessionStorage.getItem(SESSION_KEY); } catch (e) { return null; }
-}
-function waitForFirebaseUser(timeoutMs=5000){
-  if (!firebaseAuth) return Promise.resolve(null);
-  if (firebaseAuth.currentUser) return Promise.resolve(firebaseAuth.currentUser);
-  return new Promise(resolve => {
-    let done = false;
-    let timer = setTimeout(() => { if(done) return; done=true; resolve(firebaseAuth.currentUser || null); }, timeoutMs);
-    let unsub = null;
-    try {
-      unsub = firebaseAuth.onAuthStateChanged(user => {
-        if (done) return;
-        if (user) { done=true; clearTimeout(timer); try{unsub&&unsub();}catch(e){} resolve(user); }
-      });
-    } catch(e) { done=true; clearTimeout(timer); resolve(firebaseAuth.currentUser || null); }
-  });
 }
 function sessionLocalSet(email){
   try { sessionStorage.setItem(SESSION_KEY, email); } catch (e) {}
@@ -2658,14 +2089,6 @@ async function doSignup(){
     markFieldError('suPasswordConfirm', 'msgPwConfirm', 'Passwords do not match.');
     firstErrorField = firstErrorField || 'suPasswordConfirm';
   }
-  const captchaResult = await recaptchaPassed('signup');
-  if (!captchaResult.ok) {
-    if (captchaResult.reason === 'unchecked') errEl.textContent = 'Please check the "I\'m not a robot" box first.';
-    else if (captchaResult.reason === 'backend') { errEl.textContent = 'Captcha verification could not reach the verification server. Please try again.'; refreshCaptcha('signup'); }
-    else if (captchaResult.reason === 'rejected') { errEl.textContent = 'Captcha verification failed. Please check the box again.'; refreshCaptcha('signup'); }
-    else errEl.textContent = 'Captcha is still loading. Please wait a moment and try again.';
-    return;
-  }
   if (age === null && month && day && year) {
     // already reported under msgDob (either incomplete or under 13)
   }
@@ -2675,38 +2098,46 @@ async function doSignup(){
     return;
   }
 
+  const captchaResult = await recaptchaPassed('signup');
+  if (!captchaResult.ok) {
+    if (captchaResult.reason === 'unchecked') errEl.textContent = 'Please check the "I\'m not a robot" box first.';
+    else if (captchaResult.reason === 'backend') { errEl.textContent = 'Captcha verification could not reach the verification server. Please try again.'; refreshCaptcha('signup'); }
+    else if (captchaResult.reason === 'rejected') { errEl.textContent = 'Captcha verification failed. Please check the box again.'; refreshCaptcha('signup'); }
+    else errEl.textContent = 'Captcha is still loading. Please wait a moment and try again.';
+    return;
+  }
+
   const signupBtn = document.getElementById('signupBtn');
   signupBtn.disabled = true;
   signupBtn.textContent = 'Creating account...';
   showLoading(true);
   try {
-    if (!firebaseAuth || !firebaseDb || !firebaseConfigLooksReal) { errEl.textContent = 'Secure account creation is unavailable right now.'; return; }
+    const existingUname = await storageGet(usernameKey(username), true);
+    if (existingUname) {
+      markFieldError('suUsername', 'msgUsername', 'This username is already taken.');
+      errEl.textContent = 'Please fix the highlighted fields.';
+      return;
+    }
+    const existingUser = await storageGet(userKey(email), true);
+    if (existingUser) {
+      markFieldError('suEmail', 'msgEmail', 'An account with this email already exists.');
+      errEl.textContent = 'Please fix the highlighted fields.';
+      return;
+    }
 
-    // Authenticate first. The secure Worker only permits a new user's first
-    // profile write after Firebase has issued a real ID token. This also makes
-    // email uniqueness authoritative through Firebase Auth instead of relying
-    // on a pre-authentication database read.
+    if (!firebaseAuth || !firebaseDb || !firebaseConfigLooksReal) { errEl.textContent = 'Secure account creation is unavailable right now.'; return; }
     let firebaseCredential;
     try { firebaseCredential = await withTimeout(firebaseAuth.createUserWithEmailAndPassword(email, password), 8000); }
-    catch (e) { errEl.textContent = e.code === 'auth/email-already-in-use' ? 'An account with this email already exists.' : 'Secure account creation failed. Please try again.'; return; }
-    const uid = firebaseCredential.user.uid;
-
-    // Username uniqueness is checked only after authentication, so the secure
-    // Worker can authorize the read. If it is already taken, roll back the
-    // just-created Firebase account so registration does not leave a ghost
-    // account behind.
-    try {
-      const existingUname = await storageGet(usernameKey(username), true);
-      if (existingUname) {
-        markFieldError('suUsername', 'msgUsername', 'This username is already taken.');
-        errEl.textContent = 'Please choose another username.';
-        try { await firebaseCredential.user.delete(); } catch (rollbackErr) { console.warn('Could not roll back duplicate-username Firebase account.', rollbackErr); }
-        return;
-      }
-    } catch (usernameCheckErr) {
-      try { await firebaseCredential.user.delete(); } catch (rollbackErr) { console.warn('Could not roll back after username-check failure.', rollbackErr); }
-      throw usernameCheckErr;
+    catch (e) {
+      const code = e && e.code;
+      if (code === 'auth/email-already-in-use') errEl.textContent = 'An account with this email already exists.';
+      else if (code === 'auth/invalid-email') errEl.textContent = 'Please enter a valid email address.';
+      else if (code === 'auth/weak-password') errEl.textContent = 'Your password is too weak. Please follow the password rules.';
+      else if (code === 'auth/operation-not-allowed') errEl.textContent = 'Email/password registration is not enabled in Firebase Authentication.';
+      else errEl.textContent = 'Secure account creation failed. Please try again.';
+      return;
     }
+    const uid = firebaseCredential.user.uid;
     // Staff roles and special Coin grants must come only from trusted backend
     // claims/operations. Never grant them from an email address in the browser.
     const user = {
@@ -2717,18 +2148,8 @@ async function doSignup(){
       verified: false, profileLocked: false,
       createdAt: Date.now()
     };
-    let setUserRes;
-    try {
-      setUserRes = await storageSet(userKey(email), JSON.stringify(user), true);
-    } catch (profileWriteErr) {
-      try { await firebaseCredential.user.delete(); } catch (rollbackErr) { console.warn('Could not roll back Firebase account after profile-write failure.', rollbackErr); }
-      throw profileWriteErr;
-    }
-    if (!setUserRes) {
-      try { await firebaseCredential.user.delete(); } catch (rollbackErr) { console.warn('Could not roll back Firebase account after profile-write failure.', rollbackErr); }
-      errEl.textContent = 'Could not create your account right now. Please try again.';
-      return;
-    }
+    const setUserRes = await storageSet(userKey(email), JSON.stringify(user), true);
+    if (!setUserRes) { errEl.textContent = 'Could not create your account right now. Please try again.'; return; }
     await storageSet(usernameKey(username), email, true);
     await storageSet(friendsKey(username), JSON.stringify([]), true);
     await storageSet(notifsKey(username), JSON.stringify([{
@@ -2739,7 +2160,7 @@ async function doSignup(){
       id: Date.now() + '-' + Math.random().toString(36).slice(2, 8),
       type: 'system', time: Date.now() + 1, read: false, handled: true,
       title: 'What can I use my Coins for?',
-      text: 'Your Coins can be used to create a Chatroom (10,000 Coins) or Group (8,000 Coins), and to buy items and features in the Shop: profile themes, profile frames, name effects, sticker packs, premium chat themes, virtual gifts, special badges, Featured Profile, Profile Music, Private Room access, Group Background access, Premium Message Pins, Premium Reactions, and Story Insights. You can also earn 50 Coins by inviting 3 friends who actually sign up with your referral link. Check the Shop before spending your Coins so you can see the current prices.'
+      text: 'Your Coins can be used to create a Chatroom (10,000 Coins) or Group (8,000 Coins), and to buy items and features in the Shop: profile themes (up to 500 Coins), profile frames (up to 1,000 Coins), name effects (up to 1,000 Coins), free sticker packs, premium chat themes (up to 2,000 Coins), virtual gifts, special badges (50,000-150,000 Coins), Featured Profile, Profile Music, Private Room access, Group Background access, Premium Message Pins, Premium Reactions, and Story Insights. You can also earn 50 Coins by inviting 3 friends who actually sign up with your referral link. Check the Shop before spending your Coins so you can see the current prices.'
     }]), true);
 
     // Referral tracking: ?ref=someusername in the URL that brought them here.
@@ -3077,8 +2498,18 @@ async function isTrustedStaff(){
   } catch(e) { return false; }
 }
 
-async function ensureFirebaseSession(email, password){
+async function resolveLoginEmail(identifier){
+  const value = String(identifier || '').trim().toLowerCase();
+  if (!value) throw new Error('Please enter your email or username.');
+  if (value.includes('@')) return value;
+  const mappedEmail = await storageGet(usernameKey(value));
+  if (!mappedEmail) { const err = new Error('Account not found'); err.code = 'auth/user-not-found'; throw err; }
+  return String(mappedEmail).trim().toLowerCase();
+}
+
+async function ensureFirebaseSession(identifier, password){
   if (!firebaseAuth) throw new Error('Secure Firebase Authentication is unavailable.');
+  const email = await resolveLoginEmail(identifier);
   return withTimeout(firebaseAuth.signInWithEmailAndPassword(email, password), 7000);
 }
 
@@ -3157,12 +2588,11 @@ async function doLogin(){
   const statusEl = document.getElementById('loginStatus');
   errEl.textContent = ''; statusEl.textContent = '';
 
-  const email = document.getElementById('loginEmail').value.trim();
+  const identifier = document.getElementById('loginEmail').value.trim();
   const password = document.getElementById('loginPassword').value;
-  const rememberMe = !!document.getElementById('rememberMe')?.checked;
 
-  if (!email || !password) {
-    errEl.textContent = 'Please enter your email and password.';
+  if (!identifier || !password) {
+    errEl.textContent = 'Please enter your email or username and password.';
     return;
   }
   const captchaResult = await recaptchaPassed('login');
@@ -3180,17 +2610,19 @@ async function doLogin(){
   showLoading(true);
   try {
     if (!firebaseAuth || !firebaseDb || !firebaseConfigLooksReal) { errEl.textContent='Secure Firebase Authentication is unavailable. Please try again later.'; refreshCaptcha('login'); return; }
+    let email;
     let fbUser;
     try {
-      // Make the Remember me choice control Firebase's actual auth persistence.
-      // LOCAL keeps the account signed in after a browser restart; SESSION keeps
-      // it only for the current browser tab/session.
-      if (firebaseAuth && typeof firebaseAuth.setPersistence === 'function' && window.firebase?.auth?.Auth?.Persistence) {
-        await firebaseAuth.setPersistence(rememberMe ? firebase.auth.Auth.Persistence.LOCAL : firebase.auth.Auth.Persistence.SESSION);
-      }
+      email = await resolveLoginEmail(identifier);
       fbUser = await ensureFirebaseSession(email,password);
     }
-    catch(e) { errEl.textContent = e.code==='auth/too-many-requests' ? 'Too many login attempts. Please wait and try again.' : 'Invalid email or password.'; refreshCaptcha('login'); return; }
+    catch(e) {
+      if (e.code === 'auth/too-many-requests') errEl.textContent = 'Too many login attempts. Please wait and try again.';
+      else if (e.code === 'auth/user-not-found') errEl.textContent = 'No Chat Me account was found for that email or username.';
+      else errEl.textContent = 'Invalid email or password.';
+      refreshCaptcha('login');
+      return;
+    }
     // The secure Worker is now authoritative, but existing Chat Me accounts
     // may still have their profile in the legacy Firestore kv collection.
     // After Firebase authentication succeeds, recover only this user's own
@@ -3231,7 +2663,6 @@ async function doLogin(){
       console.warn('This profile has a staff flag but no trusted Firebase staff claim. Staff privileges are disabled for this session.');
     }
 
-    if (rememberMe) rememberedEmailSet(email); else rememberedEmailClear();
     statusEl.textContent = 'Logged in! Loading your account...';
     try {
       await loginSuccess(publicUser(user));
@@ -3376,15 +2807,6 @@ async function loginSuccess(user){
   document.getElementById('suDay').value = '';
   document.getElementById('suYear').value = '';
   document.getElementById('footerUserLabel').textContent = (user.firstName || '') + ' ' + (user.lastName || '') + ' (@' + user.username + ')';
-  const topAvatar = document.getElementById('cmTopUserAvatar');
-  if (topAvatar) {
-    const pic = user.profilePic ? escapeHtml(String(user.profilePic)) : '';
-    const initials = escapeHtml((((user.firstName||'?')[0] + (user.lastName||'?')[0]).toUpperCase()));
-    topAvatar.innerHTML = pic
-      ? `<img src="${pic}" alt="Your profile picture" loading="lazy" decoding="async" onerror="this.remove();this.parentElement.textContent='${initials}'">`
-      : initials;
-    topAvatar.title = (user.firstName || '') + ' ' + (user.lastName || '') + ' — Profile';
-  }
   updateCoinsDisplay();
   // Re-read trusted staff claims on every successful login/session restore.
   try { applyTrustedClaimsToUser(user, await refreshTrustedAuthClaims()); } catch(e) {}
@@ -3425,20 +2847,11 @@ async function restoreSession(){
   const email = sessionLocalGet();
   if (userHasNavigated) return; // they've already started signing up/logging in manually - don't interrupt them
   if (!email) {
-    const remembered = rememberedEmailGet();
-    const rememberedFirebaseUser = remembered ? await waitForFirebaseUser(5000) : null;
-    if (remembered && rememberedFirebaseUser?.email) {
-      const fbEmail = String(rememberedFirebaseUser.email).toLowerCase();
-      if (fbEmail === String(remembered).toLowerCase()) sessionLocalSet(fbEmail);
-    }
-  }
-  const activeEmail = sessionLocalGet();
-  if (!activeEmail) {
     if (userHasNavigated) return;
     showWelcome();
     return;
   }
-  const raw = await storageGet(userKey(activeEmail));
+  const raw = await storageGet(userKey(email));
   if (userHasNavigated) return;
   if (!raw) { sessionLocalClear(); showWelcome(); return; }
   let user;
@@ -3462,7 +2875,7 @@ function logout(){
   showWelcome();
 }
 
-window.addEventListener('pagehide', () => {
+window.addEventListener('beforeunload', () => {
   if (currentUser) storageRemove(presenceKey(currentUser.username));
 });
 
@@ -3673,25 +3086,45 @@ function selectLanguage(lang){
 function toggleWelcomeDarkMode(){
   const on=!document.body.classList.contains('dark-mode');
   document.body.classList.toggle('dark-mode',on);
-  try{localStorage.setItem('darkMode',on?'1':'0');}catch(e){}
+  if(on) document.body.classList.remove('blue-mode');
+  try{localStorage.setItem('darkMode',on?'1':'0');localStorage.setItem('colorTheme',on?'dark':'white');}catch(e){}
   const home=document.getElementById('darkModeToggle');if(home)home.checked=on;
   const settings=document.getElementById('settingsDarkModeToggle');if(settings)settings.checked=on;
   const b=document.getElementById('welcomeDarkToggle');if(b)b.textContent=on?'☀️ Light':'🌙 Dark';
 }
+function toggleWelcomeBlueMode(){
+  const on=!document.body.classList.contains('blue-mode');
+  document.body.classList.toggle('blue-mode',on);
+  if(on) document.body.classList.remove('dark-mode');
+  try{localStorage.setItem('colorTheme',on?'blue':'white');localStorage.setItem('darkMode','0');}catch(e){}
+  const home=document.getElementById('darkModeToggle');if(home)home.checked=false;
+  const settings=document.getElementById('settingsDarkModeToggle');if(settings)settings.checked=false;
+  const b=document.getElementById('welcomeDarkToggle');if(b)b.textContent='🌙 Dark';
+}
 function applyDarkModePreference(){
-  let on = false;
-  try { on = localStorage.getItem('darkMode') === '1'; } catch (e) {}
-  document.body.classList.toggle('dark-mode', on);
+  let theme = 'white';
+  try { theme = localStorage.getItem('colorTheme') || (localStorage.getItem('darkMode') === '1' ? 'dark' : 'white'); } catch (e) {}
+  document.body.classList.toggle('dark-mode', theme === 'dark');
+  document.body.classList.toggle('blue-mode', theme === 'blue');
   const toggle = document.getElementById('darkModeToggle');
-  if (toggle) toggle.checked = on;
-  const welcome=document.getElementById('welcomeDarkToggle'); if(welcome) welcome.textContent=on?'☀️ Light':'🌙 Dark';
-  const settings=document.getElementById('settingsDarkModeToggle'); if(settings) settings.checked=on;
+  if (toggle) toggle.checked = theme === 'dark';
+  const welcome=document.getElementById('welcomeDarkToggle'); if(welcome) welcome.textContent=theme==='dark'?'☀️ Light':'🌙 Dark';
+  const settings=document.getElementById('settingsDarkModeToggle'); if(settings) settings.checked = theme === 'dark';
 }
 function toggleDarkMode(){
   const toggle = document.getElementById('darkModeToggle');
   const on = toggle ? toggle.checked : false;
   document.body.classList.toggle('dark-mode', on);
-  try { localStorage.setItem('darkMode', on ? '1' : '0'); } catch (e) {}
+  if(on) document.body.classList.remove('blue-mode');
+  try { localStorage.setItem('darkMode', on ? '1' : '0'); localStorage.setItem('colorTheme', on ? 'dark' : 'white'); } catch (e) {}
+}
+function setAppColorTheme(theme){
+  theme = theme === 'blue' || theme === 'dark' ? theme : 'white';
+  document.body.classList.toggle('dark-mode', theme === 'dark');
+  document.body.classList.toggle('blue-mode', theme === 'blue');
+  try { localStorage.setItem('colorTheme', theme); localStorage.setItem('darkMode', theme === 'dark' ? '1' : '0'); } catch(e) {}
+  const t=document.getElementById('darkModeToggle'); if(t) t.checked=theme==='dark';
+  const w=document.getElementById('welcomeDarkToggle'); if(w) w.textContent=theme==='dark'?'☀️ Light':'🌙 Dark';
 }
 
 /* ---------------- TAB SWITCHING ---------------- */
@@ -3860,7 +3293,7 @@ async function cmLoadExplore(){
     const selected=out.slice(0,6);
     people.innerHTML=selected.length ? selected.map(u=>{
       const name=String(u.username||u.name||'User'); const avatar=u.avatar||u.photoURL||'';
-      const av=avatar?`<img loading="lazy" decoding="async" src="${escapeHtml(avatar)}" alt="">`:escapeHtml(name.slice(0,2).toUpperCase());
+      const av=avatar?`<img src="${escapeHtml(avatar)}" alt="">`:escapeHtml(name.slice(0,2).toUpperCase());
       return `<div class="cm-suggest-row"><div class="cm-suggest-avatar">${av}</div><div class="cm-suggest-info"><strong>@${escapeHtml(name)}</strong><span>${escapeHtml(String(u.bio||'Chat Me member').slice(0,70))}</span></div><button class="cm-explore-action" type="button" onclick="viewProfile('${String(name).replace(/'/g,"\\'")}')">View</button></div>`;
     }).join('') : '<div style="font-size:12px;color:#888;">New people will appear here as the community grows.</div>';
   }catch(e){
@@ -5430,7 +4863,7 @@ function renderPostCard(p, infoMap){
     <div style="border:1px solid #eee;border-radius:8px;padding:10px;margin-top:6px;background:#fafafa;">
       <div class="post-author" style="cursor:pointer;" onclick="viewProfile('${(p.sharedFrom.author||'').replace(/'/g,"\\'")}')">${displayNameWithNickname(p.sharedFrom.authorName || p.sharedFrom.author, sInfo.nickname)} ${roleBadgeHtml(sInfo)}</div>
       ${p.sharedFrom.text ? `<div class="post-text">${escapeHtml(p.sharedFrom.text)}</div>` : ''}
-      ${p.sharedFrom.image ? `<img loading="lazy" decoding="async" class="post-img" src="${p.sharedFrom.image}">` : ''}
+      ${p.sharedFrom.image ? `<img class="post-img" src="${p.sharedFrom.image}">` : ''}
     </div>`;
   })() : '';
 
@@ -5480,7 +4913,7 @@ function renderPostCard(p, infoMap){
       ${p.text ? `<div class="post-text">${escapeHtml(p.text)}</div>` : ''}
       ${p.tags ? `<div class="cm-post-meta-line">${escapeHtml(p.tags)}</div>` : ''}
       ${p.visibility && p.visibility !== 'public' ? `<div class="cm-post-meta-line">${p.visibility === 'friends' ? '👥 Friends only' : '🔒 Only me'}</div>` : ''}
-      ${p.image ? `<img loading="lazy" decoding="async" class="post-img" src="${p.image}">` : ''}
+      ${p.image ? `<img class="post-img" src="${p.image}">` : ''}
       ${p.video ? `<div class="cm-video-card" style="margin-top:8px;"><video controls playsinline preload="metadata" src="${p.video}"></video><div style="font-size:11.5px;color:#777;margin-top:5px;">🎬 Video · Posted by @${escapeHtml(p.author||'')}</div></div>` : ''}
       ${pollBlock}
       ${sharedBlock}
@@ -5731,14 +5164,14 @@ function achievementsRowHtml(unlocked, purchasedBadges){
 const SHOP_CATALOG = {
   themes: [
     {id:'sunset',label:'Sunset',price:250,css:'linear-gradient(135deg,#ff7e5f,#feb47b)'},
-    {id:'ocean',label:'Ocean',price:300,css:'linear-gradient(135deg,#2b6ee0,#4fc3f7)'},
-    {id:'forest',label:'Forest',price:350,css:'linear-gradient(135deg,#134e13,#25a244)'},
-    {id:'galaxy',label:'Galaxy',price:400,css:'linear-gradient(135deg,#2b0a4a,#6a4fb8)'},
-    {id:'royalNight',label:'Royal Night',price:425,css:'linear-gradient(135deg,#111827,#4c1d95)'},
-    {id:'aurora',label:'Aurora',price:450,css:'linear-gradient(135deg,#0f766e,#7c3aed)'},
-    {id:'cherry',label:'Cherry',price:475,css:'linear-gradient(135deg,#9f1239,#fb7185)'},
-    {id:'emerald',label:'Emerald',price:490,css:'linear-gradient(135deg,#064e3b,#34d399)'},
-    {id:'sunrise',label:'Sunrise',price:500,css:'linear-gradient(135deg,#f97316,#facc15)'},
+    {id:'ocean',label:'Ocean',price:275,css:'linear-gradient(135deg,#2b6ee0,#4fc3f7)'},
+    {id:'forest',label:'Forest',price:300,css:'linear-gradient(135deg,#134e13,#25a244)'},
+    {id:'galaxy',label:'Galaxy',price:325,css:'linear-gradient(135deg,#2b0a4a,#6a4fb8)'},
+    {id:'royalNight',label:'Royal Night',price:350,css:'linear-gradient(135deg,#111827,#4c1d95)'},
+    {id:'aurora',label:'Aurora',price:375,css:'linear-gradient(135deg,#0f766e,#7c3aed)'},
+    {id:'cherry',label:'Cherry',price:400,css:'linear-gradient(135deg,#9f1239,#fb7185)'},
+    {id:'emerald',label:'Emerald',price:425,css:'linear-gradient(135deg,#064e3b,#34d399)'},
+    {id:'sunrise',label:'Sunrise',price:475,css:'linear-gradient(135deg,#f97316,#facc15)'},
     {id:'midnight',label:'Midnight',price:500,css:'linear-gradient(135deg,#020617,#1e3a8a)'}
   ],
   frames: [
@@ -5754,23 +5187,23 @@ const SHOP_CATALOG = {
     {id:'cosmic',label:'Cosmic',price:1000,color:'#7c3aed'}
   ],
   nameEffects: [
-    {id:'glow',label:'Glow',price:300},{id:'rainbow',label:'Rainbow',price:400},{id:'shadow',label:'Shadow',price:500},
-    {id:'neon',label:'Neon',price:650},{id:'ice',label:'Ice',price:700},{id:'fireText',label:'Fire Text',price:750},
-    {id:'goldText',label:'Gold Text',price:800},{id:'electric',label:'Electric',price:850},{id:'sparkle',label:'Sparkle',price:900},{id:'cosmicText',label:'Cosmic Text',price:1000}
+    {id:'glow',label:'Glow',price:250},{id:'rainbow',label:'Rainbow',price:350},{id:'shadow',label:'Shadow',price:450},
+    {id:'neon',label:'Neon',price:550},{id:'ice',label:'Ice',price:650},{id:'fireText',label:'Fire Text',price:700},
+    {id:'goldText',label:'Gold Text',price:750},{id:'electric',label:'Electric',price:800},{id:'sparkle',label:'Sparkle',price:900},{id:'cosmicText',label:'Cosmic Text',price:1000}
   ],
   stickers: [
-    {id:'fun',label:'Fun Pack',price:350,emojis:['🥳','😎','🤩','🥶','😜']},{id:'love',label:'Love Pack',price:475,emojis:['😍','💘','😘','🥰','💖']},
-    {id:'meme',label:'Meme Pack',price:625,emojis:['💀','🤡','😭','🫠','👀']},{id:'animals',label:'Animals Pack',price:800,emojis:['🐶','🐱','🦊','🐼','🐸']},
-    {id:'food',label:'Food Pack',price:950,emojis:['🍕','🍔','🍟','🍩','🍰']},{id:'sports',label:'Sports Pack',price:1100,emojis:['⚽','🏀','🏆','🎾','🥇']},
-    {id:'space',label:'Space Pack',price:1300,emojis:['🚀','🪐','🌙','⭐','👽']},{id:'magic',label:'Magic Pack',price:1500,emojis:['🪄','🔮','✨','🧙','🧚']},
-    {id:'celebration',label:'Celebration Pack',price:1750,emojis:['🎉','🎊','🎈','🥳','🎁']},{id:'ultimate',label:'Ultimate Pack',price:2200,emojis:['👑','💎','🔥','⚡','🌟']}
+    {id:'fun',label:'Fun Pack',price:0,emojis:['🥳','😎','🤩','🥶','😜']},{id:'love',label:'Love Pack',price:0,emojis:['😍','💘','😘','🥰','💖']},
+    {id:'meme',label:'Meme Pack',price:0,emojis:['💀','🤡','😭','🫠','👀']},{id:'animals',label:'Animals Pack',price:0,emojis:['🐶','🐱','🦊','🐼','🐸']},
+    {id:'food',label:'Food Pack',price:0,emojis:['🍕','🍔','🍟','🍩','🍰']},{id:'sports',label:'Sports Pack',price:0,emojis:['⚽','🏀','🏆','🎾','🥇']},
+    {id:'space',label:'Space Pack',price:0,emojis:['🚀','🪐','🌙','⭐','👽']},{id:'magic',label:'Magic Pack',price:0,emojis:['🪄','🔮','✨','🧙','🧚']},
+    {id:'celebration',label:'Celebration Pack',price:0,emojis:['🎉','🎊','🎈','🥳','🎁']},{id:'ultimate',label:'Ultimate Pack',price:0,emojis:['👑','💎','🔥','⚡','🌟']}
   ],
   chatThemes: [
-    {id:'sunsetChat',label:'Sunset Chat',price:500,css:'#ffe0b3'},{id:'nightChat',label:'Night Chat',price:700,css:'#1a1a2e'},
-    {id:'roseChat',label:'Rose Chat',price:850,css:'#ffd9e8'},{id:'oceanChat',label:'Ocean Chat',price:1000,css:'#dbeafe'},
-    {id:'forestChat',label:'Forest Chat',price:1200,css:'#dcfce7'},{id:'lavenderChat',label:'Lavender Chat',price:1400,css:'#ede9fe'},
-    {id:'peachChat',label:'Peach Chat',price:1550,css:'#ffedd5'},{id:'midnightChat',label:'Midnight Chat',price:1700,css:'#0f172a'},
-    {id:'emeraldChat',label:'Emerald Chat',price:1850,css:'#d1fae5'},{id:'cosmicChat',label:'Cosmic Chat',price:2000,css:'#312e81'}
+    {id:'sunsetChat',label:'Sunset Chat',price:450,css:'#ffe0b3'},{id:'nightChat',label:'Night Chat',price:600,css:'#1a1a2e'},
+    {id:'roseChat',label:'Rose Chat',price:750,css:'#ffd9e8'},{id:'oceanChat',label:'Ocean Chat',price:900,css:'#dbeafe'},
+    {id:'forestChat',label:'Forest Chat',price:1050,css:'#dcfce7'},{id:'lavenderChat',label:'Lavender Chat',price:1200,css:'#ede9fe'},
+    {id:'peachChat',label:'Peach Chat',price:1350,css:'#ffedd5'},{id:'midnightChat',label:'Midnight Chat',price:1500,css:'#0f172a'},
+    {id:'emeraldChat',label:'Emerald Chat',price:1750,css:'#d1fae5'},{id:'cosmicChat',label:'Cosmic Chat',price:2000,css:'#312e81'}
   ],
   gifts: [
     {id:'rose',label:'Rose',price:10000,emoji:'🌹'},{id:'cake',label:'Cake',price:12000,emoji:'🎂'},{id:'crown',label:'Crown',price:15000,emoji:'👑'},
@@ -5783,7 +5216,7 @@ const SHOP_CATALOG = {
     {id:'diamondBadge',label:'Diamond',price:110000,emoji:'💠'},{id:'champion',label:'Champion',price:120000,emoji:'🥇'},{id:'master',label:'Master',price:135000,emoji:'🛡️'},{id:'ultimateBadge',label:'Ultimate',price:150000,emoji:'🌟'}
   ]
 };
-const SHOP_FIXED_PRICES = { featuredProfile:0, profileMusic:0, privateRoom:0, groupBackground:0, pinMessage:0, premiumReactions:0, storyInsights:0, verification:50000 };
+const SHOP_FIXED_PRICES = { featuredProfile:850, profileMusic:950, privateRoom:1250, groupBackground:1100, pinMessage:650, premiumReactions:450, storyInsights:600, verification:50000 };
 
 async function loadCurrentUserFull(){
   const raw = await storageGet(userKey(currentUser.email), true);
@@ -5815,25 +5248,6 @@ async function saveCurrentUserFull(u){
   return true;
 }
 
-const SHOP_FREE_ITEMS = {
-  // Starter items are free while real-money payments are not enabled.
-  // All sticker packs are FREE until payment is available. Other catalog items remain Coin-only.
-  themes: new Set(['sunset','ocean','forest']),
-  frames: new Set(['gold','diamond','fire']),
-  nameEffects: new Set(['glow','shadow','rainbow']),
-  stickers: new Set(['fun','love','meme','animals','food','sports','space','magic','celebration','ultimate']),
-  chatThemes: new Set(['sunsetChat','oceanChat','roseChat']),
-  gifts: new Set(['rose','cake'])
-};
-function shopItemPrice(category, item){
-  if (SHOP_FREE_ITEMS[category] && SHOP_FREE_ITEMS[category].has(item.id)) return 0;
-  return Number(item.price) || 0;
-}
-function shopPriceLabel(category, item){
-  const p = shopItemPrice(category, item);
-  return p === 0 ? 'FREE' : p.toLocaleString() + ' Coins';
-}
-
 async function buyShopItem(category, itemId){
   const item = SHOP_CATALOG[category].find(i => i.id === itemId);
   if (!item) return;
@@ -5848,13 +5262,12 @@ async function buyShopItem(category, itemId){
   const field = fieldMap[category];
   const owned = field ? (u[field] || []) : [];
   if (field && category !== 'gifts' && owned.includes(itemId)) { alert('You already own this.'); return; }
-  const price = shopItemPrice(category, item);
   const balance = typeof u.leos === 'number' ? u.leos : 20;
-  if (balance < price) { alert('You need ' + price + ' Coins for this. Your balance: ' + balance.toFixed(2)); return; }
-  u.leos = balance - price;
+  if (balance < item.price) { alert('You need ' + item.price + ' Coins for this. Your balance: ' + balance.toFixed(2)); return; }
+  if (item.price > 0) u.leos = balance - item.price;
   if (field) { u[field] = [...owned, itemId]; }
   await saveCurrentUserFull(u);
-  alert(price === 0 ? item.label + ' is free — added to your account.' : 'Purchased: ' + item.label + '!');
+  alert('Purchased: ' + item.label + '!');
   loadShopPage();
 }
 
@@ -5870,7 +5283,7 @@ async function equipShopItem(category, itemId){
 }
 
 async function buyFixedShopItem(kind){
-  const price = Number(SHOP_FIXED_PRICES[kind] || 0);
+  const price = SHOP_FIXED_PRICES[kind];
   const u = await loadCurrentUserFull();
   if (!u) return;
   const balance = typeof u.leos === 'number' ? u.leos : 20;
@@ -5966,101 +5379,101 @@ async function loadShopPage(){
 
   let html = '';
 
-  html += section('🎨 Profile Themes', 'Applied behind your profile header. One starter theme is FREE.',
+  html += section('🎨 Profile Themes', 'Applied behind your profile header (250-500 Coins).',
     SHOP_CATALOG.themes.map(t => {
       const owned = (u.ownedThemes || []).includes(t.id);
       const active = u.activeTheme === t.id;
-      return itemCard(t.label, shopPriceLabel('themes', t), `<div style="height:40px;border-radius:6px;background:${t.css};"></div>`,
+      return itemCard(t.label, t.price + ' Coins', `<div style="height:40px;border-radius:6px;background:${t.css};"></div>`,
         active ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Active</button>`
         : owned ? `<button onclick="equipShopItem('themes','${t.id}')" style="background:#2b6ee0;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Equip</button>`
-        : `<button onclick="buyShopItem('themes','${t.id}')" style="background:${shopItemPrice('themes', t)===0?'#25a244':'#e8622d'};color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">${shopItemPrice('themes', t)===0?'FREE':'Buy'}</button>`);
+        : `<button onclick="buyShopItem('themes','${t.id}')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`);
     }).join(''));
 
-  html += section('🖼️ Profile Frames', 'A colored ring around your avatar. One starter frame is FREE.',
+  html += section('🖼️ Profile Frames', 'A colored ring around your avatar (300-1,000 Coins).',
     SHOP_CATALOG.frames.map(f => {
       const owned = (u.ownedFrames || []).includes(f.id);
       const active = u.activeFrame === f.id;
-      return itemCard(f.label, shopPriceLabel('frames', f), `<div style="width:40px;height:40px;margin:0 auto;border-radius:50%;border:4px solid ${f.color};background:#eee;"></div>`,
+      return itemCard(f.label, f.price + ' Coins', `<div style="width:40px;height:40px;margin:0 auto;border-radius:50%;border:4px solid ${f.color};background:#eee;"></div>`,
         active ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Active</button>`
         : owned ? `<button onclick="equipShopItem('frames','${f.id}')" style="background:#2b6ee0;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Equip</button>`
-        : `<button onclick="buyShopItem('frames','${f.id}')" style="background:${shopItemPrice('frames', f)===0?'#25a244':'#e8622d'};color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">${shopItemPrice('frames', f)===0?'FREE':'Buy'}</button>`);
+        : `<button onclick="buyShopItem('frames','${f.id}')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`);
     }).join(''));
 
-  html += section('✨ Name Effects', 'A special style applied to your name everywhere. One starter effect is FREE.',
+  html += section('✨ Name Effects', 'A special style applied to your name everywhere (250-1,000 Coins).',
     SHOP_CATALOG.nameEffects.map(n => {
       const owned = (u.ownedNameEffects || []).includes(n.id);
       const active = u.activeNameEffect === n.id;
-      return itemCard(n.label, shopPriceLabel('nameEffects', n), `<div style="font-weight:700;${n.id==='glow'?'text-shadow:0 0 6px #4fc3f7,0 0 10px #4fc3f7;':n.id==='shadow'?'text-shadow:2px 2px 3px rgba(0,0,0,0.5);':'background:linear-gradient(90deg,#ff0040,#ff8c00,#ffee00,#00c853,#2979ff,#aa00ff);-webkit-background-clip:text;background-clip:text;color:transparent;'}">Name</div>`,
+      return itemCard(n.label, n.price + ' Coins', `<div style="font-weight:700;${n.id==='glow'?'text-shadow:0 0 6px #4fc3f7,0 0 10px #4fc3f7;':n.id==='shadow'?'text-shadow:2px 2px 3px rgba(0,0,0,0.5);':'background:linear-gradient(90deg,#ff0040,#ff8c00,#ffee00,#00c853,#2979ff,#aa00ff);-webkit-background-clip:text;background-clip:text;color:transparent;'}">Name</div>`,
         active ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Active</button>`
         : owned ? `<button onclick="equipShopItem('nameEffects','${n.id}')" style="background:#2b6ee0;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Equip</button>`
-        : `<button onclick="buyShopItem('nameEffects','${n.id}')" style="background:${shopItemPrice('nameEffects', n)===0?'#25a244':'#e8622d'};color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">${shopItemPrice('nameEffects', n)===0?'FREE':'Buy'}</button>`);
+        : `<button onclick="buyShopItem('nameEffects','${n.id}')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`);
     }).join(''));
 
-  html += section('😎 Sticker Packs', 'Extra emojis to use when chatting. One starter sticker pack is FREE.',
+  html += section('😎 Sticker Packs', 'Free sticker packs for the emoji picker (0 Coins).',
     SHOP_CATALOG.stickers.map(s => {
       const owned = (u.ownedStickerPacks || []).includes(s.id);
-      return itemCard(s.label, shopPriceLabel('stickers', s), `<div style="font-size:20px;">${s.emojis.join(' ')}</div>`,
-        owned ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Owned</button>`
-        : `<button onclick="buyShopItem('stickers','${s.id}')" style="background:${shopItemPrice('stickers', s)===0?'#25a244':'#e8622d'};color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">${shopItemPrice('stickers', s)===0?'FREE':'Buy'}</button>`);
+      return itemCard(s.label, 'Free', `<div style="font-size:20px;">${s.emojis.join(' ')}</div>`,
+      owned ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Owned</button>`
+      : `<button onclick="buyShopItem('stickers','${s.id}')" style="background:#2b6ee0;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Get Free</button>`);
     }).join(''));
 
-  html += section('💬 Premium Chat Themes', 'Extra wallpaper colors for your private chats. One starter theme is FREE.',
+  html += section('💬 Premium Chat Themes', 'Premium wallpaper colors for your private chats (450-2,000 Coins).',
     SHOP_CATALOG.chatThemes.map(c => {
       const owned = (u.ownedChatThemes || []).includes(c.id);
-      return itemCard(c.label, shopPriceLabel('chatThemes', c), `<div style="height:40px;border-radius:6px;background:${c.css};border:1px solid #ddd;"></div>`,
+      return itemCard(c.label, c.price + ' Coins', `<div style="height:40px;border-radius:6px;background:${c.css};border:1px solid #ddd;"></div>`,
         owned ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Owned</button>`
-        : `<button onclick="buyShopItem('chatThemes','${c.id}')" style="background:${shopItemPrice('chatThemes', c)===0?'#25a244':'#e8622d'};color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">${shopItemPrice('chatThemes', c)===0?'FREE':'Buy'}</button>`);
+        : `<button onclick="buyShopItem('chatThemes','${c.id}')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`);
     }).join('') + '<div style="font-size:11.5px;color:#888;width:100%;">Pick your active chat theme from inside any chat (🎨 icon).</div>');
 
-  html += section('🌐 Verification', 'Request the Chat Me verified badge for 20,000 Coins. An admin must review and approve the request.', [
-    `<div style=\"padding:10px;border:1px solid #ddd;border-radius:8px;\"><strong>Verified Badge</strong><div style=\"font-size:12px;color:#777;margin:5px 0 8px;\">20,000 Coins</div>${u.verified ? '<span style=\"color:#198754;font-weight:700;\">Already verified</span>' : `<button onclick=\"buyFixedShopItem('verification')\" style=\"background:#2b6ee0;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;\">Request verification for 20,000 Coins</button>`}</div>`
+  html += section('🌐 Verification', 'Request the Chat Me verified badge for 50,000 Coins. An admin must review and approve the request.', [
+    `<div style=\"padding:10px;border:1px solid #ddd;border-radius:8px;\"><strong>Verified Badge</strong><div style=\"font-size:12px;color:#777;margin:5px 0 8px;\">50,000 Coins</div>${u.verified ? '<span style=\"color:#198754;font-weight:700;\">Already verified</span>' : `<button onclick=\"buyFixedShopItem('verification')\" style=\"background:#2b6ee0;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;\">Request verification for 50,000 Coins</button>`}</div>`
   ]);
 
-  html += section('🎁 Virtual Gifts', 'Buy gifts here, then send them from the Gift button at the top of a private chat. One starter gift is FREE.',
+  html += section('🎁 Virtual Gifts', 'Buy gifts here, then send them from the Gift button at the top of a private chat.',
     SHOP_CATALOG.gifts.map(g => {
       const ownedCount = (u.ownedGifts || []).filter(id => id === g.id).length;
-      return itemCard(g.label, shopPriceLabel('gifts', g), `<div style="font-size:32px;">${g.emoji}</div>`,
-        `<div style="font-size:11px;color:#777;margin-bottom:5px;">Owned: ${ownedCount}</div><button onclick="buyShopItem('gifts','${g.id}')" style="background:${shopItemPrice('gifts', g)===0?'#25a244':'#e8622d'};color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">${shopItemPrice('gifts', g)===0?'FREE':'Buy'}</button>`);
+      return itemCard(g.label, g.price + ' Coins', `<div style="font-size:32px;">${g.emoji}</div>`,
+        `<div style="font-size:11px;color:#777;margin-bottom:5px;">Owned: ${ownedCount}</div><button onclick="buyShopItem('gifts','${g.id}')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`);
     }).join(''));
 
-  html += section('🏆 Special Badges', 'Verified users only. Badge prices range from 7,000 to 20,000 Coins.',
+  html += section('🏆 Special Badges', 'Verified users only. Badge prices range from 50,000 to 150,000 Coins.',
     SHOP_CATALOG.badges.map(b => {
       const owned = (u.ownedBadges || []).includes(b.id);
       const locked = !u.verified;
-      return itemCard(b.label, shopPriceLabel('badges', b), `<div style="font-size:28px;">${b.emoji}</div>`,
+      return itemCard(b.label, b.price.toLocaleString() + ' Coins', `<div style="font-size:28px;">${b.emoji}</div>`,
         owned ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Owned</button>`
         : locked ? `<button disabled style="background:#aaa;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">🔒 Verified only</button>`
-        : `<button onclick="buyShopItem('badges','${b.id}')" style="background:${shopItemPrice('badges', b)===0?'#25a244':'#e8622d'};color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">${shopItemPrice('badges', b)===0?'FREE':'Buy'}</button>`);
+        : `<button onclick="buyShopItem('badges','${b.id}')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`);
     }).join(''));
 
   const featuredActive = u.featuredUntil && u.featuredUntil > Date.now();
-  html += section('📣 Featured Profile', 'Shown at the top of People search for 24 hours — FREE starter access while real-money payments are not enabled.',
-    itemCard('Featured', SHOP_FIXED_PRICES.featuredProfile === 0 ? 'FREE' : SHOP_FIXED_PRICES.featuredProfile + ' Coins', `<div style="font-size:28px;">⭐</div>`,
+  html += section('📣 Featured Profile', 'Shown at the top of People search for 24 hours (850 Coins).',
+    itemCard('Featured', SHOP_FIXED_PRICES.featuredProfile + ' Coins', `<div style="font-size:28px;">⭐</div>`,
       featuredActive ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Active</button>`
       : `<button onclick="buyFixedShopItem('featuredProfile')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`));
 
-  html += section('🎵 Profile Music', 'Add a track link that plays on your profile — FREE starter access while real-money payments are not enabled.',
-    itemCard('Music', SHOP_FIXED_PRICES.profileMusic === 0 ? 'FREE' : SHOP_FIXED_PRICES.profileMusic + ' Coins', `<div style="font-size:28px;">🎵</div>`,
+  html += section('🎵 Profile Music', 'Add a track link that plays on your profile (950 Coins).',
+    itemCard('Music', SHOP_FIXED_PRICES.profileMusic + ' Coins', `<div style="font-size:28px;">🎵</div>`,
       u.hasProfileMusic ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Unlocked</button>`
       : `<button onclick="buyFixedShopItem('profileMusic')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`));
 
-  html += section('🔒 Private Rooms', 'Private Room access is FREE for now. Creating a chatroom is also free while real-money payments are not enabled.',
-    itemCard('Private Room', SHOP_FIXED_PRICES.privateRoom === 0 ? 'FREE' : SHOP_FIXED_PRICES.privateRoom + ' Coins', `<div style="font-size:28px;">🔒</div>`,
+  html += section('🔒 Private Rooms', 'Unlock Private Room access for private chatroom creation (1,250 Coins). Creating a chatroom itself costs 10,000 Coins.',
+    itemCard('Private Room', SHOP_FIXED_PRICES.privateRoom + ' Coins', `<div style="font-size:28px;">🔒</div>`,
       u.hasPrivateRoom ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Unlocked</button>`
       : `<button onclick="buyFixedShopItem('privateRoom')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`));
 
-  html += section('🎨 Group Backgrounds', 'Custom group background access is FREE for now while real-money payments are not enabled.',
-    itemCard('Group Background', SHOP_FIXED_PRICES.groupBackground === 0 ? 'FREE' : SHOP_FIXED_PRICES.groupBackground + ' Coins', `<div style="height:40px;border-radius:6px;background:linear-gradient(135deg,#2b6ee0,#6a4fb8);"></div>`,
+  html += section('🎨 Group Backgrounds', 'Unlock custom background images for groups (1,100 Coins).',
+    itemCard('Group Background', SHOP_FIXED_PRICES.groupBackground + ' Coins', `<div style="height:40px;border-radius:6px;background:linear-gradient(135deg,#2b6ee0,#6a4fb8);"></div>`,
       u.hasGroupBackground ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Unlocked</button>`
       : `<button onclick="buyFixedShopItem('groupBackground')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`));
 
-  html += section('📌 Premium Message Pin', 'Pin one message for FREE for now. This is a future Coin feature once payments are enabled.',
-    itemCard('Pin Message', SHOP_FIXED_PRICES.pinMessage === 0 ? 'FREE for now' : SHOP_FIXED_PRICES.pinMessage + ' Coins per pin', `<div style="font-size:28px;">📌</div>`, `<button onclick="switchTab('chatsPage')" style="background:#2b6ee0;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Open Chats</button>`));
-  html += section('✨ Premium Reactions', 'Unlock Love, Haha, Wow and other reactions — FREE for now.',
-    itemCard('Premium Reactions', SHOP_FIXED_PRICES.premiumReactions === 0 ? 'FREE' : SHOP_FIXED_PRICES.premiumReactions + ' Coins', `<div style="font-size:28px;">❤️😂😮</div>`,
-      u.hasPremiumReactions ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Unlocked</button>` : `<button onclick="buyFixedShopItem('premiumReactions')" style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">FREE</button>`));
-  html += section('👀 Story Insights', 'Unlock the full list of people who viewed your current story — FREE for now while payments are not enabled. The viewer count remains free.',
-    itemCard('Story Insights', SHOP_FIXED_PRICES.storyInsights === 0 ? 'FREE' : SHOP_FIXED_PRICES.storyInsights + ' Coins', `<div style="font-size:28px;">👀</div>`,
+  html += section('📌 Premium Message Pin', 'Pin one message in a chatroom for ' + SHOP_FIXED_PRICES.pinMessage + ' Coins. This is charged when you pin; it is not an owned item.',
+    itemCard('Pin Message', SHOP_FIXED_PRICES.pinMessage + ' Coins per pin', `<div style="font-size:28px;">📌</div>`, `<button onclick="switchTab('chatsPage')" style="background:#2b6ee0;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Open Chatrooms</button>`));
+  html += section('✨ Premium Reactions', 'Unlock Love, Haha, Wow and other reactions for 450 Coins.',
+    itemCard('Premium Reactions', SHOP_FIXED_PRICES.premiumReactions + ' Coins', `<div style="font-size:28px;">❤️😂😮</div>`,
+      u.hasPremiumReactions ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Unlocked</button>` : `<button onclick="buyFixedShopItem('premiumReactions')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`));
+  html += section('👀 Story Insights', 'Unlock the full list of people who viewed your current story for 600 Coins. The viewer count remains free.',
+    itemCard('Story Insights', SHOP_FIXED_PRICES.storyInsights + ' Coins', `<div style="font-size:28px;">👀</div>`,
       u.hasStoryInsights ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Unlocked</button>` : `<button onclick="buyFixedShopItem('storyInsights')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`));
 
   document.getElementById('shopContent').innerHTML = html;
@@ -6093,21 +5506,13 @@ async function loadProfile(){
   const nameStyle = nameEffectStyle(u);
 
   document.getElementById('profileCard').innerHTML = `
-    <div class="cm-profile-reference-head"><button type="button" onclick="switchTab('homePage')" aria-label="Back to Home">←</button><strong>My Profile</strong><button type="button" onclick="switchTab('settingsPage')" aria-label="Profile settings">⚙</button></div>
-    <div class="cm-profile-cover-wrap" style="position:relative;height:150px;margin:-16px -16px 16px;border-radius:0;overflow:hidden;background:${u.coverPhoto ? `url('${u.coverPhoto}') center/cover` : (themeCss || 'linear-gradient(135deg,#2b6ee0,#4fc3f7)')};">
+    <div style="position:relative;height:110px;margin:-16px -16px 16px;border-radius:8px 8px 0 0;overflow:hidden;background:${u.coverPhoto ? `url('${u.coverPhoto}') center/cover` : (themeCss || 'linear-gradient(135deg,#2b6ee0,#4fc3f7)')};">
       <label style="position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,0.5);color:#fff;font-size:11.5px;padding:4px 9px;border-radius:12px;cursor:pointer;">
         📷 Change cover
         <input type="file" id="coverPhotoInput" accept="image/*" style="display:none;" onchange="onCoverPhotoChosen()">
       </label>
     </div>
-    <div class="cm-profile-avatar-center" style="${frameColor ? `display:inline-block;border-radius:50%;border:4px solid ${frameColor};` : ''}">${avatarHtml(u.firstName, u.lastName, u.profilePic, 'avatar-lg')}</div>
-    <div class="cm-profile-name-block"><h2>${displayNameWithNickname(u.firstName + ' ' + u.lastName, u.nickname)} ${roleBadgeHtml(u)}</h2><div>@${escapeHtml(u.username)}</div><small>${u.bio ? escapeHtml(u.bio) : 'Good vibes only ✌️'}</small></div>
-    <div class="cm-profile-stats">
-      <button type="button" onclick="loadWallPosts('${escapeHtml(u.username).replace(/'/g,"\\'")}','profileCard',true)"><strong>${(typeof u.postCount==='number'?u.postCount:0)}</strong><span>Posts</span></button>
-      <button type="button" onclick="switchTab('friendsPage')"><strong>${friendsCount}</strong><span>Friends</span></button>
-      <button type="button" onclick="switchTab('friendsPage')"><strong>${friendsCount}</strong><span>Followers</span></button>
-    </div>
-    <div class="cm-profile-tabs" aria-label="Profile sections"><span class="active">Posts</span><span>Photos</span><span>About</span></div>
+    <div style="${frameColor ? `display:inline-block;border-radius:50%;border:4px solid ${frameColor};` : ''}">${avatarHtml(u.firstName, u.lastName, u.profilePic, 'avatar-lg')}</div>
     <div style="margin:-6px 0 10px;">
       <label style="font-size:12.5px;color:#2b6ee0;cursor:pointer;">
         Choose file
@@ -6115,7 +5520,7 @@ async function loadProfile(){
       </label>
       <span id="profilePicFileName" style="font-size:12px;color:#888;margin-left:6px;">No file chosen</span>
       <div id="profilePicPreviewWrap" style="display:none;margin-top:8px;align-items:center;gap:10px;">
-        <img loading="lazy" decoding="async" id="profilePicPreview" style="width:56px;height:56px;border-radius:50%;object-fit:cover;">
+        <img id="profilePicPreview" style="width:56px;height:56px;border-radius:50%;object-fit:cover;">
         <button onclick="saveProfilePic()" style="background:#25a244;color:#fff;border:none;padding:7px 16px;border-radius:6px;cursor:pointer;font-size:13px;">Save</button>
       </div>
       <div class="field-msg" id="profilePicError"></div>
@@ -7134,85 +6539,30 @@ async function updateOnlineDisplay(){
 /* ---------------- MESSAGE (chat with friends) ---------------- */
 async function loadFriendList(){
   const listEl = document.getElementById('friendList');
-  const storiesEl = document.getElementById('cmChatStories');
-  const countEl = document.getElementById('cmChatListCount');
-  if (listEl) listEl.innerHTML = '<div class="empty-feed">Loading...</div>';
-
+  listEl.innerHTML = '<div class="empty-feed">Loading...</div>';
   const raw = await storageGet(friendsKey(currentUser.username), true);
   const friends = raw ? JSON.parse(raw) : [];
-  if (countEl) countEl.textContent = friends.length ? ` · ${friends.length}` : '';
-
   if (!friends.length) {
-    if (storiesEl) {
-      storiesEl.innerHTML = `<button type="button" class="cm-story-card cm-story-create" onclick="switchTab('statusbookPage')">
-        <div class="cm-story-avatar cm-story-add">+</div><span>Your Story</span>
-      </button>`;
-    }
-    if (listEl) listEl.innerHTML = '<div class="empty-feed">No friends yet.<br><a style="color:#2b6ee0;cursor:pointer;" onclick="switchTab(\'friendsPage\')">Find friends</a> to start chatting.</div>';
+    listEl.innerHTML = '<div class="empty-feed">No friends yet.<br><a style="color:#2b6ee0;cursor:pointer;" onclick="switchTab(\'friendsPage\')">Find friends</a> to start chatting.</div>';
     return;
   }
-
   const items = await Promise.all(friends.map(async (f) => {
-    const email = await storageGet('uname:' + f.toLowerCase(), true);
-    const uRaw = email ? await storageGet(userKey(email), true) : null;
+    const uRaw = await storageGet('uname:' + f.toLowerCase(), true).then(email => email ? storageGet(userKey(email), true) : null);
     let u = null;
     try { u = uRaw ? JSON.parse(uRaw) : null; } catch(e){}
     const status = await getPresenceStatus(f);
-    const key = chatKey(currentUser.username, f);
-    let msgs = [];
-    try {
-      const chatRaw = await storageGet(key, true);
-      msgs = chatRaw ? JSON.parse(chatRaw) : [];
-    } catch(e) {}
-    const seenRaw = await storageGet(seenCountKey(currentUser.username, key), true);
-    const seen = seenRaw ? parseInt(seenRaw, 10) || 0 : 0;
-    const unread = Math.max(0, msgs.length - seen);
-    const last = msgs.length ? msgs[msgs.length - 1] : null;
-    return {
-      username: f,
-      display: u ? ((u.firstName || '') + ' ' + (u.lastName || '')).trim() || f : f,
-      status,
-      user: u,
-      lastText: last ? String(last.text || '') : 'Start a conversation',
-      lastTime: last && last.time ? new Date(last.time) : null,
-      unread
-    };
+    return { username: f, display: u ? (u.firstName + ' ' + u.lastName) : f, status, user: u };
   }));
-
-  if (storiesEl) {
-    const storyButtons = [`<button type="button" class="cm-story-card cm-story-create" onclick="switchTab('statusbookPage')">
-      <div class="cm-story-avatar cm-story-add">+</div><span>Your Story</span>
-    </button>`];
-    items.slice(0, 12).forEach(f => {
-      const uname = f.username.replace(/'/g,"\\\\'");
-      const avatar = avatarHtml(f.user ? f.user.firstName : '', f.user ? f.user.lastName : '', f.user ? f.user.profilePic : null, 'cm-story-avatar');
-      storyButtons.push(`<button type="button" class="cm-story-card" onclick="viewProfile('${uname}')">
-        ${avatar}<span>${escapeHtml(f.display.split(' ')[0] || f.username)}</span>
-      </button>`);
-    });
-    storiesEl.innerHTML = storyButtons.join('');
-  }
-
-  if (listEl) {
-    listEl.innerHTML = items.map(f => {
-      const initials = f.display.split(' ').map(x=>x[0]).join('').slice(0,2).toUpperCase();
-      const uname = f.username.replace(/'/g,"\\\\'");
-      const disp = f.display.replace(/'/g,"\\\\'");
-      const isOnline = f.status === 'Online';
-      const time = f.lastTime ? f.lastTime.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}) : '';
-      const preview = f.lastText.length > 46 ? f.lastText.slice(0,46) + '…' : f.lastText;
-      return `<button type="button" class="friend-item cm-chat-row" onclick="openChat('${uname}', '${disp}')">
-        <span class="cm-chat-avatar-wrap" onclick="event.stopPropagation();viewProfile('${uname}')">
-          ${avatarHtml(f.user ? f.user.firstName : '', f.user ? f.user.lastName : '', f.user ? f.user.profilePic : null, 'avatar')}
-          ${isOnline ? '<span class="cm-online-dot" aria-label="Online"></span>' : ''}
-        </span>
-        <span class="cm-chat-row-main">
-          <span class="cm-chat-row-top"><span class="friend-name">${escapeHtml(f.display)}</span><span class="cm-chat-time">${escapeHtml(time)}</span></span>
-          <span class="cm-chat-row-bottom"><span class="friend-status">${escapeHtml(preview)}</span>${f.unread ? `<span class="cm-unread-badge">${f.unread > 99 ? '99+' : f.unread}</span>` : ''}</span>
-        </span>
-      </button>`;
-    }).join('');
-  }
+  listEl.innerHTML = items.map(f => {
+    const initials = f.display.split(' ').map(s=>s[0]).join('').slice(0,2).toUpperCase();
+    const uname = f.username.replace(/'/g,"\\'");
+    const disp = f.display.replace(/'/g,"\\'");
+    const isOnline = f.status === 'Online';
+    return `<div class="friend-item" onclick="openChat('${uname}', '${disp}')">
+      <div style="cursor:pointer;" onclick="event.stopPropagation(); viewProfile('${uname}')">${avatarHtml(f.user ? f.user.firstName : '', f.user ? f.user.lastName : '', f.user ? f.user.profilePic : null, 'avatar')}</div>
+      <div><div class="friend-name" style="cursor:pointer;" onclick="event.stopPropagation(); viewProfile('${uname}')">${escapeHtml(f.display)}</div><div class="friend-status" style="color:${isOnline?'#25d366':'#999'};">${isOnline ? '● Online' : f.status}</div></div>
+    </div>`;
+  }).join('');
 }
 
 const WALLPAPER_COLORS = {
@@ -7229,7 +6579,7 @@ function wallpaperPickerHtml(){
     const isOwned = owned.has(t.id);
     const active = current === t.css;
     if (isOwned) return `<span onclick="setChatWallpaper('${t.css}')" title="${escapeHtml(t.label)}" style="display:inline-block;width:22px;height:22px;border-radius:50%;background:${t.css};margin-right:5px;cursor:pointer;border:2px solid ${active ? '#2b6ee0' : '#25a244'};vertical-align:middle;"></span>`;
-    return `<button onclick="buyChatThemeFromChat('${t.id}')" style="margin:0 5px 4px 0;background:${shopItemPrice('chatThemes', t)===0?'#25a244':'#e8622d'};color:#fff;border:none;padding:4px 7px;border-radius:5px;cursor:pointer;font-size:11px;">${shopItemPrice('chatThemes', t)===0?'FREE':'Buy'} ${escapeHtml(t.label)} (${shopPriceLabel('chatThemes', t)})</button>`;
+    return `<button onclick="buyChatThemeFromChat('${t.id}')" style="margin:0 5px 4px 0;background:#e8622d;color:#fff;border:none;padding:4px 7px;border-radius:5px;cursor:pointer;font-size:11px;">Buy ${escapeHtml(t.label)} (${t.price})</button>`;
   }).join('');
   return `<div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;"><span style="font-size:11.5px;color:#666;margin-right:2px;">Basic:</span>${basic}<span style="font-size:11.5px;color:#666;margin-left:5px;">Premium:</span>${premium}</div>`;
 }
@@ -7337,10 +6687,7 @@ async function openChat(username, display){
           <div id="chatPresence" style="font-size:11px;color:#999;"></div>
         </span>
       </span>
-      <span style="font-size:11.5px;color:#25a244;margin-left:auto;font-weight:700;">Free messages</span>
-      <button class="cm-call-btn cm-soon" onclick="cmComingSoon('Voice calls')" title="Voice calls — coming soon" aria-label="Voice calls — coming soon">📞</button>
-      <button class="cm-call-btn cm-soon" onclick="cmComingSoon('Video calls')" title="Video calls — coming soon" aria-label="Video calls — coming soon">🎥</button>
-      <button class="cm-call-btn" onclick="toggleCurrentChatSearch()" title="Search messages" aria-label="Search messages">⌕</button>
+      <span style="font-size:11.5px;color:#888;margin-left:auto;">0.20 Coins / message</span>
       <button onclick="toggleWallpaperPicker()" title="Chat themes" style="background:#2b6ee0;color:#fff;border:none;padding:6px 8px;border-radius:6px;cursor:pointer;font-size:12px;">🎨 Theme</button>
       <button onclick="switchTab('shopPage')" title="Open Shop" style="background:#e8622d;color:#fff;border:none;padding:6px 8px;border-radius:6px;cursor:pointer;font-size:12px;">🛍 Shop</button>
     </div>
@@ -7366,34 +6713,6 @@ async function openChat(username, display){
   updateChatPresence();
   if (chatPollTimer) clearInterval(chatPollTimer);
   chatPollTimer = setInterval(() => { loadMessages(); updateChatPresence(); }, 4000);
-}
-function toggleCurrentChatSearch(){
-  const bar=document.getElementById('cmChatSearchBar');
-  if(!bar) return;
-  bar.style.display = bar.style.display === 'none' ? 'flex' : 'none';
-  if(bar.style.display === 'flex'){
-    const input=document.getElementById('cmMessageSearchInput');
-    if(input) input.focus();
-  }
-}
-
-function cmComingSoon(feature){
-  const old=document.querySelector('.cm-coming-soon-toast');
-  if(old) old.remove();
-  const el=document.createElement('div');
-  el.className='cm-coming-soon-toast';
-  el.textContent=feature+' are coming soon.';
-  document.body.appendChild(el);
-  setTimeout(()=>el.remove(),2200);
-}
-function cmSetBottomActive(btn){
-  document.querySelectorAll('#cmBottomNav button').forEach(b=>b.classList.remove('active'));
-  if(btn) btn.classList.add('active');
-}
-function cmSyncBottomNav(pageId){
-  const map={chatsPage:'chatsPage',friendsPage:'friendsPage',explorePage:'explorePage',gamesPage:'gamesPage',menuPage:'menuPage'};
-  const target=map[pageId];
-  document.querySelectorAll('#cmBottomNav button').forEach(b=>b.classList.toggle('active', b.dataset.page===target));
 }
 function typingKey(chatKeyStr, username){ return 'typing:' + chatKeyStr + ':' + username.toLowerCase(); }
 let lastTypingSentAt = 0;
@@ -7540,22 +6859,6 @@ async function deletePrivateMessage(index){
 }
 
 const MESSAGE_COST_COINS = 0.10;
-async function chargeMessageCoins(sender){
-  const balance = typeof sender.leos === 'number' ? sender.leos : 20;
-  if (balance < MESSAGE_COST_COINS) {
-    alert('You need at least ' + MESSAGE_COST_COINS.toFixed(2) + ' Coin to send a message. Your balance: ' + balance.toFixed(2));
-    return false;
-  }
-  sender.leos = Number((balance - MESSAGE_COST_COINS).toFixed(2));
-  const saved = await storageSet(userKey(sender.email), JSON.stringify(sender), true);
-  if (!saved) {
-    alert('Your message was not sent because the Coin charge could not be completed. Please try again.');
-    return false;
-  }
-  currentUser.leos = sender.leos;
-  updateCoinsDisplay();
-  return true;
-}
 async function sendMessage(){
   if (isCurrentlyBanned(currentUser)) { alert(banBlockMessage(currentUser)); return; }
   if (await isBlockedEitherWay(currentUser.username, activeChatFriend)) { alert("You can't message this person."); return; }
@@ -7573,7 +6876,15 @@ async function sendMessage(){
   const senderRaw = await storageGet(userKey(currentUser.email), true);
   if (!senderRaw) { alert('Could not load your account. Please try again.'); return; }
   let sender; try { sender = JSON.parse(senderRaw); } catch(e) { alert('Something went wrong. Please try again.'); return; }
-  if (!(await chargeMessageCoins(sender))) return;
+  const balance = typeof sender.leos === 'number' ? sender.leos : 20;
+  if (balance < MESSAGE_COST_COINS) {
+    alert('Sending a message costs ' + MESSAGE_COST_COINS.toFixed(2) + ' Coins and your balance is too low.');
+    return;
+  }
+  sender.leos = balance - MESSAGE_COST_COINS;
+  await storageSet(userKey(currentUser.email), JSON.stringify(sender), true);
+  currentUser.leos = sender.leos;
+  updateCoinsDisplay();
 
   input.value = '';
   const key = chatKey(currentUser.username, activeChatFriend);
@@ -8206,10 +7517,6 @@ async function sendCircleMessage(){
   const input = document.getElementById('circleChatInput');
   const text = input.value.trim();
   if (!text) return;
-  const senderRaw = await storageGet(userKey(currentUser.email), true);
-  if (!senderRaw) { alert('Could not load your account. Please try again.'); return; }
-  let sender; try { sender = JSON.parse(senderRaw); } catch(e) { alert('Something went wrong. Please try again.'); return; }
-  if (!(await chargeMessageCoins(sender))) return;
   input.value = '';
   const key = circleChatKey(kind, id);
   const raw = await storageGet(key, true);
@@ -8273,7 +7580,7 @@ async function openGroup(id){
   panel.innerHTML = `
     <div style="overflow-y:auto;height:100%;">
       <div style="display:inline-block;padding:10px 14px;cursor:pointer;text-decoration:underline;font-size:13px;color:#2b6ee0;font-weight:600;" onclick="closeGroup()">&larr; Back</div>
-      ${c.backgroundImage ? `<div style="width:100%;height:140px;background-image:url('${c.backgroundImage}');background-size:cover;background-position:center;"></div>` : c.bannerImage ? `<img loading="lazy" decoding="async" src="${c.bannerImage}" style="width:100%;height:140px;object-fit:cover;display:block;">` : `<div style="width:100%;height:100px;background:linear-gradient(135deg,#2b6ee0,#6a4fb8);"></div>`}
+      ${c.backgroundImage ? `<div style="width:100%;height:140px;background-image:url('${c.backgroundImage}');background-size:cover;background-position:center;"></div>` : c.bannerImage ? `<img src="${c.bannerImage}" style="width:100%;height:140px;object-fit:cover;display:block;">` : `<div style="width:100%;height:100px;background:linear-gradient(135deg,#2b6ee0,#6a4fb8);"></div>`}
       <div style="padding:14px;">
         <div style="font-size:20px;font-weight:700;color:#222;">${escapeHtml(c.name)}</div>
         ${c.description ? `<div style="font-size:13.5px;color:#555;margin-top:4px;">${escapeHtml(c.description)}</div>` : ''}
@@ -8507,7 +7814,7 @@ function renderGroupPostCard(p, infoMap, groupId){
       </div>
     </div>
     ${p.text ? `<div style="font-size:15px;color:#222;line-height:1.4;white-space:pre-wrap;">${escapeHtml(p.text)}${p.edited ? ' <span style="font-size:11px;color:#999;">(edited)</span>' : ''}</div>` : ''}
-    ${p.image ? `<img loading="lazy" decoding="async" class="post-img" src="${p.image}">` : ''}
+    ${p.image ? `<img class="post-img" src="${p.image}">` : ''}
     ${p.type === 'poll' ? renderPollHtml(p, gid, pid) : ''}
     <div style="display:flex;gap:16px;margin-top:8px;padding-top:8px;border-top:1px solid #f0f0f0;font-size:13.5px;">
       <span onclick="toggleGroupPostLike('${gid}','${pid}')" style="cursor:pointer;color:${liked ? '#e8622d' : '#555'};font-weight:${liked ? '600' : '400'};">${liked ? '♥' : '♡'} Like${(p.likes || []).length ? ' (' + (p.likes || []).length + ')' : ''}</span>
@@ -8918,7 +8225,6 @@ function loadMenuPage(){
     { label: 'Nova', page: 'aiPage' },
     { label: 'Groups', page: 'groupsPage' },
     { label: 'Coins', page: 'leosPage' },
-    { label: '🛍 Shop', page: 'shopPage' },
     { label: 'Games', page: 'gamesPage' },
         { label: '🔍 Search', page: 'searchPage' },
     { label: '🚩 Report', page: 'reportPage' },
@@ -8933,21 +8239,12 @@ function loadMenuPage(){
   if (currentUser && (currentUserHasTrustedRole('admin') || currentUserHasTrustedRole('moderator'))) items.push({ label: '⚙ Admin', page: 'adminPage' });
   items.push({ label: 'Log Out', page: null, action: 'logout' });
 
-  const iconMap = {
-    Home:'⌂', Profile:'●', Message:'💬', Friends:'👥', Notifications:'🔔',
-    '📢 Announcements':'📢', Chatrooms:'💬', Statusbook:'▤', 'Saved Posts':'🔖',
-    Nova:'✦', Groups:'👥', Coins:'🪙', '🛍 Shop':'🛍', Games:'🎮',
-    '🔍 Search':'⌕', '🚩 Report':'🚩', '🎧 Customer Service':'🎧', '🎧 Help & Safety':'❔',
-    '⚙ Settings & Privacy':'⚙', '📜 Community Rules & Safety':'🛡', 'Terms of Service':'📄',
-    'Privacy Policy':'🔒', 'Refund Policy':'↩', '⚙ Admin':'⚙', 'Log Out':'↪'
-  };
-  document.getElementById('menuButtonGrid').innerHTML = items.map(i => {
-    const icon = iconMap[i.label] || '•';
-    const logout = i.action === 'logout';
-    return `<button class="cm-menu-ref-item ${logout ? 'logout' : ''}" type="button" onclick="${logout ? 'logout()' : `switchTab('${i.page}')`}">
-      <span class="cm-menu-ref-icon">${icon}</span><span>${escapeHtml(i.label.replace(/^[^A-Za-z0-9]+/,'').trim())}</span><span class="cm-menu-ref-arrow">›</span>
-    </button>`;
-  }).join('');
+  document.getElementById('menuButtonGrid').innerHTML = items.map(i => `
+    <button onclick="${i.action === 'logout' ? 'logout()' : `switchTab('${i.page}')`}"
+      style="background:${i.action === 'logout' ? '#d32f2f' : '#2b6ee0'};color:#fff;border:none;
+             padding:12px 22px;border-radius:999px;cursor:pointer;font-size:14px;font-weight:600;">
+      ${escapeHtml(i.label)}
+    </button>`).join('');
 }
 
 function loadAIPage(){
@@ -9047,8 +8344,7 @@ async function cmLoadSettings(){
 function toggleDarkModeFromSettings(){
   const el=document.getElementById('settingsDarkModeToggle');
   const on=!!el?.checked;
-  document.body.classList.toggle('dark-mode',on);
-  try{ localStorage.setItem('darkMode',on?'1':'0'); }catch(e){}
+  setAppColorTheme(on ? 'dark' : 'white');
   const homeToggle=document.getElementById('darkModeToggle');
   if(homeToggle) homeToggle.checked=on;
 }
@@ -9082,7 +8378,7 @@ async function cmLoadStoriesStrip(){
       const u=JSON.parse(raw);
       if(!isStatusActive(u)) continue;
       const name=u.firstName||uname;
-      const avatar=u.profilePic?`<img loading="lazy" decoding="async" src="${escapeHtml(u.profilePic)}" alt="">`:escapeHtml(name[0]||'?').toUpperCase();
+      const avatar=u.profilePic?`<img src="${escapeHtml(u.profilePic)}" alt="">`:escapeHtml(name[0]||'?').toUpperCase();
       cards.push(`<div class="cm-story" onclick="cmOpenStory('${String(uname).replace(/'/g,"\\'")}')"><div class="cm-story-avatar">${avatar}</div><div class="cm-story-name">${escapeHtml(name)}</div></div>`);
     }catch(e){}
   }
@@ -9248,7 +8544,7 @@ async function cmLoadPinnedAnnouncement(){
 
 async function cmLoadPeopleYouMayKnow(){
   const el=document.getElementById('cmPeopleSuggestions'); if(!el||!currentUser)return;
-  try{const friendsRaw=await storageGet(friendsKey(currentUser.username),true);const friends=friendsRaw?JSON.parse(friendsRaw):[];const excluded=new Set([String(currentUser.username).toLowerCase(),...friends.map(x=>String(x).toLowerCase())]);const keys=await storageListKeys('user:',true);const candidates=[];for(const k of keys){const raw=await storageGet(k,true);if(!raw)continue;let u;try{u=JSON.parse(raw)}catch(e){continue;}const uname=String(u.username||'');if(!uname||excluded.has(uname.toLowerCase()))continue;if(Array.isArray(currentUser.blockedUsers)&&currentUser.blockedUsers.map(String).map(x=>x.toLowerCase()).includes(uname.toLowerCase()))continue;if(u.isBanned)continue;candidates.push(u);}candidates.sort(()=>Math.random()-0.5);const list=candidates.slice(0,5);if(!list.length){el.style.display='none';return;}el.style.display='block';el.innerHTML='<div class="cm-social-title">People you may know</div><div class="cm-suggest-row">'+list.map(u=>{const uname=String(u.username);const full=((u.firstName||'')+' '+(u.lastName||'')).trim()||uname;const initials=((u.firstName||'')[0]||'')+((u.lastName||'')[0]||'');const av=u.profilePic?`<img loading="lazy" decoding="async" src="${escapeHtml(u.profilePic)}" alt="">`:escapeHtml((initials||uname[0]||'?').toUpperCase());return `<div class="cm-suggest-card"><div class="cm-suggest-avatar">${av}</div><div class="cm-suggest-name">${escapeHtml(full)}</div><button onclick="sendFriendRequest('${uname.replace(/'/g,"\'")}',this)">Add Friend</button></div>`;}).join('')+'</div>';}catch(e){el.style.display='none';}
+  try{const friendsRaw=await storageGet(friendsKey(currentUser.username),true);const friends=friendsRaw?JSON.parse(friendsRaw):[];const excluded=new Set([String(currentUser.username).toLowerCase(),...friends.map(x=>String(x).toLowerCase())]);const keys=await storageListKeys('user:',true);const candidates=[];for(const k of keys){const raw=await storageGet(k,true);if(!raw)continue;let u;try{u=JSON.parse(raw)}catch(e){continue;}const uname=String(u.username||'');if(!uname||excluded.has(uname.toLowerCase()))continue;if(Array.isArray(currentUser.blockedUsers)&&currentUser.blockedUsers.map(String).map(x=>x.toLowerCase()).includes(uname.toLowerCase()))continue;if(u.isBanned)continue;candidates.push(u);}candidates.sort(()=>Math.random()-0.5);const list=candidates.slice(0,5);if(!list.length){el.style.display='none';return;}el.style.display='block';el.innerHTML='<div class="cm-social-title">People you may know</div><div class="cm-suggest-row">'+list.map(u=>{const uname=String(u.username);const full=((u.firstName||'')+' '+(u.lastName||'')).trim()||uname;const initials=((u.firstName||'')[0]||'')+((u.lastName||'')[0]||'');const av=u.profilePic?`<img src="${escapeHtml(u.profilePic)}" alt="">`:escapeHtml((initials||uname[0]||'?').toUpperCase());return `<div class="cm-suggest-card"><div class="cm-suggest-avatar">${av}</div><div class="cm-suggest-name">${escapeHtml(full)}</div><button onclick="sendFriendRequest('${uname.replace(/'/g,"\'")}',this)">Add Friend</button></div>`;}).join('')+'</div>';}catch(e){el.style.display='none';}
 }
 
 async function cmLoadTrendingTopics(){
@@ -9489,208 +8785,5 @@ window.addEventListener('load', function(){ refreshWelcomeStats(); });
   setInterval(syncTopBadges,1200);
 })();
 </script>
-
-<script>if(typeof switchTab==='function' && !window.__cmBottomNavWrapped){
-  const __cmOriginalSwitchTab=switchTab;
-  window.switchTab=async function(pageId){
-    const r=await __cmOriginalSwitchTab.apply(this,arguments);
-    try{cmSyncBottomNav(pageId);}catch(e){}
-    return r;
-  };
-  window.__cmBottomNavWrapped=true;
-}
-</script>
-
-<style id="chatme-final-1-to-8-reference">
-/* FINAL 1–8 reference pass. Visual-only overrides; existing IDs, handlers and backend logic remain intact. */
-#welcomeScreen.cm-reference-landing{background:#071d38!important;}
-.cm-landing-main{
-  background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAwIDcwMCI+CjxkZWZzPgogPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPjxzdG9wIHN0b3AtY29sb3I9IiMwNzFjMzkiLz48c3RvcCBvZmZzZXQ9Ii41MiIgc3RvcC1jb2xvcj0iIzBiMzc2OCIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzA2MTgyZiIvPjwvbGluZWFyR3JhZGllbnQ+CiA8cmFkaWFsR3JhZGllbnQgaWQ9Imdsb3cxIj48c3RvcCBzdG9wLWNvbG9yPSIjMWI5Y2ZmIiBzdG9wLW9wYWNpdHk9Ii40OCIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzFiOWNmZiIgc3RvcC1vcGFjaXR5PSIwIi8+PC9yYWRpYWxHcmFkaWVudD4KIDxyYWRpYWxHcmFkaWVudCBpZD0iZ2xvdzIiPjxzdG9wIHN0b3AtY29sb3I9IiNkODRiOWIiIHN0b3Atb3BhY2l0eT0iLjMwIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjZDg0YjliIiBzdG9wLW9wYWNpdHk9IjAiLz48L3JhZGlhbEdyYWRpZW50PgogPGZpbHRlciBpZD0iYmx1ciI+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMTgiLz48L2ZpbHRlcj4KIDxmaWx0ZXIgaWQ9InNvZnQiPjxmZUdhdXNzaWFuQmx1ciBzdGREZXZpYXRpb249IjYiLz48L2ZpbHRlcj4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI3MDAiIGZpbGw9InVybCgjYmcpIi8+CjxlbGxpcHNlIGN4PSIyNjAiIGN5PSIxNzAiIHJ4PSIyNzAiIHJ5PSIxNzAiIGZpbGw9InVybCgjZ2xvdzEpIiBmaWx0ZXI9InVybCgjYmx1cikiLz4KPGVsbGlwc2UgY3g9IjgyMCIgY3k9IjE5MCIgcng9IjMwMCIgcnk9IjE4MCIgZmlsbD0idXJsKCNnbG93MikiIGZpbHRlcj0idXJsKCNibHVyKSIvPgo8ZyBvcGFjaXR5PSIuNDgiIGZpbHRlcj0idXJsKCNzb2Z0KSI+CiA8Y2lyY2xlIGN4PSIxMTAiIGN5PSIyOTAiIHI9IjU4IiBmaWxsPSIjMDgxYjM1Ii8+PGVsbGlwc2UgY3g9IjExMCIgY3k9IjQyMCIgcng9IjEwNSIgcnk9IjEyMCIgZmlsbD0iIzA4MWIzNSIvPgogPGNpcmNsZSBjeD0iMjg1IiBjeT0iMjU1IiByPSI1MiIgZmlsbD0iIzEwMmI0YyIvPjxlbGxpcHNlIGN4PSIyODUiIGN5PSIzOTAiIHJ4PSI5NCIgcnk9IjExOCIgZmlsbD0iIzEwMmI0YyIvPgogPGNpcmNsZSBjeD0iNDcwIiBjeT0iMjg1IiByPSI2NSIgZmlsbD0iIzA3MWQzNyIvPjxlbGxpcHNlIGN4PSI0NzAiIGN5PSI0NDUiIHJ4PSIxMTUiIHJ5PSIxNDUiIGZpbGw9IiMwNzFkMzciLz4KIDxjaXJjbGUgY3g9IjY4NSIgY3k9IjI2MCIgcj0iNTQiIGZpbGw9IiMxNTM4NWQiLz48ZWxsaXBzZSBjeD0iNjg1IiBjeT0iNDEwIiByeD0iMTAwIiByeT0iMTI1IiBmaWxsPSIjMTUzODVkIi8+CiA8Y2lyY2xlIGN4PSI4NzUiIGN5PSIyOTAiIHI9IjYyIiBmaWxsPSIjMGEyNDQzIi8+PGVsbGlwc2UgY3g9Ijg3NSIgY3k9IjQ0MCIgcng9IjExMiIgcnk9IjE0MCIgZmlsbD0iIzBhMjQ0MyIvPgogPGNpcmNsZSBjeD0iMTA2MCIgY3k9IjI0NSIgcj0iNTIiIGZpbGw9IiMxMjM0NWEiLz48ZWxsaXBzZSBjeD0iMTA2MCIgY3k9IjM5MCIgcng9Ijk0IiByeT0iMTIwIiBmaWxsPSIjMTIzNDVhIi8+CjwvZz4KPHJlY3Qgd2lkdGg9IjEyMDAiIGhlaWdodD0iNzAwIiBmaWxsPSIjMDMxNTJjIiBvcGFjaXR5PSIuMjUiLz4KPC9zdmc+")!important;
-  background-size:cover!important;background-position:center!important;background-repeat:no-repeat!important;
-}
-.cm-landing-main:before{background:linear-gradient(120deg,rgba(1,12,28,.25),rgba(4,25,54,.12) 45%,rgba(2,10,25,.38))!important;}
-.cm-landing-overlay{background:linear-gradient(180deg,rgba(2,14,31,.12),rgba(2,13,28,.42))!important;}
-.cm-landing-hero{max-width:720px!important;padding-top:34px!important;}
-.cm-landing-hero h1{font-size:clamp(40px,8vw,62px)!important;color:#1682ff!important;}
-.cm-landing-hero h2{font-size:clamp(23px,4.7vw,32px)!important;}
-.cm-landing-hero p{font-size:15px!important;max-width:590px!important;}
-.cm-landing-features{grid-template-columns:repeat(3,1fr)!important;max-width:620px!important;gap:18px 20px!important;margin:30px auto 32px!important;}
-.cm-landing-features span{width:58px!important;height:58px!important;background:rgba(9,91,170,.48)!important;border:1px solid rgba(126,196,255,.24)!important;}
-.cm-landing-features b{font-size:11.5px!important;}
-.cm-landing-getstarted{max-width:430px!important;}
-
-/* Auth: one clean header only (the previous pseudo header caused the duplicate bar seen on mobile). */
-.auth-box::before{display:none!important;content:none!important;}
-.auth-screen{background:linear-gradient(180deg,#062b55 0 74px,#eef3f8 74px 100%)!important;padding:0 8px 26px!important;align-items:flex-start!important;justify-content:flex-start!important;}
-.auth-box{width:min(100%,430px)!important;margin:0 auto!important;padding:0 0 22px!important;border-radius:0 0 16px 16px!important;border:1px solid #d9e3ee!important;border-top:0!important;box-shadow:0 14px 38px rgba(5,31,61,.18)!important;overflow:hidden!important;background:#fff!important;}
-.auth-screen .auth-brandbar{display:flex!important;min-height:64px!important;margin:0!important;padding:10px 14px!important;background:linear-gradient(90deg,#062b55,#0b3768)!important;border:0!important;}
-.auth-screen .auth-brandbar .auth-back{font-size:25px!important;width:36px!important;height:36px!important;}
-.auth-screen .auth-brandbar .auth-logo{width:36px!important;height:36px!important;}
-.auth-screen .auth-brandbar .auth-brandname{font-size:21px!important;font-weight:800!important;}
-.auth-box>.auth-title,.auth-box>.auth-sub,.auth-box>.auth-divider,.auth-box>label,.auth-box>.field-block,.auth-box>.auth-hint-small,.auth-box>.field-msg,.auth-box>.section-divider,.auth-box>.pw-requirements,.auth-box>#recaptchaLogin,.auth-box>#recaptchaSignup,.auth-box>.primary-btn,.auth-box>.auth-error,.auth-box>.auth-status,.auth-box>.auth-links,.auth-box>#forgotPasswordPanel{margin-left:20px!important;margin-right:20px!important;}
-.auth-box>.auth-title{margin-top:20px!important;font-size:24px!important;text-align:left!important;}
-.auth-box>.auth-sub{font-size:13px!important;text-align:left!important;}
-.auth-box>.auth-divider{margin-bottom:18px!important;}
-.field-block input,.field-block select{min-height:44px!important;border-radius:10px!important;}
-.auth-screen .primary-btn{min-height:46px!important;border-radius:999px!important;width:calc(100% - 40px)!important;}
-.auth-links .row{padding:10px 0!important;}
-#recaptchaLogin,#recaptchaSignup{min-height:0!important;}
-
-/* Registration core fields visually follow the supplied compact reference. */
-#signupScreen .auth-box{max-width:430px!important;}
-#signupScreen .auth-box .section-divider{margin-top:12px!important;}
-#signupScreen .auth-box .pw-requirements{font-size:11px!important;padding:8px 10px!important;}
-#signupScreen .auth-box .field-block{margin-bottom:5px!important;}
-#signupScreen .auth-box .auth-label{margin-top:8px!important;margin-bottom:5px!important;}
-#signupScreen .auth-box .auth-hint-small{font-size:10.5px!important;margin-top:2px!important;margin-bottom:5px!important;}
-
-/* Main app / storyboard 4–8 */
-.cm-social-topbar{background:#062b55!important;color:#fff!important;min-height:58px!important;}
-.cm-brand-mini{color:#fff!important;}
-.cm-brand-mini svg{width:32px!important;height:32px!important;}
-.cm-top-action,.cm-nav-more{background:rgba(255,255,255,.10)!important;color:#fff!important;}
-#chatsPage{background:#f7f9fc!important;}
-.cm-chat-list-shell{background:#fff!important;}
-.cm-chat-list-titlebar{background:#062b55!important;color:#fff!important;border-bottom-color:#123e6c!important;}
-.cm-chat-list-titlebar button{background:rgba(255,255,255,.10)!important;color:#fff!important;}
-.cm-chat-stories{background:#fff!important;}
-.cm-story-avatar{border-color:#8cc7ff!important;}
-.cm-chat-row{background:#fff!important;min-height:70px!important;}
-.cm-chat-row .avatar{width:50px!important;height:50px!important;}
-.cm-chat-row .friend-name{font-size:14px!important;font-weight:800!important;}
-.cm-chat-row .friend-status{font-size:12px!important;}
-#chatsPage .private-chat.active{background:#f5f7fb!important;}
-.chat-header{background:linear-gradient(90deg,#062b55,#0b3768)!important;color:#fff!important;min-height:58px!important;}
-.chat-header span,.chat-header button{color:#fff!important;}
-.messages{background:#f5f7fb!important;}
-.msg-row.sent .bubble{background:#1677ff!important;color:#fff!important;}
-.msg-row.received .bubble{background:#fff!important;color:#172b45!important;}
-#profilePage{background:#f4f7fb!important;}
-#profilePage>.profile-card{max-width:760px!important;margin:0 auto!important;background:#fff!important;border-radius:14px!important;overflow:hidden!important;padding:16px!important;box-shadow:0 8px 28px rgba(20,35,58,.08)!important;}
-.cm-profile-reference-head{background:#062b55!important;height:54px!important;}
-.cm-profile-cover-wrap{height:155px!important;}
-.cm-profile-avatar-center .avatar-lg{width:88px!important;height:88px!important;}
-.cm-profile-name-block h2{font-size:21px!important;}
-#menuPage{background:linear-gradient(180deg,#062b55,#0b3768)!important;color:#fff!important;}
-#menuPage>h2{color:#fff!important;}
-.cm-menu-ref-item{min-height:54px!important;color:#fff!important;}
-.cm-menu-ref-item.logout{color:#ffb4b4!important;}
-.cm-bottom-nav{background:#fff!important;border-top:1px solid #dfe6ef!important;}
-
-@media(max-width:720px){
-  .cm-landing-nav{height:60px!important;padding:0 12px!important;}
-  .cm-landing-brand{font-size:18px!important;}
-  .cm-landing-brand svg{width:31px!important;height:31px!important;}
-  .cm-landing-actions button{padding:8px 11px!important;font-size:11px!important;}
-  .cm-landing-main{min-height:calc(100vh - 114px)!important;}
-  .cm-landing-hero{padding:26px 0 25px!important;}
-  .cm-landing-hero h1{font-size:42px!important;}
-  .cm-landing-hero h2{font-size:24px!important;}
-  .cm-landing-hero p{font-size:13px!important;max-width:340px!important;}
-  .cm-landing-features{max-width:330px!important;gap:18px 10px!important;margin:27px auto 28px!important;}
-  .cm-landing-features span{width:50px!important;height:50px!important;font-size:21px!important;}
-  .cm-landing-features b{font-size:9.5px!important;}
-  .auth-screen{padding:0 8px 26px!important;}
-  .auth-box{width:100%!important;border-radius:0 0 14px 14px!important;}
-  #signupScreen .auth-box{max-width:560px!important;}
-  #profilePage>.profile-card{border-radius:0!important;max-width:none!important;}
-  #chatsPage .private-chat{inset:58px 0 58px 0!important;}
-}
-</style>
-\n<script id="chatme-final-1-to-8-reference-js">
-(function(){
-  function refReady(){
-    const loginLabel=document.querySelector('#loginScreen label.auth-label');
-    if(loginLabel) loginLabel.textContent='Email or Username:';
-    const loginInput=document.getElementById('loginEmail');
-    if(loginInput){loginInput.type='text';loginInput.placeholder='Enter your email or username';loginInput.autocomplete='username';}
-
-    // Make the registration flow follow the supplied compact storyboard while keeping every existing required field/ID.
-    const signup=document.querySelector('#signupScreen .auth-box');
-    if(!signup || signup.dataset.refGrouped==='1') return;
-    signup.dataset.refGrouped='1';
-    const direct=(sel)=>signup.querySelector(sel);
-    function makeGroup(inputId){
-      const input=document.getElementById(inputId);
-      if(!input) return null;
-      const field=input.closest('.field-block');
-      if(!field) return null;
-      const label=field.previousElementSibling;
-      const wrap=document.createElement('div'); wrap.className='cm-ref-field-group';
-      if(label && label.classList.contains('auth-label')) wrap.append(label);
-      wrap.append(field);
-      let n=field.nextElementSibling;
-      while(n && n!==signup.querySelector('.section-divider') && !n.matches('label.auth-label')){
-        const next=n.nextElementSibling;
-        if(n.classList.contains('auth-hint-small') || n.classList.contains('field-msg') || n.id==='pwRules') wrap.append(n);
-        n=next;
-      }
-      return wrap;
-    }
-    const first=document.getElementById('suFirst'), last=document.getElementById('suLast');
-    let fullNameRow=null;
-    if(first && last){
-      const fg=makeGroup('suFirst'), lg=makeGroup('suLast');
-      if(fg && lg){
-        fullNameRow=document.createElement('div'); fullNameRow.className='cm-ref-fullname-row';
-        fg.classList.add('cm-ref-name-part'); lg.classList.add('cm-ref-name-part'); fullNameRow.append(fg,lg);
-        const divider=signup.querySelector('.auth-divider');
-        if(divider) divider.after(fullNameRow);
-      }
-    }
-    const usernameGroup=makeGroup('suUsername');
-    const emailGroup=makeGroup('suEmail');
-    const passwordGroup=makeGroup('suPassword');
-    const confirmGroup=makeGroup('suPasswordConfirm');
-    const phoneGroup=makeGroup('suPhone');
-    const dobGroup=makeGroup('suMonth');
-    const countryGroup=makeGroup('suCountry');
-    const genderGroup=makeGroup('suGender');
-    const quick=Array.from(signup.querySelectorAll('.section-divider')).find(x=>/Quick setup/i.test(x.textContent||''));
-    const security=Array.from(signup.querySelectorAll('.section-divider')).find(x=>/Account security/i.test(x.textContent||''));
-    const afterFull=fullNameRow || signup.querySelector('.auth-divider');
-    // Core order: Full Name, Username, Email, Password, Confirm Password.
-    [usernameGroup,emailGroup,passwordGroup,confirmGroup].forEach(g=>{if(g) afterFull.parentNode.insertBefore(g, afterFull.nextSibling); afterFull= g || afterFull;});
-    // Put the extra required registration details into a clearly separated block after the core account fields.
-    const details=document.createElement('div'); details.className='cm-ref-extra-details';
-    const detailsTitle=document.createElement('div'); detailsTitle.className='cm-ref-extra-title'; detailsTitle.textContent='Additional profile details';
-    details.append(detailsTitle);
-    if(phoneGroup) details.append(phoneGroup);
-    if(quick) details.append(quick);
-    if(dobGroup) details.append(dobGroup);
-    if(countryGroup) details.append(countryGroup);
-    if(genderGroup) details.append(genderGroup);
-    const captcha=direct('#recaptchaSignup');
-    if(security) security.remove();
-    if(captcha) signup.insertBefore(details,captcha);
-  }
-  const style=document.createElement('style');
-  style.textContent='.cm-ref-fullname-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 20px}.cm-ref-name-part,.cm-ref-field-group{min-width:0}.cm-ref-name-part .auth-label,.cm-ref-field-group .auth-label{display:block;margin-top:8px}.cm-ref-name-part .field-block,.cm-ref-field-group .field-block{margin-left:0!important;margin-right:0!important}.cm-ref-extra-details{margin:12px 20px 0;padding:10px 12px;background:#f7f9fc;border:1px solid #e3e9f1;border-radius:12px}.cm-ref-extra-title{font-weight:800;color:#24346b;font-size:13px;margin-bottom:4px}.cm-ref-extra-details .section-divider{margin-left:0!important;margin-right:0!important}.cm-ref-extra-details .auth-label{margin-left:0!important;margin-right:0!important}.cm-ref-extra-details .field-block{margin-left:0!important;margin-right:0!important}@media(max-width:520px){.cm-ref-fullname-row{grid-template-columns:1fr 1fr;gap:8px}}';
-  document.head.appendChild(style);
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',refReady); else refReady();
-  setTimeout(refReady,500);
-
-  // The reference says Email or Username. Resolve a username to its account email
-  // before handing control to the existing, security-checked Firebase login flow.
-  if(typeof window.doLogin==='function' && !window.__cmReferenceLoginWrapped){
-    const original=window.doLogin;
-    window.doLogin=async function(){
-      const input=document.getElementById('loginEmail');
-      const err=document.getElementById('loginError');
-      if(!input) return original.apply(this,arguments);
-      const identifier=input.value.trim();
-      if(identifier && !identifier.includes('@')){
-        try{
-          const email=await storageGet(usernameKey(identifier),true);
-          if(email && String(email).includes('@')) input.value=String(email);
-          else { if(err) err.textContent='No Chat Me account was found for that username.'; return; }
-        }catch(e){ if(err) err.textContent='Please use the email address for this account right now.'; return; }
-      }
-      return original.apply(this,arguments);
-    };
-    window.__cmReferenceLoginWrapped=true;
-  }
-})();
-</script>\n</body>
+</body>
 </html>
-
