@@ -463,9 +463,14 @@ body.dark-mode .cm-latest-fab{box-shadow:0 3px 12px rgba(0,0,0,.45)}
 .cm-how-steps small{display:block;margin-top:2px;color:#667085;font-size:12px;line-height:1.4}
 .cm-voice-note{font-size:12px!important;color:#7a8190!important}
 .cm-voice-grid{display:grid;gap:10px}
-.cm-voice-grid>div{padding:13px;border-left:4px solid #2b6ee0;background:#f7f9fc;border-radius:10px}
+.cm-voice-grid>div,.cm-voice-grid article{padding:13px;border-left:4px solid #2b6ee0;background:#f7f9fc;border-radius:10px}
 .cm-voice-grid b{display:block;color:#24316f;font-size:14px;margin-bottom:3px}
 .cm-voice-grid span{display:block;color:#667085;font-size:12px;line-height:1.45}
+.cm-voice-grid-five{grid-template-columns:repeat(2,minmax(0,1fr));}
+.cm-voice-card{min-width:0}
+.cm-voice-card:nth-child(5){grid-column:1/-1}
+.cm-stars{font-size:15px;letter-spacing:2px;color:#f5b301;margin-bottom:6px;line-height:1}
+.cm-voice-card small{display:block;margin-top:9px;color:#8a91a0;font-size:10.5px;}
 .cm-landing-policy-strip{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:20px}
 .cm-landing-policy-strip p{max-width:720px;margin-bottom:0}
 .cm-landing-policy-strip button{border:0;background:#2b6ee0;color:#fff;padding:11px 16px;border-radius:10px;font-weight:700;cursor:pointer;white-space:nowrap}
@@ -474,7 +479,7 @@ body.dark-mode .cm-landing-info-card,body.dark-mode .cm-landing-policy-strip{bac
 body.dark-mode .cm-landing-info-card h2,body.dark-mode .cm-landing-policy-strip h2,body.dark-mode .cm-how-steps b,body.dark-mode .cm-voice-grid b{color:#e2e2e2}
 body.dark-mode .cm-how-steps>div,body.dark-mode .cm-voice-grid>div{background:#24262b}
 body.dark-mode .cm-landing-info-card>p,body.dark-mode .cm-landing-policy-strip p,body.dark-mode .cm-how-steps small,body.dark-mode .cm-voice-grid span{color:#aaa}
-@media(max-width:760px){.cm-landing-bottom{padding:8px 14px 22px}.cm-landing-bottom-inner{grid-template-columns:1fr}.cm-landing-policy-strip{grid-column:auto;display:block}.cm-landing-policy-strip button{width:100%;margin-top:15px}.cm-landing-info-card,.cm-landing-policy-strip{padding:18px;border-radius:15px}.cm-landing-info-card h2,.cm-landing-policy-strip h2{font-size:19px}}
+@media(max-width:760px){.cm-landing-bottom{padding:8px 14px 22px}.cm-landing-bottom-inner{grid-template-columns:1fr}.cm-landing-policy-strip{grid-column:auto;display:block}.cm-landing-policy-strip button{width:100%;margin-top:15px}.cm-landing-info-card,.cm-landing-policy-strip{padding:18px;border-radius:15px}.cm-landing-info-card h2,.cm-landing-policy-strip h2{font-size:19px}.cm-voice-grid-five{grid-template-columns:1fr}.cm-voice-card:nth-child(5){grid-column:auto}}
 </style>
 <style id="chatme-welcome-dark-css">
 body.dark-mode #welcomeScreen{background:#121212;color:#e2e2e2}
@@ -720,6 +725,9 @@ body{color:var(--cm-text);}
     radial-gradient(circle at 50% 80%,rgba(0,206,255,.16),transparent 30%),
     linear-gradient(135deg,#061b34,#092d52 48%,#06182e);}
   .cm-landing-main:before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(0,0,0,.20),transparent 42%,rgba(0,0,0,.28));pointer-events:none;}
+  .cm-landing-people-bg{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;display:flex;align-items:flex-end;justify-content:center;}
+  .cm-landing-people-bg svg{width:100%;height:100%;display:block;}
+  .cm-landing-people-bg:after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(4,20,40,.18),rgba(4,20,40,.52) 72%,rgba(4,20,40,.76));}
   .cm-landing-overlay{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 15%,rgba(2,12,25,.34) 100%);}
   .cm-landing-hero{position:relative;z-index:1;width:min(760px,92%);padding:40px 0 34px;}
   .cm-landing-hero h1{font-size:clamp(42px,9vw,70px);line-height:1;margin:0 0 5px;color:#1682ff;letter-spacing:-2px;text-shadow:0 7px 24px rgba(0,0,0,.28);}
@@ -758,6 +766,10 @@ body{color:var(--cm-text);}
   .auth-box{padding:0;overflow:hidden;max-width:520px;background:#fff;border:0;border-radius:16px;}
   .auth-screen .auth-brandbar{justify-content:flex-start;position:relative;margin:0;padding:12px 16px;background:linear-gradient(135deg,#062b55,#0a3f76);border:0;color:#fff;}
   .auth-screen .auth-brandbar .auth-brandname{color:#fff;font-size:21px;}
+  .cm-full-name-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-left:22px;margin-right:22px;}
+  .cm-full-name-row .field-block{margin-left:0;margin-right:0;}
+  .cm-full-name-row + .field-msg{margin-left:22px;margin-right:22px;}
+  @media(max-width:520px){.cm-full-name-row{grid-template-columns:1fr 1fr;gap:8px;}}
   .auth-screen .auth-brandbar .auth-logo{width:34px;height:34px;}
   .auth-back{border:0;background:transparent;color:#fff;font-size:25px;line-height:1;padding:4px 7px;cursor:pointer;margin-right:2px;}
   .auth-box>.auth-title,.auth-box>.auth-sub,.auth-box>.auth-divider,
@@ -985,6 +997,26 @@ body.dark-mode .cm-profile-name-block h2,body.dark-mode .cm-profile-stats strong
     </div>
 
     <main class="cm-landing-main">
+      <div class="cm-landing-people-bg" aria-hidden="true">
+        <svg viewBox="0 0 1200 520" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+          <g opacity=".24" fill="#8fd0ff">
+            <circle cx="90" cy="270" r="42"/><path d="M18 510c5-105 25-160 72-160s67 55 72 160z"/>
+            <circle cx="220" cy="220" r="50"/><path d="M135 510c6-120 31-185 85-185s79 65 85 185z"/>
+            <circle cx="370" cy="275" r="40"/><path d="M300 510c5-100 25-155 70-155s65 55 70 155z"/>
+            <circle cx="505" cy="205" r="54"/><path d="M410 510c7-130 34-195 95-195s88 65 95 195z"/>
+            <circle cx="660" cy="255" r="46"/><path d="M580 510c6-112 29-173 80-173s74 61 80 173z"/>
+            <circle cx="810" cy="210" r="52"/><path d="M720 510c6-126 33-190 90-190s84 64 90 190z"/>
+            <circle cx="955" cy="270" r="40"/><path d="M885 510c5-100 25-155 70-155s65 55 70 155z"/>
+            <circle cx="1090" cy="225" r="49"/><path d="M1005 510c6-120 31-183 85-183s79 63 85 183z"/>
+          </g>
+          <g opacity=".16" fill="#1677ff">
+            <circle cx="150" cy="170" r="28"/><circle cx="295" cy="145" r="34"/>
+            <circle cx="440" cy="135" r="30"/><circle cx="590" cy="165" r="36"/>
+            <circle cx="745" cy="140" r="30"/><circle cx="900" cy="155" r="35"/>
+            <circle cx="1040" cy="145" r="30"/>
+          </g>
+        </svg>
+      </div>
       <div class="cm-landing-overlay"></div>
       <section class="cm-landing-hero" aria-label="Chat Me landing page">
         <h1>Chat Me</h1>
@@ -1023,11 +1055,33 @@ body.dark-mode .cm-profile-name-block h2,body.dark-mode .cm-profile-stats strong
         <section class="cm-landing-info-card" aria-labelledby="chatme-voices-title">
           <div class="cm-info-icon">💬</div>
           <h2 id="chatme-voices-title">What people like about Chat Me</h2>
-          <p class="cm-voice-note">A few community themes Chat Me is designed around — not paid or fabricated testimonials.</p>
-          <div class="cm-voice-grid">
-            <div><b>“Easy conversations.”</b><span>Private chats and group conversations in one place.</span></div>
-            <div><b>“A place to connect.”</b><span>Meet people, make friends and discover communities.</span></div>
-            <div><b>“More than messaging.”</b><span>Share moments, use Statusbook and enjoy community features.</span></div>
+          <p class="cm-voice-note">Sample review-style content for the landing-page design. Replace these examples with verified member feedback when you collect real reviews.</p>
+          <div class="cm-voice-grid cm-voice-grid-five">
+            <article class="cm-voice-card">
+              <div class="cm-stars" aria-label="5 out of 5 stars">★★★★★</div>
+              <b>“Easy conversations.”</b><span>Private chats and group conversations in one place.</span>
+              <small>Sample community review</small>
+            </article>
+            <article class="cm-voice-card">
+              <div class="cm-stars" aria-label="4 out of 5 stars">★★★★☆</div>
+              <b>“A place to connect.”</b><span>Meet people, make friends and discover communities.</span>
+              <small>Sample community review</small>
+            </article>
+            <article class="cm-voice-card">
+              <div class="cm-stars" aria-label="5 out of 5 stars">★★★★★</div>
+              <b>“More than messaging.”</b><span>Share moments, use Statusbook and enjoy community features.</span>
+              <small>Sample community review</small>
+            </article>
+            <article class="cm-voice-card">
+              <div class="cm-stars" aria-label="4 out of 5 stars">★★★★☆</div>
+              <b>“Lots to explore.”</b><span>Chatrooms, friends, stories and games give the community more to do.</span>
+              <small>Sample community review</small>
+            </article>
+            <article class="cm-voice-card">
+              <div class="cm-stars" aria-label="5 out of 5 stars">★★★★★</div>
+              <b>“Simple to get started.”</b><span>The main tools are easy to find on phone and desktop layouts.</span>
+              <small>Sample community review</small>
+            </article>
           </div>
         </section>
 
@@ -1046,7 +1100,7 @@ body.dark-mode .cm-profile-name-block h2,body.dark-mode .cm-profile-stats strong
     </section>
 
     <footer class="cm-landing-footer">
-      <span>© 2026 Chat Me</span>
+      <span>© 2026 Chat Me. All rights reserved.</span>
       <button onclick="showPublicPolicy()">Privacy Policy</button>
       <button onclick="showPublicPolicy()">Terms of Service</button>
     </footer>
@@ -1136,6 +1190,14 @@ body.dark-mode .cm-profile-name-block h2,body.dark-mode .cm-profile-stats strong
       <div class="auth-sub">Join Chat Me and be part of our community.</div>
       <div class="auth-divider"></div>
 
+      <label class="auth-label">Full Name: <span aria-hidden="true">*</span></label>
+      <div class="cm-full-name-row">
+        <div class="field-block"><input type="text" id="suFirst" placeholder="First name" autocomplete="given-name" required oninput="clearFieldError('suFirst')"></div>
+        <div class="field-block"><input type="text" id="suLast" placeholder="Last name" autocomplete="family-name" required oninput="clearFieldError('suLast')"></div>
+      </div>
+      <div class="field-msg" id="msgFirst"></div>
+      <div class="field-msg" id="msgLast"></div>
+
       <label class="auth-label">Username:</label>
       <div class="field-block"><input type="text" id="suUsername" placeholder="Choose a username" oninput="clearFieldError('suUsername')"></div>
       <div class="auth-hint-small">Letters, digits and @ / . / + / - / _ only, at least 3 characters</div>
@@ -1145,13 +1207,27 @@ body.dark-mode .cm-profile-name-block h2,body.dark-mode .cm-profile-stats strong
       <div class="field-block"><input type="email" id="suEmail" placeholder="Enter your email" oninput="clearFieldError('suEmail')"></div>
       <div class="field-msg" id="msgEmail"></div>
 
-      <label class="auth-label">First Name: <span aria-hidden="true">*</span></label>
-      <div class="field-block"><input type="text" id="suFirst" placeholder="First name" autocomplete="given-name" required oninput="clearFieldError('suFirst')"></div>
-      <div class="field-msg" id="msgFirst"></div>
+      <div class="section-divider">
+        <strong>Account security</strong>
+      </div>
 
-      <label class="auth-label">Last Name: <span aria-hidden="true">*</span></label>
-      <div class="field-block"><input type="text" id="suLast" placeholder="Last name" autocomplete="family-name" required oninput="clearFieldError('suLast')"></div>
-      <div class="field-msg" id="msgLast"></div>
+      <label class="auth-label">Password:</label>
+      <div class="field-block"><input type="password" id="suPassword" placeholder="Create a password" oninput="checkPasswordRules()"></div>
+      <div class="pw-requirements" id="pwRules">
+        <div id="ruleLen">• At least 8 characters long</div>
+        <div id="ruleUser">• Cannot be too similar to your username</div>
+        <div id="ruleCommon">• Cannot be a commonly used password</div>
+        <div id="ruleNumeric">• Cannot be entirely numeric</div>
+      </div>
+
+      <label class="auth-label">Confirm Password:</label>
+      <div class="field-block"><input type="password" id="suPasswordConfirm" placeholder="Enter the same password again" oninput="clearFieldError('suPasswordConfirm')"></div>
+      <div class="field-msg" id="msgPwConfirm"></div>
+
+      <div class="section-divider">
+        <strong>Profile details</strong>
+        <span>These details help keep your account secure and personalize your profile.</span>
+      </div>
 
       <label class="auth-label">Phone Number: <span aria-hidden="true">*</span></label>
       <div class="field-block"><input type="tel" id="suPhone" placeholder="Phone number" autocomplete="tel" required oninput="clearFieldError('suPhone')"></div>
@@ -1185,23 +1261,6 @@ body.dark-mode .cm-profile-name-block h2,body.dark-mode .cm-profile-stats strong
           <option value="Prefer not to say">Prefer not to say</option>
         </select>
       </div>
-
-      <div class="section-divider">
-        <strong>Account security</strong>
-      </div>
-
-      <label class="auth-label">Password:</label>
-      <div class="field-block"><input type="password" id="suPassword" placeholder="Create a password" oninput="checkPasswordRules()"></div>
-      <div class="pw-requirements" id="pwRules">
-        <div id="ruleLen">• At least 8 characters long</div>
-        <div id="ruleUser">• Cannot be too similar to your username</div>
-        <div id="ruleCommon">• Cannot be a commonly used password</div>
-        <div id="ruleNumeric">• Cannot be entirely numeric</div>
-      </div>
-
-      <label class="auth-label">Confirm Password:</label>
-      <div class="field-block"><input type="password" id="suPasswordConfirm" placeholder="Enter the same password again" oninput="clearFieldError('suPasswordConfirm')"></div>
-      <div class="field-msg" id="msgPwConfirm"></div>
 
       <label class="auth-label">Verify you're not a robot:</label>
       <div id="recaptchaSignup" style="margin-bottom:10px;"></div>
@@ -9441,6 +9500,197 @@ window.addEventListener('load', function(){ refreshWelcomeStats(); });
   window.__cmBottomNavWrapped=true;
 }
 </script>
-</body>
+
+<style id="chatme-final-1-to-8-reference">
+/* FINAL 1–8 reference pass. Visual-only overrides; existing IDs, handlers and backend logic remain intact. */
+#welcomeScreen.cm-reference-landing{background:#071d38!important;}
+.cm-landing-main{
+  background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAwIDcwMCI+CjxkZWZzPgogPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPjxzdG9wIHN0b3AtY29sb3I9IiMwNzFjMzkiLz48c3RvcCBvZmZzZXQ9Ii41MiIgc3RvcC1jb2xvcj0iIzBiMzc2OCIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzA2MTgyZiIvPjwvbGluZWFyR3JhZGllbnQ+CiA8cmFkaWFsR3JhZGllbnQgaWQ9Imdsb3cxIj48c3RvcCBzdG9wLWNvbG9yPSIjMWI5Y2ZmIiBzdG9wLW9wYWNpdHk9Ii40OCIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzFiOWNmZiIgc3RvcC1vcGFjaXR5PSIwIi8+PC9yYWRpYWxHcmFkaWVudD4KIDxyYWRpYWxHcmFkaWVudCBpZD0iZ2xvdzIiPjxzdG9wIHN0b3AtY29sb3I9IiNkODRiOWIiIHN0b3Atb3BhY2l0eT0iLjMwIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjZDg0YjliIiBzdG9wLW9wYWNpdHk9IjAiLz48L3JhZGlhbEdyYWRpZW50PgogPGZpbHRlciBpZD0iYmx1ciI+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMTgiLz48L2ZpbHRlcj4KIDxmaWx0ZXIgaWQ9InNvZnQiPjxmZUdhdXNzaWFuQmx1ciBzdGREZXZpYXRpb249IjYiLz48L2ZpbHRlcj4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI3MDAiIGZpbGw9InVybCgjYmcpIi8+CjxlbGxpcHNlIGN4PSIyNjAiIGN5PSIxNzAiIHJ4PSIyNzAiIHJ5PSIxNzAiIGZpbGw9InVybCgjZ2xvdzEpIiBmaWx0ZXI9InVybCgjYmx1cikiLz4KPGVsbGlwc2UgY3g9IjgyMCIgY3k9IjE5MCIgcng9IjMwMCIgcnk9IjE4MCIgZmlsbD0idXJsKCNnbG93MikiIGZpbHRlcj0idXJsKCNibHVyKSIvPgo8ZyBvcGFjaXR5PSIuNDgiIGZpbHRlcj0idXJsKCNzb2Z0KSI+CiA8Y2lyY2xlIGN4PSIxMTAiIGN5PSIyOTAiIHI9IjU4IiBmaWxsPSIjMDgxYjM1Ii8+PGVsbGlwc2UgY3g9IjExMCIgY3k9IjQyMCIgcng9IjEwNSIgcnk9IjEyMCIgZmlsbD0iIzA4MWIzNSIvPgogPGNpcmNsZSBjeD0iMjg1IiBjeT0iMjU1IiByPSI1MiIgZmlsbD0iIzEwMmI0YyIvPjxlbGxpcHNlIGN4PSIyODUiIGN5PSIzOTAiIHJ4PSI5NCIgcnk9IjExOCIgZmlsbD0iIzEwMmI0YyIvPgogPGNpcmNsZSBjeD0iNDcwIiBjeT0iMjg1IiByPSI2NSIgZmlsbD0iIzA3MWQzNyIvPjxlbGxpcHNlIGN4PSI0NzAiIGN5PSI0NDUiIHJ4PSIxMTUiIHJ5PSIxNDUiIGZpbGw9IiMwNzFkMzciLz4KIDxjaXJjbGUgY3g9IjY4NSIgY3k9IjI2MCIgcj0iNTQiIGZpbGw9IiMxNTM4NWQiLz48ZWxsaXBzZSBjeD0iNjg1IiBjeT0iNDEwIiByeD0iMTAwIiByeT0iMTI1IiBmaWxsPSIjMTUzODVkIi8+CiA8Y2lyY2xlIGN4PSI4NzUiIGN5PSIyOTAiIHI9IjYyIiBmaWxsPSIjMGEyNDQzIi8+PGVsbGlwc2UgY3g9Ijg3NSIgY3k9IjQ0MCIgcng9IjExMiIgcnk9IjE0MCIgZmlsbD0iIzBhMjQ0MyIvPgogPGNpcmNsZSBjeD0iMTA2MCIgY3k9IjI0NSIgcj0iNTIiIGZpbGw9IiMxMjM0NWEiLz48ZWxsaXBzZSBjeD0iMTA2MCIgY3k9IjM5MCIgcng9Ijk0IiByeT0iMTIwIiBmaWxsPSIjMTIzNDVhIi8+CjwvZz4KPHJlY3Qgd2lkdGg9IjEyMDAiIGhlaWdodD0iNzAwIiBmaWxsPSIjMDMxNTJjIiBvcGFjaXR5PSIuMjUiLz4KPC9zdmc+")!important;
+  background-size:cover!important;background-position:center!important;background-repeat:no-repeat!important;
+}
+.cm-landing-main:before{background:linear-gradient(120deg,rgba(1,12,28,.25),rgba(4,25,54,.12) 45%,rgba(2,10,25,.38))!important;}
+.cm-landing-overlay{background:linear-gradient(180deg,rgba(2,14,31,.12),rgba(2,13,28,.42))!important;}
+.cm-landing-hero{max-width:720px!important;padding-top:34px!important;}
+.cm-landing-hero h1{font-size:clamp(40px,8vw,62px)!important;color:#1682ff!important;}
+.cm-landing-hero h2{font-size:clamp(23px,4.7vw,32px)!important;}
+.cm-landing-hero p{font-size:15px!important;max-width:590px!important;}
+.cm-landing-features{grid-template-columns:repeat(3,1fr)!important;max-width:620px!important;gap:18px 20px!important;margin:30px auto 32px!important;}
+.cm-landing-features span{width:58px!important;height:58px!important;background:rgba(9,91,170,.48)!important;border:1px solid rgba(126,196,255,.24)!important;}
+.cm-landing-features b{font-size:11.5px!important;}
+.cm-landing-getstarted{max-width:430px!important;}
+
+/* Auth: one clean header only (the previous pseudo header caused the duplicate bar seen on mobile). */
+.auth-box::before{display:none!important;content:none!important;}
+.auth-screen{background:linear-gradient(180deg,#062b55 0 74px,#eef3f8 74px 100%)!important;padding:0 8px 26px!important;align-items:flex-start!important;justify-content:flex-start!important;}
+.auth-box{width:min(100%,430px)!important;margin:0 auto!important;padding:0 0 22px!important;border-radius:0 0 16px 16px!important;border:1px solid #d9e3ee!important;border-top:0!important;box-shadow:0 14px 38px rgba(5,31,61,.18)!important;overflow:hidden!important;background:#fff!important;}
+.auth-screen .auth-brandbar{display:flex!important;min-height:64px!important;margin:0!important;padding:10px 14px!important;background:linear-gradient(90deg,#062b55,#0b3768)!important;border:0!important;}
+.auth-screen .auth-brandbar .auth-back{font-size:25px!important;width:36px!important;height:36px!important;}
+.auth-screen .auth-brandbar .auth-logo{width:36px!important;height:36px!important;}
+.auth-screen .auth-brandbar .auth-brandname{font-size:21px!important;font-weight:800!important;}
+.auth-box>.auth-title,.auth-box>.auth-sub,.auth-box>.auth-divider,.auth-box>label,.auth-box>.field-block,.auth-box>.auth-hint-small,.auth-box>.field-msg,.auth-box>.section-divider,.auth-box>.pw-requirements,.auth-box>#recaptchaLogin,.auth-box>#recaptchaSignup,.auth-box>.primary-btn,.auth-box>.auth-error,.auth-box>.auth-status,.auth-box>.auth-links,.auth-box>#forgotPasswordPanel{margin-left:20px!important;margin-right:20px!important;}
+.auth-box>.auth-title{margin-top:20px!important;font-size:24px!important;text-align:left!important;}
+.auth-box>.auth-sub{font-size:13px!important;text-align:left!important;}
+.auth-box>.auth-divider{margin-bottom:18px!important;}
+.field-block input,.field-block select{min-height:44px!important;border-radius:10px!important;}
+.auth-screen .primary-btn{min-height:46px!important;border-radius:999px!important;width:calc(100% - 40px)!important;}
+.auth-links .row{padding:10px 0!important;}
+#recaptchaLogin,#recaptchaSignup{min-height:0!important;}
+
+/* Registration core fields visually follow the supplied compact reference. */
+#signupScreen .auth-box{max-width:430px!important;}
+#signupScreen .auth-box .section-divider{margin-top:12px!important;}
+#signupScreen .auth-box .pw-requirements{font-size:11px!important;padding:8px 10px!important;}
+#signupScreen .auth-box .field-block{margin-bottom:5px!important;}
+#signupScreen .auth-box .auth-label{margin-top:8px!important;margin-bottom:5px!important;}
+#signupScreen .auth-box .auth-hint-small{font-size:10.5px!important;margin-top:2px!important;margin-bottom:5px!important;}
+
+/* Main app / storyboard 4–8 */
+.cm-social-topbar{background:#062b55!important;color:#fff!important;min-height:58px!important;}
+.cm-brand-mini{color:#fff!important;}
+.cm-brand-mini svg{width:32px!important;height:32px!important;}
+.cm-top-action,.cm-nav-more{background:rgba(255,255,255,.10)!important;color:#fff!important;}
+#chatsPage{background:#f7f9fc!important;}
+.cm-chat-list-shell{background:#fff!important;}
+.cm-chat-list-titlebar{background:#062b55!important;color:#fff!important;border-bottom-color:#123e6c!important;}
+.cm-chat-list-titlebar button{background:rgba(255,255,255,.10)!important;color:#fff!important;}
+.cm-chat-stories{background:#fff!important;}
+.cm-story-avatar{border-color:#8cc7ff!important;}
+.cm-chat-row{background:#fff!important;min-height:70px!important;}
+.cm-chat-row .avatar{width:50px!important;height:50px!important;}
+.cm-chat-row .friend-name{font-size:14px!important;font-weight:800!important;}
+.cm-chat-row .friend-status{font-size:12px!important;}
+#chatsPage .private-chat.active{background:#f5f7fb!important;}
+.chat-header{background:linear-gradient(90deg,#062b55,#0b3768)!important;color:#fff!important;min-height:58px!important;}
+.chat-header span,.chat-header button{color:#fff!important;}
+.messages{background:#f5f7fb!important;}
+.msg-row.sent .bubble{background:#1677ff!important;color:#fff!important;}
+.msg-row.received .bubble{background:#fff!important;color:#172b45!important;}
+#profilePage{background:#f4f7fb!important;}
+#profilePage>.profile-card{max-width:760px!important;margin:0 auto!important;background:#fff!important;border-radius:14px!important;overflow:hidden!important;padding:16px!important;box-shadow:0 8px 28px rgba(20,35,58,.08)!important;}
+.cm-profile-reference-head{background:#062b55!important;height:54px!important;}
+.cm-profile-cover-wrap{height:155px!important;}
+.cm-profile-avatar-center .avatar-lg{width:88px!important;height:88px!important;}
+.cm-profile-name-block h2{font-size:21px!important;}
+#menuPage{background:linear-gradient(180deg,#062b55,#0b3768)!important;color:#fff!important;}
+#menuPage>h2{color:#fff!important;}
+.cm-menu-ref-item{min-height:54px!important;color:#fff!important;}
+.cm-menu-ref-item.logout{color:#ffb4b4!important;}
+.cm-bottom-nav{background:#fff!important;border-top:1px solid #dfe6ef!important;}
+
+@media(max-width:720px){
+  .cm-landing-nav{height:60px!important;padding:0 12px!important;}
+  .cm-landing-brand{font-size:18px!important;}
+  .cm-landing-brand svg{width:31px!important;height:31px!important;}
+  .cm-landing-actions button{padding:8px 11px!important;font-size:11px!important;}
+  .cm-landing-main{min-height:calc(100vh - 114px)!important;}
+  .cm-landing-hero{padding:26px 0 25px!important;}
+  .cm-landing-hero h1{font-size:42px!important;}
+  .cm-landing-hero h2{font-size:24px!important;}
+  .cm-landing-hero p{font-size:13px!important;max-width:340px!important;}
+  .cm-landing-features{max-width:330px!important;gap:18px 10px!important;margin:27px auto 28px!important;}
+  .cm-landing-features span{width:50px!important;height:50px!important;font-size:21px!important;}
+  .cm-landing-features b{font-size:9.5px!important;}
+  .auth-screen{padding:0 8px 26px!important;}
+  .auth-box{width:100%!important;border-radius:0 0 14px 14px!important;}
+  #signupScreen .auth-box{max-width:560px!important;}
+  #profilePage>.profile-card{border-radius:0!important;max-width:none!important;}
+  #chatsPage .private-chat{inset:58px 0 58px 0!important;}
+}
+</style>
+\n<script id="chatme-final-1-to-8-reference-js">
+(function(){
+  function refReady(){
+    const loginLabel=document.querySelector('#loginScreen label.auth-label');
+    if(loginLabel) loginLabel.textContent='Email or Username:';
+    const loginInput=document.getElementById('loginEmail');
+    if(loginInput){loginInput.type='text';loginInput.placeholder='Enter your email or username';loginInput.autocomplete='username';}
+
+    // Make the registration flow follow the supplied compact storyboard while keeping every existing required field/ID.
+    const signup=document.querySelector('#signupScreen .auth-box');
+    if(!signup || signup.dataset.refGrouped==='1') return;
+    signup.dataset.refGrouped='1';
+    const direct=(sel)=>signup.querySelector(sel);
+    function makeGroup(inputId){
+      const input=document.getElementById(inputId);
+      if(!input) return null;
+      const field=input.closest('.field-block');
+      if(!field) return null;
+      const label=field.previousElementSibling;
+      const wrap=document.createElement('div'); wrap.className='cm-ref-field-group';
+      if(label && label.classList.contains('auth-label')) wrap.append(label);
+      wrap.append(field);
+      let n=field.nextElementSibling;
+      while(n && n!==signup.querySelector('.section-divider') && !n.matches('label.auth-label')){
+        const next=n.nextElementSibling;
+        if(n.classList.contains('auth-hint-small') || n.classList.contains('field-msg') || n.id==='pwRules') wrap.append(n);
+        n=next;
+      }
+      return wrap;
+    }
+    const first=document.getElementById('suFirst'), last=document.getElementById('suLast');
+    let fullNameRow=null;
+    if(first && last){
+      const fg=makeGroup('suFirst'), lg=makeGroup('suLast');
+      if(fg && lg){
+        fullNameRow=document.createElement('div'); fullNameRow.className='cm-ref-fullname-row';
+        fg.classList.add('cm-ref-name-part'); lg.classList.add('cm-ref-name-part'); fullNameRow.append(fg,lg);
+        const divider=signup.querySelector('.auth-divider');
+        if(divider) divider.after(fullNameRow);
+      }
+    }
+    const usernameGroup=makeGroup('suUsername');
+    const emailGroup=makeGroup('suEmail');
+    const passwordGroup=makeGroup('suPassword');
+    const confirmGroup=makeGroup('suPasswordConfirm');
+    const phoneGroup=makeGroup('suPhone');
+    const dobGroup=makeGroup('suMonth');
+    const countryGroup=makeGroup('suCountry');
+    const genderGroup=makeGroup('suGender');
+    const quick=Array.from(signup.querySelectorAll('.section-divider')).find(x=>/Quick setup/i.test(x.textContent||''));
+    const security=Array.from(signup.querySelectorAll('.section-divider')).find(x=>/Account security/i.test(x.textContent||''));
+    const afterFull=fullNameRow || signup.querySelector('.auth-divider');
+    // Core order: Full Name, Username, Email, Password, Confirm Password.
+    [usernameGroup,emailGroup,passwordGroup,confirmGroup].forEach(g=>{if(g) afterFull.parentNode.insertBefore(g, afterFull.nextSibling); afterFull= g || afterFull;});
+    // Put the extra required registration details into a clearly separated block after the core account fields.
+    const details=document.createElement('div'); details.className='cm-ref-extra-details';
+    const detailsTitle=document.createElement('div'); detailsTitle.className='cm-ref-extra-title'; detailsTitle.textContent='Additional profile details';
+    details.append(detailsTitle);
+    if(phoneGroup) details.append(phoneGroup);
+    if(quick) details.append(quick);
+    if(dobGroup) details.append(dobGroup);
+    if(countryGroup) details.append(countryGroup);
+    if(genderGroup) details.append(genderGroup);
+    const captcha=direct('#recaptchaSignup');
+    if(security) security.remove();
+    if(captcha) signup.insertBefore(details,captcha);
+  }
+  const style=document.createElement('style');
+  style.textContent='.cm-ref-fullname-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 20px}.cm-ref-name-part,.cm-ref-field-group{min-width:0}.cm-ref-name-part .auth-label,.cm-ref-field-group .auth-label{display:block;margin-top:8px}.cm-ref-name-part .field-block,.cm-ref-field-group .field-block{margin-left:0!important;margin-right:0!important}.cm-ref-extra-details{margin:12px 20px 0;padding:10px 12px;background:#f7f9fc;border:1px solid #e3e9f1;border-radius:12px}.cm-ref-extra-title{font-weight:800;color:#24346b;font-size:13px;margin-bottom:4px}.cm-ref-extra-details .section-divider{margin-left:0!important;margin-right:0!important}.cm-ref-extra-details .auth-label{margin-left:0!important;margin-right:0!important}.cm-ref-extra-details .field-block{margin-left:0!important;margin-right:0!important}@media(max-width:520px){.cm-ref-fullname-row{grid-template-columns:1fr 1fr;gap:8px}}';
+  document.head.appendChild(style);
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',refReady); else refReady();
+  setTimeout(refReady,500);
+
+  // The reference says Email or Username. Resolve a username to its account email
+  // before handing control to the existing, security-checked Firebase login flow.
+  if(typeof window.doLogin==='function' && !window.__cmReferenceLoginWrapped){
+    const original=window.doLogin;
+    window.doLogin=async function(){
+      const input=document.getElementById('loginEmail');
+      const err=document.getElementById('loginError');
+      if(!input) return original.apply(this,arguments);
+      const identifier=input.value.trim();
+      if(identifier && !identifier.includes('@')){
+        try{
+          const email=await storageGet(usernameKey(identifier),true);
+          if(email && String(email).includes('@')) input.value=String(email);
+          else { if(err) err.textContent='No Chat Me account was found for that username.'; return; }
+        }catch(e){ if(err) err.textContent='Please use the email address for this account right now.'; return; }
+      }
+      return original.apply(this,arguments);
+    };
+    window.__cmReferenceLoginWrapped=true;
+  }
+})();
+</script>\n</body>
 </html>
 
