@@ -367,6 +367,20 @@
   body.dark-mode .cm-social-topbar,body.dark-mode .cm-navigation-card{background:#1d1f23;border-color:#343840;color:#eee}body.dark-mode .cm-social-search{background:#2a2d32}body.dark-mode .cm-social-search input{color:#eee!important}body.dark-mode .cm-top-action,body.dark-mode .cm-nav-more,body.dark-mode .cm-nav-grid button{background:#292d33;color:#eee;border-color:#3a3f48}body.dark-mode .cm-navigation-card p{color:#a9b0bb}body.dark-mode #app,body.dark-mode .page{background:#111315}
   body.cm-data-saver-on img.post-img{content-visibility:auto} body.cm-data-saver-on .cm-stories-strip img{visibility:hidden} body.cm-data-saver-on video{background:#e9edf2;}
   @media(max-width:480px){#cmCreatorAnalytics{grid-template-columns:1fr 1fr!important}}
+
+/* ---------------- CHAT ME SPONSORED ADS ---------------- */
+.cm-ad-slot{margin:12px 0;padding:12px;border:1px solid #d9e2f2;border-radius:14px;background:linear-gradient(135deg,#f8fbff,#fff);box-shadow:0 2px 10px rgba(20,60,120,.06);position:relative}
+.cm-ad-label{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#7a8799;font-weight:700;margin-bottom:7px}
+.cm-ad-title{font-size:16px;font-weight:700;color:#243b72;margin-bottom:4px}
+.cm-ad-body{font-size:13px;line-height:1.45;color:#555}
+.cm-ad-btn{display:inline-block;margin-top:9px;padding:8px 13px;border-radius:9px;background:#2b6ee0;color:#fff;text-decoration:none;font-size:12.5px;font-weight:700}
+.cm-ad-sponsor{font-size:11px;color:#8b95a5;margin-top:8px}
+.cm-ad-empty{color:#7a8799;font-size:12px}
+.cm-ad-manager{margin-top:18px}
+.cm-ad-manager textarea{width:100%;min-height:80px;resize:vertical}
+.cm-ad-manager input,.cm-ad-manager textarea{box-sizing:border-box;padding:9px;border:1px solid #ccd5e2;border-radius:8px;background:#fff}
+.cm-ad-manager .cm-ad-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:9px}
+.cm-ad-safe-note{font-size:11.5px;color:#667085;background:#f6f8fb;border-radius:9px;padding:9px;margin-top:9px;line-height:1.4}
 </style>
 <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
 
@@ -513,7 +527,7 @@ body.dark-mode .cm-explore-card,body.dark-mode .cm-explore-chip{background:#171a
           <button class="welcome-secondary" onclick="showAuth('login')">Log in to Chat Me</button>
         </div>
         <div class="welcome-stats" aria-label="Chat Me highlights">
-          <div class="welcome-stat"><strong id="welcomeRegisteredCount">—</strong><span>registered members</span></div>
+          <div class="welcome-stat"><strong>24 hrs</strong><span>stories &amp; status window</span></div>
           <div class="welcome-stat"><strong>24/7</strong><span>chat access</span></div>
           <div class="welcome-stat"><strong>Free</strong><span>to get started</span></div>
         </div>
@@ -570,23 +584,8 @@ body.dark-mode .cm-explore-card,body.dark-mode .cm-explore-chip{background:#171a
       <button onclick="showPublicPolicy()" style="background:none;border:0;color:#2b6ee0;text-decoration:underline;cursor:pointer;font-size:12.5px;">🔒 Privacy, Safety &amp; Policies</button>
     </div>
 
-    <div class="public-policy-modal" id="publicPolicyModal" role="dialog" aria-modal="true" aria-label="Privacy and policies">
-      <div class="public-policy-box">
-        <h2>🔒 Privacy &amp; Policies</h2>
-        <p><b>Chat Me is currently a free community service.</b> Coin purchases are disabled. Coins have no cash value and cannot be exchanged or withdrawn for real money.</p>
-        <p><b>Privacy &amp; support:</b> adegboyeabdulrahmanl@gmail.com</p>
-        <p><b>Verification:</b> Members can request verification after paying the 50,000-Coin verification fee. A request is reviewed by an authorized Chat Me admin or moderator; the badge is not granted automatically. If no reviewer is available, the request remains pending until an authorized staff member reviews it.</p>
-        <p><b>Need a verification review?</b> Contact Chat Me support using the support contact above and clearly state that you are requesting verification review. Never send your password, recovery code, or other secret login information.</p>
-        <p>Our policies explain account information, community content, security, reporting/moderation, service providers, user rights and how privacy requests can be made.</p>
-        <p style="font-size:12px;color:#7a8190;">The full policy pages are available inside Chat Me after login.</p>
-        <div class="public-policy-actions">
-          <button class="public-policy-login" onclick="showAuth('login');closePublicPolicy();">Log in to read full policies</button>
-          <button class="public-policy-close" onclick="closePublicPolicy()">Close</button>
-        </div>
-      </div>
-    </div>
+<div class="public-policy-modal" id="publicPolicyModal" role="dialog" aria-modal="true" aria-label="Privacy, terms and community policies"><div class="public-policy-box" style="max-height:88vh;overflow-y:auto;line-height:1.58;"><h2>🔒 Chat Me Privacy, Terms, Safety &amp; Community Policies</h2><p><b>Effective date: 2 October 2026.</b> This is an original Chat Me policy covering privacy, accounts, content, safety, messaging, moderation and virtual features commonly addressed by major social platforms. It does not copy Facebook, Instagram, TikTok, WhatsApp or another company policy, and those services are not affiliated with Chat Me.</p><h3>1. About Chat Me</h3><p>Chat Me is a community service for conversations, profiles, Statusbook posts, stories, chatrooms, groups, games, notifications, customer support and virtual Coin features. Features may change, pause or be removed for reliability, security, moderation, legal compliance or development.</p><h3>2. Eligibility and accounts</h3><p>Provide truthful information when creating an account. Chat Me uses an age-eligibility check and is not intended for children under 13. Do not falsify your age or create an account for another person without permission. You are responsible for activity on your account and must keep passwords, recovery information and verification codes private.</p><h3>3. Information we collect</h3><p>Depending on features used, Chat Me may process your username, email, name, phone number, date of birth or age-eligibility information, country, gender where supplied, profile picture, settings and preferences. We may also process posts, comments, reactions, stories, messages, group or chatroom activity, friend requests, saved items, reports and support tickets.</p><p>Technical information may be processed by infrastructure providers, including browser/device information, network information, timestamps, security events and diagnostics needed to operate authentication, security, storage and anti-abuse systems.</p><h3>4. How information is used</h3><p>Information may be used to create and authenticate accounts; provide chats, profiles, posts, stories, groups and notifications; remember settings; prevent spam, fraud and abuse; investigate reports; enforce rules; provide support; maintain reliability; improve features; and comply with lawful obligations.</p><h3>5. Public, private and shared content</h3><p>Content intentionally published to public areas may be visible to other members. Private messages are intended for their participants, but users should avoid sending passwords, financial information or highly sensitive information through ordinary chat. Staff may access relevant information when reasonably necessary for security, support, moderation, reports, recovery or legal compliance.</p><h3>6. Messaging and social features</h3><p>Chat Me may process message content and metadata needed to deliver, secure, moderate or troubleshoot messaging. Do not use messaging to threaten, harass, scam, impersonate, stalk, spam or expose private information. Do not use automation to flood the service or manipulate engagement.</p><h3>7. Cookies and storage</h3><p>The website may use browser storage for necessary sessions, interface preferences and technical functions. Authentication and anti-abuse providers may use their own cookies or similar mechanisms. Clearing browser storage can sign you out or reset local preferences.</p><h3>8. Service providers</h3><p>Chat Me may use Firebase/Google services for authentication and infrastructure, Cloudflare for backend and security infrastructure, and Google reCAPTCHA for anti-abuse verification. Providers may process information under their own applicable terms and privacy notices.</p><h3>9. Security</h3><p>Chat Me uses authentication, server-side authorization, protected backend controls and anti-abuse checks intended to reduce unauthorized access. Administrative privileges are intended to be controlled by trusted backend roles rather than a browser-controlled button. No internet service guarantees perfect security. If you suspect compromise, secure the account and contact support without sending secrets.</p><h3>10. Community rules</h3><p>Be respectful. No harassment, bullying, credible threats, targeted abuse, scams, impersonation, malicious spam, privacy violations, non-consensual exposure of personal information, or attempts to compromise accounts. Do not upload illegal or clearly unsafe content. Do not use Chat Me to coordinate wrongdoing or evade moderation. Respect intellectual-property rights and only share material you may lawfully share.</p><h3>11. Reporting and moderation</h3><p>Use reporting and customer-service tools for rule-breaking content or account problems. Authorized moderators and administrators may review reports and remove content, restrict features, suspend or ban accounts when appropriate. Actions may consider severity, repetition, evidence, security and risk. Attempts to evade restrictions may lead to further action.</p><h3>12. Authenticity and verification</h3><p>Do not impersonate another user, staff member, organization or company in a misleading way. Verification does not mean endorsement. Verification requests are reviewed by authorized staff and can be denied or revoked.</p><h3>13. Stories, posts and deletion</h3><p>Stories may disappear after a defined period such as 24 hours, but technical copies, moderation records, backups or reports may remain where reasonably necessary. Visible deletion does not necessarily mean every technical backup or security record disappears immediately.</p><h3>14. Coins and virtual features</h3><p>Coins are virtual units used only inside Chat Me. They have no cash value and cannot be withdrawn, exchanged for Naira or other currencies, or transferred into real money. Coin purchases are currently disabled. Do not send money to anyone claiming to sell Coins. Shop features may include profile themes, frames, name effects, free sticker packs, premium chat themes, virtual gifts, special badges, Featured Profile, Profile Music, Private Room access, Group Background access, Premium Message Pins, Premium Reactions, Story Insights and verification. Prices shown in the Shop are the current reference prices and may change.</p><h3>15. Games and competitions</h3><p>Chat Me may provide skill-based games and competitions. The planned new lineup includes Ludo, Whot Card Game, Tic-Tac-Toe, Checkers (Draught), Chess, Snake Game, Quiz/Trivia, Rock-Paper-Scissors, Word Guessing Game and Car Racing 2D. Multiplayer access may be set at 100 Coins per match. This is a feature fee, not a wager or prize pool, and users must not create unofficial betting arrangements. Competition rules and prizes, if any, are displayed before participation.</p><h3>16. Referrals</h3><p>Referral rewards may be milestone-based and may require successful sign-up or other stated conditions. Do not create fake accounts, use deceptive invitations or manipulate referrals. Rewards connected to abuse or invalid activity may be withheld.</p><h3>17. Verification fee</h3><p>The current verification feature is listed at 50,000 Coins and requires authorized review. Payment or submission does not guarantee approval. Never send a password, recovery code or authentication secret for verification.</p><h3>18. Data sharing and legal requests</h3><p>Chat Me may disclose information to service providers needed to operate the service, protect users, investigate abuse, or when required by applicable law or valid legal process. Public content may be copied by viewers and Chat Me cannot guarantee control over copies made by others.</p><h3>19. Retention</h3><p>Information is retained as reasonably necessary for collection purposes, account operation, security, moderation, disputes, backups or legal obligations. Retention can differ between account records, content, messages, reports, logs and backups.</p><h3>20. Privacy choices</h3><p>Subject to applicable law, you may request access, correction, deletion where applicable, restriction or objection to certain processing, withdrawal of consent where consent is the basis, or information about how data is handled. Account ownership may need to be verified.</p><h3>21. Nigeria and other laws</h3><p>Users in Nigeria may have rights under applicable Nigerian data-protection law and may be able to complain to the Nigeria Data Protection Commission through its applicable procedures. Users elsewhere may have additional rights under local law.</p><h3>22. Suspension and termination</h3><p>Chat Me may restrict or terminate access when necessary to protect users, enforce rules, investigate serious abuse, prevent fraud, secure the service or comply with law. Support may be contacted about account actions where appropriate.</p><h3>23. Intellectual property</h3><p>Chat Me's interface, branding, original graphics and software are protected by applicable rights. Users retain rights they already have in their content, subject to the permissions needed for Chat Me to host, display and deliver it as part of the service. Do not upload material you do not have the right to use.</p><h3>24. Policy changes</h3><p>Policies may be updated when features, security practices, laws or service operations change. Material changes may be highlighted. Continuing to use Chat Me after an effective update means you have had an opportunity to review it, subject to applicable law.</p><h3>25. Contact</h3><p><b>Privacy and support:</b> adegboyeabdulrahmanl@gmail.com. Explain requests clearly and provide only necessary information. Never send passwords, recovery codes, authentication tokens or other secrets.</p><h3>26. Safety around money and scams</h3><p>Chat Me does not authorize users to collect money from other members in exchange for Coins, verification, prizes, account access or special treatment. Be cautious of messages promising free Coins, faster verification, secret admin access, account recovery or guaranteed rewards. Staff should not need your password or one-time authentication code. If someone asks for those details, stop the conversation and report it. Because the service is still developing, only features and prices actually displayed inside Chat Me should be treated as official.</p><h3>27. Fair use and technical limits</h3><p>Users must not attempt to overload, probe, scrape, reverse engineer, bypass security controls, interfere with another user's session, or use automated traffic that harms availability. Security research should not expose other people's information or disrupt the service. Chat Me may impose technical limits on messages, uploads, requests, searches, referrals or other actions to keep the service stable.</p><h3>28. User responsibility for content</h3><p>You are responsible for the content you choose to publish or send. Chat Me does not adopt every opinion expressed by members. Users should check information before relying on it, especially where posts concern health, money, legal matters or emergencies. Do not present unofficial Chat Me announcements as official staff communications.</p><h3>29. Appeals and support</h3><p>Where an appeal or review process is offered, provide the relevant account name and a concise explanation. Do not submit repeated tickets to overwhelm support or attempt to obtain a different result by misleading different staff members. Support may prioritize security incidents and urgent account-access problems.</p><h3>30. Service limitations</h3><p>Chat Me aims to provide reliable service but cannot guarantee that every feature will always be available, that messages will always arrive instantly, or that content will never be lost because of outages, maintenance, security incidents or provider failures. Users should keep copies of important information outside the service where appropriate.</p><h3>26. Safety around money and scams</h3><p>Chat Me does not authorize users to collect money from other members in exchange for Coins, verification, prizes, account access or special treatment. Be cautious of messages promising free Coins, faster verification, secret admin access, account recovery or guaranteed rewards. Staff should not need your password or one-time authentication code. If someone asks for those details, stop the conversation and report it. Only features, prices and announcements displayed through official Chat Me interfaces should be treated as official.</p><h3>27. Fair use and technical limits</h3><p>Users must not attempt to overload, probe, scrape, reverse engineer, bypass security controls, interfere with another user's session, or use automated traffic that harms availability. Security research must not expose other people's information or disrupt the service. Chat Me may impose reasonable limits on messages, uploads, requests, searches, referrals and other actions to keep the service stable.</p><h3>28. User responsibility for content</h3><p>You are responsible for the content you choose to publish or send. Chat Me does not adopt every opinion expressed by members. Check information before relying on it, especially where posts concern health, money, legal matters or emergencies. Do not present unofficial messages, screenshots or rumors as official Chat Me announcements.</p><h3>29. Appeals and support</h3><p>Where an appeal or review process is offered, provide the relevant account name and a concise explanation. Do not submit repeated tickets to overwhelm support or attempt to obtain a different result by misleading different staff members. Support may prioritize security incidents and urgent account-access problems.</p><h3>30. Service limitations</h3><p>Chat Me aims to provide reliable service but cannot guarantee that every feature will always be available, that messages will always arrive instantly, or that content will never be affected by outages, maintenance, security incidents or provider failures. Users should keep copies of important information outside the service where appropriate.</p><h3>31. Third-party links and services</h3><p>Chat Me may contain links, integrations or references to third-party services. A third-party service is controlled by its own operator and may have different privacy, safety, payment or content rules. Review the relevant service's own terms before sharing information or using an external feature. Chat Me is not responsible for independent changes made by third-party services.</p><h3>32. Account recovery and identity checks</h3><p>Account recovery may require enough information to establish that the requester controls the account. For security, support may refuse a request when ownership cannot be verified. Do not ask another user to give you their verification code. If you lose access to an email account used for Chat Me, recovery may depend on the authentication options available through the relevant provider.</p><h3>33. Community integrity</h3><p>Do not artificially inflate likes, reactions, views, referrals, followers or other activity through fake accounts, scripts, coordinated abuse or purchased engagement. Do not exploit bugs to gain Coins, unlock features, bypass limits or interfere with another member's experience. Report serious bugs responsibly through support rather than publishing instructions that enable abuse.</p><h3>34. Updates to virtual items</h3><p>Virtual items and features may be adjusted for balancing, security, availability or design. An item shown in the Shop can have a different price or availability later. Free items may remain free or may be changed when the Shop is updated. Ownership of a virtual item does not create a right to cash, refunds or transfer outside Chat Me unless a later official policy expressly says otherwise.</p><p style="background:#fff4e5;border:1px solid #f2c078;padding:10px;border-radius:8px;"><b>Important:</b> This is Chat Me's own policy. It covers broad topics commonly found in major social platforms but does not copy or reproduce Facebook, Instagram, TikTok, WhatsApp or any other service. If applicable law gives you a right that conflicts with a sentence here, applicable law controls.</p><div class="public-policy-actions"><button class="public-policy-login" onclick="showAuth('login');closePublicPolicy();">Log in to Chat Me</button><button class="public-policy-close" onclick="closePublicPolicy()">Close</button></div></div></div>
   </div>
-
   <!-- ============ LOGIN ============ -->
   <div class="auth-screen" id="loginScreen">
     <div class="auth-box">
@@ -597,8 +596,8 @@ body.dark-mode .cm-explore-card,body.dark-mode .cm-explore-chip{background:#171a
       <div class="auth-sub">Enter your credentials</div>
       <div class="auth-divider"></div>
 
-      <label class="auth-label">Email:</label>
-      <div class="field-block"><input type="email" id="loginEmail" placeholder="Enter your email" onkeydown="if(event.key==='Enter') doLogin()"></div>
+      <label class="auth-label">Email or Username:</label>
+      <div class="field-block"><input type="text" id="loginEmail" placeholder="Enter your email or username" autocomplete="username" onkeydown="if(event.key==='Enter') doLogin()"></div>
 
       <label class="auth-label">Password:</label>
       <div class="field-block"><input type="password" id="loginPassword" placeholder="Enter password" onkeydown="if(event.key==='Enter') doLogin()"></div>
@@ -766,6 +765,7 @@ body.dark-mode .cm-explore-card,body.dark-mode .cm-explore-chip{background:#171a
         <div class="cm-featured-meta">Chat Me community</div>
         <div class="cm-featured-text">Checking for the latest staff announcement.</div>
       </div>
+      <div id="chatMeHomeAd" class="cm-ad-slot" aria-label="Sponsored advertisement"></div>
       <div style="display:flex;justify-content:flex-end;align-items:center;gap:8px;margin-bottom:6px;font-size:13px;color:#555;">
         <span>🌙 Dark mode</span>
         <label class="dm-switch"><input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()"><span class="dm-slider"></span></label>
@@ -1076,24 +1076,38 @@ body.dark-mode .cm-explore-card,body.dark-mode .cm-explore-chip{background:#171a
 
       <div id="gameSelector">
         <h2 style="color:#2b3a8f;margin-bottom:4px;">Games</h2>
-        <div style="color:#888;font-size:13px;margin-bottom:16px;">Pick a game to play.</div>
+        <div style="color:#888;font-size:13px;margin-bottom:16px;">Pick a game to play. The new game lineup is listed below; multiplayer access is planned at 100 Coins per match and is not a wager or prize pool.</div>
+        <div id="chatMeGamesAd" class="cm-ad-slot" aria-label="Sponsored advertisement"></div>
         <div style="display:flex;gap:14px;flex-wrap:wrap;">
-          <div class="profile-card" style="max-width:220px;cursor:pointer;" onclick="selectGame('wordcross')">
-            <div style="font-size:32px;margin-bottom:6px;">🔤</div>
-            <div style="font-weight:700;color:#2b3a8f;margin-bottom:4px;">Game 1: Word Cross</div>
-            <div style="font-size:12.5px;color:#666;">Unscramble the word before your opponent does.</div>
-          </div>
-          <div class="profile-card" style="max-width:220px;cursor:pointer;" onclick="selectGame('dice')">
-            <div style="font-size:32px;margin-bottom:6px;">🎲</div>
-            <div style="font-weight:700;color:#2b3a8f;margin-bottom:4px;">Game 2: Dice Duel</div>
-            <div style="font-size:12.5px;color:#666;">Roll the dice - highest number wins.</div>
-          </div>
-          <div class="profile-card" style="max-width:220px;cursor:pointer;" onclick="selectGame('leaderboard')">
-            <div style="font-size:32px;margin-bottom:6px;">🏆</div>
-            <div style="font-weight:700;color:#2b3a8f;margin-bottom:4px;">Wins Leaderboard</div>
-            <div style="font-size:12.5px;color:#666;">See who has won the most games.</div>
-          </div>
+          <div class="profile-card" style="max-width:220px;cursor:pointer;" onclick="selectGame('wordcross')"><div style="font-size:32px;margin-bottom:6px;">🔤</div><div style="font-weight:700;color:#2b3a8f;margin-bottom:4px;">Current: Word Cross</div><div style="font-size:12.5px;color:#666;">Unscramble the word before your opponent does.</div></div>
+          <div class="profile-card" style="max-width:220px;cursor:pointer;" onclick="selectGame('dice')"><div style="font-size:32px;margin-bottom:6px;">🎲</div><div style="font-weight:700;color:#2b3a8f;margin-bottom:4px;">Current: Dice Duel</div><div style="font-size:12.5px;color:#666;">Roll the dice in the existing free-play game.</div></div>
+          <div class="profile-card" style="max-width:220px;cursor:pointer;" onclick="selectGame('leaderboard')"><div style="font-size:32px;margin-bottom:6px;">🏆</div><div style="font-weight:700;color:#2b3a8f;margin-bottom:4px;">Wins Leaderboard</div><div style="font-size:12.5px;color:#666;">See who has won the most existing games.</div></div>
         </div>
+        <div style="margin-top:22px;font-weight:800;color:#2b3a8f;font-size:17px;">🎮 New Game Lineup</div>
+        <div style="color:#777;font-size:12.5px;margin:5px 0 12px;">The 10 requested games are now playable in Chat Me. When online multiplayer is enabled, access is 100 Coins per match. This is a fixed feature fee only, not a wager or prize pool; the current local gameplay remains available while secure online multiplayer is connected to the backend.</div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <div class="profile-card" style="max-width:220px;cursor:pointer;" onclick="launchNewGame('ludo')"><div style="font-size:28px;">🎲</div><b>1. Ludo</b><div style="font-size:12px;color:#666;margin-top:4px;">Race four tokens around a simplified Ludo track.<br><b style="color:#2b6ee0;">Online multiplayer: 100 Coins/match</b></div></div>
+          <div class="profile-card" style="max-width:220px;cursor:pointer;" onclick="launchNewGame('whot')"><div style="font-size:28px;">🃏</div><b>2. Whot Card Game</b><div style="font-size:12px;color:#666;margin-top:4px;">Match the suit or number and empty your hand first.<br><b style="color:#2b6ee0;">Online multiplayer: 100 Coins/match</b></div></div>
+          <div class="profile-card" style="max-width:220px;cursor:pointer;" onclick="launchNewGame('ttt')"><div style="font-size:28px;">❌⭕</div><b>3. Tic-Tac-Toe</b><div style="font-size:12px;color:#666;margin-top:4px;">Full local two-player 3×3 match.<br><b style="color:#2b6ee0;">Online multiplayer: 100 Coins/match</b></div></div>
+          <div class="profile-card" style="max-width:220px;cursor:pointer;" onclick="launchNewGame('checkers')"><div style="font-size:28px;">♟️</div><b>4. Checkers (Draught)</b><div style="font-size:12px;color:#666;margin-top:4px;">Playable local board with moves and captures.<br><b style="color:#2b6ee0;">Online multiplayer: 100 Coins/match</b></div></div>
+          <div class="profile-card" style="max-width:220px;cursor:pointer;" onclick="launchNewGame('chess')"><div style="font-size:28px;">♞</div><b>5. Chess</b><div style="font-size:12px;color:#666;margin-top:4px;">Playable local chess board with standard piece movement.<br><b style="color:#2b6ee0;">Online multiplayer: 100 Coins/match</b></div></div>
+          <div class="profile-card" style="max-width:220px;cursor:pointer;" onclick="launchNewGame('snake')"><div style="font-size:28px;">🐍</div><b>6. Snake Game</b><div style="font-size:12px;color:#666;margin-top:4px;">Keyboard-friendly arcade snake with score and restart.<br><b style="color:#2b6ee0;">Online multiplayer: 100 Coins/match</b></div></div>
+          <div class="profile-card" style="max-width:220px;cursor:pointer;" onclick="launchNewGame('quiz')"><div style="font-size:28px;">🧠</div><b>7. Quiz / Trivia</b><div style="font-size:12px;color:#666;margin-top:4px;">Ten-question knowledge challenge.<br><b style="color:#2b6ee0;">Online multiplayer: 100 Coins/match</b></div></div>
+          <div class="profile-card" style="max-width:220px;cursor:pointer;" onclick="launchNewGame('rps')"><div style="font-size:28px;">✊✋✌️</div><b>8. Rock-Paper-Scissors</b><div style="font-size:12px;color:#666;margin-top:4px;">Best-of-five against the computer.<br><b style="color:#2b6ee0;">Online multiplayer: 100 Coins/match</b></div></div>
+          <div class="profile-card" style="max-width:220px;cursor:pointer;" onclick="launchNewGame('wordguess')"><div style="font-size:28px;">🔤</div><b>9. Word Guessing Game</b><div style="font-size:12px;color:#666;margin-top:4px;">Find the hidden word with limited attempts.<br><b style="color:#2b6ee0;">Online multiplayer: 100 Coins/match</b></div></div>
+          <div class="profile-card" style="max-width:220px;cursor:pointer;" onclick="launchNewGame('racing')"><div style="font-size:28px;">🏎️</div><b>10. Car Racing 2D</b><div style="font-size:12px;color:#666;margin-top:4px;">Dodge traffic and survive as long as possible.<br><b style="color:#2b6ee0;">Online multiplayer: 100 Coins/match</b></div></div>
+        </div>
+      </div>
+
+      <div id="newGameArena" style="display:none;margin-top:18px;max-width:760px;">
+        <a onclick="closeNewGame()" style="cursor:pointer;color:#2b6ee0;font-size:13px;display:inline-block;margin-bottom:12px;">⬅ Back to Games</a>
+        <div class="profile-card" style="padding:18px;">
+          <h2 id="newGameTitle" style="color:#2b3a8f;margin:0 0 6px;"></h2>
+          <div id="newGameNote" style="color:#777;font-size:12.5px;margin-bottom:14px;"></div>
+          <div id="newGameBoard"></div>
+        </div>
+      </div>
+
       </div>
 
       <div id="gameLeaderboard" style="display:none;">
@@ -1347,17 +1361,7 @@ body.dark-mode .cm-explore-card,body.dark-mode .cm-explore-chip{background:#171a
         <textarea id="reportDescInput" maxlength="500" placeholder="Describe what happened - who or what it involves, and why it breaks the rules." style="width:100%;min-height:100px;padding:9px 10px;border:1px solid #ccc;border-radius:6px;font-size:13.5px;resize:vertical;margin-bottom:10px;"></textarea>
         <div class="auth-error" id="reportError"></div>
         <div class="auth-status" id="reportStatus"></div>
-        <button id="reportSubmitBtn" onclick="submitReport()" style="background:#e8622d;color:#fff;border:none;padding:9px 18px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:600;">Submit Report</button>
-      </div>
-    </div>
-
-    <div class="page" id="supportPage" style="padding:16px;overflow-y:auto;">
-      <h2 style="color:#146c43;margin-bottom:4px;">🎧 Customer Service</h2>
-      <div style="font-size:13px;color:#666;margin-bottom:14px;max-width:650px;">Create a support ticket for account, chat, profile, report follow-up, shop, payment, group, bug, or suggestion issues. Do not include passwords or private security codes.</div>
-      <div class="profile-card" style="max-width:650px;">
-        <div style="font-weight:700;margin-bottom:8px;">New support ticket</div>
-        <select id="supportCategory" style="width:100%;padding:9px;border:1px solid #ccc;border-radius:6px;margin-bottom:8px;box-sizing:border-box;">
-          <option value="account">Account / login</option><option value="chat">Chat / messaging</option><option value="profile">Profile / settings</option><option value="report">Report follow-up</option><option value="shop">Shop issue</option><option value="payment">Payment / Coins issue</option><option value="group">Group / chatroom</option><option value="bug">Bug / technical issue</option><option value="suggestion">Suggestion</option><option value="other">Other</option>
+        <butalue="chat">Chat / messaging</option><option value="profile">Profile / settings</option><option value="report">Report follow-up</option><option value="shop">Shop issue</option><option value="payment">Payment / Coins issue</option><option value="group">Group / chatroom</option><option value="bug">Bug / technical issue</option><option value="suggestion">Suggestion</option><option value="other">Other</option>
         </select>
         <input id="supportSubject" maxlength="100" placeholder="Short subject" style="width:100%;padding:9px;border:1px solid #ccc;border-radius:6px;margin-bottom:8px;box-sizing:border-box;">
         <textarea id="supportMessage" maxlength="1500" placeholder="Describe the problem clearly." style="width:100%;min-height:120px;padding:9px;border:1px solid #ccc;border-radius:6px;resize:vertical;box-sizing:border-box;"></textarea>
@@ -1462,6 +1466,23 @@ body.dark-mode .cm-explore-card,body.dark-mode .cm-explore-chip{background:#171a
 
     <div class="page" id="adminPage" style="padding:20px;overflow-y:auto;">
       <h2 style="color:#9c1c1c;margin-bottom:4px;">Admin panel</h2>
+      <div id="chatMeAdManager" class="profile-card cm-ad-manager" style="max-width:760px;">
+        <h3 style="margin:0 0 5px;color:#2b3a8f;">📢 Sponsored Ads</h3>
+        <div style="font-size:12.5px;color:#666;margin-bottom:10px;">Create one approved sponsor card that can be displayed to Chat Me users. Ads are clearly labeled as sponsored.</div>
+        <div class="cm-ad-grid">
+          <input id="cmAdTitle" type="text" maxlength="80" placeholder="Ad title">
+          <input id="cmAdSponsor" type="text" maxlength="60" placeholder="Company / sponsor name">
+          <input id="cmAdUrl" type="url" maxlength="500" placeholder="https://company.example">
+        </div>
+        <textarea id="cmAdBody" maxlength="240" placeholder="Short advertisement message"></textarea>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:9px;">
+          <button type="button" onclick="saveChatMeAd()" style="padding:9px 13px;border:0;border-radius:8px;background:#2b6ee0;color:#fff;font-weight:700;">Publish Ad</button>
+          <button type="button" onclick="disableChatMeAd()" style="padding:9px 13px;border:1px solid #c9d2df;border-radius:8px;background:#fff;color:#333;font-weight:700;">Disable Ad</button>
+          <button type="button" onclick="previewChatMeAd()" style="padding:9px 13px;border:1px solid #c9d2df;border-radius:8px;background:#fff;color:#333;">Preview</button>
+        </div>
+        <div id="cmAdManagerStatus" style="margin-top:8px;font-size:12px;color:#666;"></div>
+        <div class="cm-ad-safe-note"><strong>Ad safety:</strong> Chat Me should reject ads for betting/gambling, alcohol, nicotine/vapes, adult sexual content, weapons, dangerous products, scams, or other age-restricted/high-risk services. The Cloudflare Worker should enforce admin-only publishing and public read access for the approved ad configuration.</div>
+      </div>
       <div style="color:#888;font-size:13px;margin-bottom:16px;">Visible to trusted Chat Me staff. Owners and admins can manage the full panel; moderators see only the controls allowed for their role.</div>
       <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:20px;">
         <div class="profile-card" style="max-width:180px;">
@@ -2626,12 +2647,29 @@ async function doLogin(){
   const statusEl = document.getElementById('loginStatus');
   errEl.textContent = ''; statusEl.textContent = '';
 
-  const email = document.getElementById('loginEmail').value.trim();
+  const loginIdentifier = document.getElementById('loginEmail').value.trim();
   const password = document.getElementById('loginPassword').value;
 
-  if (!email || !password) {
-    errEl.textContent = 'Please enter your email and password.';
+  if (!loginIdentifier || !password) {
+    errEl.textContent = 'Please enter your email or username and password.';
     return;
+  }
+
+  // Firebase signs in with the account email. If the user entered a username,
+  // resolve that username to its account email through the secure profile store.
+  let email = loginIdentifier.toLowerCase();
+  if (!email.includes('@')) {
+    try {
+      const resolvedEmail = await storageGet(usernameKey(loginIdentifier), true);
+      if (typeof resolvedEmail === 'string' && resolvedEmail.includes('@')) email = resolvedEmail.trim().toLowerCase();
+      else {
+        errEl.textContent = 'Username not found. Please check it and try again.';
+        return;
+      }
+    } catch (e) {
+      errEl.textContent = 'We could not look up that username right now. Please try again.';
+      return;
+    }
   }
   const captchaResult = await recaptchaPassed('login');
   if (!captchaResult.ok) {
@@ -2820,6 +2858,7 @@ async function verifyCoreCloudReadiness(){
 
 async function loginSuccess(user){
   currentUser = user;
+  setTimeout(refreshChatMeAds, 250);
   sessionLocalSet(user.email); // tab-local only - never synced to the shared cloud store
   document.getElementById('welcomeScreen').style.display = 'none';
   document.getElementById('loginScreen').style.display = 'none';
@@ -8936,6 +8975,170 @@ window.addEventListener('load', function(){ refreshWelcomeStats(); });
   };
   setInterval(syncTopBadges,1200);
 })();
+</script>
+
+<script>
+(function(){
+  const NGM={};
+  const $=id=>document.getElementById(id);
+  const esc=x=>String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  let active=null,timers=[],snakeTimer=null,raceTimer=null;
+  function clearTimers(){timers.forEach(clearTimeout);timers=[];if(snakeTimer){clearInterval(snakeTimer);snakeTimer=null;}if(raceTimer){cancelAnimationFrame(raceTimer);raceTimer=null;}}
+  function title(t,n){$('newGameTitle').textContent=t;$('newGameNote').textContent=n;$('newGameBoard').innerHTML='';}
+  window.launchNewGame=function(name){
+    if(!window.currentUser){if(typeof showAuth==='function')showAuth('login');return;}
+    clearTimers();active=name;$('gameSelector').style.display='none';$('gameLeaderboard').style.display='none';$('wordCrossGame').style.display='none';$('diceGame').style.display='none';$('newGameArena').style.display='block';
+    const f=NGM[name];if(f)f();
+  };
+  window.closeNewGame=function(){clearTimers();active=null;$('newGameArena').style.display='none';$('gameSelector').style.display='block';};
+  function btn(label,fn,cls){return `<button type="button" onclick="${fn}" style="border:0;border-radius:8px;padding:10px 15px;cursor:pointer;font-weight:700;${cls||''}">${label}</button>`;}
+  function resetBtn(){return btn('Restart','restartNewGame()','background:#2b6ee0;color:#fff;margin-top:12px;');}
+  window.restartNewGame=function(){if(active)launchNewGame(active);};
+
+  // 1. Ludo — a compact, non-wagering race game for two local players.
+  NGM.ludo=function(){title('🎲 Ludo','Two local players. Roll a 1 to leave home, then race one token around the track.');
+    let p=[{pos:-1},{pos:-1}],turn=0,finished=[false,false];
+    const track=24;
+    function draw(msg=''){
+      let cells='';for(let i=0;i<track;i++)cells+=`<span style="display:inline-flex;width:26px;height:26px;border:1px solid #ddd;border-radius:50%;align-items:center;justify-content:center;font-size:11px;">${p[0].pos===i?'🔴':''}${p[1].pos===i?'🔵':''}</span>`;
+      $('newGameBoard').innerHTML=`<div style="margin-bottom:12px;font-weight:700;">Player ${turn+1}'s turn</div><div style="display:flex;flex-wrap:wrap;gap:3px;max-width:760px;margin-bottom:14px;">${cells}</div><div>🔴 Player 1: ${p[0].pos<0?'Home':p[0].pos+'/'+track} &nbsp; 🔵 Player 2: ${p[1].pos<0?'Home':p[1].pos+'/'+track}</div><div id="ludoMsg" style="margin-top:10px;font-weight:700;">${esc(msg)}</div>${btn('🎲 Roll Dice','ludoRoll()','background:#2b6ee0;color:#fff;margin-top:10px;')}${btn('Reset','restartNewGame()','background:#eee;color:#333;margin-left:8px;')}`;
+    }
+    window.ludoRoll=function(){if(finished.some(Boolean))return;const d=1+Math.floor(Math.random()*6),x=p[turn];if(x.pos<0){if(d===1)x.pos=0;else{ $('ludoMsg').textContent=`You rolled ${d}. Roll a 1 to leave home.`;return;}}else x.pos+=d;if(x.pos>=track){x.pos=track;finished[turn]=true;}const m=finished[turn]?`Player ${turn+1} reached the finish!`: `Player ${turn+1} rolled ${d}.`;draw(m);if(finished[turn]){setTimeout(()=>draw(`🏆 Player ${turn+1} wins!`),20);return;}turn=1-turn;draw(m);};
+    draw();
+  };
+
+  // 2. Whot-style matching card game, local player vs simple bot.
+  NGM.whot=function(){title('🃏 Whot Card Game','Match the number or symbol of the top card. Empty your hand before the bot.');
+    const suits=['●','■','▲','★'];let deck=[];suits.forEach(s=>{for(let n=1;n<=9;n++)deck.push({s,n});});
+    deck.sort(()=>Math.random()-0.5);let me=deck.splice(0,7),bot=deck.splice(0,7),top=deck.pop(),turn=0;
+    function render(msg=''){$('newGameBoard').innerHTML=`<div><b>Top card:</b> ${top.s} ${top.n}</div><div style="margin:12px 0;"><b>Your hand</b></div><div style="display:flex;gap:7px;flex-wrap:wrap;">${me.map((c,i)=>`<button type="button" onclick="whotPlay(${i})" style="padding:12px 10px;border:1px solid #ccc;border-radius:8px;background:#fff;cursor:pointer;">${c.s} ${c.n}</button>`).join('')}</div><div style="margin-top:12px;color:#666;">Bot cards: ${bot.length} &nbsp; ${esc(msg)}</div>${btn('Draw Card','whotDraw()','background:#2b6ee0;color:#fff;margin-top:10px;')}`;}
+    function valid(c){return c.s===top.s||c.n===top.n;}
+    window.whotPlay=function(i){if(turn!==0)return;const c=me[i];if(!valid(c)){render('That card must match the top card suit or number.');return;}top=me.splice(i,1)[0];if(!me.length){render('🏆 You win!');turn=2;return;}turn=1;render('Bot is thinking…');timers.push(setTimeout(()=>{let bi=bot.findIndex(valid);if(bi<0){if(deck.length)bot.push(deck.pop());}else{top=bot.splice(bi,1)[0];if(!bot.length){render('🤖 Bot wins this round.');turn=2;return;}}turn=0;render('Your turn.');},650));};
+    window.whotDraw=function(){if(turn!==0||!deck.length)return;me.push(deck.pop());render('You drew a card.');};
+    render();
+  };
+
+  // 3. Tic-Tac-Toe.
+  NGM.ttt=function(){title('❌⭕ Tic-Tac-Toe','Local two-player match. Player 1 is X and Player 2 is O.');let b=Array(9).fill(''),turn='X';
+    function win(){return [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]].find(a=>b[a[0]]&&b[a[0]]===b[a[1]]&&b[a[1]]===b[a[2]]);}
+    window.tttMove=function(i){if(b[i]||win())return;b[i]=turn;render();if(!win()&&b.some(x=>!x))turn=turn==='X'?'O':'X';render();};
+    function render(){$('newGameBoard').innerHTML=`<div style="display:grid;grid-template-columns:repeat(3,70px);gap:5px;">${b.map((v,i)=>`<button type="button" onclick="tttMove(${i})" style="width:70px;height:70px;font-size:30px;font-weight:800;border:1px solid #ccc;border-radius:8px;background:#fff;">${v}</button>`).join('')}</div><div style="margin-top:12px;font-weight:700;">${win()?`🏆 Player ${turn} wins!`:b.every(Boolean)?'Draw!':`Player ${turn}'s turn`}</div>${resetBtn()}`;}render();
+  };
+
+  // 4. Checkers with basic legal diagonal movement and captures.
+  NGM.checkers=function(){title('♟️ Checkers (Draught)','Local two-player checkers. Pieces move diagonally; captures are supported.');let b=Array.from({length:8},()=>Array(8).fill(''));for(let r=0;r<3;r++)for(let c=0;c<8;c++)if((r+c)%2)b[r][c]='b';for(let r=5;r<8;r++)for(let c=0;c<8;c++)if((r+c)%2)b[r][c]='r';let turn='r',sel=null;
+    function moves(r,c){let out=[],dirs=turn==='r'?[[-1,-1],[-1,1]]:[[1,-1],[1,1]];for(const[d1,d2]of dirs){let nr=r+d1,nc=c+d2;if(nr>=0&&nr<8&&nc>=0&&nc<8&&!b[nr][nc])out.push([nr,nc]);else if(nr>=0&&nr<8&&nc>=0&&nc<8&&b[nr][nc]&&b[nr][nc]!==turn){let jr=nr+d1,jc=nc+d2;if(jr>=0&&jr<8&&jc>=0&&jc<8&&!b[jr][jc])out.push([jr,jc]);}}return out;}
+    window.chkClick=function(r,c){if(sel){const mv=moves(sel[0],sel[1]).find(x=>x[0]===r&&x[1]===c);if(mv){const dr=r-sel[0],dc=c-sel[1];if(Math.abs(dr)===2)b[sel[0]+dr/2][sel[1]+dc/2]='';b[r][c]=b[sel[0]][sel[1]];b[sel[0]][sel[1]]='';turn=turn==='r'?'b':'r';sel=null;render();return;}sel=null;render();return;}if(b[r][c]===turn){sel=[r,c];render();}};
+    function render(){let h=`<div style="display:grid;grid-template-columns:repeat(8,34px);width:272px;border:2px solid #555;">`;for(let r=0;r<8;r++)for(let c=0;c<8;c++){let dark=(r+c)%2,mark=sel&&sel[0]===r&&sel[1]===c;h+=`<button type="button" onclick="chkClick(${r},${c})" style="width:34px;height:34px;border:0;background:${dark?'#b58863':'#f0d9b5'};font-size:22px;">${mark?'◉':b[r][c]==='r'?'🔴':b[r][c]==='b'?'⚫':''}</button>`;}h+='</div><div style="margin-top:10px;font-weight:700;">Player '+(turn==='r'?'🔴':'⚫')+' turn</div>'+resetBtn();$('newGameBoard').innerHTML=h;}render();
+  };
+
+  // 5. Chess board with standard piece movement (check/checkmate enforcement is intentionally outside this compact client module).
+  NGM.chess=function(){title('♞ Chess','Local two-player chess board. Standard piece movement is supported; turn order is enforced.');const P={r:'♜',n:'♞',b:'♝',q:'♛',k:'♚',R:'♖',N:'♘',B:'♗',Q:'♕',K:'♔'};let b=[['r','n','b','q','k','b','n','r'],Array(8).fill('p'),...Array.from({length:4},()=>Array(8).fill('')),Array(8).fill('P'),['R','N','B','Q','K','B','N','R']],turn='w',sel=null;
+    function color(x){return x===x?.toUpperCase()?'w':'b'}
+    function pathClear(r,c,nr,nc){let dr=Math.sign(nr-r),dc=Math.sign(nc-c),rr=r+dr,cc=c+dc;while(rr!==nr||cc!==nc){if(b[rr][cc])return false;rr+=dr;cc+=dc;}return true;}
+    function legal(r,c,nr,nc){const x=b[r][c],white=x===x.toUpperCase(),dest=b[nr][nc];if(!x||color(x)!==turn||(dest&&color(dest)===turn))return false;const dr=nr-r,dc=nc-c,ad=Math.abs(dr),ac=Math.abs(dc),t=x.toLowerCase();if(t==='p'){const d=white?-1:1;if(dc===0&&!dest&&dr===d)return true;if(dc===0&&!dest&&dr===2*d&&((white&&r===6)||(!white&&r===1))&&!b[r+d][c])return true;return(ac===1&&dr===d&&dest);}if(t==='n')return(ad===2&&ac===1)||(ad===1&&ac===2);if(t==='b')return ad===ac&&pathClear(r,c,nr,nc);if(t==='r')return(dr===0||dc===0)&&pathClear(r,c,nr,nc);if(t==='q')return((dr===0||dc===0)||ad===ac)&&pathClear(r,c,nr,nc);if(t==='k')return ad<=1&&ac<=1;return false;}
+    window.chessClick=function(r,c){if(sel){if(legal(sel[0],sel[1],r,c)){b[r][c]=b[sel[0]][sel[1]];b[sel[0]][sel[1]]='';turn=turn==='w'?'b':'w';}sel=null;render();return;}if(b[r][c]&&color(b[r][c])===turn){sel=[r,c];render();}};
+    function render(){let h='<div style="display:grid;grid-template-columns:repeat(8,40px);width:320px;border:2px solid #555;">';for(let r=0;r<8;r++)for(let c=0;c<8;c++){let dark=(r+c)%2,mark=sel&&sel[0]===r&&sel[1]===c;h+=`<button type="button" onclick="chessClick(${r},${c})" style="width:40px;height:40px;border:0;background:${dark?'#b58863':'#f0d9b5'};font-size:27px;">${mark?'◉':P[b[r][c]]||''}</button>`;}h+='</div><div style="margin-top:10px;font-weight:700;">'+(turn==='w'?'White':'Black')+' turn</div>'+resetBtn();$('newGameBoard').innerHTML=h;}render();
+  };
+
+  // 6. Snake canvas.
+  NGM.snake=function(){title('🐍 Snake Game','Use the arrow keys or the buttons below. Eat food and avoid the wall and your tail.');$('newGameBoard').innerHTML='<canvas id="snakeCanvas" width="300" height="300" style="max-width:100%;border:1px solid #ccc;border-radius:8px;"></canvas><div id="snakeScore" style="font-weight:700;margin-top:8px;">Score: 0</div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;">'+btn('⬆','snakeDir(0,-1)','background:#eee;')+btn('⬅','snakeDir(-1,0)','background:#eee;')+btn('➡','snakeDir(1,0)','background:#eee;')+btn('⬇','snakeDir(0,1)','background:#eee;')+'</div>'+resetBtn();const c=$('snakeCanvas'),ctx=c.getContext('2d'),size=15;let snake=[[10,10],[9,10],[8,10]],dir=[1,0],food=[4,4],score=0;function place(){food=[Math.floor(Math.random()*size),Math.floor(Math.random()*size)];}window.snakeDir=function(x,y){if(x===-dir[0]&&y===-dir[1])return;dir=[x,y];};function tick(){let h=[snake[0][0]+dir[0],snake[0][1]+dir[1]];if(h[0]<0||h[0]>=size||h[1]<0||h[1]>=size||snake.some(p=>p[0]===h[0]&&p[1]===h[1])){clearInterval(snakeTimer);snakeTimer=null;return;}snake.unshift(h);if(h[0]===food[0]&&h[1]===food[1]){score++;place();}else snake.pop();ctx.clearRect(0,0,300,300);ctx.strokeStyle='#ddd';for(let i=0;i<=size;i++){ctx.beginPath();ctx.moveTo(i*20,0);ctx.lineTo(i*20,300);ctx.stroke();ctx.beginPath();ctx.moveTo(0,i*20);ctx.lineTo(300,i*20);ctx.stroke();}ctx.font='18px sans-serif';ctx.fillText('🟢',h[0]*20,h[1]*20+18);ctx.fillText('🍎',food[0]*20,food[1]*20+18);$('snakeScore').textContent='Score: '+score;}document.onkeydown=e=>{if(active==='snake'){if(e.key==='ArrowUp')snakeDir(0,-1);if(e.key==='ArrowDown')snakeDir(0,1);if(e.key==='ArrowLeft')snakeDir(-1,0);if(e.key==='ArrowRight')snakeDir(1,0);}};snakeTimer=setInterval(tick,140);tick();};
+
+  // 7. Quiz / Trivia.
+  NGM.quiz=function(){title('🧠 Quiz / Trivia','Ten questions. Choose an answer to continue.');const qs=[['What is the capital of Nigeria?',['Abuja','Lagos','Kano','Ibadan'],0],['Which planet is known as the Red Planet?',['Earth','Mars','Jupiter','Venus'],1],['How many sides does a hexagon have?',['5','6','7','8'],1],['Which ocean is the largest?',['Atlantic','Indian','Pacific','Arctic'],2],['What gas do plants use for photosynthesis?',['Oxygen','Carbon dioxide','Hydrogen','Helium'],1],['2 + 8 × 2 = ?',['20','18','16','12'],0],['Which animal is a mammal?',['Shark','Dolphin','Lizard','Frog'],1],['What is H2O commonly called?',['Salt','Water','Oxygen','Hydrogen'],1],['Which instrument has black and white keys?',['Guitar','Piano','Drum','Flute'],1],['How many days are in a leap year?',['364','365','366','367'],2]];let i=0,score=0;function render(msg=''){if(i>=qs.length){$('newGameBoard').innerHTML=`<h3>Result: ${score}/${qs.length}</h3><div>${score>=8?'Excellent!':score>=5?'Good work!':'Keep practising!'}</div>${resetBtn()}`;return;}const[q,a]=qs[i];$('newGameBoard').innerHTML=`<div style="font-weight:700;margin-bottom:10px;">Question ${i+1}/${qs.length}</div><div style="margin-bottom:12px;">${esc(q)}</div><div style="display:grid;gap:8px;max-width:430px;">${a.map((x,j)=>btn(esc(x),`quizAnswer(${j})`,'background:#f5f7fb;color:#222;text-align:left;')).join('')}</div><div style="margin-top:10px;color:#777;">Score: ${score} ${msg?`— ${esc(msg)}`:''}</div>`;}window.quizAnswer=function(j){if(j===qs[i][2])score++;i++;render();};render();};
+
+  // 8. Rock-Paper-Scissors, best of five.
+  NGM.rps=function(){title('✊✋✌️ Rock-Paper-Scissors','Best of five against the computer. Online multiplayer access is 100 Coins per match; this local mode does not charge Coins.');let me=0,bot=0,round=0;function render(msg=''){const over=round>=5;if(over){$('newGameBoard').innerHTML=`<h3>${me===bot?'Draw!':me>bot?'🏆 You win!':'🤖 Computer wins!'}</h3><div>Score ${me} - ${bot}</div>${resetBtn()}`;return;}$('newGameBoard').innerHTML=`<div style="font-weight:700;margin-bottom:10px;">Round ${round+1}/5</div><div style="display:flex;gap:8px;flex-wrap:wrap;">${[['✊','rock'],['✋','paper'],['✌️','scissors']].map(x=>btn(x[0],`rpsPick('${x[1]}')`,'background:#fff;border:1px solid #ccc;font-size:24px;')).join('')}</div><div style="margin-top:12px;">${esc(msg)} &nbsp; Score: ${me}-${bot}</div>`;}window.rpsPick=function(x){const y=['rock','paper','scissors'][Math.floor(Math.random()*3)];let msg=`You: ${x} · Computer: ${y}`;if(x!==y){if((x==='rock'&&y==='scissors')||(x==='paper'&&y==='rock')||(x==='scissors'&&y==='paper'))me++;else bot++;}round++;render(msg);};render();};
+
+  // 9. Word guessing without hangman imagery.
+  NGM.wordguess=function(){title('🔤 Word Guessing Game','Guess the hidden word one letter at a time. You have 7 incorrect guesses.');const words=['CHAT','GAMES','COIN','FRIEND','NIGERIA','STATUS','PLAYER','PUZZLE'];let word=words[Math.floor(Math.random()*words.length)],used=[],bad=0;function render(msg=''){const masked=[...word].map(c=>used.includes(c)?c:'_').join(' ');$('newGameBoard').innerHTML=`<div style="font-size:25px;letter-spacing:7px;font-weight:800;margin-bottom:12px;">${masked}</div><div style="color:#666;margin-bottom:10px;">Incorrect guesses: ${bad}/7</div><input id="wgLetter" maxlength="1" placeholder="Letter" style="width:100px;padding:10px;border:1px solid #ccc;border-radius:7px;text-transform:uppercase;"><button type="button" onclick="wordGuessTry()" style="margin-left:6px;background:#2b6ee0;color:#fff;border:0;border-radius:7px;padding:10px 14px;">Try</button><div style="margin-top:10px;">Used: ${used.join(', ')} ${msg?`— ${esc(msg)}`:''}</div>`;}window.wordGuessTry=function(){const v=($('wgLetter').value||'').toUpperCase();if(!/^[A-Z]$/.test(v)||used.includes(v))return;used.push(v);if(!word.includes(v))bad++;const win=[...word].every(c=>used.includes(c));if(win||bad>=7){$('newGameBoard').innerHTML=`<h3>${win?'🏆 You found it!':'Round over'}</h3><div>The word was <b>${word}</b>.</div>${resetBtn()}`;return;}render();};render();};
+
+  // 10. Car Racing 2D canvas.
+  NGM.racing=function(){title('🏎️ Car Racing 2D','Use the left/right buttons or arrow keys to dodge traffic.');$('newGameBoard').innerHTML='<canvas id="raceCanvas" width="300" height="420" style="max-width:100%;border:1px solid #ccc;border-radius:8px;background:#333;"></canvas><div id="raceScore" style="font-weight:700;margin-top:8px;">Distance: 0</div><div style="display:flex;gap:7px;margin-top:10px;">'+btn('⬅','raceMove(-1)','background:#eee;')+btn('➡','raceMove(1)','background:#eee;')+'</div>'+resetBtn();const c=$('raceCanvas'),ctx=c.getContext('2d');let lane=1,y=350,score=0,obs=[];window.raceMove=function(d){lane=Math.max(0,Math.min(2,lane+d));};function frame(){ctx.clearRect(0,0,300,420);ctx.fillStyle='#555';ctx.fillRect(0,0,300,420);ctx.strokeStyle='#eee';ctx.setLineDash([18,18]);for(let x of [100,200]){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,420);ctx.stroke();}ctx.setLineDash([]);if(Math.random()<0.025)obs.push({lane:Math.floor(Math.random()*3),y:-60});obs.forEach(o=>o.y+=5);obs=obs.filter(o=>o.y<450);ctx.font='34px sans-serif';ctx.fillText('🚗',lane*100+33,y);obs.forEach(o=>ctx.fillText('🚙',o.lane*100+33,o.y));if(obs.some(o=>o.lane===lane&&Math.abs(o.y-y)<45)){cancelAnimationFrame(raceTimer);raceTimer=null;$('raceScore').textContent='Crashed! Distance: '+score;return;}score++;$('raceScore').textContent='Distance: '+score;raceTimer=requestAnimationFrame(frame);}document.onkeydown=e=>{if(active==='racing'){if(e.key==='ArrowLeft')raceMove(-1);if(e.key==='ArrowRight')raceMove(1);}};frame();};
+})();
+
+/* ---------------- CHAT ME SPONSORED ADS ---------------- */
+const CHATME_AD_KEY = 'ads:active';
+const CHATME_AD_BLOCKED_TERMS = [
+  'betting','casino','gambling','sportsbook','wager','alcohol','beer','wine','vodka',
+  'cigarette','cigarettes','vape','vaping','nicotine','adult','porn','escort','weapon',
+  'gun','firearm','ammunition','scam','crypto investment','binary options'
+];
+function adTextSafe(text){
+  const t=String(text||'').toLowerCase();
+  return !CHATME_AD_BLOCKED_TERMS.some(x=>t.includes(x));
+}
+function safeAdUrl(url){
+  try{
+    const u=new URL(String(url||''));
+    return (u.protocol==='https:' || u.protocol==='http:') ? u.href : '';
+  }catch(e){return '';}
+}
+function renderChatMeAdInto(el){
+  if(!el) return;
+  storageGet(CHATME_AD_KEY,true).then(raw=>{
+    let ad=null;
+    try{ ad=raw?JSON.parse(raw):null; }catch(e){}
+    if(!ad || ad.enabled!==true || !ad.title || !ad.body || !ad.sponsor || !safeAdUrl(ad.url) ||
+       !adTextSafe(ad.title+' '+ad.body+' '+ad.sponsor+' '+ad.url)){
+      el.innerHTML='<div class="cm-ad-label">Sponsored</div><div class="cm-ad-empty">Advertisement space</div>';
+      return;
+    }
+    const url=safeAdUrl(ad.url);
+    el.innerHTML='<div class="cm-ad-label">Sponsored</div>'+
+      '<div class="cm-ad-title">'+escapeHtml(ad.title)+'</div>'+
+      '<div class="cm-ad-body">'+escapeHtml(ad.body)+'</div>'+
+      '<a class="cm-ad-btn" href="'+escapeHtml(url)+'" target="_blank" rel="noopener noreferrer sponsored nofollow">Learn more</a>'+
+      '<div class="cm-ad-sponsor">Advertiser: '+escapeHtml(ad.sponsor)+'</div>';
+  }).catch(()=>{
+    el.innerHTML='<div class="cm-ad-label">Sponsored</div><div class="cm-ad-empty">Advertisement space</div>';
+  });
+}
+function refreshChatMeAds(){
+  renderChatMeAdInto(document.getElementById('chatMeHomeAd'));
+  renderChatMeAdInto(document.getElementById('chatMeGamesAd'));
+}
+async function saveChatMeAd(){
+  if(!isAdminUser(currentUser)){ alert('Only trusted Chat Me admins can publish ads.'); return; }
+  const title=document.getElementById('cmAdTitle')?.value.trim();
+  const sponsor=document.getElementById('cmAdSponsor')?.value.trim();
+  const body=document.getElementById('cmAdBody')?.value.trim();
+  const url=safeAdUrl(document.getElementById('cmAdUrl')?.value.trim());
+  const status=document.getElementById('cmAdManagerStatus');
+  if(!title||!sponsor||!body||!url){ if(status) status.textContent='Please complete the ad title, sponsor, message and HTTPS/HTTP destination.'; return; }
+  if(!adTextSafe(title+' '+sponsor+' '+body+' '+url)){
+    if(status) status.textContent='This ad contains a restricted category or term and cannot be published.';
+    return;
+  }
+  const ad={enabled:true,title,sponsor,body,url,updatedAt:Date.now(),publishedBy:currentUser.username};
+  try{
+    await storageSet(CHATME_AD_KEY,JSON.stringify(ad),true);
+    if(status) status.textContent='Ad published. Users will see the approved sponsored card when the secure backend serves this ad configuration.';
+    refreshChatMeAds();
+  }catch(e){
+    if(status) status.textContent='The ad could not be published yet. The Cloudflare Worker must allow admin-only writes to ads:active.';
+  }
+}
+async function disableChatMeAd(){
+  if(!isAdminUser(currentUser)){ alert('Only trusted Chat Me admins can manage ads.'); return; }
+  const status=document.getElementById('cmAdManagerStatus');
+  try{
+    await storageSet(CHATME_AD_KEY,JSON.stringify({enabled:false,updatedAt:Date.now(),disabledBy:currentUser.username}),true);
+    if(status) status.textContent='Sponsored ad disabled.';
+    refreshChatMeAds();
+  }catch(e){
+    if(status) status.textContent='The ad could not be disabled until the secure Worker supports the ads:active key.';
+  }
+}
+function previewChatMeAd(){
+  const title=document.getElementById('cmAdTitle')?.value.trim()||'Your company on Chat Me';
+  const sponsor=document.getElementById('cmAdSponsor')?.value.trim()||'Your company';
+  const body=document.getElementById('cmAdBody')?.value.trim()||'Reach the Chat Me community with a clearly labeled sponsored message.';
+  const url=safeAdUrl(document.getElementById('cmAdUrl')?.value.trim())||'https://example.com';
+  const el=document.getElementById('chatMeHomeAd');
+  if(!el) return;
+  el.innerHTML='<div class="cm-ad-label">Sponsored — Preview</div><div class="cm-ad-title">'+escapeHtml(title)+'</div><div class="cm-ad-body">'+escapeHtml(body)+'</div><a class="cm-ad-btn" href="'+escapeHtml(url)+'" target="_blank" rel="noopener noreferrer">Learn more</a><div class="cm-ad-sponsor">Advertiser: '+escapeHtml(sponsor)+'</div>';
+}
 </script>
 </body>
 </html>
