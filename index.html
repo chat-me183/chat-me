@@ -1461,6 +1461,10 @@ body.dark-mode #welcomeScreen .welcome-trust-card span{color:#b9c0cc !important;
         <div class="cm-shortcut-row" id="cmHomeShortcutRow"></div>
       </div>
       <div id="cmProfileCompletion" class="cm-explore-card" style="margin-top:10px;"></div>
+      <div class="cm-explore-card" id="cmProfileShortcut" style="margin-top:10px;display:flex;align-items:center;justify-content:space-between;gap:10px;">
+        <div><strong>👤 CM Profile</strong><div style="font-size:12px;color:#666;margin-top:3px;">Open and manage your Chat Me profile.</div></div>
+        <button type="button" class="cm-explore-action" onclick="switchTab('profilePage')">Open Profile</button>
+      </div>
       <div class="cm-home-status" aria-label="Create a status">
         <div class="cm-status-head">
           <div id="homeStatusAvatar" class="cm-status-avatar">CM</div>
@@ -2588,19 +2592,8 @@ async function storageGet(key){
     _cacheSet(key, val);
     return val;
   }
-  if (firebaseDb) {
-    try {
-      const doc = await withTimeout(firebaseDb.collection('kv').doc(key).get(), 3000);
-      const val = doc.exists ? doc.data().value : null;
-      if (storageBackend === 'local') { try { val === null ? localStorage.removeItem(key) : localStorage.setItem(key, val); } catch(e){} }
-      else { if (val === null) delete memStore[key]; else memStore[key] = val; }
-      _cacheSet(key, val);
-      return val;
-    } catch (e) {
-      console.error('SECURITY: Firestore read failed; refusing local fallback.', e);
-      throw e;
-    }
-  }
+  // In production, Cloudflare KV is authoritative. Never fall back to a
+  // client-accessible Firestore KV path if the secure Worker is unavailable.
   if (firebaseConfigLooksReal) throw new Error('Secure cloud storage is unavailable.');
   if (storageBackend === 'local') {
     try { return localStorage.getItem(key); } catch (e) {}
@@ -2608,16 +2601,14 @@ async function storageGet(key){
   return Object.prototype.hasOwnProperty.call(memStore, key) ? memStore[key] : null;
 }
 async function storageSet(key, value){
-  _cacheSet(key, value);
   const secure = await secureStorageRequest('set', key, { value });
-  if (secure.handled) return { key, value };
-  if (firebaseDb) {
-    try { await withTimeout(firebaseDb.collection('kv').doc(key).set({ value: value, updatedAt: Date.now() }), 3000); }
-    catch (e) { console.error('SECURITY: Firestore write failed; refusing local-only save.', e); throw e; }
-  } else if (firebaseConfigLooksReal) {
-    throw new Error('Secure cloud storage is unavailable.');
+  if (secure.handled) {
+    _cacheSet(key, value);
+    return { key, value };
   }
-  if (!firebaseConfigLooksReal && storageBackend === 'local') {
+  if (firebaseConfigLooksReal) throw new Error('Secure cloud storage is unavailable.');
+  _cacheSet(key, value);
+  if (storageBackend === 'local') {
     try { localStorage.setItem(key, value); return { key, value }; }
     catch (e) { console.warn('This particular save was too large for local storage - keeping it in memory for this session only.', e); }
   }
@@ -2627,18 +2618,6 @@ async function storageSet(key, value){
 async function storageListKeys(prefix){
   const secure = await secureStorageRequest('list', prefix);
   if (secure.handled) return secure.data?.keys || [];
-  if (firebaseDb) {
-    try {
-      const snap = await withTimeout(firebaseDb.collection('kv')
-        .where(firebase.firestore.FieldPath.documentId(), '>=', prefix)
-        .where(firebase.firestore.FieldPath.documentId(), '<', prefix + '\uf8ff')
-        .get(), 3000);
-      return snap.docs.map(d => d.id);
-    } catch (e) {
-      console.error('SECURITY: Firestore list failed; refusing local fallback.', e);
-      throw e;
-    }
-  }
   if (firebaseConfigLooksReal) throw new Error('Secure cloud storage is unavailable.');
   if (storageBackend === 'local') {
     try { return Object.keys(localStorage).filter(k => k.startsWith(prefix)); } catch (e) {}
@@ -2646,13 +2625,10 @@ async function storageListKeys(prefix){
   return Object.keys(memStore).filter(k => k.startsWith(prefix));
 }
 async function storageRemove(key){
-  _cacheClear(key);
   const secure = await secureStorageRequest('delete', key);
-  if (secure.handled) return true;
-  if (firebaseDb) {
-    try { await withTimeout(firebaseDb.collection('kv').doc(key).delete(), 3000); }
-    catch (e) { console.error('SECURITY: Firestore delete failed.', e); throw e; }
-  }
+  if (secure.handled) { _cacheClear(key); return true; }
+  if (firebaseConfigLooksReal) throw new Error('Secure cloud storage is unavailable.');
+  _cacheClear(key);
   if (storageBackend === 'local') {
     try { localStorage.removeItem(key); return true; } catch (e) {}
   }
@@ -4155,9 +4131,12 @@ function switchTab(pageId, fromHistory=false){
 }
 
 window.addEventListener('hashchange', function(){
-  if (!currentUser) return;
   const id = decodeURIComponent(String(window.location.hash || '').replace(/^#/, ''));
-  if (id && document.getElementById(id)) switchTab(id, true);
+  if (!id) return;
+  // Page hashes are app routes. A fresh browser load is intentionally logged out,
+  // so protected pages still require Login; once authenticated, the route opens normally.
+  if (!currentUser) return;
+  if (document.getElementById(id)) switchTab(id, true);
 });
 
 /* ---------------- EXPLORE / DISCOVERY ---------------- */
@@ -6604,6 +6583,17 @@ function escapeHtml(s){
 }
 
 /* ---------------- PROFILE ---------------- */
+function getCMProfileLink(){
+  return window.location.origin + window.location.pathname + '#profilePage';
+}
+async function copyCMProfileLink(){
+  const link=getCMProfileLink();
+  try{
+    if(navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(link);
+    else { const ta=document.createElement('textarea'); ta.value=link; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); }
+    alert('CM Profile link copied. Open Chat Me and log in to view your profile.');
+  }catch(e){ prompt('Copy your CM Profile link:',link); }
+}
 async function loadProfile(){
   const u = currentUser;
   const friendsRaw = await storageGet(friendsKey(u.username), true);
@@ -6658,6 +6648,7 @@ async function loadProfile(){
       <div class="field-msg" id="bioError"></div>
     </div>
     <div class="profile-row"><span>Email</span><span>${escapeHtml(u.email)}</span></div>
+    <div class="profile-row"><span>CM Profile link</span><span><button type="button" onclick="copyCMProfileLink()" style="background:#2b6ee0;color:#fff;border:0;border-radius:6px;padding:6px 10px;cursor:pointer;">Copy CM Profile Link</button></span></div>
     <div class="profile-row"><span>Phone</span><span>${escapeHtml(u.phone)}</span></div>
     <div class="profile-row"><span>Country</span><span>${escapeHtml(u.country)}</span></div>
     <div class="profile-row"><span>Coins balance</span><span>${(typeof u.leos==='number'?u.leos:20).toFixed(2)} <span style="color:#aaa;font-weight:400;">(private)</span></span></div>
