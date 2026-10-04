@@ -1166,6 +1166,7 @@ body.dark-mode #welcomeScreen .welcome-trust-card span{color:#b9c0cc !important;
   #welcomeScreen > .welcome-bottom-controls{width:calc(100% - 20px)!important;}
 }
 </style>
+<style id="cm-menu-only-navigation">#cmMobileBottomNav{display:none!important;}</style>
 </head>
 <body>
 
@@ -2461,8 +2462,10 @@ async function secureStorageRequest(op, key, body) {
       });
     } finally { clearTimeout(timeoutId); }
     if (res.status === 404 || res.status === 405) {
-      secureStorageBackendState = 'legacy';
-      return { handled:false };
+      secureStorageBackendState = 'secure-error';
+      const err = new Error('Secure storage service is not available.');
+      err.secureStorage = true; err.status = res.status;
+      throw err;
     }
     if (!res.ok) {
       let detail = null; try { detail = await res.json(); } catch(e){}
@@ -2625,48 +2628,46 @@ async function storageGet(key){
     _cacheSet(key, val);
     return val;
   }
-  if (firebaseConfigLooksReal) throw new Error('Secure cloud storage is unavailable.');
-  if (storageBackend === 'local') {
-    try { return localStorage.getItem(key); } catch (e) {}
-  }
-  return Object.prototype.hasOwnProperty.call(memStore, key) ? memStore[key] : null;
+  throw new Error('Secure cloud storage is unavailable.');
 }
 async function storageSet(key, value){
   _cacheSet(key, value);
   const secure = await secureStorageRequest('set', key, { value });
   if (secure.handled) return { key, value };
-  if (firebaseConfigLooksReal) {
-    throw new Error('Secure cloud storage is unavailable.');
-  }
-  if (!firebaseConfigLooksReal && storageBackend === 'local') {
-    try { localStorage.setItem(key, value); return { key, value }; }
-    catch (e) { console.warn('This particular save was too large for local storage - keeping it in memory for this session only.', e); }
-  }
-  memStore[key] = value;
-  return { key, value };
+  throw new Error('Secure cloud storage is unavailable.');
 }
 async function storageListKeys(prefix){
   const secure = await secureStorageRequest('list', prefix);
   if (secure.handled) return secure.data?.keys || [];
-  if (firebaseConfigLooksReal) throw new Error('Secure cloud storage is unavailable.');
-  if (storageBackend === 'local') {
-    try { return Object.keys(localStorage).filter(k => k.startsWith(prefix)); } catch (e) {}
-  }
-  return Object.keys(memStore).filter(k => k.startsWith(prefix));
+  throw new Error('Secure cloud storage is unavailable.');
 }
 async function storageRemove(key){
   _cacheClear(key);
   const secure = await secureStorageRequest('delete', key);
   if (secure.handled) return true;
-  if (firebaseConfigLooksReal) throw new Error('Secure cloud storage is unavailable.');
-  if (storageBackend === 'local') {
-    try { localStorage.removeItem(key); return true; } catch (e) {}
-  }
-  delete memStore[key];
-  return true;
+  throw new Error('Secure cloud storage is unavailable.');
 }
 
 function usernameKey(u){ return 'uname:' + u.toLowerCase(); }
+
+/* Username login compatibility: the username-to-email hint is kept only on
+   this device. It is never trusted for authorization and never replaces the
+   authenticated Worker/KV profile. This lets a user who has previously
+   registered/logged in on this device use the username field without making
+   an unauthenticated protected-KV request. */
+const CM_LOCAL_USERNAME_EMAIL_PREFIX = 'chatme_local_username_email:';
+function cmLocalUsernameEmailGet(username){
+  try {
+    const v = localStorage.getItem(CM_LOCAL_USERNAME_EMAIL_PREFIX + String(username || '').trim().toLowerCase());
+    return typeof v === 'string' && v.includes('@') ? v.trim().toLowerCase() : '';
+  } catch(e) { return ''; }
+}
+function cmLocalUsernameEmailSet(username,email){
+  try {
+    if (username && email) localStorage.setItem(CM_LOCAL_USERNAME_EMAIL_PREFIX + String(username).trim().toLowerCase(), String(email).trim().toLowerCase());
+  } catch(e) {}
+}
+
 function userKey(email){ return 'user:' + email.toLowerCase(); }
 function friendsKey(username){ return 'friends:' + username.toLowerCase(); }
 function chatKey(a, b){
@@ -2842,6 +2843,8 @@ async function doSignup(){
   signupBtn.textContent = 'Creating account...';
   showLoading(true);
   let firebaseCreatedForSignup = false;
+  const signupWrittenKeys = [];
+  const signupRememberKey = (k) => { if (!signupWrittenKeys.includes(k)) signupWrittenKeys.push(k); };
   try {
     /* Firebase Authentication must be established BEFORE protected Worker/KV
        reads. The old order tried to check username/email through storage first,
@@ -2886,9 +2889,13 @@ async function doSignup(){
       createdAt: Date.now()
     };
     const setUserRes = await storageSet(userKey(email), JSON.stringify(user), true);
-    if (!setUserRes) { errEl.textContent = 'Could not create your account right now. Please try again.'; return; }
+    if (!setUserRes) throw new Error('Secure account profile could not be saved.');
+    signupRememberKey(userKey(email));
     await storageSet(usernameKey(username), email, true);
+    signupRememberKey(usernameKey(username));
+    cmLocalUsernameEmailSet(username, email);
     await storageSet(friendsKey(username), JSON.stringify([]), true);
+    signupRememberKey(friendsKey(username));
     await storageSet(notifsKey(username), JSON.stringify([{
       id: Date.now() + '-' + Math.random().toString(36).slice(2, 8),
       type: 'welcome', time: Date.now(), read: false, handled: true,
@@ -2899,6 +2906,7 @@ async function doSignup(){
       title: 'What can I use my Coins for?',
       text: 'Your Coins can be used to create a Chatroom (10,000 Coins) or Group (8,000 Coins), and to buy items and features in the Shop: profile themes, profile frames, name effects, sticker packs, premium chat themes, virtual gifts, special badges, Featured Profile, Profile Music, Private Room access, Group Background access, Premium Message Pins, Premium Reactions, and Story Insights. You can also earn 50 Coins by inviting 3 friends who actually sign up with your referral link. Check the Shop before spending your Coins so you can see the current prices.'
     }]), true);
+    signupRememberKey(notifsKey(username));
 
     // Referral tracking: ?ref=someusername in the URL that brought them here.
     // Rewards are milestone-based and claimable (not auto-added) - see showReferralInfo.
@@ -2939,7 +2947,12 @@ async function doSignup(){
       document.getElementById('loginEmail').value = email;
     }
   } catch (e) {
-    errEl.textContent = 'Something went wrong creating your account. Please try again.';
+    console.error('Chat Me registration failure:', e);
+    for (const k of signupWrittenKeys.reverse()) { try { await storageRemove(k); } catch (_) {} }
+    if (firebaseCreatedForSignup) { try { await firebaseAuth.currentUser?.delete(); } catch (_) {} }
+    try { await firebaseAuth?.signOut(); } catch (_) {}
+    errEl.textContent = e?.secureStorage ? 'Your account could not be saved securely. Please try again.' : 'Registration could not be completed. Please try again.';
+    refreshCaptcha('signup');
   } finally {
     signupBtn.disabled = false;
     signupBtn.textContent = 'Sign Up';
@@ -3369,22 +3382,15 @@ async function doLogin(){
     return;
   }
 
-  // Firebase signs in with the account email. If the user entered a username,
-  // resolve the username mapping first. During the secure-backend migration,
-  // an already-authenticated Worker can resolve protected mappings; for a fresh
-  // browser session the legacy Firestore mapping remains the compatibility path.
-  // No password or private profile data is exposed by this lookup.
+  // Firebase signs in with the account email. A username is resolved only
+  // from the non-authoritative, device-local hint created after registration
+  // or a successful email login. Do NOT call protected Worker/KV storage before
+  // Firebase authentication: the secure Worker requires a valid Firebase token.
   let email = loginIdentifier.toLowerCase();
   if (!email.includes('@')) {
-    try {
-      const resolvedEmail = await storageGet(usernameKey(loginIdentifier), true);
-      if (typeof resolvedEmail === 'string' && resolvedEmail.includes('@')) email = resolvedEmail.trim().toLowerCase();
-      else {
-        errEl.textContent = 'Username not found. Please check it and try again.';
-        return;
-      }
-    } catch (e) {
-      errEl.textContent = 'Username login needs the username mapping service. Please use your email for this login, or try again after the secure Worker is deployed.';
+    email = cmLocalUsernameEmailGet(loginIdentifier);
+    if (!email) {
+      errEl.textContent = 'For this device, enter your email address for the first login. After a successful login, your username will work here too.';
       return;
     }
   }
@@ -3402,42 +3408,28 @@ async function doLogin(){
   loginBtn.textContent = 'Logging in...';
   showLoading(true);
   try {
-    if (!firebaseAuth || !firebaseDb || !firebaseConfigLooksReal) { errEl.textContent='Secure Firebase Authentication is unavailable. Please try again later.'; refreshCaptcha('login'); return; }
+    if (!firebaseAuth || !firebaseConfigLooksReal) { errEl.textContent='Secure Firebase Authentication is unavailable. Please try again later.'; refreshCaptcha('login'); return; }
     let fbUser;
     try { fbUser = await ensureFirebaseSession(email,password); }
     catch(e) { errEl.textContent = e.code==='auth/too-many-requests' ? 'Too many login attempts. Please wait and try again.' : 'Invalid email or password.'; refreshCaptcha('login'); return; }
-    // The secure Worker is now authoritative, but existing Chat Me accounts
-    // may still have their profile in the legacy Firestore kv collection.
-    // After Firebase authentication succeeds, recover only this user's own
-    // legacy profile once, then immediately copy the sanitized profile into
-    // the secure Worker/KV store so future logins use the secure backend.
+    // Firebase authentication is now established. From this point on, protected
+    // Worker/KV reads are permitted.
+    // The secure Worker/KV backend is authoritative for the Chat Me profile.
     let raw = null;
-    let loadedFromLegacy = false;
     try {
       raw = await storageGet(userKey(email), true);
     } catch (storageErr) {
-      console.warn('Secure profile lookup failed; checking the authenticated user\'s legacy Firestore profile for one-time migration.', storageErr);
-    }
-    if (!raw && firebaseDb) {
-      try {
-        const legacySnap = await withTimeout(firebaseDb.collection('kv').doc(userKey(email)).get(), 5000);
-        if (legacySnap.exists) {
-          const legacyValue = legacySnap.data()?.value;
-          if (typeof legacyValue === 'string') { raw = legacyValue; loadedFromLegacy = true; }
-        }
-      } catch (legacyErr) {
-        console.warn('Legacy profile lookup failed.', legacyErr);
-      }
+      console.warn('Secure profile lookup failed.', storageErr);
     }
     if (!raw) { errEl.textContent='Your Firebase account exists, but your Chat Me profile could not be found. Please contact support.'; refreshCaptcha('login'); return; }
     const user = JSON.parse(raw);
     if (user.uid && user.uid !== fbUser.user.uid) { errEl.textContent='This account is linked to a different secure identity.'; await firebaseAuth.signOut(); refreshCaptcha('login'); return; }
     user.uid = fbUser.user.uid;
     delete user.salt; delete user.passwordHash; delete user.pendingResetCode; delete user.pendingResetCodeAt;
-    // Write the sanitized profile to the secure Worker. This also completes
-    // the one-time migration when the profile came from legacy Firestore.
-    await storageSet(userKey(email), JSON.stringify(user), true);
-    if (loadedFromLegacy) console.info('Chat Me: migrated this account profile to secure Worker storage.');
+    cmLocalUsernameEmailSet(user.username, email);
+    // The authenticated profile was already read from authoritative Worker/KV.
+    // Do not perform a redundant write during login: a successful login must not
+    // fail merely because a profile write is rejected by a stricter KV policy.
     const trustedClaims = await refreshTrustedAuthClaims();
     applyTrustedClaimsToUser(user, trustedClaims);
     // A profile document can say 'admin', but that value is untrusted client data.
@@ -3451,10 +3443,13 @@ async function doLogin(){
       await loginSuccess(publicUser(user));
     } catch (loginErr) {
       statusEl.textContent = '';
-      errEl.textContent = 'Login succeeded but something went wrong opening the app. Please try again.';
+      errEl.textContent = 'Login succeeded, but the app could not finish loading. Please try again.';
     }
   } catch (e) {
-    errEl.textContent = 'Something went wrong logging you in. Please try again.';
+    console.error('Chat Me login failure:', e);
+    try { if (firebaseAuth?.currentUser) await firebaseAuth.signOut(); } catch (_) {}
+    errEl.textContent = e?.secureStorage ? 'Secure account storage could not be reached. Please try again.' : 'Login could not be completed. Please try again.';
+    refreshCaptcha('login');
   } finally {
     loginBtn.disabled = false;
     loginBtn.textContent = 'Login';
@@ -3561,12 +3556,14 @@ async function grantDailyBonusIfDue(){
 }
 
 async function verifyCoreCloudReadiness(){
-  // Registration/login should never silently look successful while the app is
-  // disconnected from its shared database. This is a diagnostic only: it
-  // does not expose account data and never blocks local recovery.
-  if (!firebaseDb) return {ok:false, reason:'offline'};
+  // The Worker/KV backend is authoritative for Chat Me cloud storage.
   try {
-    await withTimeout(firebaseDb.collection('kv').doc('_chatme_healthcheck').get(), 3000);
+    if (!firebaseAuth || !firebaseAuth.currentUser) return {ok:false, reason:'auth'};
+    const token = await firebaseAuth.currentUser.getIdToken();
+    const res = await fetch(RECAPTCHA_BACKEND_URL + '/storage?op=list&prefix=system:', {
+      method:'GET', headers:{'Authorization':'Bearer ' + token}
+    });
+    if (!res.ok) return {ok:false, reason:'cloud'};
     return {ok:true};
   } catch(e) {
     return {ok:false, reason:'cloud'};
@@ -3593,9 +3590,12 @@ async function loginSuccess(user){
   updateCoinsDisplay();
   // Re-read trusted staff claims on every successful login/session restore.
   try { applyTrustedClaimsToUser(user, await refreshTrustedAuthClaims()); } catch(e) {}
-  const cloudStatus = await verifyCoreCloudReadiness();
-  if (!cloudStatus.ok) { console.warn('Chat Me cloud sync is not currently confirmed; the app may be using local fallback.'); }
-  document.getElementById('adminNavItem').style.display = (currentUserHasTrustedRole('admin') || currentUserHasTrustedRole('moderator')) ? 'block' : 'none';
+  try {
+    const cloudStatus = await verifyCoreCloudReadiness();
+    if (!cloudStatus.ok) console.warn('Chat Me cloud sync check did not confirm readiness.');
+  } catch (e) { console.warn('Chat Me cloud readiness check skipped:', e); }
+  const adminNav = document.getElementById('adminNavItem');
+  if (adminNav) adminNav.style.display = (currentUserHasTrustedRole('admin') || currentUserHasTrustedRole('moderator')) ? 'block' : 'none';
   const supportNav = document.getElementById('supportNavItem');
   if (supportNav) supportNav.style.display = (currentUserHasTrustedRole('admin') || currentUserHasTrustedRole('moderator')) ? 'block' : 'none';
   document.getElementById('homeColorPicker').innerHTML = postColorPickerHtml('home');
@@ -3618,8 +3618,12 @@ async function loginSuccess(user){
     const hashTab = decodeURIComponent(String(window.location.hash || '').replace(/^#/, ''));
     if (hashTab && document.getElementById(hashTab)) savedTab = hashTab;
   } catch (e) {}
-  if (!savedTab) savedTab = await storageGet(lastTabKey(user.username));
-  switchTab(savedTab || 'homePage');
+  if (!savedTab) {
+    try { savedTab = await storageGet(lastTabKey(user.username)); }
+    catch (e) { console.warn('Could not restore the last tab; opening Home.', e); }
+  }
+  try { switchTab(savedTab || 'homePage'); }
+  catch (e) { console.warn('Could not open the saved page; opening Home.', e); switchTab('homePage'); }
 }
 
 async function restoreSession(){
