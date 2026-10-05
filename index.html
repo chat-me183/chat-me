@@ -1614,7 +1614,6 @@ function copyCMProfileLink(){
           <button class="cm-status-action question" type="button" onclick="document.getElementById('postType').value='Question';document.getElementById('postInput').focus()">? Question</button>
         </div>
       </div>
-      <div id="cmStoriesStrip" class="cm-stories-strip"></div>
       <div id="cmPinnedAnnouncement" class="cm-home-social-card" style="display:none;"></div>
       <div id="cmPeopleSuggestions" class="cm-home-social-card" style="display:none;"></div>
       <div id="cmHomeTrendingTopics" class="cm-home-social-card" style="display:none;"></div>
@@ -1652,6 +1651,7 @@ function copyCMProfileLink(){
           <button onclick="createPost()">Post</button>
         </div>
       </div>
+      <div id="cmStoriesStrip" class="cm-stories-strip"></div>
       <div id="friendsBanner"></div>
       <div id="postList"></div>
     </div>
@@ -2185,7 +2185,19 @@ function copyCMProfileLink(){
         <textarea id="reportDescInput" maxlength="500" placeholder="Describe what happened - who or what it involves, and why it breaks the rules." style="width:100%;min-height:100px;padding:9px 10px;border:1px solid #ccc;border-radius:6px;font-size:13.5px;resize:vertical;margin-bottom:10px;"></textarea>
         <div class="auth-error" id="reportError"></div>
         <div class="auth-status" id="reportStatus"></div>
-        <butalue="chat">Chat / messaging</option><option value="profile">Profile / settings</option><option value="report">Report follow-up</option><option value="shop">Shop issue</option><option value="payment">Payment / Coins issue</option><option value="group">Group / chatroom</option><option value="bug">Bug / technical issue</option><option value="suggestion">Suggestion</option><option value="other">Other</option>
+        <button onclick="submitReport()" style="background:#d32f2f;color:#fff;border:0;padding:9px 16px;border-radius:6px;cursor:pointer;font-weight:600;">Submit Report</button>
+      </div>
+    </div>
+
+    <div class="page" id="supportPage" style="padding:16px;overflow-y:auto;">
+      <h2 style="color:#2b3a8f;margin-bottom:6px;">🎧 Customer Service</h2>
+      <div style="font-size:13px;color:#666;margin-bottom:14px;max-width:520px;">
+        Need help with your account, Coins, a chat, or something not working? Create a ticket below and staff will reply here and in your Notifications.
+      </div>
+      <div class="profile-card" style="max-width:520px;">
+        <div style="font-size:13px;color:#888;margin-bottom:4px;">What's this about?</div>
+        <select id="supportCategory" style="width:100%;padding:9px;border:1px solid #ccc;border-radius:6px;margin-bottom:8px;background:#fff;">
+          <option value="account">Account / login</option><option value="chat">Chat / messaging</option><option value="profile">Profile / settings</option><option value="report">Report follow-up</option><option value="shop">Shop issue</option><option value="payment">Payment / Coins issue</option><option value="group">Group / chatroom</option><option value="bug">Bug / technical issue</option><option value="suggestion">Suggestion</option><option value="other">Other</option>
         </select>
         <input id="supportSubject" maxlength="100" placeholder="Short subject" style="width:100%;padding:9px;border:1px solid #ccc;border-radius:6px;margin-bottom:8px;box-sizing:border-box;">
         <textarea id="supportMessage" maxlength="1500" placeholder="Describe the problem clearly." style="width:100%;min-height:120px;padding:9px;border:1px solid #ccc;border-radius:6px;resize:vertical;box-sizing:border-box;"></textarea>
