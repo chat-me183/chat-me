@@ -345,6 +345,24 @@
   /* ---- Rules bar ---- */
   .rules-bar { display: none; }
   .quick-nav-bar { display: flex; justify-content: flex-start; gap: 18px; padding: 7px 12px; background: #0d1224; border-top: 1px solid #1e2440; flex-shrink: 0; }
+  @media (max-width: 700px) {
+    #app { width:100%; max-width:100vw; overflow-x:hidden; }
+    .page { width:100%; min-width:0; box-sizing:border-box; overflow-x:hidden; }
+    .quick-nav-bar { position:sticky; bottom:0; z-index:50; width:100%; box-sizing:border-box; display:grid; grid-template-columns:repeat(4,1fr); gap:0; padding:6px 4px; padding-bottom:calc(6px + env(safe-area-inset-bottom)); }
+    .quick-nav-bar span { font-size:10px; min-width:0; padding:2px 0; }
+    .footer-tiles, .tile-support, .app-footer { display:none !important; }
+    #menuButtonGrid { display:grid !important; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px !important; max-width:none !important; }
+    #menuButtonGrid button { width:100%; min-height:44px; padding:10px 8px !important; font-size:12px !important; }
+    #shopContent .profile-card { max-width:100% !important; box-sizing:border-box; }
+    #shopContent [style*='grid-template-columns:repeat(auto-fill'] { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+    #shopContent button { min-height:38px; }
+    input, select, textarea, button { max-width:100%; }
+    /* Android-sized screens: keep the sticky quick bar from covering the last controls. */
+    .page { padding-bottom:78px !important; }
+    /* Keep the desktop profile logout tile/button out of the mobile content flow.
+       Logout remains available from the main Menu. */
+    #profileCard > .logout-btn { display:none !important; }
+  }
   .quick-nav-bar span { cursor: pointer; text-align: center; color: #cfd6ff; font-size: 9.5px; line-height: 1.5; user-select: none; }
   .footer-tiles { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 6px; padding: 7px 10px 5px; background: #05070f; flex-shrink: 0; }
   .footer-tile { border-radius: 8px; padding: 7px 4px; text-align: center; cursor: pointer; border: 1px solid; user-select: none; }
@@ -483,12 +501,10 @@ body.dark-mode .cm-banned-readonly-banner{background:#2b2819;color:#f4df9a;borde
   .cm-landing-trust{text-align:center;margin:22px auto 0;max-width:850px;padding:15px 17px;border-radius:14px;background:rgba(127,127,127,.08);font-size:14px;line-height:1.55;}
   @media (max-width:720px){.cm-landing-intro{padding:22px 14px 28px}.cm-landing-photo-grid{grid-template-columns:1fr;gap:12px}.cm-landing-photo-card{display:grid;grid-template-columns:112px 1fr;align-items:stretch}.cm-landing-photo-card img{height:100%;min-height:112px}.cm-landing-photo-card div{padding:13px 13px 13px 14px}.cm-landing-photo-card h2{font-size:16px}.cm-landing-photo-card p{font-size:13px}}
 
-  .cm-landing-footer{width:100%;padding:18px 14px 24px;margin-top:auto;text-align:center;border-top:1px solid rgba(120,130,150,.18);background:rgba(255,255,255,.62);color:#667085;font-size:12px;line-height:1.6;}
-  .cm-landing-footer strong{color:#344054;font-weight:700;}
-  .cm-landing-footer-links{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:6px 12px;margin-top:6px;}
-  .cm-landing-footer button{border:0;background:none;padding:0;color:#2b6ee0;text-decoration:underline;cursor:pointer;font:inherit;}
-  body.dark-mode #welcomeScreen .cm-landing-footer{background:rgba(20,20,20,.55);color:#aab2c0;border-top-color:rgba(255,255,255,.12);}
-  body.dark-mode #welcomeScreen .cm-landing-footer strong{color:#e2e2e2;}
+.cm-membership-badge{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:999px;background:#f0f4ff;border:1px solid #d7def5;font-size:11px;font-weight:700;white-space:nowrap;}
+.cm-membership-grid>div{min-width:0;}
+@media(max-width:520px){.cm-membership-panel{padding:12px!important}.cm-membership-grid{grid-template-columns:1fr 1fr!important}.cm-membership-grid>div{font-size:11.5px!important}.cm-membership-panel button{min-height:38px}.cm-membership-badge{font-size:10px;padding:2px 5px;}}
+@media(max-width:360px){.cm-membership-grid{grid-template-columns:1fr!important}.cm-membership-panel{font-size:12px!important}}
 </style>
 <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
 
@@ -1340,6 +1356,12 @@ body.dark-mode #welcomeScreen .welcome-trust-card span{color:#b9c0cc !important;
         <div class="about-card"><b>🧭 Find your own way around</b><span>Use search, profiles, chatrooms, groups, videos, games and other features when you want them. Your main experience stays simple, with the important actions easy to find.</span></div>
       </div>
 
+      <div class="welcome-about cm-landing-mini-features">
+        <div class="about-card"><b>💬 Conversations</b><span>Private chats, group chats and community discussions.</span></div>
+        <div class="about-card"><b>✨ Your space</b><span>Build your profile and choose how you participate.</span></div>
+        <div class="about-card"><b>🔒 Stay in control</b><span>Privacy, reporting and moderation tools help protect the community.</span></div>
+      </div>
+
       <div class="welcome-note"><b>Before you join:</b> Chat Me is for users 18+. Virtual Coins have no cash value and coin purchases are currently disabled.</div>
     </section>
     <div class="welcome-bottom-controls" aria-label="Landing page controls">
@@ -1355,19 +1377,8 @@ body.dark-mode #welcomeScreen .welcome-trust-card span{color:#b9c0cc !important;
         <button onclick="showPublicPolicy()" style="background:none;border:0;color:#2b6ee0;text-decoration:underline;cursor:pointer;font-size:12.5px;">🔒 Privacy, Safety &amp; Policies</button>
       </div>
     </div>
-    <footer class="cm-landing-footer" aria-label="Chat Me copyright and policy links">
-      <div><strong>© 2026 Chat Me. All rights reserved.</strong></div>
-      <div class="cm-landing-footer-links">
-        <button type="button" onclick="showPublicPolicy()">Privacy</button>
-        <span aria-hidden="true">•</span>
-        <button type="button" onclick="showPublicPolicy()">Terms</button>
-        <span aria-hidden="true">•</span>
-        <button type="button" onclick="showPublicPolicy()">Community Rules</button>
-      </div>
-    </footer>
 
-
-<div class="public-policy-modal" id="publicPolicyModal" role="dialog" aria-modal="true" aria-label="Privacy, terms and community policies"><div class="public-policy-box" style="max-height:88vh;overflow-y:auto;line-height:1.58;"><h2>🔒 Chat Me Privacy, Terms, Safety &amp; Community Policies</h2><div class="public-policy-preview" id="publicPolicyPreview"><p><b>Effective date: 2 October 2026.</b> These policies explain accounts, privacy, content, safety, moderation and virtual features. Chat Me is an independent service.</p><h3>1. About Chat Me</h3><p>Chat Me provides profiles, messaging, Statusbook, stories, groups, chatrooms, games, notifications, support and virtual Coin features.</p><h3>2. Eligibility and accounts</h3><p>Chat Me is for people aged <b>18 or older</b>. Provide truthful information and protect your password and verification codes.</p><h3>3. Information we collect</h3><p>Depending on features used, we may process account details, profile information, content, messages, reports, support requests and necessary technical information.</p><h3>4. How information is used</h3><p>Information helps authenticate accounts, provide features, deliver messages, prevent abuse, investigate reports, provide support, maintain security and meet lawful obligations.</p><h3>5. Public and private content</h3><p>Public content may be viewed or copied by others. Do not send passwords, financial details or highly sensitive information through ordinary chat.</p><h3>6. Messaging and social features</h3><p>Do not use messages, groups or comments for harassment, threats, scams, stalking, spam, impersonation or privacy violations.</p><h3>7. Cookies and storage</h3><p>Browser storage may support sessions, preferences and technical functions. Providers may use their own cookies or similar technologies.</p><h3>8. Service providers</h3><p>Chat Me may use Firebase/Google, Cloudflare and Google reCAPTCHA for authentication, infrastructure, security and anti-abuse functions.</p><h3>9. Security</h3><p>Chat Me uses authentication, backend authorization and security controls. Administrative access is intended to rely on trusted backend roles. Perfect security cannot be guaranteed.</p><h3>10. Community rules</h3><p>Be respectful. No harassment, threats, scams, malicious spam, impersonation, privacy violations, account attacks or clearly unlawful or unsafe content.</p><h3>11. Reporting and moderation</h3><p>Use Report or Customer Service for problems. Authorized staff may review reports and remove content or restrict accounts when appropriate.</p><h3>12. Authenticity and verification</h3><p>Do not misleadingly impersonate users, staff or organizations. Verification is not an endorsement and is subject to authorized review.</p><h3>13. Stories, posts and deletion</h3><p>Stories may expire after a defined period such as 24 hours. Backups, reports or moderation records may remain when legitimately required.</p><h3>14. Coins and virtual features</h3><p>Coins are virtual, have no cash value and cannot be withdrawn for money. Coin purchases are currently disabled. Shop prices and features may change.</p><h3>15. Games and competitions</h3><p>Games and competitions may be skill-based. A fixed multiplayer access fee such as 100 Coins is not a wager or prize pool. Unofficial betting is prohibited.</p><h3>16. Referrals</h3><p>Referral rewards may require genuine sign-ups or stated conditions. Fake accounts and referral manipulation are not allowed.</p><h3>17. Verification fee</h3><p>Verification is currently listed at 10,000 Coins and requires authorized review. Submission does not guarantee approval.</p><h3>18. Data sharing and legal requests</h3><p>Information may be shared with necessary providers, for safety investigations, or when required by applicable law or valid legal process.</p><h3>19. Retention</h3><p>Information may be retained for account operation, security, moderation, disputes, backups and legal obligations. Retention varies by record type.</p><h3>20. Privacy choices</h3><p>Subject to applicable law, you may request access, correction, applicable deletion, restriction or information about data handling. Ownership may need verification.</p><h3>21. Nigeria and other laws</h3><p>Users in Nigeria may have rights under applicable Nigerian data-protection law and applicable Nigeria Data Protection Commission procedures.</p><h3>22. Suspension and termination</h3><p>Chat Me may restrict or terminate access to protect users, enforce rules, prevent fraud, secure the service or comply with law.</p><h3>23. Intellectual property</h3><p>Chat Me branding, graphics, interface and software are protected by applicable rights. Users retain rights they already have in their content.</p><h3>24. Policy changes</h3><p>Policies may change with features, security practices, laws or operations. The latest version displayed in Chat Me applies subject to applicable law.</p><h3>25. Contact</h3><p><b>Privacy and support:</b> adegboyeabdulrahmanl@gmail.com. Never send passwords, recovery codes or authentication tokens.</p><h3>26. Money and scams</h3><p>Chat Me does not authorize users to collect money for Coins, verification, prizes, account access or special treatment. Treat official Chat Me interfaces as the source of current features and prices.</p><h3>27. Fair use and technical limits</h3><p>Do not overload, scrape, reverse engineer, bypass security, interfere with sessions or use harmful automation. Limits may apply to service actions.</p><h3>28. User responsibility</h3><p>You are responsible for what you publish or send. Check information before relying on posts, especially for health, money or legal matters.</p><h3>29. Appeals and support</h3><p>Where review is offered, provide the account name and a concise explanation. Do not overwhelm support with repeated or misleading tickets.</p><h3>30. Service limitations</h3><p>Chat Me cannot guarantee uninterrupted availability, instant delivery or permanent preservation because outages, maintenance and provider failures can occur.</p><h3>31. Third-party links and services</h3><p>Third-party services have their own operators, terms and privacy practices. Review them before sharing information or using external features.</p><h3>32. Account recovery</h3><p>Recovery may require proof of account control. Support may refuse requests that cannot be verified. Never ask another user for a verification code.</p><h3>33. Community integrity</h3><p>Do not fake likes, views, followers, referrals or scores, exploit bugs for Coins, or bypass limits. Report serious security problems responsibly.</p><h3>34. Virtual item updates</h3><p>Virtual items may change in price or availability. They do not create a right to cash or transfer outside Chat Me unless an official policy says so.</p><p style="background:#fff4e5;border:1px solid #f2c078;padding:10px;border-radius:8px;"><b>Important:</b> If applicable law gives you a right that conflicts with a sentence here, applicable law controls.</p></div><div class="public-policy-lock"><p><b>🔒 Create a free account to read the rest.</b><br>This is just a short preview of our Privacy, Safety &amp; Community Policies.</p></div><div class="public-policy-actions"><button class="public-policy-login" onclick="showAuth('login');closePublicPolicy();">Log in to Chat Me</button><button class="public-policy-close" onclick="closePublicPolicy()">Close</button></div></div></div></div>
+<div class="public-policy-modal" id="publicPolicyModal" role="dialog" aria-modal="true" aria-label="Privacy, terms and community policies"><div class="public-policy-box" style="max-height:88vh;overflow-y:auto;line-height:1.58;"><h2>🔒 Chat Me Privacy, Terms, Safety &amp; Community Policies</h2><div class="public-policy-preview" id="publicPolicyPreview"><p><b>Effective date: 2 October 2026.</b> These policies explain accounts, privacy, content, safety, moderation and virtual features. Chat Me is an independent service.</p><h3>1. About Chat Me</h3><p>Chat Me provides profiles, messaging, Statusbook, stories, groups, chatrooms, games, notifications, support and virtual Coin features.</p><h3>2. Eligibility and accounts</h3><p>Chat Me is for people aged <b>18 or older</b>. Provide truthful information and protect your password and verification codes.</p><h3>3. Information we collect</h3><p>Depending on features used, we may process account details, profile information, content, messages, reports, support requests and necessary technical information.</p><h3>4. How information is used</h3><p>Information helps authenticate accounts, provide features, deliver messages, prevent abuse, investigate reports, provide support, maintain security and meet lawful obligations.</p><h3>5. Public and private content</h3><p>Public content may be viewed or copied by others. Do not send passwords, financial details or highly sensitive information through ordinary chat.</p><h3>6. Messaging and social features</h3><p>Do not use messages, groups or comments for harassment, threats, scams, stalking, spam, impersonation or privacy violations.</p><h3>7. Cookies and storage</h3><p>Browser storage may support sessions, preferences and technical functions. Providers may use their own cookies or similar technologies.</p><h3>8. Service providers</h3><p>Chat Me may use Firebase/Google, Cloudflare and Google reCAPTCHA for authentication, infrastructure, security and anti-abuse functions.</p><h3>9. Security</h3><p>Chat Me uses authentication, backend authorization and security controls. Administrative access is intended to rely on trusted backend roles. Perfect security cannot be guaranteed.</p><h3>10. Community rules</h3><p>Be respectful. No harassment, threats, scams, malicious spam, impersonation, privacy violations, account attacks or clearly unlawful or unsafe content.</p><h3>11. Reporting and moderation</h3><p>Use Report or Customer Service for problems. Authorized staff may review reports and remove content or restrict accounts when appropriate.</p><h3>12. Authenticity and verification</h3><p>Do not misleadingly impersonate users, staff or organizations. Verification is not an endorsement and is subject to authorized review.</p><h3>13. Stories, posts and deletion</h3><p>Stories may expire after a defined period such as 24 hours. Backups, reports or moderation records may remain when legitimately required.</p><h3>14. Coins and virtual features</h3><p>Coins are virtual, have no cash value and cannot be withdrawn for money. Coin purchases are currently disabled. Shop prices and features may change.</p><h3>15. Games and competitions</h3><p>Games and competitions may be skill-based. A fixed multiplayer access fee such as 100 Coins is not a wager or prize pool. Unofficial betting is prohibited.</p><h3>16. Referrals</h3><p>Referral rewards may require genuine sign-ups or stated conditions. Fake accounts and referral manipulation are not allowed.</p><h3>17. Verification fee</h3><p>Verification is currently listed at 50,000 Coins and requires authorized review. Submission does not guarantee approval.</p><h3>18. Data sharing and legal requests</h3><p>Information may be shared with necessary providers, for safety investigations, or when required by applicable law or valid legal process.</p><h3>19. Retention</h3><p>Information may be retained for account operation, security, moderation, disputes, backups and legal obligations. Retention varies by record type.</p><h3>20. Privacy choices</h3><p>Subject to applicable law, you may request access, correction, applicable deletion, restriction or information about data handling. Ownership may need verification.</p><h3>21. Nigeria and other laws</h3><p>Users in Nigeria may have rights under applicable Nigerian data-protection law and applicable Nigeria Data Protection Commission procedures.</p><h3>22. Suspension and termination</h3><p>Chat Me may restrict or terminate access to protect users, enforce rules, prevent fraud, secure the service or comply with law.</p><h3>23. Intellectual property</h3><p>Chat Me branding, graphics, interface and software are protected by applicable rights. Users retain rights they already have in their content.</p><h3>24. Policy changes</h3><p>Policies may change with features, security practices, laws or operations. The latest version displayed in Chat Me applies subject to applicable law.</p><h3>25. Contact</h3><p><b>Privacy and support:</b> adegboyeabdulrahmanl@gmail.com. Never send passwords, recovery codes or authentication tokens.</p><h3>26. Money and scams</h3><p>Chat Me does not authorize users to collect money for Coins, verification, prizes, account access or special treatment. Treat official Chat Me interfaces as the source of current features and prices.</p><h3>27. Fair use and technical limits</h3><p>Do not overload, scrape, reverse engineer, bypass security, interfere with sessions or use harmful automation. Limits may apply to service actions.</p><h3>28. User responsibility</h3><p>You are responsible for what you publish or send. Check information before relying on posts, especially for health, money or legal matters.</p><h3>29. Appeals and support</h3><p>Where review is offered, provide the account name and a concise explanation. Do not overwhelm support with repeated or misleading tickets.</p><h3>30. Service limitations</h3><p>Chat Me cannot guarantee uninterrupted availability, instant delivery or permanent preservation because outages, maintenance and provider failures can occur.</p><h3>31. Third-party links and services</h3><p>Third-party services have their own operators, terms and privacy practices. Review them before sharing information or using external features.</p><h3>32. Account recovery</h3><p>Recovery may require proof of account control. Support may refuse requests that cannot be verified. Never ask another user for a verification code.</p><h3>33. Community integrity</h3><p>Do not fake likes, views, followers, referrals or scores, exploit bugs for Coins, or bypass limits. Report serious security problems responsibly.</p><h3>34. Virtual item updates</h3><p>Virtual items may change in price or availability. They do not create a right to cash or transfer outside Chat Me unless an official policy says so.</p><p style="background:#fff4e5;border:1px solid #f2c078;padding:10px;border-radius:8px;"><b>Important:</b> If applicable law gives you a right that conflicts with a sentence here, applicable law controls.</p></div><div class="public-policy-lock"><p><b>🔒 Create a free account to read the rest.</b><br>This is just a short preview of our Privacy, Safety &amp; Community Policies.</p></div><div class="public-policy-actions"><button class="public-policy-login" onclick="showAuth('login');closePublicPolicy();">Log in to Chat Me</button><button class="public-policy-close" onclick="closePublicPolicy()">Close</button></div></div></div></div>
   </div>
 
 <script>
@@ -2316,7 +2327,7 @@ function copyCMProfileLink(){
           <div style="font-size:26px;font-weight:700;color:#2b3a8f;" id="adminTotalPosts">-</div>
         </div>
         <div class="profile-card" style="max-width:180px;">
-          <div style="font-size:12px;color:#888;">Verified (10,000-Coin purchase)</div>
+          <div style="font-size:12px;color:#888;">Verified (50,000-Coin purchase)</div>
           <div style="font-size:26px;font-weight:700;color:#2b3a8f;" id="adminTotalVerified">-</div>
         </div>
         <div class="profile-card" style="max-width:180px;">
@@ -3672,7 +3683,7 @@ async function loginSuccess(user){
   currentUser = user;
   cmRemoveBannedReadOnlyBanner();
   setTimeout(refreshChatMeAds, 250);
-  sessionLocalSet(user.email); // device-local convenience only; Firebase Auth remains authoritative
+  sessionLocalSet(user.email); // kept only for this active tab; it is cleared on a fresh page load
   cmSetScreenState('app');
   // reset auth forms
   ['loginEmail','loginPassword','suUsername','suEmail','suFirst','suLast','suPhone','suCountry','suPassword','suPasswordConfirm'].forEach(id=>{
@@ -3725,50 +3736,19 @@ async function loginSuccess(user){
 }
 
 async function restoreSession(){
-  /* Firebase Auth is the only source of truth for a persisted login.
-     Restore the matching Chat Me profile after refresh instead of signing
-     the user out. The local session key is only a convenience hint. */
+  /* Fresh page loads must always return to the public landing page and must
+     also clear Firebase's persisted browser authentication state. This makes
+     a refresh a genuinely logged-out start: the user must press Log In and
+     authenticate again. */
+  sessionLocalClear();
   try {
-    if (!firebaseAuth || !firebaseAuth.currentUser) {
-      sessionLocalClear();
-      currentUser = null;
-      userHasNavigated = false;
-      showWelcome();
-      return;
-    }
-    const fbUser = firebaseAuth.currentUser;
-    const raw = await withTimeout(storageGet(userKey(fbUser.email), true), 8000);
-    if (!raw) {
-      sessionLocalClear();
-      currentUser = null;
-      try { await firebaseAuth.signOut(); } catch (_) {}
-      userHasNavigated = false;
-      showWelcome();
-      return;
-    }
-    const user = JSON.parse(raw);
-    if (user.uid && user.uid !== fbUser.uid) {
-      sessionLocalClear();
-      currentUser = null;
-      try { await firebaseAuth.signOut(); } catch (_) {}
-      userHasNavigated = false;
-      showWelcome();
-      return;
-    }
-    user.uid = fbUser.uid;
-    delete user.salt; delete user.passwordHash; delete user.pendingResetCode; delete user.pendingResetCodeAt;
-    const trustedClaims = await refreshTrustedAuthClaims();
-    applyTrustedClaimsToUser(user, trustedClaims);
-    cmLocalUsernameEmailSet(user.username, fbUser.email);
-    await loginSuccess(publicUser(user));
+    if (firebaseAuth && firebaseAuth.currentUser) await firebaseAuth.signOut();
   } catch (e) {
-    console.warn('Chat Me: session restore could not complete.', e);
-    sessionLocalClear();
-    currentUser = null;
-    try { if (firebaseAuth?.currentUser) await firebaseAuth.signOut(); } catch (_) {}
-    userHasNavigated = false;
-    showWelcome();
+    console.warn('Chat Me: could not clear the persisted Firebase session.', e);
   }
+  currentUser = null;
+  userHasNavigated = false;
+  showWelcome();
 }
 
 
@@ -3998,33 +3978,33 @@ const CHATME_STATIC_TRANSLATIONS = {
     nav:{home:'Home',profile:'Profile',message:'Message',friends:'Friends',notifications:'Notifications',announcements:'📢 Announcements',chatrooms:'Chatrooms',statusbook:'Statusbook',saved:'Saved Posts',nova:'Nova',groups:'Groups',coins:'Coins',games:'Games',search:'🔍 Search',report:'🚩 Report',support:'🎧 Customer Service',help:'🎧 Help & Safety',settings:'⚙ Settings & Privacy',rules:'📜 Community Rules & Safety',tos:'Terms of Service',privacy:'Privacy Policy',refund:'Refund Policy',admin:'⚙ Admin',logout:'Log Out'}
   },
   'French': {
-    landing:{badge:'💬 Connecter • Discuter • Partager',h1:'Vos proches. Vos conversations. ',h1span:'Un seul espace.',hero:'Discutez avec vos amis, découvrez les conversations de la communauté, partagez des actualités, rejoignez des groupes et profitez de Chat Me depuis une seule page.',create:'Créer votre compte',login:'Se connecter à Chat Me',stories:'fenêtre des stories et statuts',access:'accès au chat',free:'pour commencer',conversations:'💬 Conversations',conversationsText:'Gardez vos discussions privées, de groupe et communautaires au même endroit.',community:'👥 Communauté',communityText:'Trouvez des personnes, faites-vous des amis et partagez vos actualités.',fun:'🎮 Divertissement gratuit',funText:'Profitez de la communauté et des fonctions gratuites de Chat Me.',welcome:'Bon retour',welcomeText:'Vous avez déjà un compte Chat Me ? Utilisez l’écran de connexion sécurisé.',newAccount:'Nouveau sur Chat Me ? Créer un compte',secure:'La connexion, la protection du mot de passe et le reCAPTCHA restent dans l’écran sécurisé.',more:'Plus qu’une application de chat — un lieu où appartenir',moreText:'Chat Me réunit conversations, amis, publications, groupes, notifications et fonctions gratuites dans un espace communautaire nigérian simple.',real:'💬 Vraies conversations',realText:'Gardez les discussions privées, de groupe et communautaires à portée de main.',first:'🌍 La communauté avant tout',firstText:'Rencontrez des personnes, partagez, rejoignez des groupes et découvrez des conversations.',space:'✨ Votre espace',spaceText:'Construisez votre profil, personnalisez votre expérience et choisissez votre façon de participer.',use:'Ce que les gens peuvent faire sur Chat Me',useText:'Des fonctions réelles pour rester connecté, partager et participer à une communauté.',keep:'💬 Garder les conversations actives',keepText:'Discutez en privé, participez aux groupes et restez connecté avec vos proches.',everyday:'Conversations quotidiennes',find:'👥 Trouver votre communauté',findText:'Rejoignez des groupes, découvrez des intérêts communs et participez aux discussions.',connections:'Communauté et connexions',share:'📝 Partager et découvrir',shareText:'Publiez, réagissez, commentez, enregistrez et explorez les fonctions disponibles.',social:'Fonctions sociales et gratuites',works:'Comment fonctionne Chat Me',step1:'Créer votre compte',step1t:'Configurez votre profil et choisissez comment vous présenter dans la communauté.',step2:'Se connecter',step2t:'Trouvez des amis, envoyez des demandes et commencez des conversations privées ou communautaires.',step3:'Partager et découvrir',step3t:'Publiez, rejoignez des groupes, suivez les discussions et utilisez les fonctions qui vous intéressent.',step4:'Garder le contrôle',step4t:'Utilisez la confidentialité, les signalements, le blocage et la modération si nécessaire.',before:'Avant de rejoindre :',beforeText:' Chat Me utilise actuellement une vérification d’âge et n’est pas destiné aux moins de 18 ans. Les Coins virtuels n’ont aucune valeur en espèces et les achats de Coins sont désactivés. Lisez les informations de confidentialité avant de créer un compte.',privacy:'🔒 Confidentialité',privacyText:'Des informations claires sur la confidentialité et un contact dédié.',reporting:'🚩 Signalement',reportingText:'Les utilisateurs peuvent signaler les problèmes et les outils du personnel prennent en charge la modération.',coins:'🪙 Coins virtuels',coinsText:'Les achats de Coins sont désactivés pour le moment et les Coins ne sont pas encaissables.',security:'🛡️ Sécurité',securityText:'L’authentification et les contrôles backend protégés contribuent à protéger les comptes.',language:'🌐 Langue',languageHelp:'Choisissez une langue traduite. Les langues prises en charge mettent à jour la page d’accueil, la connexion/inscription et les libellés de navigation.',searchLanguage:'Rechercher une langue...'},
+    landing:{badge:'💬 Connecter • Discuter • Partager',h1:'Vos proches. Vos conversations. ',h1span:'Un seul espace.',hero:'Discutez avec vos amis, découvrez les conversations de la communauté, partagez des actualités, rejoignez des groupes et profitez de Chat Me depuis une seule page.',create:'Créer votre compte',login:'Se connecter à Chat Me',stories:'fenêtre des stories et statuts',access:'accès au chat',free:'pour commencer',conversations:'💬 Conversations',conversationsText:'Gardez vos discussions privées, de groupe et communautaires au même endroit.',community:'👥 Communauté',communityText:'Trouvez des personnes, faites-vous des amis et partagez vos actualités.',fun:'🎮 Divertissement gratuit',funText:'Profitez de la communauté et des fonctions gratuites de Chat Me.',welcome:'Bon retour',welcomeText:'Vous avez déjà un compte Chat Me ? Utilisez l’écran de connexion sécurisé.',newAccount:'Nouveau sur Chat Me ? Créer un compte',secure:'La connexion, la protection du mot de passe et le reCAPTCHA restent dans l’écran sécurisé.',more:'Plus qu’une application de chat — un lieu où appartenir',moreText:'Chat Me réunit conversations, amis, publications, groupes, notifications et fonctions gratuites dans un espace communautaire nigérian simple.',real:'💬 Vraies conversations',realText:'Gardez les discussions privées, de groupe et communautaires à portée de main.',first:'🌍 La communauté avant tout',firstText:'Rencontrez des personnes, partagez, rejoignez des groupes et découvrez des conversations.',space:'✨ Votre espace',spaceText:'Construisez votre profil, personnalisez votre expérience et choisissez votre façon de participer.',use:'Ce que les gens peuvent faire sur Chat Me',useText:'Des fonctions réelles pour rester connecté, partager et participer à une communauté.',keep:'💬 Garder les conversations actives',keepText:'Discutez en privé, participez aux groupes et restez connecté avec vos proches.',everyday:'Conversations quotidiennes',find:'👥 Trouver votre communauté',findText:'Rejoignez des groupes, découvrez des intérêts communs et participez aux discussions.',connections:'Communauté et connexions',share:'📝 Partager et découvrir',shareText:'Publiez, réagissez, commentez, enregistrez et explorez les fonctions disponibles.',social:'Fonctions sociales et gratuites',works:'Comment fonctionne Chat Me',step1:'Créer votre compte',step1t:'Configurez votre profil et choisissez comment vous présenter dans la communauté.',step2:'Se connecter',step2t:'Trouvez des amis, envoyez des demandes et commencez des conversations privées ou communautaires.',step3:'Partager et découvrir',step3t:'Publiez, rejoignez des groupes, suivez les discussions et utilisez les fonctions qui vous intéressent.',step4:'Garder le contrôle',step4t:'Utilisez la confidentialité, les signalements, le blocage et la modération si nécessaire.',before:'Avant de rejoindre :',beforeText:' Chat Me utilise actuellement une vérification d’âge et n’est pas destiné aux moins de 13 ans. Les Coins virtuels n’ont aucune valeur en espèces et les achats de Coins sont désactivés. Lisez les informations de confidentialité avant de créer un compte.',privacy:'🔒 Confidentialité',privacyText:'Des informations claires sur la confidentialité et un contact dédié.',reporting:'🚩 Signalement',reportingText:'Les utilisateurs peuvent signaler les problèmes et les outils du personnel prennent en charge la modération.',coins:'🪙 Coins virtuels',coinsText:'Les achats de Coins sont désactivés pour le moment et les Coins ne sont pas encaissables.',security:'🛡️ Sécurité',securityText:'L’authentification et les contrôles backend protégés contribuent à protéger les comptes.',language:'🌐 Langue',languageHelp:'Choisissez une langue traduite. Les langues prises en charge mettent à jour la page d’accueil, la connexion/inscription et les libellés de navigation.',searchLanguage:'Rechercher une langue...'},
     loginScreen:{title:'Connexion - Chat Me',sub:'Entrez vos identifiants',identifier:'E-mail ou nom d’utilisateur :',identifierPh:'Entrez votre e-mail ou nom d’utilisateur',password:'Mot de passe :',passwordPh:'Entrez le mot de passe',robot:'Vérifiez que vous n’êtes pas un robot :',button:'Connexion',forgot:'Mot de passe oublié ?',noAccount:'Vous n’avez pas de compte ?',register:'Inscrivez-vous ici',back:'← Retour à l’accueil'},
-    signupScreen:{title:'Créer un compte',sub:'Rejoignez Chat Me aujourd’hui',username:'Nom d’utilisateur :',usernamePh:'Choisissez un nom d’utilisateur',usernameHint:'Lettres, chiffres et @ / . / + / - / _ uniquement, au moins 3 caractères',email:'E-mail :',emailPh:'Entrez votre e-mail',first:'Prénom :',firstPh:'Prénom',last:'Nom :',lastPh:'Nom',phone:'Numéro de téléphone :',phonePh:'Numéro de téléphone',quick:'Configuration rapide',quickText:'Votre date de naissance sert uniquement à vérifier l’âge. Vous pourrez compléter votre profil plus tard.',dob:'Date de naissance :',age:'Vous devez avoir au moins 18 ans. Votre âge ne sera pas public.',country:'Pays :',countryPh:'Entrez votre pays',gender:'Genre :',genderOptional:'(facultatif)',genderSelect:'Sélectionnez votre genre',male:'Homme',female:'Femme',other:'Autre',prefer:'Je préfère ne pas répondre',security:'Sécurité du compte',password:'Mot de passe :',passwordPh:'Créez un mot de passe',ruleLen:'• Au moins 8 caractères',ruleUser:'• Ne doit pas être trop similaire à votre nom d’utilisateur',ruleCommon:'• Ne doit pas être un mot de passe courant',ruleNumeric:'• Ne doit pas être entièrement numérique',confirm:'Confirmer le mot de passe :',confirmPh:'Entrez à nouveau le même mot de passe',robot:'Vérifiez que vous n’êtes pas un robot :',button:'S’inscrire',have:'Vous avez déjà un compte ?',login:'Se connecter',back:'← Retour à l’accueil'},
+    signupScreen:{title:'Créer un compte',sub:'Rejoignez Chat Me aujourd’hui',username:'Nom d’utilisateur :',usernamePh:'Choisissez un nom d’utilisateur',usernameHint:'Lettres, chiffres et @ / . / + / - / _ uniquement, au moins 3 caractères',email:'E-mail :',emailPh:'Entrez votre e-mail',first:'Prénom :',firstPh:'Prénom',last:'Nom :',lastPh:'Nom',phone:'Numéro de téléphone :',phonePh:'Numéro de téléphone',quick:'Configuration rapide',quickText:'Votre date de naissance sert uniquement à vérifier l’âge. Vous pourrez compléter votre profil plus tard.',dob:'Date de naissance :',age:'Vous devez avoir au moins 13 ans. Votre âge ne sera pas public.',country:'Pays :',countryPh:'Entrez votre pays',gender:'Genre :',genderOptional:'(facultatif)',genderSelect:'Sélectionnez votre genre',male:'Homme',female:'Femme',other:'Autre',prefer:'Je préfère ne pas répondre',security:'Sécurité du compte',password:'Mot de passe :',passwordPh:'Créez un mot de passe',ruleLen:'• Au moins 8 caractères',ruleUser:'• Ne doit pas être trop similaire à votre nom d’utilisateur',ruleCommon:'• Ne doit pas être un mot de passe courant',ruleNumeric:'• Ne doit pas être entièrement numérique',confirm:'Confirmer le mot de passe :',confirmPh:'Entrez à nouveau le même mot de passe',robot:'Vérifiez que vous n’êtes pas un robot :',button:'S’inscrire',have:'Vous avez déjà un compte ?',login:'Se connecter',back:'← Retour à l’accueil'},
     nav:{home:'Accueil',profile:'Profil',message:'Message',friends:'Amis',notifications:'Notifications',announcements:'📢 Annonces',chatrooms:'Salons',statusbook:'Statuts',saved:'Publications enregistrées',nova:'Nova',groups:'Groupes',coins:'Coins',games:'Jeux',search:'🔍 Rechercher',report:'🚩 Signaler',support:'🎧 Service client',help:'🎧 Aide et sécurité',settings:'⚙ Paramètres et confidentialité',rules:'📜 Règles de la communauté',tos:'Conditions d’utilisation',privacy:'Politique de confidentialité',refund:'Politique de remboursement',admin:'⚙ Admin',logout:'Se déconnecter'}
   },
   'Spanish': {
-    landing:{badge:'💬 Conectar • Chatear • Compartir',h1:'Tu gente. Tus conversaciones. ',h1span:'Un solo hogar.',hero:'Chatea con amigos, descubre conversaciones de la comunidad, comparte actualizaciones, únete a grupos y disfruta Chat Me desde una sola página.',create:'Crear tu cuenta',login:'Iniciar sesión en Chat Me',stories:'ventana de historias y estados',access:'acceso al chat',free:'para comenzar',conversations:'💬 Conversaciones',conversationsText:'Mantén tus chats privados, grupales y comunitarios juntos.',community:'👥 Comunidad',communityText:'Encuentra personas, haz amigos y comparte tus actualizaciones.',fun:'🎮 Diversión gratis',funText:'Disfruta la comunidad y las funciones gratuitas de Chat Me.',welcome:'Bienvenido de nuevo',welcomeText:'¿Ya tienes una cuenta de Chat Me? Usa la pantalla segura de inicio de sesión.',newAccount:'¿Nuevo en Chat Me? Crea una cuenta',secure:'El inicio de sesión, la protección de contraseña y reCAPTCHA permanecen en la pantalla segura.',more:'Más que una app de chat — un lugar al que pertenecer',moreText:'Chat Me reúne conversaciones, amigos, publicaciones, grupos, notificaciones y funciones gratuitas en una comunidad nigeriana sencilla.',real:'💬 Conversaciones reales',realText:'Mantén a mano tus chats privados, conversaciones grupales y comunitarias.',first:'🌍 La comunidad primero',firstText:'Conoce personas, comparte, únete a grupos y descubre conversaciones.',space:'✨ Tu espacio',spaceText:'Crea tu perfil, personaliza tu experiencia y elige cómo participar.',use:'Para qué se puede usar Chat Me',useText:'Funciones reales para mantenerse conectado, compartir y participar en una comunidad.',keep:'💬 Mantén las conversaciones',keepText:'Chatea en privado, participa en grupos y mantente conectado con quienes conoces.',everyday:'Conversaciones diarias',find:'👥 Encuentra tu comunidad',findText:'Únete a grupos, descubre intereses comunes y participa en conversaciones.',connections:'Comunidad y conexiones',share:'📝 Comparte y descubre',shareText:'Publica, reacciona, comenta, guarda publicaciones y explora las funciones disponibles.',social:'Funciones sociales y gratuitas',works:'Cómo funciona Chat Me',step1:'Crea tu cuenta',step1t:'Configura tu perfil y decide cómo quieres presentarte en la comunidad.',step2:'Conecta',step2t:'Encuentra amigos, envía solicitudes y comienza conversaciones privadas o comunitarias.',step3:'Comparte y descubre',step3t:'Publica, únete a grupos, sigue conversaciones y usa las funciones que te interesen.',step4:'Mantén el control',step4t:'Usa privacidad, reportes, bloqueo y moderación cuando lo necesites.',before:'Antes de unirte:',beforeText:' Chat Me usa actualmente una comprobación de edad y no está destinado a menores de 18 años. Las Coins virtuales no tienen valor en efectivo y las compras de Coins están desactivadas. Lee la información de privacidad antes de crear una cuenta.',privacy:'🔒 Privacidad',privacyText:'Información clara de privacidad y un contacto dedicado.',reporting:'🚩 Reportes',reportingText:'Los usuarios pueden reportar problemas y las herramientas del personal ayudan con la moderación.',coins:'🪙 Coins virtuales',coinsText:'Las compras de Coins están desactivadas por ahora y las Coins no se pueden retirar.',security:'🛡️ Seguridad',securityText:'La autenticación y los controles protegidos del backend ayudan a proteger las cuentas.',language:'🌐 Idioma',languageHelp:'Elige un idioma traducido. Los idiomas compatibles actualizan la página de inicio, el acceso/registro y las etiquetas principales de navegación.',searchLanguage:'Buscar idioma...'},
+    landing:{badge:'💬 Conectar • Chatear • Compartir',h1:'Tu gente. Tus conversaciones. ',h1span:'Un solo hogar.',hero:'Chatea con amigos, descubre conversaciones de la comunidad, comparte actualizaciones, únete a grupos y disfruta Chat Me desde una sola página.',create:'Crear tu cuenta',login:'Iniciar sesión en Chat Me',stories:'ventana de historias y estados',access:'acceso al chat',free:'para comenzar',conversations:'💬 Conversaciones',conversationsText:'Mantén tus chats privados, grupales y comunitarios juntos.',community:'👥 Comunidad',communityText:'Encuentra personas, haz amigos y comparte tus actualizaciones.',fun:'🎮 Diversión gratis',funText:'Disfruta la comunidad y las funciones gratuitas de Chat Me.',welcome:'Bienvenido de nuevo',welcomeText:'¿Ya tienes una cuenta de Chat Me? Usa la pantalla segura de inicio de sesión.',newAccount:'¿Nuevo en Chat Me? Crea una cuenta',secure:'El inicio de sesión, la protección de contraseña y reCAPTCHA permanecen en la pantalla segura.',more:'Más que una app de chat — un lugar al que pertenecer',moreText:'Chat Me reúne conversaciones, amigos, publicaciones, grupos, notificaciones y funciones gratuitas en una comunidad nigeriana sencilla.',real:'💬 Conversaciones reales',realText:'Mantén a mano tus chats privados, conversaciones grupales y comunitarias.',first:'🌍 La comunidad primero',firstText:'Conoce personas, comparte, únete a grupos y descubre conversaciones.',space:'✨ Tu espacio',spaceText:'Crea tu perfil, personaliza tu experiencia y elige cómo participar.',use:'Para qué se puede usar Chat Me',useText:'Funciones reales para mantenerse conectado, compartir y participar en una comunidad.',keep:'💬 Mantén las conversaciones',keepText:'Chatea en privado, participa en grupos y mantente conectado con quienes conoces.',everyday:'Conversaciones diarias',find:'👥 Encuentra tu comunidad',findText:'Únete a grupos, descubre intereses comunes y participa en conversaciones.',connections:'Comunidad y conexiones',share:'📝 Comparte y descubre',shareText:'Publica, reacciona, comenta, guarda publicaciones y explora las funciones disponibles.',social:'Funciones sociales y gratuitas',works:'Cómo funciona Chat Me',step1:'Crea tu cuenta',step1t:'Configura tu perfil y decide cómo quieres presentarte en la comunidad.',step2:'Conecta',step2t:'Encuentra amigos, envía solicitudes y comienza conversaciones privadas o comunitarias.',step3:'Comparte y descubre',step3t:'Publica, únete a grupos, sigue conversaciones y usa las funciones que te interesen.',step4:'Mantén el control',step4t:'Usa privacidad, reportes, bloqueo y moderación cuando lo necesites.',before:'Antes de unirte:',beforeText:' Chat Me usa actualmente una comprobación de edad y no está destinado a menores de 13 años. Las Coins virtuales no tienen valor en efectivo y las compras de Coins están desactivadas. Lee la información de privacidad antes de crear una cuenta.',privacy:'🔒 Privacidad',privacyText:'Información clara de privacidad y un contacto dedicado.',reporting:'🚩 Reportes',reportingText:'Los usuarios pueden reportar problemas y las herramientas del personal ayudan con la moderación.',coins:'🪙 Coins virtuales',coinsText:'Las compras de Coins están desactivadas por ahora y las Coins no se pueden retirar.',security:'🛡️ Seguridad',securityText:'La autenticación y los controles protegidos del backend ayudan a proteger las cuentas.',language:'🌐 Idioma',languageHelp:'Elige un idioma traducido. Los idiomas compatibles actualizan la página de inicio, el acceso/registro y las etiquetas principales de navegación.',searchLanguage:'Buscar idioma...'},
     loginScreen:{title:'Iniciar sesión - Chat Me',sub:'Introduce tus credenciales',identifier:'Correo o nombre de usuario:',identifierPh:'Introduce tu correo o nombre de usuario',password:'Contraseña:',passwordPh:'Introduce la contraseña',robot:'Verifica que no eres un robot:',button:'Iniciar sesión',forgot:'¿Olvidaste tu contraseña?',noAccount:'¿No tienes una cuenta?',register:'Regístrate aquí',back:'← Volver al inicio'},
-    signupScreen:{title:'Crear cuenta',sub:'Únete a Chat Me hoy',username:'Nombre de usuario:',usernamePh:'Elige un nombre de usuario',usernameHint:'Solo letras, números y @ / . / + / - / _, mínimo 3 caracteres',email:'Correo electrónico:',emailPh:'Introduce tu correo',first:'Nombre:',firstPh:'Nombre',last:'Apellido:',lastPh:'Apellido',phone:'Número de teléfono:',phonePh:'Número de teléfono',quick:'Configuración rápida',quickText:'Tu fecha de nacimiento solo se usa para comprobar la edad. Puedes completar tu perfil después.',dob:'Fecha de nacimiento:',age:'Debes tener al menos 18 años. Tu edad no será pública.',country:'País:',countryPh:'Introduce tu país',gender:'Género:',genderOptional:'(opcional)',genderSelect:'Selecciona tu género',male:'Hombre',female:'Mujer',other:'Otro',prefer:'Prefiero no decirlo',security:'Seguridad de la cuenta',password:'Contraseña:',passwordPh:'Crea una contraseña',ruleLen:'• Al menos 8 caracteres',ruleUser:'• No puede ser demasiado similar a tu nombre de usuario',ruleCommon:'• No puede ser una contraseña común',ruleNumeric:'• No puede ser completamente numérica',confirm:'Confirmar contraseña:',confirmPh:'Introduce la misma contraseña otra vez',robot:'Verifica que no eres un robot:',button:'Registrarse',have:'¿Ya tienes una cuenta?',login:'Iniciar sesión',back:'← Volver al inicio'},
+    signupScreen:{title:'Crear cuenta',sub:'Únete a Chat Me hoy',username:'Nombre de usuario:',usernamePh:'Elige un nombre de usuario',usernameHint:'Solo letras, números y @ / . / + / - / _, mínimo 3 caracteres',email:'Correo electrónico:',emailPh:'Introduce tu correo',first:'Nombre:',firstPh:'Nombre',last:'Apellido:',lastPh:'Apellido',phone:'Número de teléfono:',phonePh:'Número de teléfono',quick:'Configuración rápida',quickText:'Tu fecha de nacimiento solo se usa para comprobar la edad. Puedes completar tu perfil después.',dob:'Fecha de nacimiento:',age:'Debes tener al menos 13 años. Tu edad no será pública.',country:'País:',countryPh:'Introduce tu país',gender:'Género:',genderOptional:'(opcional)',genderSelect:'Selecciona tu género',male:'Hombre',female:'Mujer',other:'Otro',prefer:'Prefiero no decirlo',security:'Seguridad de la cuenta',password:'Contraseña:',passwordPh:'Crea una contraseña',ruleLen:'• Al menos 8 caracteres',ruleUser:'• No puede ser demasiado similar a tu nombre de usuario',ruleCommon:'• No puede ser una contraseña común',ruleNumeric:'• No puede ser completamente numérica',confirm:'Confirmar contraseña:',confirmPh:'Introduce la misma contraseña otra vez',robot:'Verifica que no eres un robot:',button:'Registrarse',have:'¿Ya tienes una cuenta?',login:'Iniciar sesión',back:'← Volver al inicio'},
     nav:{home:'Inicio',profile:'Perfil',message:'Mensaje',friends:'Amigos',notifications:'Notificaciones',announcements:'📢 Anuncios',chatrooms:'Salas',statusbook:'Estados',saved:'Publicaciones guardadas',nova:'Nova',groups:'Grupos',coins:'Coins',games:'Juegos',search:'🔍 Buscar',report:'🚩 Reportar',support:'🎧 Atención al cliente',help:'🎧 Ayuda y seguridad',settings:'⚙ Configuración y privacidad',rules:'📜 Reglas de la comunidad',tos:'Términos del servicio',privacy:'Política de privacidad',refund:'Política de reembolso',admin:'⚙ Admin',logout:'Cerrar sesión'}
   },
   'Yoruba': {
-    landing:{badge:'💬 Sopọ • Bá Ọ̀rẹ́ Sọ̀rọ̀ • Pín',h1:'Àwọn ènìyàn rẹ. Àwọn ìjíròrò rẹ. ',h1span:'Ibi kan.',hero:'Bá àwọn ọ̀rẹ́ sọ̀rọ̀, ṣàwárí ìjíròrò àwùjọ, pín àwọn ìmúdójúìwọ̀n, darapọ̀ mọ́ ẹgbẹ́, kí o sì gbádùn Chat Me láti ojú-ìwé kan.',create:'Ṣẹ̀dá àkọọ́lẹ̀ rẹ',login:'Wọlé sí Chat Me',stories:'àkókò ìtàn àti status',access:'ìwọlé sí ìjíròrò',free:'láti bẹ̀rẹ̀',conversations:'💬 Ìjíròrò',conversationsText:'Pa ìjíròrò aládàáni, ẹgbẹ́ àti àwùjọ rẹ mọ́ pọ̀.',community:'👥 Àwùjọ',communityText:'Wa ènìyàn, ṣe ọ̀rẹ́ kí o sì pín àwọn ìmúdójúìwọ̀n rẹ.',fun:'🎮 Ìgbádùn ọ̀fẹ́',funText:'Gbádùn àwùjọ àti àwọn ohun ọ̀fẹ́ tó wà nínú Chat Me.',welcome:'Káàbọ̀ padà',welcomeText:'Ṣé o ti ní àkọọ́lẹ̀ Chat Me? Lo ojú-ìwé ìwọlé tó ní ààbò.',newAccount:'Ṣé o jẹ́ tuntun sí Chat Me? Ṣẹ̀dá àkọọ́lẹ̀',secure:'Ìwọlé, ààbò ọ̀rọ̀ aṣínà àti reCAPTCHA wà nínú ojú-ìwé ìwọlé tó ní ààbò.',more:'Ju ohun èlò ìjíròrò lọ — ibi láti jẹ́ apá àwùjọ',moreText:'Chat Me kó ìjíròrò, ọ̀rẹ́, ìfìwéránṣẹ́, ẹgbẹ́, ìkéde àti àwọn ohun ọ̀fẹ́ jọ sí àwùjọ Nàìjíríà tó rọrùn.',real:'💬 Ìjíròrò gidi',realText:'Pa ìjíròrò aládàáni, ẹgbẹ́ àti àwùjọ mọ́ ní ọwọ́.',first:'🌍 Àwùjọ ni àkọ́kọ́',firstText:'Pàdé ènìyàn, pín ìmúdójúìwọ̀n, darapọ̀ mọ́ ẹgbẹ́ kí o sì ṣàwárí ìjíròrò.',space:'✨ Àyè rẹ',spaceText:'Kọ́ profaili rẹ, ṣe àdáni ìrírí rẹ kí o sì yan bí o ṣe fẹ́ kópa.',use:'Ohun tí ènìyàn lè lò Chat Me fún',useText:'Àwọn iṣẹ́ gidi fún ìbáṣepọ̀, pípín àti kíkópa nínú àwùjọ.',keep:'💬 Jẹ́ kí ìjíròrò máa lọ',keepText:'Bá ènìyàn sọ̀rọ̀ ní ikọ̀kọ̀, kópa nínú ẹgbẹ́, kí o sì wà ní ìbáṣepọ̀.',everyday:'Ìjíròrò ojoojúmọ́',find:'👥 Wa àwùjọ rẹ',findText:'Darapọ̀ mọ́ ẹgbẹ́, ṣàwárí ohun tí ẹ nífẹ̀ẹ́ sí, kí o sì kópa nínú ìjíròrò.',connections:'Àwùjọ àti ìbáṣepọ̀',share:'📝 Pín àti ṣàwárí',shareText:'Fìwéránṣẹ́, fèsì, sọ̀rọ̀, pamọ́ ìfìwéránṣẹ́ kí o sì ṣàwárí àwọn iṣẹ́ tó wà fún ọ.',social:'Àwọn iṣẹ́ àwùjọ àti ọ̀fẹ́',works:'Bí Chat Me ṣe ń ṣiṣẹ́',step1:'Ṣẹ̀dá àkọọ́lẹ̀ rẹ',step1t:'Ṣètò profaili rẹ kí o sì yan bí o ṣe fẹ́ fi ara rẹ hàn nínú àwùjọ.',step2:'Sopọ̀',step2t:'Wa àwọn ọ̀rẹ́, fi ìbéèrè ọ̀rẹ́ ránṣẹ́, kí o sì bẹ̀rẹ̀ ìjíròrò.',step3:'Pín àti ṣàwárí',step3t:'Fìwéránṣẹ́, darapọ̀ mọ́ ẹgbẹ́, tẹ̀lé ìjíròrò kí o sì lo iṣẹ́ tó wù ọ.',step4:'Máa ṣàkóso rẹ',step4t:'Lo àṣírí, ìròyìn, ìdènà àti ìṣàkóso nígbà tó bá yẹ.',before:'Kí o tó darapọ̀:',beforeText:' Chat Me ń lo ìdánwò ọjọ́-ori, kò sì ṣe fún àwọn tí kò tíì pé ọdún 18. Coins foju kò ní iye owó, àwọn rira Coins sì ti wa ni pipa. Ka ìsọfúnni àṣírí àti ìlànà kí o tó ṣẹ̀dá àkọọ́lẹ̀.',privacy:'🔒 Àṣírí',privacyText:'Ìsọfúnni àṣírí tó yege àti olubasọrọ àtìlẹ́yìn.',reporting:'🚩 Ìròyìn',reportingText:'Àwọn ọmọ ẹgbẹ́ lè ròyìn ìṣòro, àwọn irinṣẹ́ staff sì ń rànwọ́ nínú ìṣàkóso.',coins:'🪙 Coins foju',coinsText:'Àwọn rira Coins ti wa ni pipa báyìí, Coins kò sì ṣeé yọ sí owó.',security:'🛡️ Ààbò',securityText:'Ìfàṣẹsí àti àwọn iṣakoso backend tó ní ààbò ń rànwọ́ láti dáàbò bo àkọọ́lẹ̀.',language:'🌐 Èdè',languageHelp:'Yan èdè tí a ti túmọ̀. Èdè tó ní àtúmọ̀ yóò ṣe àtúnṣe landing, ìwọlé/forúkọsílẹ̀ àti àwọn orúkọ ìrìnàjò pàtàkì.',searchLanguage:'Wa èdè...'},
+    landing:{badge:'💬 Sopọ • Bá Ọ̀rẹ́ Sọ̀rọ̀ • Pín',h1:'Àwọn ènìyàn rẹ. Àwọn ìjíròrò rẹ. ',h1span:'Ibi kan.',hero:'Bá àwọn ọ̀rẹ́ sọ̀rọ̀, ṣàwárí ìjíròrò àwùjọ, pín àwọn ìmúdójúìwọ̀n, darapọ̀ mọ́ ẹgbẹ́, kí o sì gbádùn Chat Me láti ojú-ìwé kan.',create:'Ṣẹ̀dá àkọọ́lẹ̀ rẹ',login:'Wọlé sí Chat Me',stories:'àkókò ìtàn àti status',access:'ìwọlé sí ìjíròrò',free:'láti bẹ̀rẹ̀',conversations:'💬 Ìjíròrò',conversationsText:'Pa ìjíròrò aládàáni, ẹgbẹ́ àti àwùjọ rẹ mọ́ pọ̀.',community:'👥 Àwùjọ',communityText:'Wa ènìyàn, ṣe ọ̀rẹ́ kí o sì pín àwọn ìmúdójúìwọ̀n rẹ.',fun:'🎮 Ìgbádùn ọ̀fẹ́',funText:'Gbádùn àwùjọ àti àwọn ohun ọ̀fẹ́ tó wà nínú Chat Me.',welcome:'Káàbọ̀ padà',welcomeText:'Ṣé o ti ní àkọọ́lẹ̀ Chat Me? Lo ojú-ìwé ìwọlé tó ní ààbò.',newAccount:'Ṣé o jẹ́ tuntun sí Chat Me? Ṣẹ̀dá àkọọ́lẹ̀',secure:'Ìwọlé, ààbò ọ̀rọ̀ aṣínà àti reCAPTCHA wà nínú ojú-ìwé ìwọlé tó ní ààbò.',more:'Ju ohun èlò ìjíròrò lọ — ibi láti jẹ́ apá àwùjọ',moreText:'Chat Me kó ìjíròrò, ọ̀rẹ́, ìfìwéránṣẹ́, ẹgbẹ́, ìkéde àti àwọn ohun ọ̀fẹ́ jọ sí àwùjọ Nàìjíríà tó rọrùn.',real:'💬 Ìjíròrò gidi',realText:'Pa ìjíròrò aládàáni, ẹgbẹ́ àti àwùjọ mọ́ ní ọwọ́.',first:'🌍 Àwùjọ ni àkọ́kọ́',firstText:'Pàdé ènìyàn, pín ìmúdójúìwọ̀n, darapọ̀ mọ́ ẹgbẹ́ kí o sì ṣàwárí ìjíròrò.',space:'✨ Àyè rẹ',spaceText:'Kọ́ profaili rẹ, ṣe àdáni ìrírí rẹ kí o sì yan bí o ṣe fẹ́ kópa.',use:'Ohun tí ènìyàn lè lò Chat Me fún',useText:'Àwọn iṣẹ́ gidi fún ìbáṣepọ̀, pípín àti kíkópa nínú àwùjọ.',keep:'💬 Jẹ́ kí ìjíròrò máa lọ',keepText:'Bá ènìyàn sọ̀rọ̀ ní ikọ̀kọ̀, kópa nínú ẹgbẹ́, kí o sì wà ní ìbáṣepọ̀.',everyday:'Ìjíròrò ojoojúmọ́',find:'👥 Wa àwùjọ rẹ',findText:'Darapọ̀ mọ́ ẹgbẹ́, ṣàwárí ohun tí ẹ nífẹ̀ẹ́ sí, kí o sì kópa nínú ìjíròrò.',connections:'Àwùjọ àti ìbáṣepọ̀',share:'📝 Pín àti ṣàwárí',shareText:'Fìwéránṣẹ́, fèsì, sọ̀rọ̀, pamọ́ ìfìwéránṣẹ́ kí o sì ṣàwárí àwọn iṣẹ́ tó wà fún ọ.',social:'Àwọn iṣẹ́ àwùjọ àti ọ̀fẹ́',works:'Bí Chat Me ṣe ń ṣiṣẹ́',step1:'Ṣẹ̀dá àkọọ́lẹ̀ rẹ',step1t:'Ṣètò profaili rẹ kí o sì yan bí o ṣe fẹ́ fi ara rẹ hàn nínú àwùjọ.',step2:'Sopọ̀',step2t:'Wa àwọn ọ̀rẹ́, fi ìbéèrè ọ̀rẹ́ ránṣẹ́, kí o sì bẹ̀rẹ̀ ìjíròrò.',step3:'Pín àti ṣàwárí',step3t:'Fìwéránṣẹ́, darapọ̀ mọ́ ẹgbẹ́, tẹ̀lé ìjíròrò kí o sì lo iṣẹ́ tó wù ọ.',step4:'Máa ṣàkóso rẹ',step4t:'Lo àṣírí, ìròyìn, ìdènà àti ìṣàkóso nígbà tó bá yẹ.',before:'Kí o tó darapọ̀:',beforeText:' Chat Me ń lo ìdánwò ọjọ́-ori, kò sì ṣe fún àwọn ọmọ tí kò tíì pé ọdún 13. Coins foju kò ní iye owó, àwọn rira Coins sì ti wa ni pipa. Ka ìsọfúnni àṣírí àti ìlànà kí o tó ṣẹ̀dá àkọọ́lẹ̀.',privacy:'🔒 Àṣírí',privacyText:'Ìsọfúnni àṣírí tó yege àti olubasọrọ àtìlẹ́yìn.',reporting:'🚩 Ìròyìn',reportingText:'Àwọn ọmọ ẹgbẹ́ lè ròyìn ìṣòro, àwọn irinṣẹ́ staff sì ń rànwọ́ nínú ìṣàkóso.',coins:'🪙 Coins foju',coinsText:'Àwọn rira Coins ti wa ni pipa báyìí, Coins kò sì ṣeé yọ sí owó.',security:'🛡️ Ààbò',securityText:'Ìfàṣẹsí àti àwọn iṣakoso backend tó ní ààbò ń rànwọ́ láti dáàbò bo àkọọ́lẹ̀.',language:'🌐 Èdè',languageHelp:'Yan èdè tí a ti túmọ̀. Èdè tó ní àtúmọ̀ yóò ṣe àtúnṣe landing, ìwọlé/forúkọsílẹ̀ àti àwọn orúkọ ìrìnàjò pàtàkì.',searchLanguage:'Wa èdè...'},
     loginScreen:{title:'Wọlé - Chat Me',sub:'Tẹ àwọn alaye ìwọlé rẹ',identifier:'Imeeli tàbí orúkọ olumulo:',identifierPh:'Tẹ imeeli tàbí orúkọ olumulo',password:'Ọ̀rọ̀ aṣínà:',passwordPh:'Tẹ ọ̀rọ̀ aṣínà',robot:'Jẹ́rìí pé o kì í ṣe robot:',button:'Wọlé',forgot:'Ṣé o gbàgbé ọ̀rọ̀ aṣínà?',noAccount:'Kò sí àkọọ́lẹ̀?',register:'Forúkọsílẹ̀ síbí',back:'← Padà sí Ojú-ìwé Àkọ́kọ́'},
-    signupScreen:{title:'Ṣẹ̀dá Àkọọ́lẹ̀',sub:'Darapọ̀ mọ́ Chat Me lónìí',username:'Orúkọ olumulo:',usernamePh:'Yan orúkọ olumulo',usernameHint:'Lẹ́tà, nọ́mbà àti @ / . / + / - / _ nìkan, ó kéré tán ohun kikọ 3',email:'Imeeli:',emailPh:'Tẹ imeeli rẹ',first:'Orúkọ àkọ́kọ́:',firstPh:'Orúkọ àkọ́kọ́',last:'Orúkọ ìdílé:',lastPh:'Orúkọ ìdílé',phone:'Nọ́mbà fóònù:',phonePh:'Nọ́mbà fóònù',quick:'Ìṣètò kíákíá',quickText:'Ọjọ́ ìbí rẹ wúlò fún ìdánwò ọjọ́-ori nìkan. O lè parí profaili rẹ lẹ́yìn náà.',dob:'Ọjọ́ ìbí:',age:'O gbọ́dọ̀ ti pé ọdún 18. Ọjọ́-ori rẹ kò ní jẹ́ gbangba.',country:'Orílẹ̀-èdè:',countryPh:'Tẹ orílẹ̀-èdè rẹ',gender:'Ìbálòpọ̀:',genderOptional:'(aṣàyàn)',genderSelect:'Yan ìbálòpọ̀ rẹ',male:'Ọkùnrin',female:'Obìnrin',other:'Miíràn',prefer:'Mi ò fẹ́ sọ',security:'Ààbò àkọọ́lẹ̀',password:'Ọ̀rọ̀ aṣínà:',passwordPh:'Ṣẹ̀dá ọ̀rọ̀ aṣínà',ruleLen:'• O kere tán ohun kikọ 8',ruleUser:'• Kò gbọ́dọ̀ jọ orúkọ olumulo rẹ ju',ruleCommon:'• Kò gbọ́dọ̀ jẹ́ ọ̀rọ̀ aṣínà tí a máa ń lò',ruleNumeric:'• Kò gbọ́dọ̀ jẹ́ nọ́mbà nìkan',confirm:'Jẹ́rìí Ọ̀rọ̀ aṣínà:',confirmPh:'Tẹ ọ̀rọ̀ aṣínà kan náà sílẹ̀ lẹ́ẹ̀kan síi',robot:'Jẹ́rìí pé o kì í ṣe robot:',button:'Forúkọsílẹ̀',have:'Ṣé o ti ní àkọọ́lẹ̀?',login:'Wọlé',back:'← Padà sí Ojú-ìwé Àkọ́kọ́'},
+    signupScreen:{title:'Ṣẹ̀dá Àkọọ́lẹ̀',sub:'Darapọ̀ mọ́ Chat Me lónìí',username:'Orúkọ olumulo:',usernamePh:'Yan orúkọ olumulo',usernameHint:'Lẹ́tà, nọ́mbà àti @ / . / + / - / _ nìkan, ó kéré tán ohun kikọ 3',email:'Imeeli:',emailPh:'Tẹ imeeli rẹ',first:'Orúkọ àkọ́kọ́:',firstPh:'Orúkọ àkọ́kọ́',last:'Orúkọ ìdílé:',lastPh:'Orúkọ ìdílé',phone:'Nọ́mbà fóònù:',phonePh:'Nọ́mbà fóònù',quick:'Ìṣètò kíákíá',quickText:'Ọjọ́ ìbí rẹ wúlò fún ìdánwò ọjọ́-ori nìkan. O lè parí profaili rẹ lẹ́yìn náà.',dob:'Ọjọ́ ìbí:',age:'O gbọ́dọ̀ ti pé ọdún 13. Ọjọ́-ori rẹ kò ní jẹ́ gbangba.',country:'Orílẹ̀-èdè:',countryPh:'Tẹ orílẹ̀-èdè rẹ',gender:'Ìbálòpọ̀:',genderOptional:'(aṣàyàn)',genderSelect:'Yan ìbálòpọ̀ rẹ',male:'Ọkùnrin',female:'Obìnrin',other:'Miíràn',prefer:'Mi ò fẹ́ sọ',security:'Ààbò àkọọ́lẹ̀',password:'Ọ̀rọ̀ aṣínà:',passwordPh:'Ṣẹ̀dá ọ̀rọ̀ aṣínà',ruleLen:'• O kere tán ohun kikọ 8',ruleUser:'• Kò gbọ́dọ̀ jọ orúkọ olumulo rẹ ju',ruleCommon:'• Kò gbọ́dọ̀ jẹ́ ọ̀rọ̀ aṣínà tí a máa ń lò',ruleNumeric:'• Kò gbọ́dọ̀ jẹ́ nọ́mbà nìkan',confirm:'Jẹ́rìí Ọ̀rọ̀ aṣínà:',confirmPh:'Tẹ ọ̀rọ̀ aṣínà kan náà sílẹ̀ lẹ́ẹ̀kan síi',robot:'Jẹ́rìí pé o kì í ṣe robot:',button:'Forúkọsílẹ̀',have:'Ṣé o ti ní àkọọ́lẹ̀?',login:'Wọlé',back:'← Padà sí Ojú-ìwé Àkọ́kọ́'},
     nav:{home:'Ile',profile:'Profaili',message:'Ifiranṣẹ',friends:'Ọ̀rẹ́',notifications:'Ìkéde',announcements:'📢 Ìkéde',chatrooms:'Yàrá ìjíròrò',statusbook:'Ìwé ipò',saved:'Àwọn ìfìwéránṣẹ́ tí a pamọ́',nova:'Nova',groups:'Àwùjọ',coins:'Coins',games:'Eré',search:'🔍 Wa',report:'🚩 Ròyìn',support:'🎧 Ìrànlọ́wọ́ Oníbàárà',help:'🎧 Ìrànlọ́wọ́ àti Ààbò',settings:'⚙ Àwọn ètò àti àṣírí',rules:'📜 Àwọn òfin àwùjọ',tos:'Àwọn òfin iṣẹ́',privacy:'Ìlànà àṣírí',refund:'Ìlànà ìpadà owó',admin:'⚙ Alábòójútó',logout:'Jáde'}
   },
   'Hausa': {
     landing:{badge:'💬 Haɗu • Yi Hira • Raba',h1:'Mutanenka. Hirarrakinka. ',h1span:'Wuri ɗaya.',hero:'Yi hira da abokai, gano hirarrakin al’umma, raba sabuntawa, shiga ƙungiyoyi kuma ka more Chat Me daga shafi ɗaya.',create:'Ƙirƙiri asusunka',login:'Shiga Chat Me',stories:'lokacin stories da status',access:'damar hira',free:'don farawa',conversations:'💬 Hirarraki',conversationsText:'Riƙe hirarrakin sirri, na ƙungiya da na al’umma wuri guda.',community:'👥 Al’umma',communityText:'Nemo mutane, yi abokai kuma raba sabuntawarka.',fun:'🎮 Nishaɗi kyauta',funText:'Ji daɗin al’umma da abubuwan kyauta na Chat Me.',welcome:'Barka da dawowa',welcomeText:'Kana da asusun Chat Me? Yi amfani da shafin shiga mai tsaro.',newAccount:'Sabon mai Chat Me? Ƙirƙiri asusu',secure:'Shiga, kariyar kalmar sirri da reCAPTCHA suna cikin shafin shiga mai tsaro.',more:'Fiye da manhajar hira — wuri na zama cikin al’umma',moreText:'Chat Me yana haɗa hirarraki, abokai, wallafe-wallafe, ƙungiyoyi, sanarwa da abubuwan kyauta a sauƙaƙƙiyar al’ummar Najeriya.',real:'💬 Hirarraki na gaske',realText:'Riƙe hirarrakin sirri, ƙungiya da al’umma kusa da kai.',first:'🌍 Al’umma da farko',firstText:'Haɗu da mutane, raba sabuntawa, shiga ƙungiyoyi kuma gano hirarraki.',space:'✨ Wurinka',spaceText:'Gina bayanan martabarka, tsara ƙwarewarka kuma zaɓi yadda za ka shiga.',use:'Abin da mutane za su iya amfani da Chat Me wajen yi',useText:'Abubuwan gaske don kasancewa tare, rabawa da shiga cikin al’umma.',keep:'💬 Ci gaba da hira',keepText:'Yi hira a sirrance, shiga ƙungiyoyi kuma kasance kusa da mutanen da ka sani.',everyday:'Hirarrakin yau da kullum',find:'👥 Nemo al’ummarka',findText:'Shiga ƙungiyoyi, gano abubuwan sha’awa iri ɗaya kuma shiga tattaunawa.',connections:'Al’umma da haɗin kai',share:'📝 Raba da ganowa',shareText:'Wallafa, yi martani, yi sharhi, adana wallafe-wallafe kuma binciki abubuwan da suke gare ka.',social:'Abubuwan zamantakewa da kyauta',works:'Yadda Chat Me ke aiki',step1:'Ƙirƙiri asusunka',step1t:'Shirya bayanan martabarka kuma zaɓi yadda za ka bayyana kanka a al’umma.',step2:'Haɗa kai',step2t:'Nemo abokai, aika buƙatun abota kuma fara hirarraki.',step3:'Raba da ganowa',step3t:'Wallafa, shiga ƙungiyoyi, bi hirarraki kuma yi amfani da abubuwan da suka burge ka.',step4:'Kasance mai iko',step4t:'Yi amfani da sirri, rahoto, toshewa da daidaita al’umma idan kana buƙata.',before:'Kafin ka shiga:',beforeText:' Chat Me yana amfani da binciken cancantar shekaru kuma ba a nufa ga yara ƙasa da 13 ba. Coins na kama-da-wane ba su da darajar kuɗi kuma sayen Coins a halin yanzu a kashe yake. Karanta bayanan sirri kafin ka ƙirƙiri asusu.',privacy:'🔒 Sirri',privacyText:'Bayani bayyananne game da sirri da lambar tuntuɓar taimako.',reporting:'🚩 Rahoto',reportingText:'Masu amfani za su iya bayar da rahoton matsaloli kuma kayan aikin ma’aikata suna taimakawa wajen daidaitawa.',coins:'🪙 Coins na kama-da-wane',coinsText:'An kashe sayen Coins a yanzu kuma ba za a iya mayar da Coins zuwa kuɗi ba.',security:'🛡️ Tsaro',securityText:'Tabbatarwa da kariyar backend suna taimakawa wajen kare asusu.',language:'🌐 Harshe',languageHelp:'Zaɓi harshe da aka fassara. Harsunan da ake tallafawa suna sabunta landing, shiga/rajista da manyan sunayen kewayawa.',searchLanguage:'Nemo harshe...'},
     loginScreen:{title:'Shiga - Chat Me',sub:'Shigar da bayanan shigarka',identifier:'Imel ko sunan mai amfani:',identifierPh:'Shigar da imel ko sunan mai amfani',password:'Kalmar sirri:',passwordPh:'Shigar da kalmar sirri',robot:'Tabbatar ba robot ba ne:',button:'Shiga',forgot:'Ka manta kalmar sirri?',noAccount:'Ba ka da asusu?',register:'Yi rajista a nan',back:'← Koma shafin farko'},
-    signupScreen:{title:'Ƙirƙiri Asusu',sub:'Shiga Chat Me yau',username:'Sunan mai amfani:',usernamePh:'Zaɓi sunan mai amfani',usernameHint:'Haruffa, lambobi da @ / . / + / - / _ kawai, aƙalla haruffa 3',email:'Imel:',emailPh:'Shigar da imel',first:'Sunan farko:',firstPh:'Sunan farko',last:'Sunan ƙarshe:',lastPh:'Sunan ƙarshe',phone:'Lambar waya:',phonePh:'Lambar waya',quick:'Saitin gaggawa',quickText:'Ranar haihuwarka ana amfani da ita ne don cancantar shekaru kawai. Za ka iya kammala bayananka daga baya.',dob:'Ranar haihuwa:',age:'Dole ka kasance aƙalla shekara 18. Shekarunka ba za su zama na jama’a ba.',country:'Ƙasa:',countryPh:'Shigar da ƙasarka',gender:'Jinsi:',genderOptional:'(zaɓi ne)',genderSelect:'Zaɓi jinsinka',male:'Namiji',female:'Mace',other:'Wani',prefer:'Na fi son kada in faɗa',security:'Tsaron asusu',password:'Kalmar sirri:',passwordPh:'Ƙirƙiri kalmar sirri',ruleLen:'• Aƙalla haruffa 8',ruleUser:'• Kada ta yi kama da sunan mai amfani sosai',ruleCommon:'• Kada ta zama kalmar sirri da ake yawan amfani da ita',ruleNumeric:'• Kada ta kasance lambobi kawai',confirm:'Tabbatar da kalmar sirri:',confirmPh:'Sake shigar da kalmar sirri ɗaya',robot:'Tabbatar ba robot ba ne:',button:'Yi rajista',have:'Kana da asusu?',login:'Shiga',back:'← Koma shafin farko'},
+    signupScreen:{title:'Ƙirƙiri Asusu',sub:'Shiga Chat Me yau',username:'Sunan mai amfani:',usernamePh:'Zaɓi sunan mai amfani',usernameHint:'Haruffa, lambobi da @ / . / + / - / _ kawai, aƙalla haruffa 3',email:'Imel:',emailPh:'Shigar da imel',first:'Sunan farko:',firstPh:'Sunan farko',last:'Sunan ƙarshe:',lastPh:'Sunan ƙarshe',phone:'Lambar waya:',phonePh:'Lambar waya',quick:'Saitin gaggawa',quickText:'Ranar haihuwarka ana amfani da ita ne don cancantar shekaru kawai. Za ka iya kammala bayananka daga baya.',dob:'Ranar haihuwa:',age:'Dole ka kasance aƙalla shekara 13. Shekarunka ba za su zama na jama’a ba.',country:'Ƙasa:',countryPh:'Shigar da ƙasarka',gender:'Jinsi:',genderOptional:'(zaɓi ne)',genderSelect:'Zaɓi jinsinka',male:'Namiji',female:'Mace',other:'Wani',prefer:'Na fi son kada in faɗa',security:'Tsaron asusu',password:'Kalmar sirri:',passwordPh:'Ƙirƙiri kalmar sirri',ruleLen:'• Aƙalla haruffa 8',ruleUser:'• Kada ta yi kama da sunan mai amfani sosai',ruleCommon:'• Kada ta zama kalmar sirri da ake yawan amfani da ita',ruleNumeric:'• Kada ta kasance lambobi kawai',confirm:'Tabbatar da kalmar sirri:',confirmPh:'Sake shigar da kalmar sirri ɗaya',robot:'Tabbatar ba robot ba ne:',button:'Yi rajista',have:'Kana da asusu?',login:'Shiga',back:'← Koma shafin farko'},
     nav:{home:'Gida',profile:'Bayani',message:'Saƙo',friends:'Abokai',notifications:'Sanarwa',announcements:'📢 Sanarwa',chatrooms:'Ɗakunan hira',statusbook:'Littafin matsayi',saved:'Abubuwan da aka adana',nova:'Nova',groups:'Ƙungiyoyi',coins:'Coins',games:'Wasanni',search:'🔍 Bincike',report:'🚩 Rahoto',support:'🎧 Sabis na abokin ciniki',help:'🎧 Taimako da tsaro',settings:'⚙ Saituna da sirri',rules:'📜 Dokokin al’umma',tos:'Sharuɗɗan sabis',privacy:'Manufar sirri',refund:'Manufar mayar da kuɗi',admin:'⚙ Admin',logout:'Fita'}
   },
   'Igbo': {
-    landing:{badge:'💬 Jikọọ • Kparịta ụka • Kekọrịta',h1:'Ndị gị. Mkparịta ụka gị. ',h1span:'Otu ebe.',hero:'Kparịta ụka na ndị enyi, chọpụta mkparịta ụka obodo, kesaa mmelite, sonyere otu ma nwee obi ụtọ na Chat Me site n’otu peeji.',create:'Mepụta akaụntụ gị',login:'Banye na Chat Me',stories:'oge stories na status',access:'ohere mkparịta ụka',free:'ịmalite',conversations:'💬 Mkparịta ụka',conversationsText:'Debe mkparịta ụka nzuzo, otu na obodo ọnụ.',community:'👥 Obodo',communityText:'Chọta ndị mmadụ, mee enyi ma kesaa mmelite gị.',fun:'🎮 Ntụrụndụ efu',funText:'Nwee obi ụtọ n’obodo na atụmatụ efu dị na Chat Me.',welcome:'Nnọọ ọzọ',welcomeText:'Ị nwere akaụntụ Chat Me? Jiri peeji nbanye nwere nchekwa.',newAccount:'Ọhụrụ na Chat Me? Mepụta akaụntụ',secure:'Nbanye, nchekwa paswọọdụ na reCAPTCHA dị na peeji nbanye nwere nchekwa.',more:'Karịa ngwa nkata — ebe ị ga-abụ akụkụ nke obodo',moreText:'Chat Me na-ejikọta mkparịta ụka, ndị enyi, posts, otu, ọkwa na atụmatụ efu n’obodo Naịjirịa dị mfe.',real:'💬 Mkparịta ụka n’ezie',realText:'Debe mkparịta ụka nzuzo, otu na obodo nso.',first:'🌍 Obodo mbụ',firstText:'Zute ndị mmadụ, kesaa mmelite, sonyere otu ma chọpụta mkparịta ụka.',space:'✨ Oghere gị',spaceText:'Wulite profaịlụ gị, hazie ahụmịhe gị ma họrọ otu ị ga-esi sonye.',use:'Ihe ndị mmadụ nwere ike iji Chat Me mee',useText:'Atụmatụ n’ezie maka ịnọ na njikọ, ikekọrịta na isonye n’obodo.',keep:'💬 Mee ka mkparịta ụka gaa n’ihu',keepText:'Kparịta ụka na nzuzo, sonyere otu ma nọgide na njikọ.',everyday:'Mkparịta ụka kwa ụbọchị',find:'👥 Chọta obodo gị',findText:'Sonyere otu, chọpụta mmasị ndị yiri ibe ha ma sonye na mkparịta ụka.',connections:'Obodo na njikọ',share:'📝 Kekọrịta ma chọpụta',shareText:'Bipute, zaghachi, kwuo okwu, chekwaa posts ma chọpụta atụmatụ dịịrị gị.',social:'Atụmatụ mmekọrịta na efu',works:'Otu Chat Me si arụ ọrụ',step1:'Mepụta akaụntụ gị',step1t:'Hazie profaịlụ gị ma họrọ otu ị chọrọ isi gosi onwe gị n’obodo.',step2:'Jikọọ',step2t:'Chọta ndị enyi, zipu arịrịọ enyi ma malite mkparịta ụka.',step3:'Kekọrịta ma chọpụta',step3t:'Bipute, sonyere otu, soro mkparịta ụka ma jiri atụmatụ masịrị gị.',step4:'Nọgide na-achịkwa',step4t:'Jiri nzuzo, mkpesa, igbochi na nhazi obodo mgbe ịchọrọ.',before:'Tupu ị sonyere:',beforeText:' Chat Me na-eji nyocha afọ ma ebughị ya maka ndị na-erubeghị afọ 18. Coins nke dijitalụ enweghị uru ego, a kwụsịkwara ịzụrụ Coins ugbu a. Gụọ ozi nzuzo tupu ịmepụta akaụntụ.',privacy:'🔒 Nzuzo',privacyText:'Ozi nzuzo doro anya na kọntaktị nkwado.',reporting:'🚩 Mkpesa',reportingText:'Ndị ọrụ nwere ike kọọ nsogbu ma ngwaọrụ ndị ọrụ na-enyere aka n’ịchịkwa obodo.',coins:'🪙 Coins dijitalụ',coinsText:'Akwụsịla ịzụrụ Coins ugbu a, enweghịkwa ike ịgbanwe Coins ka ọ bụrụ ego.',security:'🛡️ Nchekwa',securityText:'Nyocha njirimara na njikwa backend echekwara na-enyere aka ichekwa akaụntụ.',language:'🌐 Asụsụ',languageHelp:'Họrọ asụsụ a sụgharịrị. Asụsụ ndị a na-akwado na-emelite landing, nbanye/ndebanye na aha igodo.',searchLanguage:'Chọọ asụsụ...'},
+    landing:{badge:'💬 Jikọọ • Kparịta ụka • Kekọrịta',h1:'Ndị gị. Mkparịta ụka gị. ',h1span:'Otu ebe.',hero:'Kparịta ụka na ndị enyi, chọpụta mkparịta ụka obodo, kesaa mmelite, sonyere otu ma nwee obi ụtọ na Chat Me site n’otu peeji.',create:'Mepụta akaụntụ gị',login:'Banye na Chat Me',stories:'oge stories na status',access:'ohere mkparịta ụka',free:'ịmalite',conversations:'💬 Mkparịta ụka',conversationsText:'Debe mkparịta ụka nzuzo, otu na obodo ọnụ.',community:'👥 Obodo',communityText:'Chọta ndị mmadụ, mee enyi ma kesaa mmelite gị.',fun:'🎮 Ntụrụndụ efu',funText:'Nwee obi ụtọ n’obodo na atụmatụ efu dị na Chat Me.',welcome:'Nnọọ ọzọ',welcomeText:'Ị nwere akaụntụ Chat Me? Jiri peeji nbanye nwere nchekwa.',newAccount:'Ọhụrụ na Chat Me? Mepụta akaụntụ',secure:'Nbanye, nchekwa paswọọdụ na reCAPTCHA dị na peeji nbanye nwere nchekwa.',more:'Karịa ngwa nkata — ebe ị ga-abụ akụkụ nke obodo',moreText:'Chat Me na-ejikọta mkparịta ụka, ndị enyi, posts, otu, ọkwa na atụmatụ efu n’obodo Naịjirịa dị mfe.',real:'💬 Mkparịta ụka n’ezie',realText:'Debe mkparịta ụka nzuzo, otu na obodo nso.',first:'🌍 Obodo mbụ',firstText:'Zute ndị mmadụ, kesaa mmelite, sonyere otu ma chọpụta mkparịta ụka.',space:'✨ Oghere gị',spaceText:'Wulite profaịlụ gị, hazie ahụmịhe gị ma họrọ otu ị ga-esi sonye.',use:'Ihe ndị mmadụ nwere ike iji Chat Me mee',useText:'Atụmatụ n’ezie maka ịnọ na njikọ, ikekọrịta na isonye n’obodo.',keep:'💬 Mee ka mkparịta ụka gaa n’ihu',keepText:'Kparịta ụka na nzuzo, sonyere otu ma nọgide na njikọ.',everyday:'Mkparịta ụka kwa ụbọchị',find:'👥 Chọta obodo gị',findText:'Sonyere otu, chọpụta mmasị ndị yiri ibe ha ma sonye na mkparịta ụka.',connections:'Obodo na njikọ',share:'📝 Kekọrịta ma chọpụta',shareText:'Bipute, zaghachi, kwuo okwu, chekwaa posts ma chọpụta atụmatụ dịịrị gị.',social:'Atụmatụ mmekọrịta na efu',works:'Otu Chat Me si arụ ọrụ',step1:'Mepụta akaụntụ gị',step1t:'Hazie profaịlụ gị ma họrọ otu ị chọrọ isi gosi onwe gị n’obodo.',step2:'Jikọọ',step2t:'Chọta ndị enyi, zipu arịrịọ enyi ma malite mkparịta ụka.',step3:'Kekọrịta ma chọpụta',step3t:'Bipute, sonyere otu, soro mkparịta ụka ma jiri atụmatụ masịrị gị.',step4:'Nọgide na-achịkwa',step4t:'Jiri nzuzo, mkpesa, igbochi na nhazi obodo mgbe ịchọrọ.',before:'Tupu ị sonyere:',beforeText:' Chat Me na-eji nyocha afọ ma ebughị ya maka ụmụaka na-erubeghị afọ 13. Coins nke dijitalụ enweghị uru ego, a kwụsịkwara ịzụrụ Coins ugbu a. Gụọ ozi nzuzo tupu ịmepụta akaụntụ.',privacy:'🔒 Nzuzo',privacyText:'Ozi nzuzo doro anya na kọntaktị nkwado.',reporting:'🚩 Mkpesa',reportingText:'Ndị ọrụ nwere ike kọọ nsogbu ma ngwaọrụ ndị ọrụ na-enyere aka n’ịchịkwa obodo.',coins:'🪙 Coins dijitalụ',coinsText:'Akwụsịla ịzụrụ Coins ugbu a, enweghịkwa ike ịgbanwe Coins ka ọ bụrụ ego.',security:'🛡️ Nchekwa',securityText:'Nyocha njirimara na njikwa backend echekwara na-enyere aka ichekwa akaụntụ.',language:'🌐 Asụsụ',languageHelp:'Họrọ asụsụ a sụgharịrị. Asụsụ ndị a na-akwado na-emelite landing, nbanye/ndebanye na aha igodo.',searchLanguage:'Chọọ asụsụ...'},
     loginScreen:{title:'Nbanye - Chat Me',sub:'Tinye ozi nbanye gị',identifier:'Email ma ọ bụ aha onye ọrụ:',identifierPh:'Tinye email ma ọ bụ aha onye ọrụ',password:'Paswọọdụ:',passwordPh:'Tinye paswọọdụ',robot:'Kwenye na ị bụghị robot:',button:'Banye',forgot:'Chefuru paswọọdụ?',noAccount:'Ị nweghị akaụntụ?',register:'Debanye aha ebe a',back:'← Laghachi na mbụ'},
-    signupScreen:{title:'Mepụta Akaụntụ',sub:'Sonyere Chat Me taa',username:'Aha onye ọrụ:',usernamePh:'Họrọ aha onye ọrụ',usernameHint:'Akwụkwọ ozi, ọnụọgụ na @ / . / + / - / _ naanị, opekata mpe mkpụrụedemede 3',email:'Email:',emailPh:'Tinye email gị',first:'Aha mbụ:',firstPh:'Aha mbụ',last:'Aha ikpeazụ:',lastPh:'Aha ikpeazụ',phone:'Nọmba ekwentị:',phonePh:'Nọmba ekwentị',quick:'Nhazi ngwa ngwa',quickText:'A na-eji ụbọchị ọmụmụ gị naanị maka nyocha afọ. Ị nwere ike mezue profaịlụ gị ma emechaa.',dob:'Ụbọchị ọmụmụ:',age:'Ị ga-abụrịrị afọ 18 ma ọ bụ karịa. Afọ gị agaghị abụ ọha.',country:'Obodo:',countryPh:'Tinye obodo gị',gender:'Okike:',genderOptional:'(nhọrọ)',genderSelect:'Họrọ okike gị',male:'Nwoke',female:'Nwanyị',other:'Ọzọ',prefer:'Achọghị m ikwu',security:'Nchekwa akaụntụ',password:'Paswọọdụ:',passwordPh:'Mepụta paswọọdụ',ruleLen:'• Opekata mpe mkpụrụedemede 8',ruleUser:'• O kwesịghị ịdị nso na aha onye ọrụ gị',ruleCommon:'• O kwesịghị ịbụ paswọọdụ a na-ejikarị',ruleNumeric:'• O kwesịghị ịbụ ọnụọgụ naanị',confirm:'Kwenye paswọọdụ:',confirmPh:'Tinye otu paswọọdụ ahụ ọzọ',robot:'Kwenye na ị bụghị robot:',button:'Debanye aha',have:'Ị nwere akaụntụ?',login:'Banye',back:'← Laghachi na mbụ'},
+    signupScreen:{title:'Mepụta Akaụntụ',sub:'Sonyere Chat Me taa',username:'Aha onye ọrụ:',usernamePh:'Họrọ aha onye ọrụ',usernameHint:'Akwụkwọ ozi, ọnụọgụ na @ / . / + / - / _ naanị, opekata mpe mkpụrụedemede 3',email:'Email:',emailPh:'Tinye email gị',first:'Aha mbụ:',firstPh:'Aha mbụ',last:'Aha ikpeazụ:',lastPh:'Aha ikpeazụ',phone:'Nọmba ekwentị:',phonePh:'Nọmba ekwentị',quick:'Nhazi ngwa ngwa',quickText:'A na-eji ụbọchị ọmụmụ gị naanị maka nyocha afọ. Ị nwere ike mezue profaịlụ gị ma emechaa.',dob:'Ụbọchị ọmụmụ:',age:'Ị ga-abụrịrị afọ 13 ma ọ bụ karịa. Afọ gị agaghị abụ ọha.',country:'Obodo:',countryPh:'Tinye obodo gị',gender:'Okike:',genderOptional:'(nhọrọ)',genderSelect:'Họrọ okike gị',male:'Nwoke',female:'Nwanyị',other:'Ọzọ',prefer:'Achọghị m ikwu',security:'Nchekwa akaụntụ',password:'Paswọọdụ:',passwordPh:'Mepụta paswọọdụ',ruleLen:'• Opekata mpe mkpụrụedemede 8',ruleUser:'• O kwesịghị ịdị nso na aha onye ọrụ gị',ruleCommon:'• O kwesịghị ịbụ paswọọdụ a na-ejikarị',ruleNumeric:'• O kwesịghị ịbụ ọnụọgụ naanị',confirm:'Kwenye paswọọdụ:',confirmPh:'Tinye otu paswọọdụ ahụ ọzọ',robot:'Kwenye na ị bụghị robot:',button:'Debanye aha',have:'Ị nwere akaụntụ?',login:'Banye',back:'← Laghachi na mbụ'},
     nav:{home:'Ụlọ',profile:'Profaịlụ',message:'Ozi',friends:'Ndị enyi',notifications:'Ọkwa',announcements:'📢 Ọkwa',chatrooms:'Ụlọ nkata',statusbook:'Akwụkwọ ọnọdụ',saved:'Posts echekwara',nova:'Nova',groups:'Òtù',coins:'Coins',games:'Egwuregwu',search:'🔍 Chọọ',report:'🚩 Kọọ',support:'🎧 Ọrụ ndị ahịa',help:'🎧 Enyemaka na nchekwa',settings:'⚙ Ntọala na nzuzo',rules:'📜 Iwu obodo',tos:'Usoro ọrụ',privacy:'Iwu nzuzo',refund:'Iwu nkwụghachi',admin:'⚙ Onye nlekọta',logout:'Pụọ'}
   },
   'Nigerian Pidgin': {
@@ -4533,13 +4513,13 @@ async function loadAdminPage(){
   const eligible = rows.filter(u => !u.verified && !!u.pendingVerification);
   const canVerify = iAmAdmin || iAmModerator;
   const verifySection = `
-    <div class="section-divider"><strong>Verification requests</strong><span>Members who paid the 10,000-Coin verification fee and are waiting for staff review.</span></div>
+    <div class="section-divider"><strong>Verification requests</strong><span>Members who paid the 50,000-Coin verification fee and are waiting for staff review.</span></div>
     ${eligible.length ? eligible.map(u => `
       <div class="user-result" style="max-width:560px;">
         ${avatarHtml(u.firstName, u.lastName, u.profilePic, 'avatar')}
         <div class="info">
           <div class="name">${escapeHtml(u.firstName)} ${escapeHtml(u.lastName)}</div>
-          <div class="uname">@${escapeHtml(u.username)} &middot; Verification fee paid: 10,000 Coins</div>
+          <div class="uname">@${escapeHtml(u.username)} &middot; Verification fee paid: 50,000 Coins</div>
         </div>
         ${canVerify ? `<button onclick="verifyUser('${u.username.replace(/'/g,"\\'")}')">Approve Verification</button>` : `<span style="color:#aaa;font-size:12.5px;">Only staff can verify</span>`}
       </div>`).join('') : '<div class="empty-feed">No one is currently eligible.</div>'}
@@ -5919,8 +5899,8 @@ function timeAgo(ts){
   return Math.floor(diff/86400) + ' day' + (Math.floor(diff/86400)===1?'':'s') + ' ago';
 }
 
-const VERIFIED_COINS_THRESHOLD = 10000;
-const VERIFICATION_PRICE_COINS = 10000;
+const VERIFIED_COINS_THRESHOLD = 50000;
+const VERIFICATION_PRICE_COINS = 50000;
 const MAX_ADMINS = 2;
 const MAX_MODERATORS = 3;
 function isModeratorUser(u){
@@ -5939,12 +5919,13 @@ function ownerBadgeHtml(isOwner){
 // Pass any object with isOwner / isAdmin / isModerator / verified fields.
 function roleBadgeHtml(u){
   if (!u) return '';
-  if (u.isOwner) return '<span title="Owner">\uD83D\uDC8E\uD83C\uDFC5\uD83C\uDF10\uD83D\uDC8D</span>';
-  if (u.isAdmin) return '<span title="Admin">\uD83D\uDC8D\uD83C\uDF10\uD83C\uDFC5</span>';
-  if (u.isModerator) return '<span title="Moderator">\uD83C\uDFC5\uD83C\uDF10</span>';
-  if (u.isSupportAgent) return '<span title="Support Agent">🎧</span>';
-  if (u.verified) return '<span title="Verified">\uD83C\uDF10</span>';
-  return '';
+  const membership = (typeof currentBadgeHtml === 'function') ? currentBadgeHtml(u) : '';
+  if (u.isOwner) return '<span title="Owner">\uD83D\uDC8E\uD83C\DFC5\uD83C\DF10\uD83D\uDC8D</span> ' + membership;
+  if (u.isAdmin) return '<span title="Admin">\uD83D\uDC8D\uD83C\DF10\uD83C\DFC5</span> ' + membership;
+  if (u.isModerator) return '<span title="Moderator">\uD83C\DFC5\uD83C\DF10</span> ' + membership;
+  if (u.isSupportAgent) return '<span title="Support Agent">🎧</span> ' + membership;
+  if (u.verified) return '<span title="Verified">\uD83C\DF10</span> ' + membership;
+  return membership;
 }
 function isAdminUser(u){
   if (!u) return false;
@@ -6464,12 +6445,50 @@ const SHOP_CATALOG = {
     {id:'starGift',label:'Star Gift',price:30000,emoji:'🌟'},{id:'fireGift',label:'Fire Gift',price:35000,emoji:'🔥'},{id:'unicorn',label:'Unicorn',price:40000,emoji:'🦄'},{id:'galaxyGift',label:'Galaxy Gift',price:50000,emoji:'🌌'}
   ],
   badges: [
-    {id:'legend',label:'Legend',price:50000,emoji:'🏆'},{id:'vip',label:'VIP',price:60000,emoji:'💎'},{id:'creator',label:'Creator',price:70000,emoji:'🎨'},
-    {id:'star',label:'Star',price:80000,emoji:'⭐'},{id:'royal',label:'Royal',price:90000,emoji:'👑'},{id:'elite',label:'Elite',price:100000,emoji:'⚡'},
-    {id:'diamondBadge',label:'Diamond',price:110000,emoji:'💠'},{id:'champion',label:'Champion',price:125000,emoji:'🥇'},{id:'master',label:'Master',price:140000,emoji:'🛡️'},{id:'ultimateBadge',label:'Ultimate',price:150000,emoji:'🌟'}
+    {id:'bronzeBadge',label:'Bronze',price:2000,emoji:'🥉',tier:1,benefits:['Bronze profile badge','Member status display','Badge history']},
+    {id:'silverBadge',label:'Silver',price:5000,emoji:'🥈',tier:2,benefits:['Everything in Bronze','Silver profile badge','Upgrade priority']},
+    {id:'goldBadge',label:'Gold',price:10000,emoji:'🥇',tier:3,benefits:['Everything in Silver','Gold profile badge','Premium member display']},
+    {id:'eliteBadge',label:'Elite',price:15000,emoji:'👑',tier:4,benefits:['Everything in Gold','Elite profile badge','Elite member display']},
+    {id:'vip',label:'VIP',price:25000,emoji:'💎',tier:5,comingSoon:true,adminOnly:true,benefits:['Admin-only VIP status','VIP profile badge','Special staff-managed access']}
   ]
 };
-const SHOP_FIXED_PRICES = { featuredProfile:850, profileMusic:950, privateRoom:1250, groupBackground:1100, pinMessage:50, premiumReactions:450, storyInsights:600, verification:10000 };
+
+/* Membership/badge system: one current badge per member. Higher badges replace lower badges. */
+const BADGE_TIERS = SHOP_CATALOG.badges.reduce((m,b) => { m[b.id] = b.tier || 0; return m; }, {});
+function badgeDef(id){ return SHOP_CATALOG.badges.find(b => b.id === id) || null; }
+function normalizeBadgeState(u){
+  if (!u) return [];
+  const list = Array.isArray(u.ownedBadges) ? u.ownedBadges.filter(id => badgeDef(id)) : [];
+  if (!list.length) return [];
+  const best = list.sort((a,b) => (BADGE_TIERS[b]||0) - (BADGE_TIERS[a]||0))[0];
+  u.ownedBadges = [best];
+  return u.ownedBadges;
+}
+function currentBadgeDef(u){
+  const ids = normalizeBadgeState(u);
+  return ids.length ? badgeDef(ids[0]) : null;
+}
+function currentBadgeHtml(u){
+  const b = currentBadgeDef(u);
+  if (!b) return '';
+  const expired = u.badgeExpiresAt && Number(u.badgeExpiresAt) <= Date.now();
+  if (expired) return '';
+  const expiry = u.badgeExpiresAt ? ' · expires ' + new Date(Number(u.badgeExpiresAt)).toLocaleDateString() : '';
+  return `<span class="cm-membership-badge" title="${escapeHtml(b.label)} Membership${escapeHtml(expiry)}">${b.emoji} ${escapeHtml(b.label)}</span>`;
+}
+function badgeHistoryHtml(u){
+  const h = Array.isArray(u && u.badgeHistory) ? u.badgeHistory : [];
+  if (!h.length) return '<div style="font-size:12px;color:#888;">No badge history yet.</div>';
+  return h.slice(0,10).map(x => {
+    const b = badgeDef(x.badgeId);
+    return `<div style="display:flex;justify-content:space-between;gap:8px;padding:7px 0;border-bottom:1px solid #eee;font-size:12px;"><span>${b ? b.emoji+' '+escapeHtml(b.label) : escapeHtml(x.badgeId||'Badge')}</span><span style="color:#777;">${x.action==='upgrade'?'Upgraded':'Purchased'} · ${x.time ? new Date(x.time).toLocaleDateString() : ''}</span></div>`;
+  }).join('');
+}
+function badgeBenefitsHtml(b){
+  if (!b) return '';
+  return `<ul style="margin:6px 0 0 18px;padding:0;font-size:11.5px;color:#666;text-align:left;">${(b.benefits||[]).map(x => `<li>${escapeHtml(x)}</li>`).join('')}</ul>`;
+}
+const SHOP_FIXED_PRICES = { featuredProfile:850, profileMusic:950, privateRoom:1250, groupBackground:1100, pinMessage:50, premiumReactions:450, storyInsights:600, verification:50000 };
 
 async function loadCurrentUserFull(){
   const raw = await storageGet(userKey(currentUser.email), true);
@@ -6489,7 +6508,9 @@ async function saveCurrentUserFull(u){
   currentUser.ownedStickerPacks = u.ownedStickerPacks;
   currentUser.ownedChatThemes = u.ownedChatThemes;
   currentUser.ownedGifts = u.ownedGifts;
-  currentUser.ownedBadges = u.ownedBadges;
+  currentUser.ownedBadges = normalizeBadgeState(u);
+  currentUser.badgeExpiresAt = u.badgeExpiresAt || null;
+  currentUser.badgeHistory = Array.isArray(u.badgeHistory) ? u.badgeHistory : [];
   currentUser.hasPrivateRoom = u.hasPrivateRoom;
   currentUser.hasGroupBackground = u.hasGroupBackground;
   currentUser.profileMusicUrl = u.profileMusicUrl;
@@ -6506,20 +6527,51 @@ async function buyShopItem(category, itemId){
   if (!item) return;
   const u = await loadCurrentUserFull();
   if (!u) return;
-  if (category === 'badges' && !u.verified) {
-    alert('Only verified users can buy badges. Complete the 10,000-Coin verification process and receive admin approval first.');
+
+  if (category === 'badges') {
+    normalizeBadgeState(u);
+    const admin = currentUserHasTrustedRole('admin') || currentUserHasTrustedRole('owner');
+    if (item.adminOnly && !admin) { alert('💎 VIP is Coming Soon for members. Only an authorized admin can manage VIP.'); return; }
+    if (item.adminOnly && admin) { alert('Use Manage VIP in the admin membership controls to assign 💎 VIP.'); return; }
+    const oldBadge = currentBadgeDef(u);
+    if (oldBadge && oldBadge.id === item.id) { alert('You already have the ' + item.label + ' badge.'); return; }
+    if (oldBadge && (item.tier || 0) < (oldBadge.tier || 0)) {
+      alert('You already have a higher ' + oldBadge.label + ' badge. Badge purchases only upgrade upward.');
+      return;
+    }
+    if (oldBadge && (item.tier || 0) > (oldBadge.tier || 0)) {
+      if (!confirm('Upgrade from ' + oldBadge.emoji + ' ' + oldBadge.label + ' to ' + item.emoji + ' ' + item.label + ' for ' + item.price.toLocaleString() + ' Coins? Your old badge will be replaced.')) return;
+    } else if (!confirm('Buy the ' + item.emoji + ' ' + item.label + ' badge for ' + item.price.toLocaleString() + ' Coins?')) return;
+
+    const balance = typeof u.leos === 'number' ? u.leos : 20;
+    if (balance < item.price) {
+      alert('Not enough Coins. You need ' + item.price.toLocaleString() + ' Coins and have ' + balance.toFixed(2) + '.');
+      return;
+    }
+    u.leos = balance - item.price;
+    u.ownedBadges = [item.id];
+    u.badgeHistory = Array.isArray(u.badgeHistory) ? u.badgeHistory : [];
+    u.badgeHistory.unshift({badgeId:item.id, previousBadgeId:oldBadge ? oldBadge.id : null, action:oldBadge ? 'upgrade' : 'purchase', price:item.price, time:Date.now()});
+    u.badgeHistory = u.badgeHistory.slice(0,20);
+    const saved = await saveCurrentUserFull(u);
+    if (!saved) { alert('The badge purchase could not be saved. No purchase was confirmed. Please try again.'); return; }
+    await recordCoinTransaction('Membership badge: ' + item.label, -item.price, u.leos);
+    loadShopPage();
+    if (typeof loadProfile === 'function') loadProfile();
+    alert('Membership upgraded to ' + item.emoji + ' ' + item.label + '!');
     return;
   }
-  // Map category -> the exact field name used on the user record.
+
   const fieldMap = { themes: 'ownedThemes', frames: 'ownedFrames', nameEffects: 'ownedNameEffects', stickers: 'ownedStickerPacks', chatThemes: 'ownedChatThemes', gifts: 'ownedGifts', badges: 'ownedBadges' };
   const field = fieldMap[category];
   const owned = field ? (u[field] || []) : [];
   if (field && category !== 'gifts' && owned.includes(itemId)) { alert('You already own this.'); return; }
   const balance = typeof u.leos === 'number' ? u.leos : 20;
-  if (balance < item.price) { alert('You need ' + item.price + ' Coins for this. Your balance: ' + balance.toFixed(2)); return; }
+  if (balance < item.price) { alert('Not enough Coins. You need ' + item.price.toLocaleString() + ' and have ' + balance.toFixed(2) + '.'); return; }
   u.leos = balance - item.price;
   if (field) { u[field] = [...owned, itemId]; }
-  await saveCurrentUserFull(u);
+  const saved = await saveCurrentUserFull(u);
+  if (!saved) { alert('Purchase could not be saved. Please try again.'); return; }
   if (item.price > 0) await recordCoinTransaction('Shop: ' + item.label, -item.price, u.leos);
   loadShopPage();
   alert('Purchased: ' + item.label + '!');
@@ -6551,7 +6603,7 @@ async function buyFixedShopItem(kind){
     u.verificationRequestedAt = Date.now();
     u.verified = false;
     await saveCurrentUserFull(u);
-    alert('10,000 Coins have been used for your verification request. An admin must review and approve it before your verified badge is activated.');
+    alert('50,000 Coins have been used for your verification request. An admin must review and approve it before your verified badge is activated.');
   } else if (kind === 'featuredProfile') {
     u.leos = balance - price;
     u.featuredUntil = Date.now() + 24 * 60 * 60 * 1000;
@@ -6681,8 +6733,8 @@ async function loadShopPage(){
         : `<button onclick="buyShopItem('chatThemes','${c.id}')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`);
     }).join('') + '<div style="font-size:11.5px;color:#888;width:100%;">Pick your active chat theme from inside any chat (🎨 icon).</div>');
 
-  html += section('🌐 Verification', 'Request the Chat Me verified badge for 10,000 Coins. An admin must review and approve the request.', [
-    `<div style=\"padding:10px;border:1px solid #ddd;border-radius:8px;\"><strong>Verified Badge</strong><div style=\"font-size:12px;color:#777;margin:5px 0 8px;\">10,000 Coins</div>${u.verified ? '<span style=\"color:#198754;font-weight:700;\">Already verified</span>' : `<button onclick=\"buyFixedShopItem('verification')\" style=\"background:#2b6ee0;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;\">Request verification for 10,000 Coins</button>`}</div>`
+  html += section('🌐 Verification', 'Request the Chat Me verified badge for 50,000 Coins. An admin must review and approve the request.', [
+    `<div style=\"padding:10px;border:1px solid #ddd;border-radius:8px;\"><strong>Verified Badge</strong><div style=\"font-size:12px;color:#777;margin:5px 0 8px;\">50,000 Coins</div>${u.verified ? '<span style=\"color:#198754;font-weight:700;\">Already verified</span>' : `<button onclick=\"buyFixedShopItem('verification')\" style=\"background:#2b6ee0;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;\">Request verification for 50,000 Coins</button>`}</div>`
   ]);
 
   html += section('🎁 Virtual Gifts', 'Buy gifts here, then send them from the Gift button at the top of a private chat.',
@@ -6692,49 +6744,88 @@ async function loadShopPage(){
         `<div style="font-size:11px;color:#777;margin-bottom:5px;">Owned: ${ownedCount}</div><button onclick="buyShopItem('gifts','${g.id}')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`);
     }).join(''));
 
-  html += section('🏆 Special Badges', 'Verified users only. Badge prices range from 50,000 to 150,000 Coins.',
+  const currentBadge = currentBadgeDef(u);
+  const admin = currentUserHasTrustedRole('admin') || currentUserHasTrustedRole('owner');
+  const balanceNum = typeof u.leos === 'number' ? u.leos : 20;
+  html += section('🏆 Membership Badges', 'Everyone can buy Bronze, Silver, Gold or Elite when they have enough Coins. Only 💎 VIP is admin-managed. One current badge is kept; an upgrade replaces the previous badge.',
     SHOP_CATALOG.badges.map(b => {
-      const owned = (u.ownedBadges || []).includes(b.id);
-      const locked = !u.verified;
-      return itemCard(b.label, b.price.toLocaleString() + ' Coins', `<div style="font-size:28px;">${b.emoji}</div>`,
-        owned ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Owned</button>`
-        : locked ? `<button disabled style="background:#aaa;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">🔒 Verified only</button>`
-        : `<button onclick="buyShopItem('badges','${b.id}')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`);
+      const owned = currentBadge && currentBadge.id === b.id;
+      const higher = currentBadge && (currentBadge.tier||0) > (b.tier||0);
+      let action = '';
+      if (owned) action = `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Current badge</button>`;
+      else if (b.comingSoon && !admin) action = `<button disabled style="background:#888;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Coming Soon</button>`;
+      else if (higher) action = `<button disabled style="background:#aaa;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Higher badge owned</button>`;
+      else if (b.comingSoon && admin) action = `<button onclick="buyShopItem('badges','${b.id}')" style="background:#7c3aed;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Manage VIP</button>`;
+      else if (balanceNum < b.price) action = `<button disabled style="background:#aaa;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Need ${(b.price-balanceNum).toLocaleString()} more</button>`;
+      else action = `<button onclick="buyShopItem('badges','${b.id}')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">${currentBadge ? 'Upgrade' : 'Buy'}</button>`;
+      return itemCard(b.label, b.price.toLocaleString() + ' Coins', `<div style="font-size:28px;">${b.emoji}</div>${badgeBenefitsHtml(b)}`, action);
     }).join(''));
 
-  const featuredActive = u.featuredUntil && u.featuredUntil > Date.now();
-  html += section('📣 Featured Profile', 'Shown at the top of People search for 24 hours (850 Coins).',
-    itemCard('Featured', SHOP_FIXED_PRICES.featuredProfile + ' Coins', `<div style="font-size:28px;">⭐</div>`,
-      featuredActive ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Active</button>`
-      : `<button onclick="buyFixedShopItem('featuredProfile')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`));
+  html += `<div class="profile-card cm-membership-panel" style="margin:8px 0 18px;max-width:760px;">
+    <strong>💎 Membership Plans</strong>
+    <div style="font-size:12.5px;color:#666;margin-top:6px;line-height:1.5;">Choose a membership badge using Coins. Bronze, Silver, Gold and Elite are available to eligible members with enough Coins. 💎 VIP is <b>Coming Soon</b> for members and remains admin-managed. Membership badges have no cash value.
+    <div class="cm-membership-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-top:10px;">
+      ${SHOP_CATALOG.badges.map(b => `<div style="padding:10px;border:1px solid #ddd;border-radius:8px;"><b>${b.emoji} ${b.label}</b><br>${b.price.toLocaleString()} Coins<br><span style="font-size:11px;color:${b.comingSoon?'#7c3aed':'#666'};">${b.comingSoon?'Coming Soon':(currentBadge && currentBadge.id===b.id?'Current membership':(currentBadge && currentBadge.tier>b.tier?'Already below your current badge':'Available to buy'))}</span></div>`).join('')}
+    </div>
+    <div style="margin-top:10px;padding:10px;background:#f7f9fc;border-radius:8px;font-size:12px;"><b>Current membership:</b> ${currentBadge ? currentBadge.emoji+' '+escapeHtml(currentBadge.label) : 'No badge yet'} ${u.badgeExpiresAt ? ' · expires ' + new Date(u.badgeExpiresAt).toLocaleDateString() : ' · no expiry'} </div>
+    <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
+      <button onclick="showBadgeBenefits()" style="background:#2b6ee0;color:#fff;border:none;padding:7px 12px;border-radius:7px;cursor:pointer;font-size:12px;">Membership benefits</button>
+      <button onclick="showBadgeHistory()" style="background:#5b4abf;color:#fff;border:none;padding:7px 12px;border-radius:7px;cursor:pointer;font-size:12px;">Badge history</button>
+      <button onclick="showCoinHistoryFromShop()" style="background:#198754;color:#fff;border:none;padding:7px 12px;border-radius:7px;cursor:pointer;font-size:12px;">Coin history</button>
+    </div>
+    <div id="membershipInfoPanel" style="display:none;margin-top:10px;"></div>
+  </div>`;
 
-  html += section('🎵 Profile Music', 'Add a track link that plays on your profile (950 Coins).',
-    itemCard('Music', SHOP_FIXED_PRICES.profileMusic + ' Coins', `<div style="font-size:28px;">🎵</div>`,
-      u.hasProfileMusic ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Unlocked</button>`
-      : `<button onclick="buyFixedShopItem('profileMusic')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`));
+  if (admin) {
+    html += `<div class="profile-card" style="margin:8px 0 18px;max-width:760px;border:1px solid #ddd;"><strong>🛡️ Admin Membership Controls</strong><div style="font-size:12px;color:#666;margin:6px 0 10px;">VIP is managed here for authorized staff. Final permission checks must also be enforced by the Cloudflare Worker.</div><button onclick="adminManageVip()" style="background:#7c3aed;color:#fff;border:none;padding:8px 12px;border-radius:7px;cursor:pointer;font-size:12px;">Manage VIP member</button></div>`;
+  }
 
-  html += section('🔒 Private Rooms', 'Unlock Private Room access for private chatroom creation (1,250 Coins). Creating a chatroom itself costs 10,000 Coins.',
-    itemCard('Private Room', SHOP_FIXED_PRICES.privateRoom + ' Coins', `<div style="font-size:28px;">🔒</div>`,
-      u.hasPrivateRoom ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Unlocked</button>`
-      : `<button onclick="buyFixedShopItem('privateRoom')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`));
+  html += `<div class="profile-card" style="margin:8px 0 18px;max-width:760px;"><strong>📜 Badge History</strong><div style="margin-top:8px;">${badgeHistoryHtml(u)}</div></div>`;
 
-  html += section('🎨 Group Backgrounds', 'Unlock custom background images for groups (1,100 Coins).',
-    itemCard('Group Background', SHOP_FIXED_PRICES.groupBackground + ' Coins', `<div style="height:40px;border-radius:6px;background:linear-gradient(135deg,#2b6ee0,#6a4fb8);"></div>`,
-      u.hasGroupBackground ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Unlocked</button>`
-      : `<button onclick="buyFixedShopItem('groupBackground')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`));
+  if (balanceNum < Math.min(...SHOP_CATALOG.badges.filter(b => !b.comingSoon).map(b=>b.price))) {
+    const need = Math.min(...SHOP_CATALOG.badges.filter(b => !b.comingSoon).map(b=>b.price)) - balanceNum;
+    html += `<div class="profile-card" style="margin:8px 0 18px;max-width:760px;background:#fff8e6;border:1px solid #f0d58a;"><strong>🪙 Not enough Coins for a membership badge yet</strong><div style="font-size:12px;color:#765f25;margin-top:5px;">You need ${need.toLocaleString()} more Coins to reach Bronze. Keep using Chat Me to earn Coins.</div></div>`;
+  }
 
-  html += section('📌 Premium Message Pin', 'Pin one message in a chatroom for ' + SHOP_FIXED_PRICES.pinMessage + ' Coins. This is charged when you pin; it is not an owned item.',
-    itemCard('Pin Message', SHOP_FIXED_PRICES.pinMessage + ' Coins per pin', `<div style="font-size:28px;">📌</div>`, `<button onclick="switchTab('chatsPage')" style="background:#2b6ee0;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Open Chatrooms</button>`));
-  html += section('✨ Premium Reactions', 'Unlock Love, Haha, Wow and other reactions for 450 Coins.',
-    itemCard('Premium Reactions', SHOP_FIXED_PRICES.premiumReactions + ' Coins', `<div style="font-size:28px;">❤️😂😮</div>`,
-      u.hasPremiumReactions ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Unlocked</button>` : `<button onclick="buyFixedShopItem('premiumReactions')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`));
-  html += section('👀 Story Insights', 'Unlock the full list of people who viewed your current story for 600 Coins. The viewer count remains free.',
-    itemCard('Story Insights', SHOP_FIXED_PRICES.storyInsights + ' Coins', `<div style="font-size:28px;">👀</div>`,
-      u.hasStoryInsights ? `<button disabled style="background:#25a244;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:12px;">Unlocked</button>` : `<button onclick="buyFixedShopItem('storyInsights')" style="background:#e8622d;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Buy</button>`));
 
   document.getElementById('shopContent').innerHTML = html;
 }
 
+
+function showBadgeBenefits(){
+  const el = document.getElementById('membershipInfoPanel');
+  if (!el) return;
+  el.style.display='block';
+  el.innerHTML = '<div style="padding:10px;background:#f7f9fc;border-radius:8px;"><b>Membership benefits</b><ul style="margin:7px 0 0 18px;font-size:12px;color:#666;"><li>One clear membership badge is shown on your profile.</li><li>Upgrading automatically replaces your previous lower badge.</li><li>Badge history records membership purchases and upgrades.</li><li>Badge expiry is supported for future admin-managed memberships; normal purchases do not expire.</li><li>VIP remains Coming Soon for normal members and is admin-managed.</li></ul></div>';
+}
+function showBadgeHistory(){
+  const el = document.getElementById('membershipInfoPanel');
+  if (!el) return;
+  el.style.display='block';
+  loadCurrentUserFull().then(u => { if (u) el.innerHTML='<div style="padding:10px;background:#f7f9fc;border-radius:8px;"><b>Badge history</b><div style="margin-top:6px;">'+badgeHistoryHtml(u)+'</div></div>'; });
+}
+function showCoinHistoryFromShop(){
+  switchTab('leosPage');
+}
+async function adminManageVip(){
+  if (!(currentUserHasTrustedRole('admin') || currentUserHasTrustedRole('owner'))) { alert('Admin access required.'); return; }
+  const username = prompt('Enter the exact username for the VIP member:');
+  if (!username) return;
+  const email = await storageGet(usernameKey(username.trim()), true);
+  if (!email) { alert('That username was not found.'); return; }
+  const raw = await storageGet(userKey(email), true);
+  if (!raw) { alert('That profile could not be loaded.'); return; }
+  let u; try { u=JSON.parse(raw); } catch(e){ alert('Profile data is invalid.'); return; }
+  const previousBadge = currentBadgeDef(u);
+  u.ownedBadges=['vip'];
+  u.badgeHistory=Array.isArray(u.badgeHistory)?u.badgeHistory:[];
+  u.badgeHistory.unshift({badgeId:'vip',previousBadgeId:previousBadge ? previousBadge.id : null,action:'admin-assigned',price:0,time:Date.now(),assignedBy:currentUser.username});
+  u.badgeHistory=u.badgeHistory.slice(0,20);
+  const saved=await storageSet(userKey(email),JSON.stringify(u),true);
+  if (!saved) { alert('VIP could not be saved.'); return; }
+  alert('VIP membership assigned to @'+u.username+'. Backend rules will be added next to enforce this securely.');
+  loadShopPage();
+}
 
 function escapeHtml(s){
   const d = document.createElement('div');
@@ -7199,7 +7290,7 @@ function showChangePasswordForm(){
   const u = currentUser;
   if (!canChangePassword(u)) {
     if (!u.verified) {
-      alert('Only verified users and admins can change their password. Verification costs 10,000 Coins.');
+      alert('Only verified users and admins can change their password. Verification costs 50,000 Coins.');
     } else {
       const daysLeft = Math.ceil(PASSWORD_COOLDOWN_DAYS - daysSincePasswordChange(u));
       alert('You can only change your password once every ' + PASSWORD_COOLDOWN_DAYS + ' days. Try again in ' + daysLeft + ' day' + (daysLeft===1?'':'s') + '.');
@@ -9485,6 +9576,7 @@ function loadMenuPage(){
     { label: nt.nova, page: 'aiPage' },
     { label: nt.groups, page: 'groupsPage' },
     { label: nt.coins, page: 'leosPage' },
+    { label: '💎 Membership Plans', page: 'shopPage' },
     { label: nt.games, page: 'gamesPage' },
         { label: nt.search, page: 'searchPage' },
     { label: nt.report, page: 'reportPage' },
@@ -9570,15 +9662,6 @@ async function migrateLegacyCloudData(){
   } catch(e) { alert('Migration could not start: ' + e.message); }
 }
 
-/* ---------------- HOME SHORTCUT CONSTANTS ---------------- */
-const CM_HOME_SHORTCUTS = [
-  ['profilePage','👤 Profile'],['chatsPage','💬 Messages'],['friendsPage','👥 Friends'],['notificationsPage','🔔 Notifications'],
-  ['chatroomsPage','🏠 Chatrooms'],['videosPage','🎬 Videos'],['statusbookPage','📖 Statusbook'],['aiPage','🤖 Nova'],['groupsPage','👨‍👩‍👧 Groups'],
-  ['searchPage','🔎 Search'],['savedPostsPage','🔖 Saved'],['gamesPage','🎮 Games'],['shopPage','🛍️ Shop'],['leosPage','🪙 Coins'],
-  ['announcementsPage','📢 Announcements'],['menuPage','☰ Menu'],['settingsPage','⚙ Settings'],['supportPage','🎧 Support'],['adminPage','🛡️ Admin']
-];
-const CM_HOME_SHORTCUT_DEFAULTS=['profilePage','videosPage','statusbookPage','friendsPage','notificationsPage','chatsPage','searchPage','chatroomsPage'];
-
 /* ---------------- INIT ---------------- */
 populateDobSelects();
 refreshCaptcha('login');
@@ -9587,7 +9670,7 @@ applyDarkModePreference();
 cmRenderHomeShortcuts();
 cmSetupHomeLatestButton();
 applyLanguage();
-// Session state is kept by Firebase Auth; do not delete it during startup.
+storageRemove(SESSION_KEY); // one-time cleanup: delete the old shared cloud session doc from before this was made tab-local, so no leftover email sits in the shared store
 applySpecialGrantsOnce();
 
 /* ================= REAL SOCIAL APP UPGRADES =================
@@ -9829,6 +9912,13 @@ const _cmHomeSocialBaseLoader=window.loadHome;if(typeof _cmHomeSocialBaseLoader=
 
 
 /* ================= HOME SHORTCUTS + VIDEOS + PAGINATION ================= */
+const CM_HOME_SHORTCUTS = [
+  ['profilePage','👤 Profile'],['chatsPage','💬 Messages'],['friendsPage','👥 Friends'],['notificationsPage','🔔 Notifications'],
+  ['chatroomsPage','🏠 Chatrooms'],['videosPage','🎬 Videos'],['statusbookPage','📖 Statusbook'],['aiPage','🤖 Nova'],['groupsPage','👨‍👩‍👧 Groups'],
+  ['searchPage','🔎 Search'],['savedPostsPage','🔖 Saved'],['gamesPage','🎮 Games'],['shopPage','🛍️ Shop'],['leosPage','🪙 Coins'],
+  ['announcementsPage','📢 Announcements'],['menuPage','☰ Menu'],['settingsPage','⚙ Settings'],['supportPage','🎧 Support'],['adminPage','🛡️ Admin']
+];
+const CM_HOME_SHORTCUT_DEFAULTS=['profilePage','videosPage','statusbookPage','friendsPage','notificationsPage','chatsPage','searchPage','chatroomsPage'];
 function cmGetShortcutPrefs(){try{const x=JSON.parse(localStorage.getItem('homeShortcuts')||'null');return Array.isArray(x)?x:CM_HOME_SHORTCUT_DEFAULTS.slice();}catch(e){return CM_HOME_SHORTCUT_DEFAULTS.slice();}}
 function cmSaveShortcutPrefs(list){try{localStorage.setItem('homeShortcuts',JSON.stringify(list));}catch(e){}}
 function cmRenderHomeShortcuts(){
