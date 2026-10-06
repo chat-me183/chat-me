@@ -1205,7 +1205,7 @@ body.dark-mode #welcomeScreen .welcome-trust-card span{color:#b9c0cc !important;
 .cm-final-brand{display:flex!important;align-items:center!important;gap:10px!important;min-width:150px!important;flex:0 0 auto!important}
 .cm-logo-mark{width:48px!important;height:48px!important;border-radius:14px!important;background:linear-gradient(135deg,#2b6ee0,#6a4fb8)!important;color:#fff!important;display:flex!important;align-items:center!important;justify-content:center!important;font-weight:900!important;font-size:15px!important;letter-spacing:-2px!important;box-shadow:0 4px 12px rgba(43,110,224,.22)!important}
 .cm-logo-mark span:first-child{transform:translateX(2px)!important}.cm-logo-mark span:last-child{transform:translateX(-2px)!important}
-.cm-brand-name{font-size:24px!important;font-weight:900!important;letter-spacing:-.5px!important;color:#182230!important;white-space:nowrap!important}
+.cm-brand-name{font-size:24px!important;font-weight:900!important;letter-spacing:-.5px!important;color:#2b6ee0!important;white-space:nowrap!important;text-shadow:0 1px 0 rgba(43,110,224,.08)!important}
 .cm-final-search{flex:1 1 260px!important;max-width:520px!important;margin:0 auto!important}
 .cm-final-nav{flex:1 1 auto!important;display:flex!important;align-items:stretch!important;justify-content:flex-end!important;gap:4px!important;min-width:0!important}
 .cm-final-nav .cm-top-action,.cm-final-nav .cm-menu-top-button{flex:1 1 0!important;max-width:150px!important;min-width:90px!important;height:58px!important;border:0!important;border-radius:10px!important;background:#f0f2f5!important;color:#263445!important;font-size:23px!important;display:flex!important;align-items:center!important;justify-content:center!important;flex-direction:column!important;gap:3px!important;cursor:pointer!important}
@@ -1223,15 +1223,15 @@ body.dark-mode #welcomeScreen .welcome-trust-card span{color:#b9c0cc !important;
 
 <style id="chatme-final-user-request-fixes">
   .cm-final-brand{display:flex!important;align-items:center!important;gap:9px!important;visibility:visible!important;opacity:1!important;white-space:nowrap!important}
-  .cm-final-brand .cm-brand-name{display:inline!important;visibility:visible!important;opacity:1!important;font-weight:800!important;color:#24324a!important;font-size:21px!important;line-height:1!important}
+  .cm-final-brand .cm-brand-name{display:inline!important;visibility:visible!important;opacity:1!important;font-weight:900!important;color:#2b6ee0!important;font-size:21px!important;line-height:1!important;text-shadow:0 1px 0 rgba(43,110,224,.08)!important}
   .cm-final-brand .cm-logo-mark{flex:0 0 auto!important}
   .cm-menu-clean{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px!important;width:100%!important;max-width:900px!important}
-  .cm-menu-clean .cm-menu-item{display:flex!important;align-items:center!important;justify-content:flex-start!important;gap:10px!important;min-height:52px!important;padding:12px 15px!important;border-radius:12px!important;border:1px solid rgba(0,0,0,.06)!important;background:#2b6ee0!important;color:#fff!important;box-shadow:0 2px 7px rgba(18,34,64,.08)!important;cursor:pointer!important;font-size:14px!important;font-weight:700!important;text-align:left!important;opacity:1!important;visibility:visible!important;line-height:1.2!important}
+  .cm-menu-clean .cm-menu-item{display:flex!important;align-items:center!important;justify-content:flex-start!important;gap:10px!important;min-height:52px!important;padding:12px 15px!important;border-radius:12px!important;border:1px solid rgba(0,0,0,.06)!important;background:#2b6ee0!important;color:#fff!important;-webkit-text-fill-color:#fff!important;text-shadow:0 0 0 #fff!important;box-shadow:0 2px 7px rgba(18,34,64,.08)!important;cursor:pointer!important;font-size:14px!important;font-weight:700!important;text-align:left!important;opacity:1!important;visibility:visible!important;line-height:1.2!important}
   .cm-menu-clean .cm-menu-item:hover{filter:brightness(.97)!important;transform:translateY(-1px)!important}
   .cm-menu-clean .cm-menu-item.cm-menu-danger{background:#d32f2f!important}
   .cm-menu-clean .cm-menu-icon{width:26px!important;min-width:26px!important;text-align:center!important;font-size:20px!important;line-height:1!important}
   body.dark-mode .cm-menu-clean .cm-menu-item{background:#252a33!important;color:#f7f8fa!important;border-color:#3b4350!important}
-  body.dark-mode .cm-final-brand .cm-brand-name{color:#f4f6f8!important}
+  body.dark-mode .cm-final-brand .cm-brand-name{color:#4f8df7!important}
 
   .cm-fb-profile-shell{max-width:760px!important;margin:0 auto 28px!important;background:#fff!important;border:1px solid #e3e7ee!important;border-radius:14px!important;overflow:hidden!important;box-shadow:0 3px 12px rgba(16,24,40,.07)!important}
   .cm-fb-cover{position:relative!important;height:190px!important;overflow:hidden!important;background:linear-gradient(135deg,#2b6ee0,#4fc3f7)!important}
@@ -1610,7 +1610,6 @@ function copyCMProfileLink(){
           </select>
         </div>
         <div style="display:grid;gap:8px;margin-top:8px;">
-          <input id="postTitle" maxlength="120" placeholder="Post title (optional)" style="width:100%;padding:9px;border:1px solid #ccc;border-radius:7px;box-sizing:border-box;">
           <input id="postTags" maxlength="300" placeholder="Tags, e.g. #Nigeria #ChatMe #Football" style="width:100%;padding:9px;border:1px solid #ccc;border-radius:7px;box-sizing:border-box;">
           <select id="postVisibility" style="padding:9px;border:1px solid #ccc;border-radius:7px;background:#fff;">
             <option value="public">🌍 Public — everyone can see it</option>
@@ -2372,6 +2371,11 @@ if (firebaseConfigLooksReal) {
   try {
     firebase.initializeApp(firebaseConfig);
     firebaseAuth = firebase.auth();
+    try {
+      firebaseAuth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(e => console.warn('Firebase local session persistence could not be set:', e));
+    } catch (e) {
+      console.warn('Firebase local session persistence is unavailable:', e);
+    }
     firebaseDb = firebase.firestore();
     // SECURITY: anonymous Firebase sessions are disabled. Only real Firebase Auth identities may access cloud data.
   } catch (e) {
@@ -2742,21 +2746,23 @@ function sentRequestsKey(username){ return 'sentreq:' + username.toLowerCase(); 
 function notifsKey(username){ return 'notifs:' + username.toLowerCase(); }
 function seenCountKey(username, key){ return 'seen:' + username.toLowerCase() + ':' + key; }
 const SESSION_KEY = 'session:currentEmail';
-/* The logged-in session must NEVER go through storageGet/storageSet above -
-   those sync to the shared Firestore "kv" collection, which every visitor
-   reads from. Saving the session there means the most recent login
-   anywhere becomes the auto-login for everyone else too. Instead we keep
-   the session in this browser tab's sessionStorage only: it survives a
-   page refresh, but is never shared across devices/tabs and disappears
-   when the tab is closed. */
+/* The logged-in session is never stored in the shared data store. The browser keeps the
+   current account email locally, while Firebase Auth is the real authentication source and
+   is explicitly configured to persist the signed-in session across page refreshes. */
 function sessionLocalGet(){
-  try { return sessionStorage.getItem(SESSION_KEY); } catch (e) { return null; }
+  try {
+    const s = sessionStorage.getItem(SESSION_KEY);
+    if (s) return s;
+  } catch (e) {}
+  try { return localStorage.getItem(SESSION_KEY) || ''; } catch (e) { return ''; }
 }
 function sessionLocalSet(email){
   try { sessionStorage.setItem(SESSION_KEY, email); } catch (e) {}
+  try { localStorage.setItem(SESSION_KEY, email); } catch (e) {}
 }
 function sessionLocalClear(){
   try { sessionStorage.removeItem(SESSION_KEY); } catch (e) {}
+  try { localStorage.removeItem(SESSION_KEY); } catch (e) {}
 }
 function lastTabKey(username){ return 'lasttab:' + username.toLowerCase(); }
 function presenceKey(username){ return 'presence:' + username.toLowerCase(); }
@@ -3708,20 +3714,31 @@ async function restoreSession(){
     return;
   }
 
+  // Keep the app shell visible while Firebase restores its real session after refresh.
+  cmSetScreenState('app');
+
   let fbUser = firebaseAuth && firebaseAuth.currentUser ? firebaseAuth.currentUser : null;
   if (!fbUser && firebaseAuth) {
     try {
       fbUser = await new Promise(resolve => {
-        let done=false;
-        const finish=(value)=>{ if(done)return; done=true; resolve(value||firebaseAuth.currentUser||null); };
-        const timer=setTimeout(()=>finish(firebaseAuth.currentUser||null),3500);
-        const unsub=firebaseAuth.onAuthStateChanged(u=>{
+        let done = false;
+        const finish = value => { if (done) return; done = true; resolve(value || firebaseAuth.currentUser || null); };
+        const timer = setTimeout(() => finish(firebaseAuth.currentUser || null), 10000);
+        const unsub = firebaseAuth.onAuthStateChanged(u => {
           clearTimeout(timer);
-          try{unsub();}catch(e){}
+          try { unsub(); } catch(e) {}
           finish(u);
         });
       });
     } catch(e) { fbUser = firebaseAuth.currentUser || null; }
+  }
+
+  // Give Firebase one more moment on slower phones after a refresh.
+  if (!fbUser || fbUser.isAnonymous || String(fbUser.email || '').toLowerCase() !== savedEmail) {
+    try {
+      await new Promise(r => setTimeout(r, 1200));
+      fbUser = firebaseAuth ? (firebaseAuth.currentUser || null) : null;
+    } catch(e) {}
   }
 
   if (!fbUser || fbUser.isAnonymous || String(fbUser.email || '').toLowerCase() !== savedEmail) {
@@ -3732,24 +3749,41 @@ async function restoreSession(){
     return;
   }
 
-  try {
-    const raw = await storageGet(userKey(savedEmail), true);
-    if (!raw) throw new Error('Profile not found');
-    const user = JSON.parse(raw);
-    if (user.uid && user.uid !== fbUser.uid) throw new Error('Account identity mismatch');
-    user.uid = fbUser.uid;
-    delete user.salt; delete user.passwordHash; delete user.pendingResetCode; delete user.pendingResetCodeAt;
-    cmLocalUsernameEmailSet(user.username, savedEmail);
-    try { applyTrustedClaimsToUser(user, await refreshTrustedAuthClaims()); } catch(e) {}
-    await loginSuccess(publicUser(user));
-  } catch(e) {
-    console.warn('Chat Me session restore failed; returning to login.',e);
-    sessionLocalClear();
-    try { if(firebaseAuth && firebaseAuth.currentUser) await firebaseAuth.signOut(); } catch(_) {}
-    currentUser = null;
-    userHasNavigated = false;
-    showWelcome();
+  let lastError = null;
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      const raw = await storageGet(userKey(savedEmail), true);
+      if (!raw) throw new Error('Profile not found');
+      const user = JSON.parse(raw);
+      if (user.uid && user.uid !== fbUser.uid) throw new Error('Account identity mismatch');
+      user.uid = fbUser.uid;
+      delete user.salt; delete user.passwordHash; delete user.pendingResetCode; delete user.pendingResetCodeAt;
+      cmLocalUsernameEmailSet(user.username, savedEmail);
+      try { applyTrustedClaimsToUser(user, await refreshTrustedAuthClaims()); } catch(e) {}
+      await loginSuccess(publicUser(user));
+      return;
+    } catch(e) {
+      lastError = e;
+      const msg = String(e?.message || '');
+      if (msg === 'Profile not found' || msg === 'Account identity mismatch') break;
+      if (attempt < 2) await new Promise(r => setTimeout(r, 1000 * (attempt + 1)));
+    }
   }
+
+  // A temporary Worker/KV/network problem must not log out a valid Firebase user.
+  const lastMsg = String(lastError?.message || '');
+  if (lastMsg !== 'Profile not found' && lastMsg !== 'Account identity mismatch') {
+    console.warn('Chat Me session restore is waiting for secure storage.', lastError);
+    setTimeout(() => restoreSession().catch(e => console.warn('Session restore retry failed:', e)), 2500);
+    return;
+  }
+
+  console.warn('Chat Me session restore failed; returning to login.', lastError);
+  sessionLocalClear();
+  try { if(firebaseAuth && firebaseAuth.currentUser) await firebaseAuth.signOut(); } catch(_) {}
+  currentUser = null;
+  userHasNavigated = false;
+  showWelcome();
 }
 
 /* ---------------- BANNED ACCOUNT: READ-ONLY MODE ---------------- */
@@ -5871,19 +5905,18 @@ function insertEmoji(targetId){
 async function createPost(){
   if (isCurrentlyBanned(currentUser)) { document.getElementById('postError').textContent = banBlockMessage(currentUser); return; }
   const text = document.getElementById('postInput').value.trim();
-  const title = (document.getElementById('postTitle')?.value || '').trim();
   const tags = (document.getElementById('postTags')?.value || '').trim();
   const visibility = document.getElementById('postVisibility')?.value || 'public';
   const errEl = document.getElementById('postError'); errEl.textContent = '';
   const poll = readPollBuilder('postInput');
-  if (!text && !title && !chosenFileDataUrl && !poll) { errEl.textContent = 'Write a description, add a title, attach media, or create a poll first.'; return; }
+  if (!text && !chosenFileDataUrl && !poll) { errEl.textContent = 'Write something, attach media, or create a poll first.'; return; }
   if (chosenFileKind === 'video' && visibility === 'private') { /* private videos remain visible only to their owner */ }
   const normalizedTags = tags.split(/[\\s,]+/).filter(Boolean).map(t => t.startsWith('#') ? t : '#'+t).slice(0,20).join(' ');
   const post = {
     id: Date.now() + '-' + Math.random().toString(36).slice(2, 8),
     author: currentUser.username,
     authorName: currentUser.firstName + ' ' + currentUser.lastName,
-    title, text, tags: normalizedTags,
+    title: '', text, tags: normalizedTags,
     visibility,
     type: chosenFileKind === 'video' ? 'Video' : document.getElementById('postType').value,
     color: (document.getElementById('postColor_home') || {}).value || '',
@@ -5898,7 +5931,7 @@ async function createPost(){
   try {
     const res = await storageSet('post:' + post.id, JSON.stringify(post), true);
     if (!res) { errEl.textContent = 'Could not publish your post. Please try again.'; return; }
-    ['postInput','postTitle','postTags'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+    ['postInput','postTags'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
     const vis=document.getElementById('postVisibility'); if(vis) vis.value='public';
     const pf=document.getElementById('postFile'); if(pf) pf.value='';
     document.getElementById('postFileName').textContent = 'No file chosen';
@@ -6286,6 +6319,26 @@ async function notifyMentions(text, postId){
   } catch (e) { /* never let a mention hiccup block the post itself */ }
 }
 
+async function awardSocialActionCoins(action, targetId){
+  const amount = 5;
+  if (!currentUser || !targetId) return;
+  try {
+    const raw = await storageGet(userKey(currentUser.email), true);
+    if (!raw) return;
+    const u = JSON.parse(raw);
+    const rewards = Array.isArray(u.socialCoinRewards) ? u.socialCoinRewards : [];
+    const rewardKey = String(action) + ':' + String(targetId);
+    if (rewards.includes(rewardKey)) return;
+    u.leos = (typeof u.leos === 'number' ? u.leos : 20) + amount;
+    u.socialCoinRewards = rewards.slice(-499);
+    u.socialCoinRewards.push(rewardKey);
+    await storageSet(userKey(currentUser.email), JSON.stringify(u), true);
+    currentUser.leos = u.leos;
+    updateCoinsDisplay();
+    await recordCoinTransaction('Social reward: ' + action, amount, u.leos);
+  } catch (e) {}
+}
+
 async function toggleLike(postId){
   const key = 'post:' + postId;
   const raw = await storageGet(key, true);
@@ -6296,6 +6349,7 @@ async function toggleLike(postId){
   if (idx === -1) {
     p.likes.push(currentUser.username);
     if (p.author && p.author !== currentUser.username) cmPushSocialNotification(p.author, 'like', `${currentUser.firstName || currentUser.username} liked your post.`);
+    await awardSocialActionCoins('like', postId);
   } else p.likes.splice(idx, 1);
   await storageSet(key, JSON.stringify(p), true);
   loadHome();
@@ -6315,6 +6369,7 @@ async function addComment(postId){
   p.comments.push({ author: currentUser.username, authorName: currentUser.firstName + ' ' + currentUser.lastName, text, time: Date.now() });
   await storageSet(key, JSON.stringify(p), true);
   if (p.author && p.author !== currentUser.username) cmPushSocialNotification(p.author, 'comment', `${currentUser.firstName || currentUser.username} commented on your post.`);
+  await awardSocialActionCoins('comment', postId + ':' + p.comments.length);
   loadHome();
 }
 
@@ -6805,6 +6860,11 @@ async function loadProfile(){
           <button type="button" class="cm-fb-btn cm-fb-btn-secondary" onclick="showEditProfileForm()">Edit Profile</button>
           <button type="button" class="cm-fb-btn cm-fb-btn-secondary" onclick="copyCMProfileLink()">Share Profile</button>
         </div>
+        <div class="post-composer" id="profilePostComposer" style="margin:14px 0 4px;max-width:100%;">
+          <textarea id="profilePostInput" placeholder="Post something on your profile..."></textarea>
+          ${postColorPickerHtml('profile')}
+          <div class="composer-row"><button type="button" onclick="createProfilePost()">Post</button></div>
+        </div>
         <div id="profileFullDetails" class="cm-fb-full-details" style="display:none;">
           <div class="cm-profile-photo-tools">
             <label style="font-size:12.5px;color:#2b6ee0;cursor:pointer;">📷 Change profile photo<input type="file" id="profilePicInput" accept="image/*" style="display:none;" onchange="onProfilePicChosen()"></label>
@@ -6836,11 +6896,6 @@ async function loadProfile(){
           <div id="profileEditArea"></div>
           <div id="passwordEditArea"></div>
           <div class="cm-fb-actions" style="margin-top:4px;"><button type="button" class="logout-btn" onclick="logout()">Log Out</button></div>
-          <div class="post-composer" id="profilePostComposer" style="margin-top:16px;max-width:100%;">
-            <textarea id="profilePostInput" placeholder="Post something on your profile..."></textarea>
-            ${postColorPickerHtml('profile')}
-            <div class="composer-row"><button type="button" onclick="createProfilePost()">Post</button></div>
-          </div>
           <div style="margin-top:16px;font-weight:700;color:#2b3a8f;">Your posts</div>
           <div id="profileWall"></div>
         </div>
@@ -7318,25 +7373,37 @@ function resizeImageDataUrl(dataUrl, maxDim){
     img.src = dataUrl;
   });
 }
-function onCoverPhotoChosen(){
+async function onCoverPhotoChosen(){
   const input = document.getElementById('coverPhotoInput');
-  if (!input.files || !input.files[0]) return;
+  if (!input || !input.files || !input.files[0]) return;
+  if (!currentUser || !currentUser.email) { alert('Please sign in again before changing your cover photo.'); return; }
   const file = input.files[0];
+  if (!/^image\//i.test(file.type)) { alert('Please choose an image file.'); input.value = ''; return; }
   if (file.size > 8 * 1024 * 1024) { alert('Please choose an image under 8MB.'); input.value = ''; return; }
   const reader = new FileReader();
   reader.onload = async () => {
-    let resized;
-    try { resized = await resizeImageDataUrl(reader.result, 800); }
-    catch (e) { alert('Could not read that image.'); return; }
-    const raw = await storageGet(userKey(currentUser.email), true);
-    if (!raw) return;
     try {
+      const resized = await resizeImageDataUrl(reader.result, 1200);
+      if (!resized || resized.length > 1_750_000) {
+        alert('That cover image is still too large after resizing. Please choose another image.');
+        input.value = '';
+        return;
+      }
+      const raw = await storageGet(userKey(currentUser.email), true);
+      if (!raw) throw new Error('Your profile could not be loaded.');
       const u = JSON.parse(raw);
       u.coverPhoto = resized;
-      await storageSet(userKey(currentUser.email), JSON.stringify(u), true);
+      const saved = await storageSet(userKey(currentUser.email), JSON.stringify(u), true);
+      if (!saved) throw new Error('The cover photo could not be saved.');
+      const verifyRaw = await storageGet(userKey(currentUser.email), true);
+      const verifyUser = verifyRaw ? JSON.parse(verifyRaw) : null;
+      if (!verifyUser || verifyUser.coverPhoto !== resized) throw new Error('The cover photo could not be confirmed after saving.');
       currentUser.coverPhoto = resized;
       loadProfile();
-    } catch(e){}
+      input.value = '';
+    } catch (e) {
+      alert(e?.message || 'Could not save the cover photo. Please try again.');
+    }
   };
   reader.onerror = () => { alert('Could not read that file.'); };
   reader.readAsDataURL(file);
@@ -7565,6 +7632,7 @@ async function sendFriendRequest(otherUsername, btnEl){
     });
     await storageSet(notifsKey(otherUsername), JSON.stringify(notifs), true);
 
+    await awardSocialActionCoins('follow', otherUsername);
     if (btnEl) { btnEl.textContent = 'Requested'; }
   } catch (e) {
     if (btnEl) { btnEl.disabled = false; btnEl.textContent = 'Add Friend'; }
@@ -10247,8 +10315,13 @@ function previewChatMeAd(){
 
 <script id="chatme-final-startup-screen-guard">
 (function(){
-  /* Session restore decides whether the user belongs on the landing page or in the app. */
-  try { if (typeof cmSetScreenState === 'function' && !currentUser && !sessionLocalGet()) cmSetScreenState('welcomeScreen'); } catch(e) {}
+  /* Keep a stored authenticated session in the app shell while Firebase restore runs. */
+  try {
+    if (typeof cmSetScreenState === 'function' && !currentUser) {
+      if (sessionLocalGet()) cmSetScreenState('app');
+      else cmSetScreenState('welcomeScreen');
+    }
+  } catch(e) {}
 })();
 </script>
 </body>
