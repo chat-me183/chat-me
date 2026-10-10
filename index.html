@@ -1374,6 +1374,29 @@ body.dark-mode .cm-game-multiplier-box div{color:#e4e6eb!important}
 body.dark-mode .cm-multiplier-choice{background:#3a3b3c;color:#e4e6eb;border-color:#555}
 body.dark-mode .cm-multiplier-choice.active{background:#1877f2;color:#fff}
 </style>
+
+<style id="chatme-menu-birthday-upgrade-css">
+#menuPage{background:#f0f2f5!important;padding:12px!important;color:#1c1e21!important}
+#menuPage>h2{font-size:25px!important;color:#1c1e21!important;margin:4px 0 12px!important}
+.cm-menu-profile{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #e4e6eb;border-radius:12px;padding:12px;margin:0 0 12px;box-shadow:0 1px 2px #0000000d}
+.cm-menu-profile img{width:48px;height:48px;border-radius:50%;object-fit:cover}
+.cm-menu-search{width:100%;box-sizing:border-box;padding:11px 13px;border:0;border-radius:22px;background:#e4e6eb;margin:0 0 12px;font-size:14px}
+#menuButtonGrid.cm-menu-clean{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;max-width:900px!important}
+#menuButtonGrid .cm-menu-item{display:flex;align-items:center;gap:9px;text-align:left;min-height:62px;padding:10px!important;border:1px solid #e4e6eb!important;border-radius:10px!important;background:#fff!important;color:#1c1e21!important;font-size:13px;font-weight:700;box-shadow:0 1px 2px #0000000a}
+#menuButtonGrid .cm-menu-icon{width:34px;height:34px;display:grid;place-items:center;border-radius:9px;background:#f0f2f5;font-size:20px;flex-shrink:0}
+.cm-menu-footer{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
+.cm-menu-footer button,.cm-menu-disclosure{border:0;border-radius:9px;padding:12px;background:#e4e6eb;color:#1c1e21;font-weight:700;text-align:left;cursor:pointer}
+.cm-menu-extra{background:#fff;border:1px solid #e4e6eb;border-radius:10px;padding:8px;margin:8px 0}
+#birthdaysPage{padding:14px;background:#f0f2f5;overflow-y:auto}
+.cm-birthday-card{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #e4e6eb;border-radius:12px;padding:12px;margin:8px 0}
+.cm-birthday-card img{width:48px;height:48px;object-fit:cover;border-radius:50%}
+.cm-birthday-card button{border:0;border-radius:8px;padding:8px 10px;background:#1877f2;color:white;font-weight:700;cursor:pointer}
+.cm-birthday-empty{padding:18px;text-align:center;background:#fff;border-radius:12px;color:#65676b}
+@media(max-width:420px){#menuButtonGrid .cm-menu-item{min-height:56px;padding:8px!important;font-size:12px}.cm-menu-profile{padding:10px}}
+body.dark-mode #menuPage,body.dark-mode #birthdaysPage{background:#18191a!important;color:#e4e6eb!important}
+body.dark-mode .cm-menu-profile,body.dark-mode #menuButtonGrid .cm-menu-item,body.dark-mode .cm-menu-extra,body.dark-mode .cm-birthday-card,body.dark-mode .cm-birthday-empty{background:#242526!important;color:#e4e6eb!important;border-color:#393a3b!important}
+</style>
+
 </head>
 <body>
 
@@ -1686,6 +1709,7 @@ function copyCMProfileLink(){
         </div>
       </div>
       <div id="cmStoriesStrip" class="cm-stories-strip"></div>
+      <div id="cmHomeFriendStatuses" class="cm-home-friend-statuses" aria-label="Friends status updates"></div>
       <div id="cmPinnedAnnouncement" class="cm-home-social-card" style="display:none;"></div>
       <div id="cmPeopleSuggestions" class="cm-home-social-card" style="display:none;"></div>
       <div id="cmHomeTrendingTopics" class="cm-home-social-card" style="display:none;"></div>
@@ -1953,6 +1977,19 @@ function copyCMProfileLink(){
       <div id="announceList"></div>
     </div>
 
+
+<div class="page" id="birthdaysPage" style="display:none;">
+  <div style="max-width:760px;margin:0 auto;">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px;">
+      <div><h2 style="margin:0;color:#1c1e21;">🎂 Birthdays</h2><div style="font-size:13px;color:#65676b;margin-top:4px;">Celebrate your friends today and see upcoming birthdays.</div></div>
+      <button type="button" onclick="cmLoadBirthdays()" style="border:0;border-radius:8px;padding:9px 12px;background:#1877f2;color:#fff;font-weight:700;">Refresh</button>
+    </div>
+    <div class="cm-setting-card"><h3 style="margin:0 0 8px;">🎉 Today’s birthdays</h3><div id="cmBirthdaysToday"></div></div>
+    <div class="cm-setting-card" style="margin-top:12px;"><h3 style="margin:0 0 8px;">📅 Upcoming birthdays</h3><div id="cmBirthdaysUpcoming"></div></div>
+    <div id="cmBirthdayStatus" style="font-size:12px;color:#65676b;padding:8px 2px;"></div>
+  </div>
+</div>
+
     <div class="page" id="menuPage" style="padding:20px;overflow-y:auto;">
       <h2 style="color:#2b3a8f;margin-bottom:14px;">Menu</h2>
       <div id="menuButtonGrid" class="cm-menu-clean" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;width:100%;max-width:900px;"></div>
@@ -1962,7 +1999,8 @@ function copyCMProfileLink(){
 
       <div id="gameSelector">
         <h2 style="color:#2b3a8f;margin-bottom:4px;">Games</h2>
-        <div style="color:#888;font-size:13px;margin-bottom:12px;">Pick a game to play. The new game lineup is listed below; multiplayer access is planned at 100 Coins per match and is not a wager or prize pool.</div>
+        <button type="button" onclick="cmOpenMultiplayerLobby()" style="margin:0 0 12px;border:0;border-radius:9px;background:#1877f2;color:#fff;padding:10px 14px;font-weight:700;cursor:pointer;">👥 Multiplayer</button>
+        <div style="color:#888;font-size:13px;margin-bottom:12px;">Pick a game to play. The new game lineup is listed below; multiplayer options are shown below; no payment or coin charge is enabled here.</div>
         <div class="cm-game-multiplier-box" style="background:#f5f7fb;border:1px solid #dfe5ef;border-radius:12px;padding:12px;margin:0 0 14px;max-width:620px;">
           <div style="font-weight:800;margin-bottom:4px;color:#273449;">🏆 Win reward multiplier</div>
           <div style="font-size:12px;color:#667085;margin-bottom:9px;">Choose a multiplier before playing. Game wins pay up to 5 Leo Coins maximum.</div>
@@ -1980,19 +2018,16 @@ function copyCMProfileLink(){
           <div class="profile-card" style="max-width:220px;cursor:pointer;" onclick="selectGame('dice')"><div style="font-size:32px;margin-bottom:6px;">🎲</div><div style="font-weight:700;color:#2b3a8f;margin-bottom:4px;">Current: Dice Duel</div><div style="font-size:12.5px;color:#666;">Roll the dice in the existing free-play game.</div></div>
           <div class="profile-card" style="max-width:220px;cursor:pointer;" onclick="selectGame('leaderboard')"><div style="font-size:32px;margin-bottom:6px;">🏆</div><div style="font-weight:700;color:#2b3a8f;margin-bottom:4px;">Wins Leaderboard</div><div style="font-size:12.5px;color:#666;">See who has won the most existing games.</div></div>
         </div>
-        <div style="margin-top:22px;font-weight:800;color:#2b3a8f;font-size:17px;">🎮 New Game Lineup</div>
-        <div style="color:#777;font-size:12.5px;margin:5px 0 12px;">The 10 requested games are now playable in Chat Me. When online multiplayer is enabled, access is 100 Coins per match. This is a fixed feature fee only, not a wager or prize pool; the current local gameplay remains available while secure online multiplayer is connected to the backend.</div>
+        <div style="margin-top:22px;font-weight:800;color:#2b3a8f;font-size:17px;">🎮 Seven New Games</div>
+        <div style="color:#777;font-size:12.5px;margin:5px 0 12px;">There are 10 game tiles in this lineup. Multiplayer is available as local pass-and-play where supported; online matchmaking requires the secure real-time game backend.</div>
         <div style="display:flex;gap:12px;flex-wrap:wrap;">
-          <div class="profile-card" style="max-width:220px;cursor:pointer;" onclick="launchNewGame('ludo')"><div style="font-size:28px;">🎲</div><b>1. Ludo</b><div style="font-size:12px;color:#666;margin-top:4px;">Race four tokens around a simplified Ludo track.<br><b style="color:#2b6ee0;">Online multiplayer: 100 Coins/match</b></div></div>
-          <div class="profile-card" style="max-width:220px;cursor:pointer;" onclick="launchNewGame('whot')"><div style="font-size:28px;">🃏</div><b>2. Whot Card Game</b><div style="font-size:12px;color:#666;margin-top:4px;">Match the suit or number and empty your hand first.<br><b style="color:#2b6ee0;">Online multiplayer: 100 Coins/match</b></div></div>
-          <div class="profile-card" style="max-width:220px;cursor:pointer;" onclick="launchNewGame('ttt')"><div style="font-size:28px;">❌⭕</div><b>3. Tic-Tac-Toe</b><div style="font-size:12px;color:#666;margin-top:4px;">Full local two-player 3×3 match.<br><b style="color:#2b6ee0;">Online multiplayer: 100 Coins/match</b></div></div>
-          <div class="profile-card" style="max-width:220px;cursor:pointer;" onclick="launchNewGame('checkers')"><div style="font-size:28px;">♟️</div><b>4. Checkers (Draught)</b><div style="font-size:12px;color:#666;margin-top:4px;">Playable local board with moves and captures.<br><b style="color:#2b6ee0;">Online multiplayer: 100 Coins/match</b></div></div>
-          <div class="profile-card" style="max-width:220px;cursor:pointer;" onclick="launchNewGame('chess')"><div style="font-size:28px;">♞</div><b>5. Chess</b><div style="font-size:12px;color:#666;margin-top:4px;">Playable local chess board with standard piece movement.<br><b style="color:#2b6ee0;">Online multiplayer: 100 Coins/match</b></div></div>
-          <div class="profile-card" style="max-width:220px;cursor:pointer;" onclick="launchNewGame('snake')"><div style="font-size:28px;">🐍</div><b>6. Snake Game</b><div style="font-size:12px;color:#666;margin-top:4px;">Keyboard-friendly arcade snake with score and restart.<br><b style="color:#2b6ee0;">Online multiplayer: 100 Coins/match</b></div></div>
-          <div class="profile-card" style="max-width:220px;cursor:pointer;" onclick="launchNewGame('quiz')"><div style="font-size:28px;">🧠</div><b>7. Quiz / Trivia</b><div style="font-size:12px;color:#666;margin-top:4px;">Ten-question knowledge challenge.<br><b style="color:#2b6ee0;">Online multiplayer: 100 Coins/match</b></div></div>
-          <div class="profile-card" style="max-width:220px;cursor:pointer;" onclick="launchNewGame('rps')"><div style="font-size:28px;">✊✋✌️</div><b>8. Rock-Paper-Scissors</b><div style="font-size:12px;color:#666;margin-top:4px;">Best-of-five against the computer.<br><b style="color:#2b6ee0;">Online multiplayer: 100 Coins/match</b></div></div>
-          <div class="profile-card" style="max-width:220px;cursor:pointer;" onclick="launchNewGame('wordguess')"><div style="font-size:28px;">🔤</div><b>9. Word Guessing Game</b><div style="font-size:12px;color:#666;margin-top:4px;">Find the hidden word with limited attempts.<br><b style="color:#2b6ee0;">Online multiplayer: 100 Coins/match</b></div></div>
-          <div class="profile-card" style="max-width:220px;cursor:pointer;" onclick="launchNewGame('racing')"><div style="font-size:28px;">🏎️</div><b>10. Car Racing 2D</b><div style="font-size:12px;color:#666;margin-top:4px;">Dodge traffic and survive as long as possible.<br><b style="color:#2b6ee0;">Online multiplayer: 100 Coins/match</b></div></div>
+          <div class="profile-card" style="max-width:220px;cursor:pointer;" onclick="launchNewGame('ludo')"><div style="font-size:28px;">🎲</div><b>1. Ludo</b><div style="font-size:12px;color:#666;margin-top:4px;">Race four tokens around a simplified Ludo track.</div></div>
+          <div class="profile-card" style="max-width:220px;cursor:pointer;" onclick="launchNewGame('whot')"><div style="font-size:28px;">🃏</div><b>2. Whot Card Game</b><div style="font-size:12px;color:#666;margin-top:4px;">Match the suit or number and empty your hand first.</div></div>
+          <div class="profile-card" style="max-width:220px;cursor:pointer;" onclick="launchNewGame('ttt')"><div style="font-size:28px;">❌⭕</div><b>3. Tic-Tac-Toe</b><div style="font-size:12px;color:#666;margin-top:4px;">Full local two-player 3×3 match.</div></div>
+          <div class="profile-card" style="max-width:220px;cursor:pointer;" onclick="launchNewGame('checkers')"><div style="font-size:28px;">♟️</div><b>4. Checkers (Draught)</b><div style="font-size:12px;color:#666;margin-top:4px;">Playable local board with moves and captures.</div></div>
+          <div class="profile-card" style="max-width:220px;cursor:pointer;" onclick="launchNewGame('chess')"><div style="font-size:28px;">♞</div><b>5. Chess</b><div style="font-size:12px;color:#666;margin-top:4px;">Playable local chess board with standard piece movement.</div></div>
+          <div class="profile-card" style="max-width:220px;cursor:pointer;" onclick="launchNewGame('snake')"><div style="font-size:28px;">🐍</div><b>6. Snake Game</b><div style="font-size:12px;color:#666;margin-top:4px;">Keyboard-friendly arcade snake with score and restart.</div></div>
+          <div class="profile-card" style="max-width:220px;cursor:pointer;" onclick="launchNewGame('quiz')"><div style="font-size:28px;">🧠</div><b>7. Quiz / Trivia</b><div style="font-size:12px;color:#666;margin-top:4px;">Ten-question knowledge challenge.</div></div>
         </div>
       </div>
 
@@ -8202,6 +8237,8 @@ async function openChat(username, display){
       </span>
       <span style="font-size:11.5px;color:#888;margin-left:auto;">0.10 Coin / message</span>
       <button onclick="toggleWallpaperPicker()" title="Chat themes" style="background:#2b6ee0;color:#fff;border:none;padding:6px 8px;border-radius:6px;cursor:pointer;font-size:12px;">🎨 Theme</button>
+      <button onclick="cmStartCall('voice')" title="Voice call" style="background:#16834a;color:#fff;border:none;padding:6px 8px;border-radius:6px;cursor:pointer;font-size:15px;">📞</button>
+      <button onclick="cmStartCall('video')" title="Video call" style="background:#16834a;color:#fff;border:none;padding:6px 8px;border-radius:6px;cursor:pointer;font-size:15px;">📹</button>
       <button onclick="switchTab('shopPage')" title="Open Shop" style="background:#e8622d;color:#fff;border:none;padding:6px 8px;border-radius:6px;cursor:pointer;font-size:12px;">🛍 Shop</button>
     </div>
     <div id="wallpaperPickerRow" style="display:none;padding:8px 14px;border-bottom:1px solid #ddd;background:#fafafa;">
@@ -8217,6 +8254,8 @@ async function openChat(username, display){
         <div class="input-bar">
           <button onclick="toggleChatStickerPicker()" title="Stickers" style="background:#fff;border:1px solid #ccc;border-radius:8px;padding:7px 8px;cursor:pointer;font-size:16px;">😊</button>
           <button onclick="toggleChatGiftPicker()" title="Send gift" style="background:#fff;border:1px solid #ccc;border-radius:8px;padding:7px 8px;cursor:pointer;font-size:16px;">🎁</button>
+          <button onclick="cmChooseChatMedia()" title="Attach photo or video" style="background:#fff;border:1px solid #ccc;border-radius:8px;padding:7px 8px;cursor:pointer;font-size:16px;">📎</button>
+          <button onclick="cmStartVoiceNote()" title="Record voice note" style="background:#fff;border:1px solid #ccc;border-radius:8px;padding:7px 8px;cursor:pointer;font-size:16px;">🎙️</button>
           <input type="text" id="chatInput" placeholder="Type a message" oninput="notifyTyping()" onkeydown="if(event.key==='Enter') sendMessage()">
           <button class="send-btn" onclick="sendMessage()">&#10148;</button>
         </div>
@@ -9737,7 +9776,7 @@ function loadMenuPage(){
     {icon:'🔔', label: nt.notifications, page:'notificationsPage'},
     {icon:'📢', label: nt.announcements, page:'announcementsPage'},
     {icon:'💬', label: nt.chatrooms, page:'chatroomsPage'},
-    {icon:'📝', label: nt.statusbook, page:'statusbookPage'},
+    {icon:'📝', label: 'Status Book', page:'statusbookPage'},
     {icon:'🔖', label: nt.saved, page:'savedPostsPage'},
     {icon:'✨', label: nt.nova, page:'aiPage'},
     {icon:'👥', label: nt.groups, page:'groupsPage'},
@@ -9913,22 +9952,61 @@ if (typeof _cmOriginalLoadHome === 'function') {
   window.loadHome = async function(){ const r=await _cmOriginalLoadHome.apply(this,arguments); cmLoadStoriesStrip(); return r; };
 }
 
-// Lightweight browser-side media preview helper for future message attachments.
-// Files remain local unless the existing app explicitly uploads/stores them.
+
+// Chat media controls. These provide the UI and local previews now; durable delivery
+// and real calls require the planned secure backend/signalling service.
+function cmStartCall(kind){
+  if(!activeChatFriend) return;
+  alert((kind==='video'?'Video':'Voice')+' calling is prepared in the chat UI, but live calls are not active yet. The real-time backend must be connected first.');
+}
 function cmChooseChatMedia(){
   if(!activeChatFriend) return;
   let input=document.getElementById('cmChatMediaInput');
-  if(!input){ input=document.createElement('input'); input.type='file'; input.accept='image/*,video/*'; input.style.display='none'; input.id='cmChatMediaInput'; document.body.appendChild(input); input.onchange=cmPreviewChatMedia; }
-  input.click();
+  if(!input){
+    input=document.createElement('input'); input.type='file'; input.accept='image/*,video/*'; input.style.display='none'; input.id='cmChatMediaInput'; document.body.appendChild(input);
+    input.onchange=cmPreviewChatMedia;
+  }
+  input.value=''; input.click();
 }
 function cmPreviewChatMedia(){
   const input=document.getElementById('cmChatMediaInput'); if(!input?.files?.[0]) return;
   const file=input.files[0];
-  if(file.size>5*1024*1024){ alert('Please choose a file smaller than 5 MB.'); input.value=''; return; }
-  alert('Media selected: '+file.name+'\
-The current app stores chat messages as text. Connect a secure file-storage backend before enabling permanent media uploads.');
+  if(file.size>20*1024*1024){ alert('Please choose a photo or video smaller than 20 MB.'); input.value=''; return; }
+  const url=URL.createObjectURL(file);
+  const wrap=document.createElement('div'); wrap.style.cssText='padding:10px;margin:8px;border:1px solid #ddd;border-radius:10px;background:#fff;color:#333;font-size:13px;';
+  const media=file.type.startsWith('video/')?document.createElement('video'):document.createElement('img');
+  media.src=url; media.style.cssText='display:block;max-width:100%;max-height:220px;border-radius:8px;margin:6px 0;';
+  if(media.tagName==='VIDEO'){media.controls=true;}
+  const label=document.createElement('div'); label.textContent='Preview: '+file.name+' — media delivery will work after storage backend is connected.';
+  const close=document.createElement('button'); close.textContent='Close preview'; close.style.cssText='margin-top:6px;padding:6px 10px;'; close.onclick=()=>{URL.revokeObjectURL(url);wrap.remove();};
+  wrap.append(label,media,close);
+  const area=document.getElementById('messagesArea'); if(area){area.appendChild(wrap);area.scrollTop=area.scrollHeight;}
   input.value='';
 }
+let cmVoiceRecorder=null, cmVoiceChunks=[];
+async function cmStartVoiceNote(){
+  if(!activeChatFriend) return;
+  if(!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder){ alert('Voice recording is not supported in this browser. Try a newer browser with microphone permission.'); return; }
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+    cmVoiceChunks=[]; cmVoiceRecorder=new MediaRecorder(stream);
+    cmVoiceRecorder.ondataavailable=e=>{if(e.data&&e.data.size)cmVoiceChunks.push(e.data);};
+    cmVoiceRecorder.onstop=()=>{
+      stream.getTracks().forEach(t=>t.stop());
+      const blob=new Blob(cmVoiceChunks,{type:cmVoiceRecorder.mimeType||'audio/webm'}); const url=URL.createObjectURL(blob);
+      const wrap=document.createElement('div');wrap.style.cssText='padding:10px;margin:8px;border:1px solid #ddd;border-radius:10px;background:#fff;color:#333;';
+      const title=document.createElement('div');title.textContent='Voice note preview — backend needed to send it to your friend.';
+      const audio=document.createElement('audio');audio.controls=true;audio.src=url;audio.style.width='100%';audio.style.marginTop='6px';
+      const close=document.createElement('button');close.textContent='Remove';close.onclick=()=>{URL.revokeObjectURL(url);wrap.remove();};
+      wrap.append(title,audio,close);const area=document.getElementById('messagesArea');if(area){area.appendChild(wrap);area.scrollTop=area.scrollHeight;}
+    };
+    cmVoiceRecorder.start();
+    const stop=document.createElement('button');stop.id='cmStopVoiceNote';stop.textContent='⏹ Stop recording';stop.style.cssText='position:fixed;bottom:90px;left:50%;transform:translateX(-50%);z-index:9999;padding:12px 16px;border:0;border-radius:22px;background:#c62828;color:white;font-weight:700;';
+    stop.onclick=()=>{if(cmVoiceRecorder&&cmVoiceRecorder.state==='recording')cmVoiceRecorder.stop();stop.remove();};document.body.appendChild(stop);
+    setTimeout(()=>{const b=document.getElementById('cmStopVoiceNote');if(b&&cmVoiceRecorder?.state==='recording'){cmVoiceRecorder.stop();b.remove();}},120000);
+  }catch(e){alert('Microphone permission was not granted. Allow microphone access and try again.');}
+}
+
 
 
 /* ================= SOCIAL FEATURES ================= */
@@ -10487,5 +10565,131 @@ function previewChatMeAd(){
   } catch(e) {}
 })();
 </script>
+<script id="chatme-menu-birthday-upgrade-js">
+(function(){
+  const originalLoadMenuPage = window.loadMenuPage;
+  function cmSafeText(v){return String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  function cmAddMenuItem(){
+    const host=document.getElementById('menuButtonGrid'); if(!host)return;
+    if(!host.querySelector('[data-cm-birthday]')){
+      const b=document.createElement('button');b.type='button';b.className='cm-menu-item';b.dataset.cmBirthday='1';b.innerHTML='<span class="cm-menu-icon">🎂</span><span>Birthdays</span>';b.onclick=()=>{switchTab('birthdaysPage');cmLoadBirthdays();};
+      const status=Array.from(host.querySelectorAll('.cm-menu-item')).find(x=>/statusbook/i.test(x.textContent));
+      if(status&&status.nextSibling)host.insertBefore(b,status.nextSibling);else host.appendChild(b);
+    }
+  }
+  window.loadMenuPage=function(){if(typeof originalLoadMenuPage==='function')originalLoadMenuPage.apply(this,arguments);cmEnhanceMenu();};
+  function cmEnhanceMenu(){
+    const page=document.getElementById('menuPage'),host=document.getElementById('menuButtonGrid');if(!page||!host)return;
+    let profile=page.querySelector('.cm-menu-profile');
+    if(!profile){profile=document.createElement('div');profile.className='cm-menu-profile';page.insertBefore(profile,host);}
+    const u=(typeof currentUser!=='undefined'&&currentUser)||{};const uname=u.username||'Chat Me member';const fullname=[u.firstName,u.lastName].filter(Boolean).join(' ')||uname;
+    const pic=u.profilePic||window.CHATME_DEFAULT_AVATAR||'';
+    profile.innerHTML=(pic?'<img src="'+cmSafeText(pic)+'" alt="Profile">':'<div style="width:48px;height:48px;border-radius:50%;background:#e4e6eb;display:grid;place-items:center;">👤</div>')+'<div style="min-width:0;flex:1"><div style="font-weight:800;font-size:16px;overflow-wrap:anywhere;">'+cmSafeText(fullname)+'</div><div style="font-size:12px;color:#65676b;">@'+cmSafeText(uname)+'</div></div><button type="button" onclick="switchTab(\'profilePage\')" style="border:0;border-radius:8px;padding:8px 10px;background:#e4e6eb;font-weight:700;">Profile</button>';
+    let search=page.querySelector('.cm-menu-search');if(!search){search=document.createElement('input');search.type='search';search.className='cm-menu-search';search.placeholder='🔍 Search menu';search.setAttribute('aria-label','Search menu');page.insertBefore(search,host);search.addEventListener('input',()=>{const q=search.value.toLowerCase().trim();host.querySelectorAll('.cm-menu-item').forEach(b=>b.style.display=b.textContent.toLowerCase().includes(q)?'flex':'none');});}
+    cmAddMenuItem();
+    if(!page.querySelector('.cm-menu-footer')){
+      const footer=document.createElement('div');footer.className='cm-menu-footer';footer.innerHTML='<button type="button" onclick="switchTab(\'settingsPage\')">⚙️ Settings &amp; privacy</button><button type="button" onclick="switchTab(\'helpPage\')">❓ Help &amp; support</button><button type="button" onclick="cmInviteFriends()">👋 Invite friends</button><button type="button" onclick="cmAddAccount()">➕ Add account</button>';
+      page.appendChild(footer);
+    }
+  }
+  window.cmInviteFriends=function(){const url=location.href.split('#')[0];const msg='Join me on Chat Me: '+url;if(navigator.share){navigator.share({title:'Join Chat Me',text:msg,url}).catch(()=>{});}else if(navigator.clipboard){navigator.clipboard.writeText(msg).then(()=>alert('Invite link copied. Send it to your friends!')).catch(()=>prompt('Copy this invite link:',url));}else prompt('Copy this invite link:',url);};
+  window.cmAddAccount=function(){if(typeof logout==='function'){if(confirm('Sign out so another account can sign in on this device?'))logout();}else alert('Please sign out, then choose Create account or Log in.');};
+  function cmBirthdayDate(u){let raw=u.dateOfBirth||u.dob||u.birthDate||u.birthday||u.dateOfbirth||'';if(!raw)return null;let d;if(typeof raw==='number')d=new Date(raw);else d=new Date(String(raw));if(!Number.isFinite(d.getTime()))return null;return {month:d.getMonth(),day:d.getDate(),year:d.getFullYear()};}
+  function cmDaysUntil(m,d){const now=new Date();const today=new Date(now.getFullYear(),now.getMonth(),now.getDate());let next=new Date(now.getFullYear(),m,d);if(next<today)next=new Date(now.getFullYear()+1,m,d);return Math.round((next-today)/86400000);}
+  function cmBirthdayCard(u,uname,days){const name=[u.firstName,u.lastName].filter(Boolean).join(' ')||uname;const pic=u.profilePic||window.CHATME_DEFAULT_AVATAR||'';const age=u.dateOfBirth||u.dob||u.birthDate?(()=>{const dt=new Date(u.dateOfBirth||u.dob||u.birthDate);return Number.isFinite(dt.getTime())?Math.max(0,new Date().getFullYear()-dt.getFullYear()):null;})():null;const when=days===0?'Today':days===1?'Tomorrow':'In '+days+' days';return '<div class="cm-birthday-card">'+(pic?'<img src="'+cmSafeText(pic)+'" alt="">':'<div style="width:48px;height:48px;border-radius:50%;background:#e4e6eb;display:grid;place-items:center;">🎂</div>')+'<div style="flex:1;min-width:0"><div style="font-weight:800;overflow-wrap:anywhere;">'+cmSafeText(name)+'</div><div style="font-size:12px;color:#65676b;">@'+cmSafeText(uname)+' · '+when+(age!==null?' · turning '+(age+1):'')+'</div></div><button type="button" onclick="cmGreetBirthday(\''+cmSafeText(uname).replace(/'/g,"\\'")+'\',\''+cmSafeText(name).replace(/'/g,"\\'")+'\')">🎉 Greet</button></div>';}
+  window.cmGreetBirthday=function(username,name){const greeting=prompt('Write a birthday greeting for '+name+':','Happy birthday! 🎂🎉 Wishing you joy and a wonderful year ahead!');if(greeting===null||!greeting.trim())return;const text='🎂 Birthday wishes for @'+username+': '+greeting.trim();if(typeof switchTab==='function')switchTab('chatsPage');alert('Your greeting is ready. Open your conversation with @'+username+' to send it:\n\n'+text);};
+  window.cmLoadBirthdays=async function(){const todayEl=document.getElementById('cmBirthdaysToday'),upEl=document.getElementById('cmBirthdaysUpcoming'),status=document.getElementById('cmBirthdayStatus');if(!todayEl||!upEl)return;todayEl.innerHTML='<div class="cm-birthday-empty">Loading birthdays…</div>';upEl.innerHTML='';if(!(typeof currentUser!=='undefined'&&currentUser)){todayEl.innerHTML='<div class="cm-birthday-empty">Log in to see friends’ birthdays.</div>';return;}try{let friends=[];if(typeof friendsKey==='function'&&typeof storageGet==='function'){const raw=await storageGet(friendsKey(currentUser.username),true);const parsed=raw?JSON.parse(raw):[];if(Array.isArray(parsed))friends=parsed;}const entries=[];for(const uname0 of friends){const uname=String(uname0);try{const email=await storageGet(usernameKey(uname),true);if(!email)continue;const raw=await storageGet(userKey(email),true);if(!raw)continue;const u=JSON.parse(raw);const bd=cmBirthdayDate(u);if(!bd)continue;const days=cmDaysUntil(bd.month,bd.day);entries.push({u,uname,days,month:bd.month,day:bd.day});}catch(e){}}entries.sort((a,b)=>a.days-b.days);const todays=entries.filter(x=>x.days===0);const upcoming=entries.filter(x=>x.days>0&&x.days<=60).slice(0,20);todayEl.innerHTML=todays.length? todays.map(x=>cmBirthdayCard(x.u,x.uname,x.days)).join(''):'<div class="cm-birthday-empty">No friends’ birthdays listed for today. Birthdays appear when a friend has shared a birthday on their profile.</div>';upEl.innerHTML=upcoming.length?upcoming.map(x=>cmBirthdayCard(x.u,x.uname,x.days)).join(''):'<div class="cm-birthday-empty">No upcoming birthdays in the next 60 days, or friends have not shared their birthdays.</div>';if(status)status.textContent='Only birthday information available on friends’ profiles is shown.';}catch(e){todayEl.innerHTML='<div class="cm-birthday-empty">Could not load birthdays. Check your connection and tap Refresh.</div>';if(status)status.textContent='';}};
+  // Ensure Birthdays is navigable even if this file's existing navigation renderer is called later.
+  const oldSwitch=window.switchTab;window.switchTab=function(pageId){if(pageId==='birthdaysPage'){const p=document.getElementById('birthdaysPage');if(p)p.style.display='block';}else{const p=document.getElementById('birthdaysPage');if(p)p.style.display='';}const result=oldSwitch.apply(this,arguments);if(pageId==='birthdaysPage')setTimeout(()=>window.cmLoadBirthdays(),0);if(pageId==='menuPage')setTimeout(cmEnhanceMenu,0);return result;};
+  document.addEventListener('DOMContentLoaded',()=>{cmEnhanceMenu();});
+  const _restore=window.restoreSession;if(typeof _restore==='function'){window.restoreSession=async function(){const r=await _restore.apply(this,arguments);cmEnhanceMenu();return r;};}
+})();
+</script>
+
+
+<style id="chatme-feature-refresh-css">
+#menuPage{background:#f0f2f5!important;color:#1c1e21!important;padding:12px!important}
+#menuPage>h2{color:#1c1e21!important;font-size:25px!important}
+#menuButtonGrid.cm-menu-clean{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important;max-width:900px!important}
+.cm-menu-item{display:flex!important;align-items:center!important;gap:10px!important;min-height:64px!important;padding:12px!important;border:1px solid #e4e6eb!important;border-radius:12px!important;background:#fff!important;color:#1c1e21!important;text-align:left!important;font-weight:700!important;box-shadow:0 1px 2px #0000000a!important}
+.cm-menu-icon{width:38px!important;height:38px!important;display:grid!important;place-items:center!important;background:#e7f3ff!important;border-radius:10px!important;font-size:21px!important;flex:0 0 38px!important}
+.cm-menu-profile{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #e4e6eb;border-radius:12px;padding:12px;margin:8px 0}
+.cm-menu-profile img{width:48px;height:48px;object-fit:cover;border-radius:50%}
+.cm-menu-search{width:100%;box-sizing:border-box;padding:11px 14px;border:1px solid #dddfe2;border-radius:999px;margin:8px 0 12px;background:#fff;color:#1c1e21}
+.cm-menu-footer{display:grid;grid-template-columns:1fr;gap:8px;margin:14px 0 4px}
+.cm-menu-footer button{width:100%;text-align:left;padding:12px;border:1px solid #e4e6eb;border-radius:10px;background:#fff;color:#1c1e21;font-weight:700}
+.cm-home-friend-statuses{display:flex;gap:9px;overflow-x:auto;padding:10px 0;margin:4px 0 12px;scrollbar-width:thin}
+.cm-friend-status-card{min-width:155px;max-width:190px;flex:0 0 auto;border:1px solid #e4e6eb;background:#fff;border-radius:12px;padding:10px;cursor:pointer;overflow-wrap:anywhere}
+.cm-friend-status-head{display:flex;align-items:center;gap:7px;margin-bottom:7px;font-weight:700;font-size:12px}
+.cm-friend-status-head img{width:32px;height:32px;border-radius:50%;object-fit:cover}
+.cm-friend-status-text{font-size:13px;line-height:1.35;color:#333;white-space:pre-wrap;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.cm-social-title{font-weight:800;margin:8px 0;color:#1c1e21}
+#chatsPage{min-height:0}
+@media(max-width:600px){#menuButtonGrid.cm-menu-clean{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}.cm-menu-item{min-height:58px!important;padding:9px!important;font-size:13px!important}.cm-menu-icon{width:32px!important;height:32px!important;flex-basis:32px!important;font-size:18px!important}}
+</style>
+<script id="chatme-requested-features-js">
+(function(){
+  const esc = v => (typeof escapeHtml==='function') ? escapeHtml(String(v==null?'':v)) : String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  async function renderHomeFriendStatuses(){
+    const host=document.getElementById('cmHomeFriendStatuses');
+    if(!host)return;
+    if(!currentUser){host.innerHTML='';return;}
+    host.innerHTML='<div style="font-size:12px;color:#777;padding:8px;">Loading friends’ statuses…</div>';
+    try{
+      const raw=await storageGet(friendsKey(currentUser.username),true);const friends=raw?JSON.parse(raw):[];
+      const rows=[];
+      for(const username0 of (Array.isArray(friends)?friends:[]).slice(0,60)){
+        const username=String(username0);
+        try{
+          const email=await storageGet(usernameKey(username),true);if(!email)continue;
+          const uraw=await storageGet(userKey(email),true);if(!uraw)continue;
+          const u=JSON.parse(uraw);if(!u.status)continue;
+          if(typeof isStatusActive==='function'&&!isStatusActive(u))continue;
+          rows.push({username,u});
+        }catch(e){}
+      }
+      if(!rows.length){host.innerHTML='<div style="font-size:12px;color:#777;padding:8px 2px;">No friends’ status updates yet. Their shared statuses will appear here.</div>';return;}
+      host.innerHTML='<div style="font-size:13px;font-weight:800;flex:0 0 100%;padding:0 2px;">👥 Friends’ Status Book</div>'+rows.map(({username,u})=>{
+        const name=([u.firstName,u.lastName].filter(Boolean).join(' ')||username);
+        const pic=u.profilePic||window.CHATME_DEFAULT_AVATAR||'';
+        const when=u.statusUpdatedAt?timeAgo(u.statusUpdatedAt):'Recently';
+        return `<div class="cm-friend-status-card" role="button" tabindex="0" onclick="switchTab('statusbookPage')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();switchTab('statusbookPage')}"><div class="cm-friend-status-head">${pic?`<img src="${esc(pic)}" alt="">`:'<span>👤</span>'}<span>${esc(name)}<small style="display:block;color:#777;font-weight:400;">${esc(when)}</small></span></div><div class="cm-friend-status-text">${esc(u.status)}</div></div>`;
+      }).join('');
+    }catch(e){host.innerHTML='<div style="font-size:12px;color:#777;padding:8px 2px;">Could not load friends’ statuses. Check your connection and refresh.</div>';}
+  }
+  window.cmRenderHomeFriendStatuses=renderHomeFriendStatuses;
+  // Refresh friend statuses after the existing Home loader completes.
+  const prevHome=window.loadHome;
+  if(typeof prevHome==='function')window.loadHome=async function(){const r=await prevHome.apply(this,arguments);try{await renderHomeFriendStatuses();}catch(e){}return r;};
+  // Make sure menu extras remain available after the app's own menu renderer rebuilds the grid.
+  const prevMenu=window.loadMenuPage;
+  if(typeof prevMenu==='function')window.loadMenuPage=function(){const r=prevMenu.apply(this,arguments);setTimeout(()=>{if(typeof cmEnhanceMenu==='function')cmEnhanceMenu();},0);return r;};
+  // Make announcements and videos fail visibly instead of leaving an endless spinner.
+  const timeout=(ms)=>new Promise((_,reject)=>setTimeout(()=>reject(new Error('timeout')),ms));
+  const prevAnnouncements=window.loadAnnouncementsPage;
+  if(typeof prevAnnouncements==='function')window.loadAnnouncementsPage=async function(){
+    const el=document.getElementById('announceList');if(el)el.innerHTML='<div class="empty-feed">Loading announcements…</div>';
+    try{return await Promise.race([prevAnnouncements.apply(this,arguments),timeout(12000)]);}
+    catch(e){if(el)el.innerHTML='<div class="empty-feed">Announcements could not load. Check your connection and tap Announcements again.</div>';}
+  };
+  const prevVideos=window.loadVideosPage;
+  if(typeof prevVideos==='function')window.loadVideosPage=async function(){
+    const el=document.getElementById('cmVideosList');if(el)el.innerHTML='<div class="empty-feed">Loading videos…</div>';
+    try{return await Promise.race([prevVideos.apply(this,arguments),timeout(12000)]);}
+    catch(e){if(el)el.innerHTML='<div class="empty-feed">Videos could not load. Check your connection and try again.</div>';}
+  };
+  // A simple lobby entry opens at the top of Games. It does not charge Coins.
+  window.cmOpenMultiplayerLobby=function(){
+    const arena=document.getElementById('newGameArena');const selector=document.getElementById('gameSelector');const leader=document.getElementById('gameLeaderboard');const wc=document.getElementById('wordCrossGame');const dice=document.getElementById('diceGame');
+    [arena,leader,wc,dice].forEach(el=>{if(el)el.style.display='none';});if(selector)selector.style.display='block';
+    let box=document.getElementById('cmMultiplayerLobby');
+    if(!box){box=document.createElement('section');box.id='cmMultiplayerLobby';box.style.cssText='background:#fff;border:1px solid #dfe5ef;border-radius:12px;padding:14px;margin:0 0 14px;max-width:620px;';box.innerHTML='<h3 style="margin:0 0 6px;color:#243b7a;">👥 Multiplayer Lobby</h3><p style="margin:0 0 10px;color:#667085;font-size:13px;">Choose a game for two players on this device. Live online matchmaking needs the secure real-time game service and is not activated in this file. No Coins or payment are used.</p><div style="display:flex;gap:8px;flex-wrap:wrap;"><button type="button" onclick="launchNewGame(\'ttt\')" style="border:0;border-radius:8px;background:#1877f2;color:#fff;padding:9px 12px;">Play Tic-Tac-Toe</button><button type="button" onclick="launchNewGame(\'chess\')" style="border:0;border-radius:8px;background:#1877f2;color:#fff;padding:9px 12px;">Play Chess</button><button type="button" onclick="launchNewGame(\'checkers\')" style="border:0;border-radius:8px;background:#1877f2;color:#fff;padding:9px 12px;">Play Checkers</button></div>';} 
+    const title=selector&&selector.querySelector('h2');if(title&&title.parentNode)title.parentNode.insertBefore(box,title.nextSibling);else if(selector)selector.prepend(box);
+    const page=document.getElementById('gamesPage');if(page){page.scrollTop=0;page.scrollIntoView({block:'start',behavior:'smooth'});}
+  };
+  document.addEventListener('DOMContentLoaded',()=>{renderHomeFriendStatuses();});
+})();
+</script>
+
 </body>
 </html>
