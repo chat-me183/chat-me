@@ -1281,6 +1281,11 @@ body.dark-mode #welcomeScreen .welcome-trust-card span{color:#b9c0cc !important;
     .cm-fb-profile-body{padding:0 12px 14px!important}
     .cm-menu-clean{grid-template-columns:1fr!important}
   }
+
+/* Mobile post actions: keep every social action visible on narrow screens. */
+.post-card [data-post-actions], .post-card .cm-post-actions{display:flex;flex-wrap:wrap;gap:12px;}
+.post-card button,.post-card [role=button],.post-card span[onclick]{touch-action:manipulation;}
+@media(max-width:480px){.post-card{overflow-wrap:anywhere}.post-card img,.post-card video{max-width:100%;height:auto}.post-card input[type=text]{min-width:0}.post-card span[onclick]{padding-top:3px;padding-bottom:3px}}
 </style>
 
 </head>
@@ -2199,9 +2204,8 @@ function copyCMProfileLink(){
       <h2 style="color:#2b3a8f;margin-bottom:6px;">Privacy Policy</h2>
       <div class="profile-card" style="max-width:700px;line-height:1.65;font-size:14px;">
         <p><b>Effective date:</b> 29 September 2026</p>
-        <p><b>Data controller / legal owner:</b> <span style="color:#b42318;">Adegboye Abdulrahman Ayofe</span></p>
         <p><b>Privacy and support contact:</b> <span style="color:#b42318;">adegboyeabdulrahmanl@gmail.com</span></p>
-        <p>Chat Me is a community service. The controller/owner and privacy/support contact listed above are the project contact details provided for this Privacy Policy.</p>
+        <p>Chat Me is a community service. For privacy and support requests, contact the email address listed above.</p>
         <p><b>What we collect:</b> account information such as name, username, email address, date of birth/age-eligibility information, profile information, profile picture, posts, comments, messages, reports, support requests, moderation records, and information needed to operate security and authentication. Technical information may also be processed by service providers used to operate the site.</p>
         <p><b>Account and activity information:</b> depending on the features you use, this can include friend requests and connections, reactions, saved posts, stories and story interactions, group/chatroom membership, notifications, support tickets, reports, moderation actions, and settings such as privacy and message preferences.</p>
         <p><b>Account controls:</b> Chat Me aims to provide controls for changing profile information, privacy preferences and account security. If account deletion is available in Settings, using it may permanently remove account-associated content and data subject to security, dispute, backup and legal-retention needs.</p>
@@ -2217,7 +2221,7 @@ function copyCMProfileLink(){
         <p><b>Children:</b> Chat Me requires users to be 18 years or older. Do not provide false age information or use another person's account.</p>
         <p><b>Cookies and local storage:</b> the website may use browser storage for necessary session/UI preferences and similar technical purposes. Third-party services such as reCAPTCHA may use their own technical mechanisms.</p>
         <p><b>Changes:</b> this policy may be updated when the service, law, or processing practices change. The effective date will be updated when material changes are made.</p>
-        <p style="background:#fff4e5;border:1px solid #f2c078;padding:10px;border-radius:8px;"><b>Important before publication:</b> The controller/owner name and privacy/support contact above should remain accurate and should be updated if the legal controller or contact address changes.</p>
+        
       </div>
     </div>
 
@@ -2698,9 +2702,10 @@ async function storageGet(key){
   throw new Error('Secure cloud storage is unavailable.');
 }
 async function storageSet(key, value){
-  _cacheSet(key, value);
+  // Only cache after the secure Worker confirms the write. Caching first can
+  // make failed likes/comments/shares look saved until a full reload.
   const secure = await secureStorageRequest('set', key, { value });
-  if (secure.handled) return { key, value };
+  if (secure.handled) { _cacheSet(key, value); return { key, value }; }
   throw new Error('Secure cloud storage is unavailable.');
 }
 async function storageListKeys(prefix){
@@ -3701,8 +3706,8 @@ async function loginSuccess(user){
     try { savedTab = await storageGet(lastTabKey(user.username)); }
     catch (e) { console.warn('Could not restore the last tab; opening Home.', e); }
   }
-  try { switchTab(savedTab || 'homePage'); }
-  catch (e) { console.warn('Could not open the saved page; opening Home.', e); switchTab('homePage'); }
+  try { switchTab(savedTab || 'homePage'); cmInitMobileBackHistory(); }
+  catch (e) { console.warn('Could not open the saved page; opening Home.', e); switchTab('homePage'); cmInitMobileBackHistory(); }
 }
 
 async function restoreSession(){
@@ -4262,8 +4267,10 @@ function switchTab(pageId, fromHistory=false){
   try {
     const targetHash = '#' + encodeURIComponent(pageId);
     if (window.location.hash !== targetHash) {
-      if (fromHistory) history.replaceState(null, '', targetHash);
-      else history.replaceState(null, '', targetHash);
+      if (fromHistory) history.replaceState({ cmPage: pageId }, '', targetHash);
+      else history.pushState({ cmPage: pageId }, '', targetHash);
+    } else if (!history.state || history.state.cmPage !== pageId) {
+      history.replaceState({ cmPage: pageId }, '', targetHash);
     }
   } catch (e) {}
   document.querySelectorAll('.nav-item,.cm-topnav-item').forEach(el => el.classList.remove('active'));
@@ -4310,11 +4317,26 @@ function switchTab(pageId, fromHistory=false){
   if (pageId === 'creatorToolsPage') cmLoadCreatorAnalytics();
 }
 
+window.addEventListener('popstate', function(e){
+  if (!currentUser) return;
+  const id = String(e.state?.cmPage || decodeURIComponent(String(window.location.hash || '').replace(/^#/, '')) || 'homePage');
+  if (id && document.getElementById(id)) switchTab(id, true);
+});
 window.addEventListener('hashchange', function(){
   if (!currentUser) return;
   const id = decodeURIComponent(String(window.location.hash || '').replace(/^#/, ''));
   if (id && document.getElementById(id)) switchTab(id, true);
 });
+
+// Mobile browser/Android back gesture: keep the user inside Chat Me and navigate
+// through the app's page history before allowing the browser/tab to close.
+function cmInitMobileBackHistory(){
+  if (!currentUser) return;
+  const id = decodeURIComponent(String(window.location.hash || '').replace(/^#/, '')) || 'homePage';
+  const safeId = document.getElementById(id) ? id : 'homePage';
+  try { history.replaceState({ cmPage: safeId }, '', '#' + encodeURIComponent(safeId)); } catch(e) {}
+}
+
 
 /* ---------------- EXPLORE / DISCOVERY ---------------- */
 async function cmLoadExplore(){
@@ -5942,11 +5964,11 @@ async function createPost(){
       // The post is already saved. Keep the successful publish state even if a feed refresh is temporarily unavailable.
       errEl.textContent = '';
       const list=document.getElementById('postList');
-      if(list && !list.querySelector('[data-cm-new-post="'+post.id+'"]')) {
+      if(list && !list.querySelector('[data-post-id="'+post.id+'"]')) {
         const empty=list.querySelector('.empty-feed'); if(empty) empty.remove();
-        const card=document.createElement('div'); card.setAttribute('data-cm-new-post',post.id); card.className='post-card';
-        card.innerHTML='<div class="post-author">@'+escapeHtml(post.author)+'</div>'+((post.title)?'<div style="font-weight:700;margin:4px 0;">'+escapeHtml(post.title)+'</div>':'')+'<div class="post-text">'+escapeHtml(post.text||'Post published.')+'</div>'+((post.image)?'<img src="'+escapeHtml(post.image)+'" alt="Post image" style="max-width:100%;border-radius:10px;margin-top:8px;">':'')+'<div class="post-time">just now</div>';
-        list.prepend(card);
+        // Render the exact same complete card as the normal feed, even when a
+        // feed refresh fails after the Worker has already saved the post.
+        list.insertAdjacentHTML('afterbegin', renderPostCard(post, {}));
       }
     }
     if (post.video) { try { await loadVideosPage(); } catch(e) {} }
@@ -6166,7 +6188,7 @@ function renderPostCard(p, infoMap){
   const commentsBlock = comments.map((c, ci) => {
     const cInfo = infoMap[c.author] || {};
     const mine = currentUser && c.author === currentUser.username;
-    const canDeleteComment = mine || (currentUser && isAdminUser(currentUser));
+    const canDeleteComment = mine || (currentUser && (currentUser.username === p.author || isAdminUser(currentUser) || currentUserHasTrustedRole('owner')));
     const links = [];
     if (mine) links.push(`<span style="cursor:pointer;text-decoration:underline;" onclick="editComment('${p.id}',${ci})">Edit</span>`);
     if (canDeleteComment) links.push(`<span style="cursor:pointer;text-decoration:underline;" onclick="deleteComment('${p.id}',${ci})">Delete</span>`);
@@ -6216,7 +6238,7 @@ function renderPostCard(p, infoMap){
       <div class="post-time">${timeAgo(p.time)}</div>
       <div style="display:flex;gap:16px;margin-top:8px;padding-top:8px;border-top:1px solid #f0f0f0;font-size:13.5px;">
         <span style="cursor:pointer;color:${iLiked ? '#e8622d' : '#555'};font-weight:${iLiked ? '600' : '400'};" onclick="toggleLike('${p.id}')">${iLiked ? '♥' : '♡'} Like${likes.length ? ' (' + likes.length + ')' : ''}</span>
-        <span style="cursor:default;color:#555;">💬 Comment${comments.length ? ' (' + comments.length + ')' : ''}</span>
+        <span role="button" tabindex="0" style="cursor:pointer;color:#555;" onclick="cmFocusPostComment('${p.id}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();cmFocusPostComment('${p.id}')}">💬 Comment${comments.length ? ' (' + comments.length + ')' : ''}</span>
         <span style="cursor:pointer;color:#555;" onclick="sharePost('${p.id}')">↻ Share${shareCount ? ' (' + shareCount + ')' : ''}</span>
       </div>
       <div style="margin-top:8px;">${commentsBlock}</div>
@@ -6339,38 +6361,50 @@ async function awardSocialActionCoins(action, targetId){
   } catch (e) {}
 }
 
+function cmPostActionError(action, e){
+  console.error('Chat Me '+action+' failed:', e);
+  const msg = e && e.message ? e.message : 'Please check your connection and try again.';
+  alert(action + ' could not be saved. ' + msg + (String(msg).toLowerCase().includes('forbidden') ? ' The live backend may be rejecting this action.' : ''));
+}
+function cmFocusPostComment(postId){
+  const input=document.getElementById('commentInput_'+postId);
+  if(input){input.focus();input.scrollIntoView({behavior:'smooth',block:'center'});}
+}
 async function toggleLike(postId){
-  const key = 'post:' + postId;
-  const raw = await storageGet(key, true);
-  if (!raw) return;
-  let p; try { p = JSON.parse(raw); } catch (e) { return; }
-  p.likes = p.likes || [];
-  const idx = p.likes.indexOf(currentUser.username);
-  if (idx === -1) {
-    p.likes.push(currentUser.username);
-    if (p.author && p.author !== currentUser.username) cmPushSocialNotification(p.author, 'like', `${currentUser.firstName || currentUser.username} liked your post.`);
-    await awardSocialActionCoins('like', postId);
-  } else p.likes.splice(idx, 1);
-  await storageSet(key, JSON.stringify(p), true);
-  loadHome();
+  if(!currentUser){alert('Please log in to like posts.');return;}
+  try{
+    const key='post:'+postId;
+    const raw=await storageGet(key);
+    if(!raw){alert('This post is no longer available. Refresh the page and try again.');return;}
+    const p=JSON.parse(raw); p.likes=Array.isArray(p.likes)?p.likes:[];
+    const idx=p.likes.indexOf(currentUser.username);
+    if(idx===-1){p.likes.push(currentUser.username);if(p.author&&p.author!==currentUser.username)cmPushSocialNotification(p.author,'like',`${currentUser.firstName||currentUser.username} liked your post.`);}
+    else p.likes.splice(idx,1);
+    const saved=await storageSet(key,JSON.stringify(p));
+    if(!saved) throw new Error('The server did not confirm the update.');
+    if(idx===-1) await awardSocialActionCoins('like',postId);
+    await loadHome();
+  }catch(e){cmPostActionError('Like',e);}
 }
 
 async function addComment(postId){
-  if (isCurrentlyBanned(currentUser)) { alert(banBlockMessage(currentUser)); return; }
-  const input = document.getElementById('commentInput_' + postId);
-  if (!input) return;
-  const text = input.value.trim();
-  if (!text) return;
-  const key = 'post:' + postId;
-  const raw = await storageGet(key, true);
-  if (!raw) return;
-  let p; try { p = JSON.parse(raw); } catch (e) { return; }
-  p.comments = p.comments || [];
-  p.comments.push({ author: currentUser.username, authorName: currentUser.firstName + ' ' + currentUser.lastName, text, time: Date.now() });
-  await storageSet(key, JSON.stringify(p), true);
-  if (p.author && p.author !== currentUser.username) cmPushSocialNotification(p.author, 'comment', `${currentUser.firstName || currentUser.username} commented on your post.`);
-  await awardSocialActionCoins('comment', postId + ':' + p.comments.length);
-  loadHome();
+  if(!currentUser){alert('Please log in to comment.');return;}
+  if(isCurrentlyBanned(currentUser)){alert(banBlockMessage(currentUser));return;}
+  const input=document.getElementById('commentInput_'+postId); if(!input)return;
+  const text=input.value.trim(); if(!text){input.focus();return;}
+  if(text.length>5000){alert('Comments must be 5,000 characters or fewer.');return;}
+  try{
+    const key='post:'+postId; const raw=await storageGet(key);
+    if(!raw){alert('This post is no longer available. Refresh the page and try again.');return;}
+    const p=JSON.parse(raw); p.comments=Array.isArray(p.comments)?p.comments:[];
+    p.comments.push({author:currentUser.username,authorName:[currentUser.firstName,currentUser.lastName].filter(Boolean).join(' '),text,time:Date.now()});
+    const saved=await storageSet(key,JSON.stringify(p));
+    if(!saved)throw new Error('The server did not confirm the comment.');
+    input.value='';
+    if(p.author&&p.author!==currentUser.username)cmPushSocialNotification(p.author,'comment',`${currentUser.firstName||currentUser.username} commented on your post.`);
+    await awardSocialActionCoins('comment',postId+':'+p.comments.length);
+    await loadHome();
+  }catch(e){cmPostActionError('Comment',e);}
 }
 
 async function editComment(postId, commentId){
@@ -6389,15 +6423,18 @@ async function editComment(postId, commentId){
 }
 
 async function deleteComment(postId, commentId){
-  const key='post:'+postId;
-  const raw=await storageGet(key,true);
-  if(!raw) return;
-  let p; try{p=JSON.parse(raw);}catch(e){return;}
-  const comments=p.comments||[]; const i=Number(commentId);
-  if(!Number.isInteger(i)||i<0||i>=comments.length) return;
-  if(!currentUser || (comments[i].author!==currentUser.username && !isAdminUser(currentUser))){ alert('Only the comment author, or an admin, can delete this.'); return; }
-  if(!confirm('Delete this comment?')) return;
-  comments.splice(i,1); await storageSet(key,JSON.stringify(p),true); loadHome();
+  try{
+    const key='post:'+postId; const raw=await storageGet(key);
+    if(!raw){alert('This post is no longer available.');return;}
+    const p=JSON.parse(raw); const comments=Array.isArray(p.comments)?p.comments:[]; const i=Number(commentId);
+    if(!Number.isInteger(i)||i<0||i>=comments.length)return;
+    const allowed=!!currentUser&&(comments[i].author===currentUser.username||p.author===currentUser.username||isAdminUser(currentUser)||currentUserHasTrustedRole('owner'));
+    if(!allowed){alert('Only the comment author, the post owner, or authorized staff can delete this comment.');return;}
+    if(!confirm('Delete this comment?'))return;
+    comments.splice(i,1); const saved=await storageSet(key,JSON.stringify(p));
+    if(!saved)throw new Error('The server did not confirm comment deletion.');
+    await loadHome();
+  }catch(e){cmPostActionError('Comment deletion',e);}
 }
 
 async function reportComment(postId, commentId){
@@ -6414,42 +6451,31 @@ async function reportComment(postId, commentId){
 }
 
 async function deletePost(postId){
-  const key = 'post:' + postId;
-  const raw = await storageGet(key, true);
-  if (!raw) return;
-  let p; try { p = JSON.parse(raw); } catch (e) { return; }
-  if (!currentUser || (currentUser.username !== p.author && !currentUserHasTrustedRole('owner'))) {
-    alert('Only the person who posted this, or the site owner, can delete it.');
-    return;
-  }
-  if (!confirm('Delete this post? This cannot be undone.')) return;
-  await storageRemove(key);
-  loadHome();
+  try{
+    const key='post:'+postId; const raw=await storageGet(key);
+    if(!raw){alert('This post is no longer available.');return;}
+    const p=JSON.parse(raw);
+    if(!currentUser||(currentUser.username!==p.author&&!currentUserHasTrustedRole('owner')&&!currentUserHasTrustedRole('admin'))){alert('Only the person who posted this, or authorized site staff, can delete it.');return;}
+    if(!confirm('Delete this post? This cannot be undone.'))return;
+    const removed=await storageRemove(key);
+    if(!removed)throw new Error('The server did not confirm post deletion.');
+    await loadHome();
+  }catch(e){cmPostActionError('Post deletion',e);}
 }
 
 async function sharePost(postId){
-  const key = 'post:' + postId;
-  const raw = await storageGet(key, true);
-  if (!raw) return;
-  let original; try { original = JSON.parse(raw); } catch (e) { return; }
-  original.shareCount = (original.shareCount || 0) + 1;
-  await storageSet(key, JSON.stringify(original), true);
-
-  const shared = {
-    id: Date.now() + '-' + Math.random().toString(36).slice(2, 8),
-    author: currentUser.username,
-    authorName: currentUser.firstName + ' ' + currentUser.lastName,
-    text: '',
-    type: 'Shared Post',
-    image: null,
-    time: Date.now(),
-    likes: [],
-    comments: [],
-    shareCount: 0,
-    sharedFrom: { author: original.author, authorName: original.authorName, text: original.text, image: original.image }
-  };
-  await storageSet('post:' + shared.id, JSON.stringify(shared), true);
-  loadHome();
+  if(!currentUser){alert('Please log in to share posts.');return;}
+  try{
+    const key='post:'+postId; const raw=await storageGet(key);
+    if(!raw){alert('This post is no longer available.');return;}
+    const original=JSON.parse(raw);
+    const shared={id:Date.now()+'-'+Math.random().toString(36).slice(2,8),author:currentUser.username,authorName:[currentUser.firstName,currentUser.lastName].filter(Boolean).join(' '),text:'',type:'Shared Post',image:null,time:Date.now(),likes:[],comments:[],shareCount:0,sharedFrom:{author:original.author,authorName:original.authorName,text:original.text,image:original.image}};
+    const created=await storageSet('post:'+shared.id,JSON.stringify(shared));
+    if(!created)throw new Error('The server did not confirm the shared post.');
+    original.shareCount=(original.shareCount||0)+1;
+    try{await storageSet(key,JSON.stringify(original));}catch(countError){console.warn('Share was created, but the original share counter did not update.',countError);}
+    await loadHome();
+  }catch(e){cmPostActionError('Share',e);}
 }
 
 const ACHIEVEMENT_DEFS = [
@@ -9171,7 +9197,7 @@ function renderGroupPostCard(p, infoMap, groupId){
     ${p.type === 'poll' ? renderPollHtml(p, gid, pid) : ''}
     <div style="display:flex;gap:16px;margin-top:8px;padding-top:8px;border-top:1px solid #f0f0f0;font-size:13.5px;">
       <span onclick="toggleGroupPostLike('${gid}','${pid}')" style="cursor:pointer;color:${liked ? '#e8622d' : '#555'};font-weight:${liked ? '600' : '400'};">${liked ? '♥' : '♡'} Like${(p.likes || []).length ? ' (' + (p.likes || []).length + ')' : ''}</span>
-      <span style="cursor:default;color:#555;">💬 Comment${comments.length ? ' (' + comments.length + ')' : ''}</span>
+      <span role="button" tabindex="0" style="cursor:pointer;color:#555;" onclick="cmFocusPostComment('${p.id}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();cmFocusPostComment('${p.id}')}">💬 Comment${comments.length ? ' (' + comments.length + ')' : ''}</span>
       <span style="color:#aaa;margin-left:auto;font-size:11px;">${timeAgo(p.time)}</span>
     </div>
     <div style="margin-top:8px;">${commentsBlock}</div>
