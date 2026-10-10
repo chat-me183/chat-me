@@ -6065,10 +6065,12 @@ function onPostFileChosen(){
   nameEl.textContent = file.name;
   const chosenLabel=document.getElementById('cmChosenPostMedia'); if(chosenLabel) chosenLabel.textContent='Selected: '+file.name;
   const isVideo = file.type.startsWith('video/');
-  const max = isVideo ? 12 * 1024 * 1024 : 10 * 1024 * 1024;
+  const max = 5 * 1024 * 1024;
   if (file.size > max) {
-    document.getElementById('postError').textContent = isVideo ? 'Video is too large (max 12MB).' : 'Image is too large (max 10MB).';
-    input.value = ''; nameEl.textContent = 'No file chosen'; return;
+    document.getElementById('postError').textContent = 'File is too large. Maximum upload size is 5 MB.';
+    input.value = ''; nameEl.textContent = 'No file chosen';
+    const chosenLabel = document.getElementById('cmChosenPostMedia'); if (chosenLabel) chosenLabel.textContent = '';
+    return;
   }
   chosenFileKind = isVideo ? 'video' : 'image';
   if (isVideo) document.getElementById('postType').value = 'Video';
@@ -6291,7 +6293,7 @@ function cmRenderHomePage(){
 }
 function cmLoadMoreHomePosts(){ cmHomeOffset += cmHomePageSize; cmRenderHomePage(); setTimeout(()=>{document.getElementById('cmHomeLatestBtn')?.scrollIntoView({block:'nearest'});},50); }
 
-async function loadHomeCore(){
+async function loadHome(){
   refreshHomeStatusHeader();
   const listEl=document.getElementById('postList');
   listEl.innerHTML='<div class="empty-feed">Loading posts...</div>';
@@ -7695,7 +7697,7 @@ async function toggleProfileLock(locked){
 /* ---------------- FRIENDS (find people) ---------------- */
 function runFriendSearch(){
   const q = document.getElementById('friendSearch').value.trim();
-  if (!q) { switchTab('friendsPage'); const input=document.getElementById('peopleSearch'); if(input) input.focus(); return; }
+  if (!q) return;
   switchTab('friendsPage');
   document.getElementById('peopleSearch').value = q;
   searchPeople();
@@ -7703,7 +7705,7 @@ function runFriendSearch(){
 
 let friendsListPage = 0;
 const FRIENDS_PER_PAGE = 20;
-async function loadMyFriendsListCore(){
+async function loadMyFriendsList(){
   const container = document.getElementById('myFriendsList');
   if (!container || !currentUser) return;
   const raw = await storageGet(friendsKey(currentUser.username), true);
@@ -7749,7 +7751,7 @@ function changeFriendsPage(delta){
   loadMyFriendsList();
 }
 
-async function searchPeopleCore(){
+async function searchPeople(){
   const q = document.getElementById('peopleSearch').value.trim().toLowerCase();
   const resultsEl = document.getElementById('peopleResults');
   resultsEl.innerHTML = '<div class="empty-feed">Searching...</div>';
@@ -7941,7 +7943,7 @@ async function markAllNotificationsRead(){
   const now=Date.now();await storageSet(notifsKey(currentUser.username),JSON.stringify(notifs.map(n=>({...n,read:true,readAt:n.readAt||now}))),true);
   await loadNotifications();refreshBadges();
 }
-async function loadNotificationsCore(){
+async function loadNotifications(){
   const listEl = document.getElementById('notifList');
   listEl.innerHTML = '<div class="empty-feed">Loading...</div>';
   const raw = await storageGet(notifsKey(currentUser.username), true);
@@ -9292,15 +9294,23 @@ async function confirmDeleteGroup(id){
 function onGroupPostFileChosen(){
   const input = document.getElementById('groupPostFile');
   const nameEl = document.getElementById('groupPostFileName');
+  const errEl = document.getElementById('groupPostError');
   chosenGroupPostImage = null;
   if (!input.files || !input.files[0]) { nameEl.textContent = 'No file chosen'; return; }
-  nameEl.textContent = input.files[0].name;
+  const file = input.files[0];
+  if (file.size > 5 * 1024 * 1024) {
+    if (errEl) errEl.textContent = 'Image is too large. Maximum upload size is 5 MB.';
+    input.value = ''; nameEl.textContent = 'No file chosen'; return;
+  }
+  nameEl.textContent = file.name;
+  if (errEl) errEl.textContent = '';
   const reader = new FileReader();
   reader.onload = async () => {
     try { chosenGroupPostImage = await resizeImageDataUrl(reader.result, 640); }
-    catch(e) { document.getElementById('groupPostError').textContent = 'Could not read that image.'; }
+    catch(e) { if (errEl) errEl.textContent = 'Could not read that image.'; }
   };
-  reader.readAsDataURL(input.files[0]);
+  reader.onerror = () => { if (errEl) errEl.textContent = 'Could not read that image. Please try again.'; };
+  reader.readAsDataURL(file);
 }
 
 async function loadGroupPosts(id){
@@ -10689,45 +10699,6 @@ function previewChatMeAd(){
   };
   document.addEventListener('DOMContentLoaded',()=>{renderHomeFriendStatuses();});
 })();
-
-/* Chat Me reliability guards: show a useful error instead of leaving pages on Loading forever. */
-async function loadHome() {
-  try { return await loadHomeCore(); }
-  catch (error) {
-    console.error('Chat Me loadHome failed:', error);
-    const el = document.getElementById('postList');
-    if (el) el.innerHTML = '<div class="empty-feed" role="status">Posts could not load. Check your connection and tap Retry.</div>';
-    return false;
-  }
-}
-async function searchPeople() {
-  try { return await searchPeopleCore(); }
-  catch (error) {
-    console.error('Chat Me searchPeople failed:', error);
-    const el = document.getElementById('peopleResults');
-    if (el) el.innerHTML = '<div class="empty-feed" role="status">People could not load. Check your connection and tap Search again.</div>';
-    return false;
-  }
-}
-async function loadMyFriendsList() {
-  try { return await loadMyFriendsListCore(); }
-  catch (error) {
-    console.error('Chat Me loadMyFriendsList failed:', error);
-    const el = document.getElementById('myFriendsList');
-    if (el) el.innerHTML = '<div class="empty-feed" role="status">Your friends could not load. Check your connection and retry.</div>';
-    return false;
-  }
-}
-async function loadNotifications() {
-  try { return await loadNotificationsCore(); }
-  catch (error) {
-    console.error('Chat Me loadNotifications failed:', error);
-    const el = document.getElementById('notifList');
-    if (el) el.innerHTML = '<div class="empty-feed" role="status">Notifications could not load. Check your connection and retry.</div>';
-    return false;
-  }
-}
-
 </script>
 
 </body>
