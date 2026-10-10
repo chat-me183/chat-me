@@ -236,6 +236,19 @@
   .page { flex: 1; overflow: hidden; display: none; flex-direction: column; }
   .page.active { display: flex; }
 
+
+  .cm-home-composer-tools[hidden]{display:none!important}
+  .cm-home-composer-tools{display:block;margin-top:8px}
+  .cm-home-media-actions{display:flex;gap:7px;flex-wrap:wrap;padding:9px 0;border-top:1px solid #e4e6eb;border-bottom:1px solid #e4e6eb;margin:4px 0 10px}
+  .cm-home-media-actions button{background:transparent!important;color:#4b5563!important;border:1px solid #e1e5eb!important;border-radius:8px!important;padding:8px 10px!important;font-size:12px!important;flex:1 1 auto}
+  .cm-chosen-post-media{font-size:12px;color:#687385;margin:3px 0 8px;overflow-wrap:anywhere}
+  .cm-create-top-button,.cm-search-top-button{font-weight:800!important;font-size:28px!important;line-height:1!important}
+  .cm-final-nav .cm-create-top-button,.cm-final-nav .cm-search-top-button{display:flex!important}
+  .cm-compact-composer:not(.cm-composer-expanded) #postInput{min-height:44px!important;height:44px!important;resize:none!important;margin-bottom:0!important;cursor:text}
+  .cm-compact-composer.cm-composer-expanded #postInput{min-height:96px!important;resize:vertical!important;margin-bottom:8px!important}
+  .cm-compact-post-actions{display:flex;justify-content:space-between;align-items:center;gap:8px}
+  @media(max-width:650px){.cm-final-nav .cm-create-top-button,.cm-final-nav .cm-search-top-button{min-width:42px!important;width:42px!important;height:42px!important;font-size:27px!important}}
+
   /* ---- Home / feed ---- */
   #homePage { padding: 12px; overflow-y: auto; background:#f0f2f5; }
   .cm-home-status { background:#fff; border:1px solid #e4e6eb; border-radius:12px; padding:12px; margin-bottom:12px; box-shadow:0 1px 2px rgba(0,0,0,.06); }
@@ -1343,6 +1356,14 @@ body.cm-social-shell .cm-top-action:hover,body.cm-social-shell .cm-top-action.ac
 }
 </style>
 
+
+<style>
+  .cm-compact-composer{padding:14px!important;}
+  .cm-compact-composer textarea{display:block;width:100%;min-height:76px;box-sizing:border-box;resize:vertical;}
+  .cm-compact-post-actions{display:flex;justify-content:flex-end;align-items:center;gap:10px;margin-top:10px;}
+  .cm-compact-post-actions .composer-err{margin-right:auto;font-size:12px;}
+  .cm-compact-composer #homePostButton{border:0;border-radius:8px;padding:10px 18px;background:#f0642d;color:#fff;font-weight:700;cursor:pointer;}
+</style>
 </head>
 <body>
 
@@ -1624,6 +1645,8 @@ function copyCMProfileLink(){
         <button type="button" onclick="runFriendSearch()" aria-label="Search">⌕</button>
       </div>
       <div class="cm-top-actions cm-facebook-style-nav cm-final-nav" aria-label="Main navigation">
+        <button class="cm-top-action cm-create-top-button" type="button" onclick="cmOpenHomeComposer()" aria-label="Create post" title="Create post">＋</button>
+        <button class="cm-top-action cm-search-top-button" type="button" onclick="cmOpenSearch()" aria-label="Search" title="Search">⌕</button>
         <button class="cm-top-action cm-topnav-item active" data-page="homePage" onclick="switchTab('homePage')" aria-label="Home" title="Home">🏠<span class="cm-fb-nav-label">Home</span></button>
         <button class="cm-top-action cm-topnav-item" data-page="chatsPage" onclick="switchTab('chatsPage')" aria-label="Messages" title="Messages">💬<span class="cm-top-badge" id="msgTopBadge" style="display:none;"></span><span class="cm-fb-nav-label">Messages</span></button>
         <button class="cm-top-action cm-topnav-item" data-page="notificationsPage" onclick="switchTab('notificationsPage')" aria-label="Notifications" title="Notifications">🔔<span class="cm-top-badge" id="notifTopBadge" style="display:none;"></span><span class="cm-fb-nav-label">Notifications</span></button>
@@ -1652,49 +1675,37 @@ function copyCMProfileLink(){
       <div class="cm-home-status" aria-label="Create a status">
         <div class="cm-status-head">
           <div id="homeStatusAvatar" class="cm-status-avatar">CM</div>
-          <div class="cm-status-prompt" onclick="document.getElementById('postInput').focus()">What's on your mind?</div>
-        </div>
-        <div class="cm-status-actions">
-          <button class="cm-status-action photo" type="button" onclick="document.getElementById('postFile').click()">▣ Photo</button>
-          <button class="cm-status-action feeling" type="button" onclick="document.getElementById('postType').value='Feeling';document.getElementById('postInput').focus()">● Feeling</button>
-          <button class="cm-status-action question" type="button" onclick="document.getElementById('postType').value='Question';document.getElementById('postInput').focus()">? Question</button>
+          <div class="cm-status-prompt" role="button" tabindex="0" onclick="cmOpenHomeComposer()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();cmOpenHomeComposer();}">What's on your mind?</div>
         </div>
       </div>
       <div id="cmStoriesStrip" class="cm-stories-strip"></div>
       <div id="cmPinnedAnnouncement" class="cm-home-social-card" style="display:none;"></div>
       <div id="cmPeopleSuggestions" class="cm-home-social-card" style="display:none;"></div>
       <div id="cmHomeTrendingTopics" class="cm-home-social-card" style="display:none;"></div>
-      <div class="post-composer">
-        <textarea id="postInput" placeholder="What's on your mind?"></textarea>
-        <div class="composer-file-row">
-          <input type="file" id="postFile" accept="image/*,video/*" onchange="onPostFileChosen()">
-          <span id="postFileName">No file chosen</span>
+      <div class="post-composer cm-compact-composer" id="homePostComposer">
+        <textarea id="postInput" placeholder="What's on your mind?" aria-label="Write a post" onfocus="cmExpandHomeComposer()" onclick="cmExpandHomeComposer()"></textarea>
+        <div class="cm-home-composer-tools" id="cmHomeComposerTools" hidden>
+          <div class="cm-home-media-actions">
+            <button type="button" onclick="cmChoosePostMedia('image')">🖼️ Photo</button>
+            <button type="button" onclick="cmChoosePostMedia('video')">🎬 Video</button>
+            <button type="button" onclick="document.getElementById('postType').value='Question';document.getElementById('postInput').focus()">❓ Question</button>
+            <button type="button" onclick="document.getElementById('postType').value='Feeling';document.getElementById('postInput').focus()">🙂 Feeling</button>
+          </div>
+          <div id="cmChosenPostMedia" class="cm-chosen-post-media" aria-live="polite"></div>
+          <div class="cm-compact-post-actions">
+            <span class="composer-err" id="postError" role="status" aria-live="polite"></span>
+            <button type="button" id="homePostButton" onclick="createPost()">Post</button>
+          </div>
         </div>
-        <div class="composer-type-row">
-          <select id="postType">
-            <option value="Normal Post">Normal Post</option>
-            <option value="Feeling">Feeling / Activity</option>
-            <option value="Question">Question</option>
-            <option value="Video">Video</option>
-          </select>
-        </div>
-        <div style="display:grid;gap:8px;margin-top:8px;">
-          <input id="postTags" maxlength="300" placeholder="Tags, e.g. #Nigeria #ChatMe #Football" style="width:100%;padding:9px;border:1px solid #ccc;border-radius:7px;box-sizing:border-box;">
-          <select id="postVisibility" style="padding:9px;border:1px solid #ccc;border-radius:7px;background:#fff;">
-            <option value="public">🌍 Public — everyone can see it</option>
-            <option value="friends">👥 Friends — only your friends</option>
-            <option value="private">🔒 Only me — private</option>
-          </select>
-        </div>
-        <div id="postVideoHint" style="display:none;font-size:11.5px;color:#777;margin-top:5px;">Videos are shown in the Videos section with the poster's name.</div>
-        <div id="homeColorPicker"></div>
-        <div class="composer-extras">
-          <span onclick="insertEmoji('postInput')">Use Emojis</span><span class="sep">|</span><span onclick="togglePollBuilder('postInput')">Create Poll</span><span class="sep">|</span><span onclick="showMentionPicker('postInput')">Mention</span>
-        </div>
-        <div class="composer-row">
-          <span class="composer-err" id="postError"></span>
-          <button type="button" id="homePostButton" onclick="createPost()">Post</button>
-        </div>
+        <!-- Keep existing internal controls for the current post publishing logic. -->
+        <input type="file" id="postFile" accept="image/*,video/*" onchange="onPostFileChosen()" hidden>
+        <span id="postFileName" hidden>No file chosen</span>
+        <select id="postType" hidden>
+          <option value="Normal Post">Normal Post</option><option value="Feeling">Feeling / Activity</option><option value="Question">Question</option><option value="Video">Video</option>
+        </select>
+        <input id="postTags" maxlength="300" type="hidden" value="">
+        <select id="postVisibility" hidden><option value="public">Public</option><option value="friends">Friends</option><option value="private">Only me</option></select>
+        <div id="postVideoHint" hidden></div><div id="homeColorPicker" hidden></div>
       </div>
       <div id="friendsBanner"></div>
       <div id="postList"></div>
@@ -5950,6 +5961,28 @@ function renderComingSoon(label){
 /* ---------------- HOME / POSTS ---------------- */
 let chosenFileDataUrl = null;
 let chosenFileKind = '';
+function cmExpandHomeComposer(){
+  const composer=document.getElementById('homePostComposer');
+  const tools=document.getElementById('cmHomeComposerTools');
+  if(composer) composer.classList.add('cm-composer-expanded');
+  if(tools) tools.hidden=false;
+}
+function cmOpenHomeComposer(){
+  switchTab('homePage');
+  setTimeout(()=>{cmExpandHomeComposer();const input=document.getElementById('postInput');if(input){input.focus({preventScroll:true});input.scrollIntoView({behavior:'smooth',block:'center'});}},80);
+}
+function cmChoosePostMedia(kind){
+  cmExpandHomeComposer();
+  const input=document.getElementById('postFile');
+  if(!input)return;
+  input.accept=kind==='video'?'video/*':'image/*,video/*';
+  input.click();
+}
+function cmOpenSearch(){
+  switchTab('searchPage');
+  setTimeout(()=>document.getElementById('searchInput')?.focus(),80);
+}
+
 function onPostFileChosen(){
   const input = document.getElementById('postFile');
   const nameEl = document.getElementById('postFileName');
@@ -5957,6 +5990,7 @@ function onPostFileChosen(){
   if (!input.files || !input.files[0]) { nameEl.textContent = 'No file chosen'; return; }
   const file = input.files[0];
   nameEl.textContent = file.name;
+  const chosenLabel=document.getElementById('cmChosenPostMedia'); if(chosenLabel) chosenLabel.textContent='Selected: '+file.name;
   const isVideo = file.type.startsWith('video/');
   const max = isVideo ? 12 * 1024 * 1024 : 10 * 1024 * 1024;
   if (file.size > max) {
@@ -6021,6 +6055,7 @@ async function createPost(){
     const vis=document.getElementById('postVisibility'); if(vis) vis.value='public';
     const pf=document.getElementById('postFile'); if(pf) pf.value='';
     document.getElementById('postFileName').textContent = 'No file chosen';
+    const chosenLabel=document.getElementById('cmChosenPostMedia'); if(chosenLabel) chosenLabel.textContent='';
     chosenFileDataUrl = null; chosenFileKind = '';
     const hint=document.getElementById('postVideoHint'); if(hint) hint.style.display='none';
     if (text) notifyMentions(text, post.id);
