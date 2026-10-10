@@ -1288,6 +1288,61 @@ body.dark-mode #welcomeScreen .welcome-trust-card span{color:#b9c0cc !important;
 @media(max-width:480px){.post-card{overflow-wrap:anywhere}.post-card img,.post-card video{max-width:100%;height:auto}.post-card input[type=text]{min-width:0}.post-card span[onclick]{padding-top:3px;padding-bottom:3px}}
 </style>
 
+
+<style id="cm-fb-mobile-home-refresh">
+/* Chat Me mobile social-home refresh, inspired by the supplied reference. */
+:root{--cm-fb-blue:#1877f2}
+body.cm-social-shell,#app{background:#18191a!important;color:#e4e6eb!important}
+.cm-social-topbar.cm-final-topbar{position:sticky!important;top:0!important;z-index:120!important;min-height:70px!important;height:auto!important;padding:9px 14px!important;gap:12px!important;background:#242526!important;border-bottom:1px solid #393a3b!important;box-shadow:none!important;flex-wrap:nowrap!important}
+.cm-final-brand{min-width:0!important;flex:1 1 auto!important;color:#f5f6f7!important;font-size:27px!important;letter-spacing:-.7px!important}
+.cm-final-brand .cm-logo-mark{display:none!important}
+.cm-final-brand .cm-brand-name{font-weight:800!important;color:#f5f6f7!important}
+.cm-final-search{display:none!important}
+.cm-final-nav{margin-left:auto!important;gap:8px!important}
+.cm-final-nav .cm-top-action,.cm-final-nav .cm-menu-top-button{width:48px!important;min-width:48px!important;height:48px!important;border-radius:50%!important;background:#3a3b3c!important;color:#f0f2f5!important;font-size:23px!important;flex-direction:row!important}
+.cm-final-nav .cm-fb-nav-label{display:none!important}
+.cm-fb-secondary-tabs{display:flex!important;position:sticky;top:68px;z-index:115;background:#242526;border-bottom:1px solid #393a3b;min-height:62px;align-items:stretch;justify-content:space-around;padding:0 5px}
+.cm-fb-secondary-tabs button{flex:1;min-width:0;border:0;border-bottom:3px solid transparent;background:transparent;color:#e4e6eb;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;font-size:25px;cursor:pointer;touch-action:manipulation}
+.cm-fb-secondary-tabs button span{font-size:10px;line-height:13px;font-weight:600}
+.cm-fb-secondary-tabs button.active{color:#2d88ff;border-bottom-color:#2d88ff}
+#homePage{padding:0 0 16px!important;background:#18191a!important;color:#e4e6eb!important}
+#homePage>div[style*="height:8px"]{height:0!important}
+.cm-home-status{background:#242526!important;border:0!important;border-bottom:1px solid #393a3b!important;border-radius:0!important;padding:14px 14px 10px!important;margin:0!important;box-shadow:none!important}
+.cm-status-head{gap:10px!important}
+.cm-status-prompt{background:#3a3b3c!important;color:#e4e6eb!important;border-radius:28px!important;min-height:48px!important;font-size:16px!important}
+.cm-status-actions{grid-template-columns:repeat(3,minmax(0,1fr))!important;border-top:1px solid #393a3b!important;margin-top:10px!important;padding-top:7px!important}
+.cm-status-action{color:#e4e6eb!important;font-size:13px!important;padding:9px 2px!important}
+.cm-status-action.photo{color:#45bd62!important}
+.cm-status-action.feeling{color:#f7c844!important}
+.cm-status-action.question{color:#f55364!important}
+.cm-stories-strip,.cm-stories-strip-wrap{background:#242526!important;color:#e4e6eb!important;border:0!important;border-bottom:1px solid #393a3b!important;border-radius:0!important;padding:12px 10px!important;margin:0 0 10px!important}
+.cm-story-name{color:#f5f6f7!important}
+.post-composer{margin:10px!important;border:1px solid #393a3b!important;border-radius:12px!important;background:#242526!important;color:#e4e6eb!important;padding:12px!important}
+.post-composer textarea,.post-composer input,.post-composer select{background:#3a3b3c!important;color:#f5f6f7!important;border-color:#555!important}
+.post-composer textarea::placeholder,.post-composer input::placeholder{color:#b0b3b8!important}
+#postList{padding:0 0 12px!important}
+.post-card,.cm-home-social-card{background:#242526!important;color:#e4e6eb!important;border-color:#393a3b!important}
+.post-card p,.post-card div,.post-card span{overflow-wrap:anywhere}
+body.cm-social-shell .cm-top-action:hover,body.cm-social-shell .cm-top-action.active{background:#3a3b3c!important;color:#2d88ff!important}
+#app button{touch-action:manipulation}
+.auth-screen{padding:12px!important;align-items:flex-start!important;overflow-y:auto!important}
+.auth-box{width:100%!important;max-width:440px!important;box-sizing:border-box!important;margin:0 auto 24px!important;padding:22px 18px!important}
+.auth-box input,.auth-box select,.auth-box button{max-width:100%;box-sizing:border-box}
+@media(max-width:480px){
+ .cm-social-topbar.cm-final-topbar{min-height:62px!important;padding:7px 10px!important;gap:5px!important}
+ .cm-final-brand{font-size:25px!important}
+ .cm-final-nav{gap:5px!important}
+ .cm-final-nav .cm-top-action,.cm-final-nav .cm-menu-top-button{width:42px!important;min-width:42px!important;height:42px!important;font-size:21px!important}
+ .cm-fb-secondary-tabs{top:60px;min-height:57px}
+ .cm-fb-secondary-tabs button{font-size:23px}
+ .cm-fb-secondary-tabs button span{font-size:9px}
+ .cm-status-actions{gap:1px!important}
+ .cm-status-action{font-size:12px!important}
+ .cm-stories-strip{overflow-x:auto!important;max-width:100vw!important}
+ .auth-box{padding:18px 14px!important;border-radius:12px!important}
+}
+</style>
+
 </head>
 <body>
 
@@ -1575,6 +1630,15 @@ function copyCMProfileLink(){
         <button class="cm-menu-top-button cm-topnav-item" type="button" data-page="menuPage" onclick="switchTab('menuPage')" aria-label="Menu" title="Menu">☰<span class="cm-fb-nav-label">Menu</span></button>
       </div>
     </div>
+
+    <div class="cm-fb-secondary-tabs" role="navigation" aria-label="Chat Me tabs">
+      <button type="button" class="active" data-page="homePage" onclick="switchTab('homePage')" aria-label="Home">⌂<span>Home</span></button>
+      <button type="button" data-page="friendsPage" onclick="switchTab('friendsPage')" aria-label="Friends">♙<span>Friends</span></button>
+      <button type="button" data-page="chatsPage" onclick="switchTab('chatsPage')" aria-label="Messages">☏<span>Messages</span></button>
+      <button type="button" data-page="notificationsPage" onclick="switchTab('notificationsPage')" aria-label="Notifications">♧<span>Alerts</span></button>
+      <button type="button" data-page="videosPage" onclick="switchTab('videosPage')" aria-label="Videos">▷<span>Videos</span></button>
+    </div>
+
     <div class="cm-mobile-search" id="cmMobileSearch" style="display:none;">
       <input type="text" id="cmMobileSearchInput" placeholder="Search people..." onkeydown="if(event.key==='Enter'){document.getElementById('friendSearch').value=this.value;runFriendSearch();cmToggleMobileSearch();}">
       <button type="button" onclick="document.getElementById('friendSearch').value=document.getElementById('cmMobileSearchInput').value;runFriendSearch();cmToggleMobileSearch();">Search</button>
