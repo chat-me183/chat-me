@@ -1342,10 +1342,11 @@ body.cm-social-shell .cm-top-action:hover,body.cm-social-shell .cm-top-action.ac
 .auth-box{width:100%!important;max-width:440px!important;box-sizing:border-box!important;margin:0 auto 24px!important;padding:22px 18px!important}
 .auth-box input,.auth-box select,.auth-box button{max-width:100%;box-sizing:border-box}
 @media(max-width:480px){
- .cm-social-topbar.cm-final-topbar{min-height:62px!important;padding:7px 10px!important;gap:5px!important}
- .cm-final-brand{font-size:25px!important}
- .cm-final-nav{gap:5px!important}
- .cm-final-nav .cm-top-action,.cm-final-nav .cm-menu-top-button{width:42px!important;min-width:42px!important;height:42px!important;font-size:21px!important}
+ .cm-social-topbar.cm-final-topbar{min-height:62px!important;padding:7px 10px!important;gap:6px!important;flex-wrap:nowrap!important;align-items:center!important}
+ .cm-final-brand{font-size:22px!important;flex:1 1 auto!important;min-width:0!important;overflow:hidden!important}
+ .cm-final-brand .cm-brand-name{font-size:22px!important;overflow:hidden!important;text-overflow:ellipsis!important}
+ .cm-final-nav{flex:0 0 auto!important;margin-left:auto!important;display:flex!important;justify-content:flex-end!important;gap:5px!important;width:auto!important;min-width:0!important}
+ .cm-final-nav .cm-top-action,.cm-final-nav .cm-menu-top-button{flex:0 0 42px!important;width:42px!important;min-width:42px!important;height:42px!important;font-size:21px!important;padding:0!important}
  .cm-fb-secondary-tabs{top:60px;min-height:57px}
  .cm-fb-secondary-tabs button{font-size:23px}
  .cm-fb-secondary-tabs button span{font-size:9px}
@@ -1363,6 +1364,15 @@ body.cm-social-shell .cm-top-action:hover,body.cm-social-shell .cm-top-action.ac
   .cm-compact-post-actions{display:flex;justify-content:flex-end;align-items:center;gap:10px;margin-top:10px;}
   .cm-compact-post-actions .composer-err{margin-right:auto;font-size:12px;}
   .cm-compact-composer #homePostButton{border:0;border-radius:8px;padding:10px 18px;background:#f0642d;color:#fff;font-weight:700;cursor:pointer;}
+</style>
+
+<style id="cm-multiplier-and-nav-fixes">
+.cm-multiplier-choice{border:1px solid #cfd7e6;background:#fff;color:#243044;border-radius:9px;padding:8px 14px;font-weight:800;cursor:pointer;touch-action:manipulation}
+.cm-multiplier-choice.active{background:#1877f2;color:#fff;border-color:#1877f2;box-shadow:0 0 0 2px rgba(24,119,242,.15)}
+body.dark-mode .cm-game-multiplier-box{background:#242526!important;border-color:#393a3b!important}
+body.dark-mode .cm-game-multiplier-box div{color:#e4e6eb!important}
+body.dark-mode .cm-multiplier-choice{background:#3a3b3c;color:#e4e6eb;border-color:#555}
+body.dark-mode .cm-multiplier-choice.active{background:#1877f2;color:#fff}
 </style>
 </head>
 <body>
@@ -1647,9 +1657,6 @@ function copyCMProfileLink(){
       <div class="cm-top-actions cm-facebook-style-nav cm-final-nav" aria-label="Main navigation">
         <button class="cm-top-action cm-create-top-button" type="button" onclick="cmOpenHomeComposer()" aria-label="Create post" title="Create post">＋</button>
         <button class="cm-top-action cm-search-top-button" type="button" onclick="cmOpenSearch()" aria-label="Search" title="Search">⌕</button>
-        <button class="cm-top-action cm-topnav-item active" data-page="homePage" onclick="switchTab('homePage')" aria-label="Home" title="Home">🏠<span class="cm-fb-nav-label">Home</span></button>
-        <button class="cm-top-action cm-topnav-item" data-page="chatsPage" onclick="switchTab('chatsPage')" aria-label="Messages" title="Messages">💬<span class="cm-top-badge" id="msgTopBadge" style="display:none;"></span><span class="cm-fb-nav-label">Messages</span></button>
-        <button class="cm-top-action cm-topnav-item" data-page="notificationsPage" onclick="switchTab('notificationsPage')" aria-label="Notifications" title="Notifications">🔔<span class="cm-top-badge" id="notifTopBadge" style="display:none;"></span><span class="cm-fb-nav-label">Notifications</span></button>
         <button class="cm-menu-top-button cm-topnav-item" type="button" data-page="menuPage" onclick="switchTab('menuPage')" aria-label="Menu" title="Menu">☰<span class="cm-fb-nav-label">Menu</span></button>
       </div>
     </div>
@@ -1955,7 +1962,18 @@ function copyCMProfileLink(){
 
       <div id="gameSelector">
         <h2 style="color:#2b3a8f;margin-bottom:4px;">Games</h2>
-        <div style="color:#888;font-size:13px;margin-bottom:16px;">Pick a game to play. The new game lineup is listed below; multiplayer access is planned at 100 Coins per match and is not a wager or prize pool.</div>
+        <div style="color:#888;font-size:13px;margin-bottom:12px;">Pick a game to play. The new game lineup is listed below; multiplayer access is planned at 100 Coins per match and is not a wager or prize pool.</div>
+        <div class="cm-game-multiplier-box" style="background:#f5f7fb;border:1px solid #dfe5ef;border-radius:12px;padding:12px;margin:0 0 14px;max-width:620px;">
+          <div style="font-weight:800;margin-bottom:4px;color:#273449;">🏆 Win reward multiplier</div>
+          <div style="font-size:12px;color:#667085;margin-bottom:9px;">Choose a multiplier before playing. Game wins pay up to 5 Leo Coins maximum.</div>
+          <div id="cmGameMultiplierOptions" style="display:flex;gap:7px;flex-wrap:wrap;">
+            <button type="button" class="cm-multiplier-choice" data-multiplier="1" onclick="cmSetGameMultiplier(1)">1×</button>
+            <button type="button" class="cm-multiplier-choice" data-multiplier="1.5" onclick="cmSetGameMultiplier(1.5)">1.5×</button>
+            <button type="button" class="cm-multiplier-choice" data-multiplier="2" onclick="cmSetGameMultiplier(2)">2×</button>
+            <button type="button" class="cm-multiplier-choice" data-multiplier="2.5" onclick="cmSetGameMultiplier(2.5)">2.5×</button>
+          </div>
+          <div id="cmGameMultiplierStatus" style="font-size:12px;color:#2b6ee0;font-weight:700;margin-top:8px;">Current multiplier: 1× · maximum reward: 5 Coins</div>
+        </div>
         <div id="chatMeGamesAd" class="cm-ad-slot" aria-label="Sponsored advertisement"></div>
         <div style="display:flex;gap:14px;flex-wrap:wrap;">
           <div class="profile-card" style="max-width:220px;cursor:pointer;" onclick="selectGame('wordcross')"><div style="font-size:32px;margin-bottom:6px;">🔤</div><div style="font-weight:700;color:#2b3a8f;margin-bottom:4px;">Current: Word Cross</div><div style="font-size:12.5px;color:#666;">Unscramble the word before your opponent does.</div></div>
@@ -4348,11 +4366,13 @@ function switchTab(pageId, fromHistory=false){
       history.replaceState({ cmPage: pageId }, '', targetHash);
     }
   } catch (e) {}
-  document.querySelectorAll('.nav-item,.cm-topnav-item').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.nav-item,.cm-topnav-item,.cm-fb-secondary-tabs button').forEach(el => el.classList.remove('active'));
   const navEl = document.querySelector(`.nav-item[data-page="${pageId}"]`);
   const topEl = document.querySelector(`.cm-topnav-item[data-page="${pageId}"]`);
+  const secondaryEl = document.querySelector(`.cm-fb-secondary-tabs button[data-page="${pageId}"]`);
   if (navEl) navEl.classList.add('active');
   if (topEl) topEl.classList.add('active');
+  if (secondaryEl) secondaryEl.classList.add('active');
 
   document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
 
@@ -4364,6 +4384,9 @@ function switchTab(pageId, fromHistory=false){
   const pageEl = document.getElementById(pageId);
   if (pageEl) {
     pageEl.classList.add('active');
+    // Each section should open from its heading, not at a stale scroll position.
+    pageEl.scrollTop = 0;
+    pageEl.querySelectorAll('.cm-page-scroll,.messages,.post-list-scroll').forEach(node => { node.scrollTop = 0; });
     if (!pageEl.textContent.trim()) pageEl.innerHTML = '<div class="cm-page-loading">Loading Chat Me…</div>';
   }
 
@@ -5395,17 +5418,31 @@ async function incrementGameWins(username){
   await storageSet(gameWinsKey(username), String(n + 1), true);
 }
 
+let cmGameRewardMultiplier = 1;
+try { const savedMultiplier = Number(localStorage.getItem('cmGameRewardMultiplier')); if ([1,1.5,2,2.5].includes(savedMultiplier)) cmGameRewardMultiplier = savedMultiplier; } catch(e) {}
+function cmSetGameMultiplier(value){
+  const m=Number(value); if(![1,1.5,2,2.5].includes(m)) return;
+  cmGameRewardMultiplier=m;
+  try{localStorage.setItem('cmGameRewardMultiplier',String(m));}catch(e){}
+  document.querySelectorAll('.cm-multiplier-choice').forEach(b=>b.classList.toggle('active',Number(b.dataset.multiplier)===m));
+  const status=document.getElementById('cmGameMultiplierStatus'); if(status)status.textContent='Current multiplier: '+m+'× · maximum reward: 5 Coins';
+}
+function cmInitGameMultiplier(){cmSetGameMultiplier(cmGameRewardMultiplier);}
 async function awardGameCoins(amount = 2){
-  const reward = Math.max(0, Number(amount) || 0);
-  if (!currentUser || reward <= 0) return;
+  const base = Math.max(0, Number(amount) || 0);
+  const reward = Math.min(5, Math.max(0, Math.round(base * cmGameRewardMultiplier)));
+  if (!currentUser || reward <= 0) return 0;
   const raw = await storageGet(userKey(currentUser.email), true);
-  if (!raw) return;
-  let u; try { u = JSON.parse(raw); } catch(e) { return; }
+  if (!raw) return 0;
+  let u; try { u = JSON.parse(raw); } catch(e) { return 0; }
   u.leos = (typeof u.leos === 'number' ? u.leos : 0) + reward;
-  await storageSet(userKey(currentUser.email), JSON.stringify(u), true);
+  const saved = await storageSet(userKey(currentUser.email), JSON.stringify(u), true);
+  if(saved === false) return 0;
   currentUser.leos = u.leos;
   updateCoinsDisplay();
+  return reward;
 }
+setTimeout(cmInitGameMultiplier, 0);
 
 async function endWordGame(won, reason){
   if (!gameState) return;
@@ -5415,10 +5452,10 @@ async function endWordGame(won, reason){
   const resultEl = document.getElementById('gameResult');
   if (won) {
     await incrementGameWins(currentUser.username);
-    await awardGameCoins(2);
+    const earned = await awardGameCoins(2);
     fireConfetti();
     resultEl.style.color = '#25a244';
-    resultEl.textContent = 'You got it — "' + gameState.word + '"! +2 Coins earned.';
+    resultEl.textContent = 'You got it — "' + gameState.word + '"! +' + earned + ' Coins earned.';
   } else if (reason === 'bot') {
     resultEl.style.color = '#d32f2f';
     resultEl.textContent = 'The bot solved it first — the word was "' + gameState.word + '".';
@@ -5698,7 +5735,8 @@ async function winPvpChallenge(){
   c.finishedAt = Date.now();
   await storageSet(challengeKey(gameState.code), JSON.stringify(c), true);
   await incrementGameWins(currentUser.username);
-  await awardGameCoins(2);
+  const earned = await awardGameCoins(2);
+  c.reward = earned;
   fireConfetti();
   finishPvpLocally(c);
 }
@@ -5727,7 +5765,7 @@ function finishPvpLocally(c){
     resultEl.textContent = "Time's up for both of you — the word was \"" + (c.word || gameState.word) + '". The free round has ended.';
   } else if (c.winner && c.winner.toLowerCase() === currentUser.username.toLowerCase()) {
     resultEl.style.color = '#25a244';
-    resultEl.textContent = 'You won! The word was "' + (c.word || gameState.word) + '". +2 Coins earned.';
+    resultEl.textContent = 'You won! The word was "' + (c.word || gameState.word) + '". +' + (Number(c.reward)||Math.min(5,Math.round(2*cmGameRewardMultiplier))) + ' Coins earned.';
   } else {
     resultEl.style.color = '#d32f2f';
     resultEl.textContent = '@' + c.winner + ' guessed it first — the word was "' + (c.word || gameState.word) + '". Better luck next time!';
@@ -5804,10 +5842,10 @@ async function finishDiceRoll(myRoll, oppRoll){
     resultEl.textContent = 'Tie! You both rolled ' + myRoll + '.';
   } else if (myRoll > oppRoll) {
     await incrementGameWins(currentUser.username);
-    await awardGameCoins(2);
+    const earned = await awardGameCoins(2);
     fireConfetti();
     resultEl.style.color = '#25a244';
-    resultEl.textContent = 'You rolled ' + myRoll + ' vs ' + oppRoll + ' — you win! +2 Coins earned.';
+    resultEl.textContent = 'You rolled ' + myRoll + ' vs ' + oppRoll + ' — you win! +' + earned + ' Coins earned.';
   } else {
     resultEl.style.color = '#d32f2f';
     resultEl.textContent = 'You rolled ' + myRoll + ' vs ' + oppRoll + ' — the bot wins this round.';
