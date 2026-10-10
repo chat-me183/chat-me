@@ -6291,7 +6291,7 @@ function cmRenderHomePage(){
 }
 function cmLoadMoreHomePosts(){ cmHomeOffset += cmHomePageSize; cmRenderHomePage(); setTimeout(()=>{document.getElementById('cmHomeLatestBtn')?.scrollIntoView({block:'nearest'});},50); }
 
-async function loadHome(){
+async function loadHomeCore(){
   refreshHomeStatusHeader();
   const listEl=document.getElementById('postList');
   listEl.innerHTML='<div class="empty-feed">Loading posts...</div>';
@@ -7695,7 +7695,7 @@ async function toggleProfileLock(locked){
 /* ---------------- FRIENDS (find people) ---------------- */
 function runFriendSearch(){
   const q = document.getElementById('friendSearch').value.trim();
-  if (!q) return;
+  if (!q) { switchTab('friendsPage'); const input=document.getElementById('peopleSearch'); if(input) input.focus(); return; }
   switchTab('friendsPage');
   document.getElementById('peopleSearch').value = q;
   searchPeople();
@@ -7703,7 +7703,7 @@ function runFriendSearch(){
 
 let friendsListPage = 0;
 const FRIENDS_PER_PAGE = 20;
-async function loadMyFriendsList(){
+async function loadMyFriendsListCore(){
   const container = document.getElementById('myFriendsList');
   if (!container || !currentUser) return;
   const raw = await storageGet(friendsKey(currentUser.username), true);
@@ -7749,7 +7749,7 @@ function changeFriendsPage(delta){
   loadMyFriendsList();
 }
 
-async function searchPeople(){
+async function searchPeopleCore(){
   const q = document.getElementById('peopleSearch').value.trim().toLowerCase();
   const resultsEl = document.getElementById('peopleResults');
   resultsEl.innerHTML = '<div class="empty-feed">Searching...</div>';
@@ -7941,7 +7941,7 @@ async function markAllNotificationsRead(){
   const now=Date.now();await storageSet(notifsKey(currentUser.username),JSON.stringify(notifs.map(n=>({...n,read:true,readAt:n.readAt||now}))),true);
   await loadNotifications();refreshBadges();
 }
-async function loadNotifications(){
+async function loadNotificationsCore(){
   const listEl = document.getElementById('notifList');
   listEl.innerHTML = '<div class="empty-feed">Loading...</div>';
   const raw = await storageGet(notifsKey(currentUser.username), true);
@@ -10689,6 +10689,45 @@ function previewChatMeAd(){
   };
   document.addEventListener('DOMContentLoaded',()=>{renderHomeFriendStatuses();});
 })();
+
+/* Chat Me reliability guards: show a useful error instead of leaving pages on Loading forever. */
+async function loadHome() {
+  try { return await loadHomeCore(); }
+  catch (error) {
+    console.error('Chat Me loadHome failed:', error);
+    const el = document.getElementById('postList');
+    if (el) el.innerHTML = '<div class="empty-feed" role="status">Posts could not load. Check your connection and tap Retry.</div>';
+    return false;
+  }
+}
+async function searchPeople() {
+  try { return await searchPeopleCore(); }
+  catch (error) {
+    console.error('Chat Me searchPeople failed:', error);
+    const el = document.getElementById('peopleResults');
+    if (el) el.innerHTML = '<div class="empty-feed" role="status">People could not load. Check your connection and tap Search again.</div>';
+    return false;
+  }
+}
+async function loadMyFriendsList() {
+  try { return await loadMyFriendsListCore(); }
+  catch (error) {
+    console.error('Chat Me loadMyFriendsList failed:', error);
+    const el = document.getElementById('myFriendsList');
+    if (el) el.innerHTML = '<div class="empty-feed" role="status">Your friends could not load. Check your connection and retry.</div>';
+    return false;
+  }
+}
+async function loadNotifications() {
+  try { return await loadNotificationsCore(); }
+  catch (error) {
+    console.error('Chat Me loadNotifications failed:', error);
+    const el = document.getElementById('notifList');
+    if (el) el.innerHTML = '<div class="empty-feed" role="status">Notifications could not load. Check your connection and retry.</div>';
+    return false;
+  }
+}
+
 </script>
 
 </body>
