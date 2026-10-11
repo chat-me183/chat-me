@@ -2673,14 +2673,14 @@ const RECAPTCHA_BACKEND_URL = 'https://chat-me-backend.rahmanadegboye1.workers.d
 // never silently downgraded to a local/insecure cloud write.
 const SECURE_STORAGE_BACKEND_URL = RECAPTCHA_BACKEND_URL.replace(/\/$/, '') + '/storage';
 let secureStorageBackendState = 'unknown';
-async function secureStorageRequest(op, key, body) {
+async function secureStorageRequest(op, key, body, cursor) {
   if (navigator.onLine === false) {
     const err = new Error('Network unavailable'); err.secureStorage = true; err.offline = true; throw err;
   }
   if (!firebaseAuth || !firebaseAuth.currentUser || firebaseAuth.currentUser.isAnonymous) return { handled:false };
   try {
     const token = await firebaseAuth.currentUser.getIdToken();
-    const url = SECURE_STORAGE_BACKEND_URL + '?op=' + encodeURIComponent(op) + '&key=' + encodeURIComponent(key || '');
+    const url = SECURE_STORAGE_BACKEND_URL + '?op=' + encodeURIComponent(op) + '&key=' + encodeURIComponent(key || '') + (cursor ? '&cursor=' + encodeURIComponent(cursor) : '');
     const controller = new AbortController();
     const requestTimeout = body && typeof body.value === 'string' && body.value.length > 1500000 ? Math.max(window.cmNetworkTimeout || 10000, 120000) : (window.cmNetworkTimeout || 10000);
     const timeoutId = setTimeout(() => controller.abort(), requestTimeout);
@@ -2874,6 +2874,21 @@ async function storageListKeys(prefix){
   const secure = await secureStorageRequest('list', prefix);
   if (secure.handled) return secure.data?.keys || [];
   throw new Error('Secure cloud storage is unavailable.');
+}
+
+// Admin totals and public username discovery must follow KV pagination; ordinary feed calls stay single-page for speed.
+async function storageListAllKeys(prefix, maxPages = 20){
+  const all=[]; let cursor=null; const seen=new Set();
+  for(let page=0;page<Math.max(1,Math.min(50,Number(maxPages)||20));page++){
+    const secure=await secureStorageRequest('list',prefix,null,cursor);
+    if(!secure.handled) throw new Error('Secure cloud storage is unavailable.');
+    const data=secure.data||{};
+    for(const key of (Array.isArray(data.keys)?data.keys:[])) all.push(key);
+    cursor=data.cursor||null;
+    if(!cursor || seen.has(cursor)) break;
+    seen.add(cursor);
+  }
+  return all;
 }
 async function storageRemove(key){
   _cacheClear(key);
@@ -4704,8 +4719,8 @@ async function loadAdminPage(){
   await cmLoadSmallPhoneAccess();
   const smallPhoneAdminNote=document.getElementById('cmSmallPhoneAccessAdminNote');
   if(smallPhoneAdminNote) smallPhoneAdminNote.textContent = iAmOwner ? 'Owner control — admins can also change this setting.' : (iAmAdmin ? 'Admin control — moderators cannot change this setting.' : 'Moderator view only — this setting is owner/admin controlled.');
-  const userKeys = await storageListKeys('user:', true);
-  const postKeys = await storageListKeys('post:', true);
+  const userKeys = await storageListAllKeys('user:');
+  const postKeys = await storageListAllKeys('post:');
   let verifiedCount = 0;
   let adminCount = 0;
   const rows = [];
@@ -5093,34 +5108,36 @@ async function saveAdminEdit(username){
 }
 
 async function verifyUser(username){
-  if (!currentUser || !(isAdminUser(currentUser) || isModeratorUser(currentUser))) { alert('Only staff can verify users.'); return; }
-  const email = await storageGet(usernameKey(username), true);
-  if (!email) return;
-  const raw = await storageGet(userKey(email), true);
-  if (!raw) return;
-  try {
-    const u = JSON.parse(raw);
-    if (!u.pendingVerification) { alert('This account has no pending verification request.'); return; }
-    u.verified = true;
-    u.pendingVerification = false;
-    u.verifiedAt = Date.now();
-    await storageSet(userKey(email), JSON.stringify(u), true);
-  } catch(e){}
-  loadAdminPage();
+  if(!currentUser || !(isAdminUser(currentUser)||isModeratorUser(currentUser))){alert('Only authorized staff can verify accounts.');return;}
+  try{
+    const email=await storageGet(usernameKey(username),true);
+    if(!email){alert('Could not find this account.');return;}
+    const raw=await storageGet(userKey(email),true);
+    if(!raw){alert('Could not load this account.');return;}
+    const u=JSON.parse(raw);
+    if(u.verified){alert('This account is already verified.');return;}
+    if(!u.pendingVerification){alert('This account has no pending verification request.');return;}
+    u.verified=true;u.pendingVerification=false;u.verifiedAt=Date.now();u.verifiedBy=currentUser.username;
+    await storageSet(userKey(email),JSON.stringify(u),true);
+    if(typeof cmWriteAudit==='function') { try { await cmWriteAudit('account_verified',username,'Approved pending verification request'); } catch(auditError) { console.warn('Verification saved; audit logging failed.',auditError); } }
+    alert('@'+username+' is now verified.');
+    await loadAdminPage();
+  }catch(e){console.error('Verification approval failed',e);alert('Verification could not be saved. Check the secure backend connection and try again.');}
 }
 
 async function unverifyUser(username){
-  if (!currentUser || !(isAdminUser(currentUser) || isModeratorUser(currentUser))) { alert('Only staff can remove verification.'); return; }
-  const email = await storageGet(usernameKey(username), true);
-  if (!email) return;
-  const raw = await storageGet(userKey(email), true);
-  if (!raw) return;
-  try {
-    const u = JSON.parse(raw);
-    u.verified = false;
-    await storageSet(userKey(email), JSON.stringify(u), true);
-  } catch(e){}
-  loadAdminPage();
+  if(!currentUser || !(isAdminUser(currentUser)||isModeratorUser(currentUser))){alert('Only authorized staff can remove verification.');return;}
+  if(!confirm('Remove the verified badge from @'+username+'?'))return;
+  try{
+    const email=await storageGet(usernameKey(username),true);
+    if(!email){alert('Could not find this account.');return;}
+    const raw=await storageGet(userKey(email),true);
+    if(!raw){alert('Could not load this account.');return;}
+    const u=JSON.parse(raw);u.verified=false;delete u.verifiedBy;delete u.verifiedAt;
+    await storageSet(userKey(email),JSON.stringify(u),true);
+    if(typeof cmWriteAudit==='function') { try { await cmWriteAudit('account_unverified',username,'Removed verified badge'); } catch(auditError) { console.warn('Verification removal saved; audit logging failed.',auditError); } }
+    await loadAdminPage();
+  }catch(e){console.error('Verification removal failed',e);alert('Could not remove verification. Check the secure backend connection and try again.');}
 }
 
 async function promoteModerator(username){
@@ -6325,7 +6342,11 @@ function cmRenderHomePage(){
   const end=Math.min(cmHomeOffset+cmHomePageSize,cmHomePostsCache.length);
   const shown=cmHomePostsCache.slice(0,end);
   if(!shown.length){listEl.innerHTML='<div class="empty-feed">No posts yet. Be the first to share something!</div>';return;}
-  listEl.innerHTML=shown.map(p=>renderPostCard(p,cmHomeInfoMap)).join('')+
+  listEl.innerHTML=shown.map((p,i)=>{
+    let html=renderPostCard(p,cmHomeInfoMap);
+    if(cmSuggestionUsersCache.length && (i+1)%10===0) html+=cmRenderFeedFriendSuggestions(Math.floor(i/10));
+    return html;
+  }).join('')+
     `<div class="cm-load-more-wrap">${end<cmHomePostsCache.length?`<button class="cm-load-more-btn" onclick="cmLoadMoreHomePosts()">Load next 200 posts</button>`:'<div style="font-size:12px;color:#888;">You have reached the end of the available posts.</div>'}</div>`;
   cmEnhancePostCards();
 }
@@ -7849,94 +7870,116 @@ async function searchPeople(){
 }
 
 async function sendFriendRequest(otherUsername, btnEl){
-  if (await isBlockedEitherWay(currentUser.username, otherUsername)) {
+  if(!currentUser || !currentUser.username){ alert('Please log in to add friends.'); return; }
+  const from=String(currentUser.username).trim();
+  const to=String(otherUsername||'').trim();
+  if(!to || to.toLowerCase()===from.toLowerCase()){ alert('You cannot add your own account.'); return; }
+  if (await isBlockedEitherWay(from, to)) {
     alert("You can't send a friend request to this person.");
     return;
   }
   if (btnEl) { btnEl.disabled = true; btnEl.textContent = 'Sending...'; }
   showLoading(true);
+  let requestSaved=false;
   try {
-    const theirReqRaw = await storageGet(requestsKey(otherUsername), true);
-    const theirReqs = theirReqRaw ? JSON.parse(theirReqRaw) : [];
-    if (!theirReqs.some(r => r.from === currentUser.username)) {
-      theirReqs.push({ from: currentUser.username, time: Date.now() });
-      await storageSet(requestsKey(otherUsername), JSON.stringify(theirReqs), true);
+    const [theirReqRaw,mySentRaw,myFriendsRaw,theirFriendsRaw]=await Promise.all([
+      storageGet(requestsKey(to), true),
+      storageGet(sentRequestsKey(from), true),
+      storageGet(friendsKey(from), true),
+      storageGet(friendsKey(to), true)
+    ]);
+    const theirReqs=theirReqRaw?JSON.parse(theirReqRaw):[];
+    const mySent=mySentRaw?JSON.parse(mySentRaw):[];
+    const myFriends=myFriendsRaw?JSON.parse(myFriendsRaw):[];
+    const theirFriends=theirFriendsRaw?JSON.parse(theirFriendsRaw):[];
+    if(myFriends.some(x=>String(x).toLowerCase()===to.toLowerCase()) || theirFriends.some(x=>String(x).toLowerCase()===from.toLowerCase())){
+      if(btnEl){btnEl.textContent='Friends';btnEl.disabled=true;} return;
     }
-    const mySentRaw = await storageGet(sentRequestsKey(currentUser.username), true);
-    const mySent = mySentRaw ? JSON.parse(mySentRaw) : [];
-    if (!mySent.includes(otherUsername)) mySent.push(otherUsername);
-    await storageSet(sentRequestsKey(currentUser.username), JSON.stringify(mySent), true);
-
-    const notifRaw = await storageGet(notifsKey(otherUsername), true);
-    const notifs = notifRaw ? JSON.parse(notifRaw) : [];
-    notifs.push({
-      id: Date.now() + '-' + Math.random().toString(36).slice(2,8),
-      type: 'friend_request', from: currentUser.username,
-      fromName: currentUser.firstName + ' ' + currentUser.lastName,
-      time: Date.now(), read: false, handled: false
-    });
-    await storageSet(notifsKey(otherUsername), JSON.stringify(notifs), true);
-
-    await awardSocialActionCoins('follow', otherUsername);
-    if (btnEl) { btnEl.textContent = 'Requested'; }
+    const hasIncoming=theirReqs.some(r=>String(r?.from||'').toLowerCase()===from.toLowerCase());
+    const hasSent=mySent.some(x=>String(x).toLowerCase()===to.toLowerCase());
+    if(hasIncoming && hasSent){if(btnEl){btnEl.textContent='Requested';btnEl.disabled=true;}return;}
+    // Repair either half of an interrupted prior attempt instead of returning an error or creating duplicates.
+    if(!hasIncoming){theirReqs.push({from,time:Date.now()});await storageSet(requestsKey(to),JSON.stringify(theirReqs),true);}
+    requestSaved=true;
+    if(!hasSent){mySent.push(to);await storageSet(sentRequestsKey(from),JSON.stringify(mySent),true);}
+    // Notification delivery is best-effort; it must not turn a successfully saved request into a false failure.
+    try{
+      const notifRaw=await storageGet(notifsKey(to),true);
+      const notifs=notifRaw?JSON.parse(notifRaw):[];
+      if(!notifs.some(n=>n?.type==='friend_request'&&String(n?.from||'').toLowerCase()===from.toLowerCase()&&!n?.handled)){
+        notifs.push({id:Date.now()+'-'+Math.random().toString(36).slice(2,8),type:'friend_request',from,fromName:((currentUser.firstName||'')+' '+(currentUser.lastName||'')).trim(),time:Date.now(),read:false,handled:false});
+        await storageSet(notifsKey(to),JSON.stringify(notifs),true);
+      }
+    }catch(notifError){console.warn('Friend request saved but notification delivery failed.',notifError);}
+    try{await awardSocialActionCoins('follow',to);}catch(coinError){console.warn('Friend request saved; optional coin reward was not recorded.',coinError);}
+    if(btnEl){btnEl.textContent='Requested';btnEl.disabled=true;}
   } catch (e) {
-    if (btnEl) { btnEl.disabled = false; btnEl.textContent = 'Add Friend'; }
-    alert('Could not send friend request right now. Please try again.');
+    if (btnEl) { btnEl.disabled = false; btnEl.textContent = requestSaved ? 'Retry sync' : 'Add Friend'; }
+    alert(requestSaved ? 'Your request was saved, but syncing the sent-request list failed. Tap again to retry.' : 'Could not send friend request right now. Please try again.');
   } finally {
     showLoading(false);
   }
 }
 
 async function acceptRequest(otherUsername, btnEl){
+  if (!currentUser || !currentUser.username) { alert('Please log in first.'); return; }
+  const me = String(currentUser.username).trim();
+  const requestedName = String(otherUsername || '').trim();
+  if (!requestedName) { alert('This friend request has no username. Refresh Notifications and try again.'); return; }
   if (btnEl) { btnEl.disabled = true; btnEl.textContent = 'Accepting...'; }
   showLoading(true);
   try {
-    // remove pending request records on both sides
-    const myReqRaw = await storageGet(requestsKey(currentUser.username), true);
+    // Read all current records together to reduce network round trips and avoid
+    // using a display name or differently-cased username as a storage key.
+    const [myReqRaw, theirSentRaw, myRaw, theirRaw, myNotifRaw] = await Promise.all([
+      storageGet(requestsKey(me)),
+      storageGet(sentRequestsKey(requestedName)),
+      storageGet(friendsKey(me)),
+      storageGet(friendsKey(requestedName)),
+      storageGet(notifsKey(me))
+    ]);
     let myReqs = myReqRaw ? JSON.parse(myReqRaw) : [];
-    myReqs = myReqs.filter(r => r.from !== otherUsername);
-    await storageSet(requestsKey(currentUser.username), JSON.stringify(myReqs), true);
-
-    const theirSentRaw = await storageGet(sentRequestsKey(otherUsername), true);
     let theirSent = theirSentRaw ? JSON.parse(theirSentRaw) : [];
-    theirSent = theirSent.filter(u => u !== currentUser.username);
-    await storageSet(sentRequestsKey(otherUsername), JSON.stringify(theirSent), true);
-
-    // make them mutual friends
-    const myKey = friendsKey(currentUser.username);
-    const theirKey = friendsKey(otherUsername);
-    const myRaw = await storageGet(myKey, true);
-    const theirRaw = await storageGet(theirKey, true);
     const mine = myRaw ? JSON.parse(myRaw) : [];
     const theirs = theirRaw ? JSON.parse(theirRaw) : [];
-    if (!mine.includes(otherUsername)) mine.push(otherUsername);
-    if (!theirs.includes(currentUser.username)) theirs.push(currentUser.username);
-    await storageSet(myKey, JSON.stringify(mine), true);
-    await storageSet(theirKey, JSON.stringify(theirs), true);
-
-    // mark my own friend_request notif (if any) as handled
-    const myNotifRaw = await storageGet(notifsKey(currentUser.username), true);
     let myNotifs = myNotifRaw ? JSON.parse(myNotifRaw) : [];
-    myNotifs = myNotifs.map(n => (n.type === 'friend_request' && n.from === otherUsername)
-      ? { ...n, handled: true, read: true } : n);
-    await storageSet(notifsKey(currentUser.username), JSON.stringify(myNotifs), true);
+    if (!Array.isArray(myReqs) || !Array.isArray(theirSent) || !Array.isArray(mine) || !Array.isArray(theirs) || !Array.isArray(myNotifs)) {
+      throw new Error('Friend data is invalid. Refresh the page and try again.');
+    }
+    // Prefer the canonical sender name from the actual pending request/notification.
+    const pending = myReqs.find(r => String(r?.from || '').trim().toLowerCase() === requestedName.toLowerCase());
+    const notification = myNotifs.find(n => n?.type === 'friend_request' && String(n?.from || '').trim().toLowerCase() === requestedName.toLowerCase() && !n?.handled);
+    const sender = String(pending?.from || notification?.from || requestedName).trim();
+    if (sender.toLowerCase() === me.toLowerCase()) throw new Error('You cannot accept a request from your own account.');
 
-    // notify the other person their request was accepted
-    const theirNotifRaw = await storageGet(notifsKey(otherUsername), true);
-    const theirNotifs = theirNotifRaw ? JSON.parse(theirNotifRaw) : [];
-    theirNotifs.push({
-      id: Date.now() + '-' + Math.random().toString(36).slice(2,8),
-      type: 'friend_accept', from: currentUser.username,
-      fromName: currentUser.firstName + ' ' + currentUser.lastName,
-      time: Date.now(), read: false, handled: true
-    });
-    await storageSet(notifsKey(otherUsername), JSON.stringify(theirNotifs), true);
+    // Make both friend lists consistent first. Friend-list writes are idempotent,
+    // so retrying after a slow connection will not create duplicate friends.
+    if (!mine.some(u => String(u || '').toLowerCase() === sender.toLowerCase())) mine.push(sender);
+    if (!theirs.some(u => String(u || '').toLowerCase() === me.toLowerCase())) theirs.push(me);
+    await Promise.all([
+      storageSet(friendsKey(me), JSON.stringify(mine)),
+      storageSet(friendsKey(sender), JSON.stringify(theirs))
+    ]);
 
-    if (btnEl) { btnEl.textContent = 'Friends'; }
-    refreshBadges();
+    // Then clear both sides of the pending request and update the notification.
+    myReqs = myReqs.filter(r => String(r?.from || '').trim().toLowerCase() !== sender.toLowerCase());
+    theirSent = theirSent.filter(u => String(u || '').trim().toLowerCase() !== me.toLowerCase());
+    myNotifs = myNotifs.map(n => n?.type === 'friend_request' && String(n?.from || '').trim().toLowerCase() === sender.toLowerCase()
+      ? { ...n, handled: true, read: true, acceptedAt: Date.now() } : n);
+    await Promise.all([
+      storageSet(requestsKey(me), JSON.stringify(myReqs)),
+      storageSet(sentRequestsKey(sender), JSON.stringify(theirSent)),
+      storageSet(notifsKey(me), JSON.stringify(myNotifs))
+    ]);
+
+    if (btnEl) { btnEl.textContent = 'Friends'; btnEl.disabled = true; }
+    await Promise.all([loadNotifications().catch(() => {}), refreshBadges().catch(() => {})]);
+    if (typeof searchPeople === 'function') { try { await searchPeople(); } catch (_) {} }
   } catch (e) {
+    console.error('Chat Me accept friend request failed:', e);
     if (btnEl) { btnEl.disabled = false; btnEl.textContent = 'Accept Request'; }
-    alert('Could not accept the friend request right now. Please try again.');
+    const message = String(e?.message || 'Network error');
+    alert('Could not finish accepting this request: ' + message + '. Please refresh and try again.');
   } finally {
     showLoading(false);
   }
@@ -10208,11 +10251,74 @@ async function cmLoadPinnedAnnouncement(){
   try{const keys=await storageListKeys('post:',true);const raw=await Promise.all(keys.map(k=>storageGet(k,true)));const posts=raw.map(x=>{try{return JSON.parse(x)}catch(e){return null}}).filter(p=>p&&p.type==='Announcement');posts.sort((a,b)=>(b.time||0)-(a.time||0));const p=posts[0];if(!p){el.style.display='none';return;}el.style.display='block';el.innerHTML=`<div class="cm-social-title">📌 Pinned announcement</div><div class="cm-pin"><div>${escapeHtml(p.text||'')}</div><small>${escapeHtml(p.authorName||p.author||'Chat Me staff')} · ${p.time?new Date(p.time).toLocaleString():''}</small></div>`;}catch(e){el.style.display='none';}
 }
 
+let cmSuggestionUsersCache = [];
+function cmRenderFeedFriendSuggestions(batchIndex){
+  if(!cmSuggestionUsersCache.length)return '';
+  const count=Math.min(4,cmSuggestionUsersCache.length);
+  const start=(Math.max(0,batchIndex)*count)%cmSuggestionUsersCache.length;
+  const chosen=[];
+  for(let i=0;i<count;i++)chosen.push(cmSuggestionUsersCache[(start+i)%cmSuggestionUsersCache.length]);
+  const cards=chosen.map(u=>{
+    const uname=String(u.username||'');
+    const full=((u.firstName||'')+' '+(u.lastName||'')).trim()||uname;
+    const av=u.profilePic?`<img src="${escapeHtml(u.profilePic)}" alt="" loading="lazy">`:`<img src="${CHATME_DEFAULT_AVATAR}" alt="Chat Me profile picture" loading="lazy">`;
+    return `<div class="cm-suggest-card"><div class="cm-suggest-avatar">${av}</div><div class="cm-suggest-name">${escapeHtml(full)}</div><div style="font-size:11px;color:#777;margin:3px 0 7px;">@${escapeHtml(uname)}</div><button type="button" onclick="sendFriendRequest('${escapeHtml(uname)}',this)">Add Friend</button></div>`;
+  }).join('');
+  return `<div class="cm-home-social-card cm-feed-friend-suggestions"><div class="cm-social-title">👥 People you may know</div><div class="cm-suggest-row">${cards}</div></div>`;
+}
 async function cmLoadPeopleYouMayKnow(){
   const el=document.getElementById('cmPeopleSuggestions'); if(!el||!currentUser)return;
-  try{const friendsRaw=await storageGet(friendsKey(currentUser.username),true);const friends=friendsRaw?JSON.parse(friendsRaw):[];const excluded=new Set([String(currentUser.username).toLowerCase(),...friends.map(x=>String(x).toLowerCase())]);const keys=await storageListKeys('user:',true);const candidates=[];for(const k of keys){const raw=await storageGet(k,true);if(!raw)continue;let u;try{u=JSON.parse(raw)}catch(e){continue;}const uname=String(u.username||'');if(!uname||excluded.has(uname.toLowerCase()))continue;if(Array.isArray(currentUser.blockedUsers)&&currentUser.blockedUsers.map(String).map(x=>x.toLowerCase()).includes(uname.toLowerCase()))continue;if(u.isBanned)continue;candidates.push(u);}candidates.sort(()=>Math.random()-0.5);const list=candidates.slice(0,5);if(!list.length){el.style.display='none';return;}el.style.display='block';el.innerHTML='<div class="cm-social-title">People you may know</div><div class="cm-suggest-row">'+list.map(u=>{const uname=String(u.username);const full=((u.firstName||'')+' '+(u.lastName||'')).trim()||uname;const initials=((u.firstName||'')[0]||'')+((u.lastName||'')[0]||'');const av=u.profilePic?`<img src="${escapeHtml(u.profilePic)}" alt="">`:`<img src="${CHATME_DEFAULT_AVATAR}" alt="Chat Me profile picture" loading="lazy">`;return `<div class="cm-suggest-card"><div class="cm-suggest-avatar">${av}</div><div class="cm-suggest-name">${escapeHtml(full)}</div><button onclick="sendFriendRequest('${uname.replace(/'/g,"\'")}',this)">Add Friend</button></div>`;}).join('')+'</div>';}catch(e){el.style.display='none';}
+  try{
+    const [friendsRaw,sentRaw,incomingRaw]=await Promise.all([
+      storageGet(friendsKey(currentUser.username),true).catch(()=>null),
+      storageGet(sentRequestsKey(currentUser.username),true).catch(()=>null),
+      storageGet(requestsKey(currentUser.username),true).catch(()=>null)
+    ]);
+    const friends=friendsRaw?JSON.parse(friendsRaw):[];
+    const sent=sentRaw?JSON.parse(sentRaw):[];
+    const incoming=incomingRaw?JSON.parse(incomingRaw).map(r=>r.from):[];
+    const excluded=new Set([String(currentUser.username).toLowerCase(),...friends,...sent,...incoming].map(x=>String(x).toLowerCase()));
+    const blocked=new Set((Array.isArray(currentUser.blockedUsers)?currentUser.blockedUsers:[]).map(x=>String(x).toLowerCase()));
+    // Enumerate the public username directory, not private user: keys (which
+    // contain email addresses and are intentionally not listable by members).
+    const keys=await storageListAllKeys('uname:');
+    const raws=await Promise.all(keys.map(async k=>{
+      const email=await storageGet(k,true).catch(()=>null);
+      if(typeof email!=='string'||!email.includes('@'))return null;
+      return storageGet(userKey(email),true).catch(()=>null);
+    }));
+    const candidates=[];
+    for(const raw of raws){
+      if(!raw)continue;
+      let u;try{u=JSON.parse(raw)}catch(e){continue;}
+      const uname=String(u.username||'');
+      if(!uname||excluded.has(uname.toLowerCase())||blocked.has(uname.toLowerCase())||u.isBanned||u.banned)continue;
+      candidates.push(u);
+    }
+    candidates.sort(()=>Math.random()-0.5);
+    cmSuggestionUsersCache=candidates;
+    const list=candidates.slice(0,5);
+    if(!list.length){el.style.display='none';return;}
+    el.style.display='block';
+    el.innerHTML='<div class="cm-social-title">People you may know</div><div class="cm-suggest-row">'+list.map(u=>{
+      const uname=String(u.username);
+      const full=((u.firstName||'')+' '+(u.lastName||'')).trim()||uname;
+      const av=u.profilePic?`<img src="${escapeHtml(u.profilePic)}" alt="" loading="lazy">`:`<img src="${CHATME_DEFAULT_AVATAR}" alt="Chat Me profile picture" loading="lazy">`;
+      return `<div class="cm-suggest-card"><div class="cm-suggest-avatar">${av}</div><div class="cm-suggest-name">${escapeHtml(full)}</div><div style="font-size:11px;color:#777;margin:3px 0 7px;">@${escapeHtml(uname)}</div><button type="button" onclick="sendFriendRequest('${escapeHtml(uname)}',this)">Add Friend</button></div>`;
+    }).join('')+'</div>';
+    // The feed may already have rendered before suggestions were fetched. Add
+    // recommendation rows into the existing feed without resetting scroll.
+    const postList=document.getElementById('postList');
+    if(postList){
+      const cards=Array.from(postList.querySelectorAll(':scope > .post-card'));
+      cards.forEach((card,i)=>{
+        if((i+1)%10!==0)return;
+        if(card.nextElementSibling?.classList.contains('cm-feed-friend-suggestions'))return;
+        card.insertAdjacentHTML('afterend',cmRenderFeedFriendSuggestions(Math.floor(i/10)));
+      });
+    }
+  }catch(e){el.style.display='none';}
 }
-
 async function cmLoadTrendingTopics(){
   const el=document.getElementById('cmTrendingTopics'); if(!el||!currentUser)return;
   try{const keys=await storageListKeys('post:',true);const counts={};for(const k of keys){const raw=await storageGet(k,true);if(!raw)continue;let p;try{p=JSON.parse(raw)}catch(e){continue;}const tags=String(p.text||'').match(/#[A-Za-z0-9_]+/g)||[];tags.forEach(tag=>{const x=tag.toLowerCase();counts[x]=(counts[x]||0)+1;});}const topics=Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,6);if(!topics.length){el.style.display='none';return;}el.style.display='block';el.innerHTML='<div class="cm-social-title">🔥 Trending topics</div><div class="cm-trend-list">'+topics.map(([tag,count])=>`<span class="cm-trend">${escapeHtml(tag)} · ${count}</span>`).join('')+'</div>';}catch(e){el.style.display='none';}
