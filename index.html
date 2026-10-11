@@ -473,6 +473,32 @@
 /* Banned-account read-only mode */
 .cm-banned-readonly-banner{position:fixed;left:10px;right:10px;top:10px;z-index:20000;background:#fff3cd;color:#664d03;border:1px solid #f0d98a;border-radius:10px;padding:10px 12px;font-size:12.5px;line-height:1.4;box-shadow:0 4px 18px rgba(0,0,0,.12)}
 body.dark-mode .cm-banned-readonly-banner{background:#2b2819;color:#f4df9a;border-color:#5b4c20}
+
+/* Chat Me usability polish: higher contrast in light mode and slightly smaller UI. */
+html { font-size: 80%; }
+body { font-size: 100%; }
+body:not(.dark-mode) .post-card,
+body:not(.dark-mode) .cm-setting-card,
+body:not(.dark-mode) #homePage,
+body:not(.dark-mode) #statusbookPage { color: #202124; }
+body:not(.dark-mode) .post-card .post-text,
+body:not(.dark-mode) .post-card span[style*="color:#333"],
+body:not(.dark-mode) .post-card span[style*="color: #333"] { color: #202124 !important; }
+body:not(.dark-mode) .post-card .post-time,
+body:not(.dark-mode) .post-card [style*="color:#aaa"],
+body:not(.dark-mode) .post-card [style*="color: #aaa"],
+body:not(.dark-mode) .post-card [style*="color:#999"],
+body:not(.dark-mode) .post-card [style*="color: #999"] { color: #606770 !important; }
+body:not(.dark-mode) .empty-feed,
+body:not(.dark-mode) .friend-status,
+body:not(.dark-mode) .uname { color: #4b5563 !important; }
+body:not(.dark-mode) input,
+body:not(.dark-mode) textarea,
+body:not(.dark-mode) select { color: #202124 !important; }
+body.dark-mode .post-card .post-text,
+body.dark-mode .post-card span[style*="color:#333"],
+body.dark-mode .post-card span[style*="color: #333"] { color: #e6e8ec !important; }
+
 </style>
 <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
 
@@ -1318,6 +1344,13 @@ body.cm-social-shell,#app{background:#18191a!important;color:#e4e6eb!important}
 .cm-fb-secondary-tabs button{flex:1;min-width:0;border:0;border-bottom:3px solid transparent;background:transparent;color:#e4e6eb;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;font-size:25px;cursor:pointer;touch-action:manipulation}
 .cm-fb-secondary-tabs button span{font-size:10px;line-height:13px;font-weight:600}
 .cm-fb-secondary-tabs button.active{color:#2d88ff;border-bottom-color:#2d88ff}
+/* Counted red notification badges on Messages and Alerts. */
+.cm-fb-secondary-tabs button{position:relative;overflow:visible!important}
+.cm-count-badge{position:absolute;top:5px;left:calc(50% + 5px);min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:#e02424;color:#fff!important;border:2px solid #242526;font:700 10px/14px Arial,sans-serif!important;text-align:center;display:none;align-items:center;justify-content:center;z-index:5;box-sizing:border-box;white-space:nowrap;box-shadow:0 1px 3px #0005}
+.cm-count-badge.is-visible{display:inline-flex!important}
+.notif-origin{display:inline-flex;align-items:center;margin:0 0 6px;padding:2px 7px;border-radius:999px;background:#e8f0ff;color:#1647a8;font-size:10px;font-weight:700;letter-spacing:.2px}
+.notif-item.unread{border-left:4px solid #e02424;background:#fff8f8}
+
 #homePage{padding:0 0 16px!important;background:#18191a!important;color:#e4e6eb!important}
 #homePage>div[style*="height:8px"]{height:0!important}
 .cm-home-status{background:#242526!important;border:0!important;border-bottom:1px solid #393a3b!important;border-radius:0!important;padding:14px 14px 10px!important;margin:0!important;box-shadow:none!important}
@@ -1687,8 +1720,8 @@ function copyCMProfileLink(){
     <div class="cm-fb-secondary-tabs" role="navigation" aria-label="Chat Me tabs">
       <button type="button" class="active" data-page="homePage" onclick="switchTab('homePage')" aria-label="Home">⌂<span>Home</span></button>
       <button type="button" data-page="friendsPage" onclick="switchTab('friendsPage')" aria-label="Friends">♙<span>Friends</span></button>
-      <button type="button" data-page="chatsPage" onclick="switchTab('chatsPage')" aria-label="Messages">☏<span>Messages</span></button>
-      <button type="button" data-page="notificationsPage" onclick="switchTab('notificationsPage')" aria-label="Notifications">♧<span>Alerts</span></button>
+      <button type="button" data-page="chatsPage" onclick="switchTab('chatsPage')" aria-label="Messages">☏<b class="cm-count-badge" id="msgCountBadge" aria-label="Unread messages">0</b><span>Messages</span></button>
+      <button type="button" data-page="notificationsPage" onclick="switchTab('notificationsPage')" aria-label="Notifications">♧<b class="cm-count-badge" id="notifCountBadge" aria-label="Unread notifications">0</b><span>Alerts</span></button>
       <button type="button" data-page="videosPage" onclick="switchTab('videosPage')" aria-label="Videos">▷<span>Videos</span></button>
     </div>
 
@@ -2649,7 +2682,8 @@ async function secureStorageRequest(op, key, body) {
     const token = await firebaseAuth.currentUser.getIdToken();
     const url = SECURE_STORAGE_BACKEND_URL + '?op=' + encodeURIComponent(op) + '&key=' + encodeURIComponent(key || '');
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), window.cmNetworkTimeout || 10000);
+    const requestTimeout = body && typeof body.value === 'string' && body.value.length > 1500000 ? Math.max(window.cmNetworkTimeout || 10000, 120000) : (window.cmNetworkTimeout || 10000);
+    const timeoutId = setTimeout(() => controller.abort(), requestTimeout);
     let res;
     try {
       res = await fetch(url, {
@@ -3093,10 +3127,12 @@ async function doSignup(){
     const setUserRes = await storageSet(userKey(email), JSON.stringify(user), true);
     if (!setUserRes) throw new Error('Secure account profile could not be saved.');
     signupRememberKey(userKey(email));
-    await storageSet(usernameKey(username), email, true);
+    const usernameIndexWrite = await storageSet(usernameKey(username), email, true);
+    if (!usernameIndexWrite) throw new Error('Secure username index could not be saved.');
     signupRememberKey(usernameKey(username));
     cmLocalUsernameEmailSet(username, email);
-    await storageSet(friendsKey(username), JSON.stringify([]), true);
+    const friendsWrite = await storageSet(friendsKey(username), JSON.stringify([]), true);
+    if (!friendsWrite) throw new Error('Secure friends list could not be saved.');
     signupRememberKey(friendsKey(username));
     await storageSet(notifsKey(username), JSON.stringify([{
       id: Date.now() + '-' + Math.random().toString(36).slice(2, 8),
@@ -6065,9 +6101,9 @@ function onPostFileChosen(){
   nameEl.textContent = file.name;
   const chosenLabel=document.getElementById('cmChosenPostMedia'); if(chosenLabel) chosenLabel.textContent='Selected: '+file.name;
   const isVideo = file.type.startsWith('video/');
-  const max = 5 * 1024 * 1024;
+  const max = (isVideo ? 20 : 5) * 1024 * 1024;
   if (file.size > max) {
-    document.getElementById('postError').textContent = 'File is too large. Maximum upload size is 5 MB.';
+    document.getElementById('postError').textContent = isVideo ? 'Video is too large. Maximum upload size is 20 MB.' : 'Image is too large. Maximum upload size is 5 MB.';
     input.value = ''; nameEl.textContent = 'No file chosen';
     const chosenLabel = document.getElementById('cmChosenPostMedia'); if (chosenLabel) chosenLabel.textContent = '';
     return;
@@ -6103,6 +6139,8 @@ async function createPost(){
   const tags = (document.getElementById('postTags')?.value || '').trim();
   const visibility = document.getElementById('postVisibility')?.value || 'public';
   const errEl = document.getElementById('postError'); errEl.textContent = '';
+  const wordCount = text ? text.split(/\s+/u).filter(Boolean).length : 0;
+  if (wordCount > 1000) { errEl.textContent = 'Post text is too long. Maximum is 1,000 words.'; return; }
   const poll = readPollBuilder('postInput');
   if (!text && !chosenFileDataUrl && !poll) { errEl.textContent = 'Write something, attach media, or create a poll first.'; return; }
   if (chosenFileKind === 'video' && visibility === 'private') { /* private videos remain visible only to their owner */ }
@@ -6296,23 +6334,41 @@ function cmLoadMoreHomePosts(){ cmHomeOffset += cmHomePageSize; cmRenderHomePage
 async function loadHome(){
   refreshHomeStatusHeader();
   const listEl=document.getElementById('postList');
+  if(!listEl)return;
   listEl.innerHTML='<div class="empty-feed">Loading posts...</div>';
   cmHomeOffset=0; cmHomePostsCache=[]; cmHomeInfoMap={};
-  try { const friendsRaw=await storageGet(friendsKey(currentUser.username),true); cmHomeFriends=friendsRaw?JSON.parse(friendsRaw):[]; } catch(e){cmHomeFriends=[];}
-  const bannerEl=document.getElementById('friendsBanner');
-  if(cmHomeFriends.length<5) bannerEl.innerHTML=`<div class="friends-banner">Add more friends! You have ${cmHomeFriends.length} friend${cmHomeFriends.length===1?'':'s'}. Add at least 5 for a better experience. <a onclick="switchTab('friendsPage')">Find Friends</a></div>`; else bannerEl.innerHTML='';
-  const keys=await storageListKeys('post:',true);
-  if(!keys.length){cmRenderHomePage();return;}
-  const rawPosts=await Promise.all(keys.map(k=>storageGet(k,true)));
-  const posts=[];
-  for(const raw of rawPosts){if(!raw)continue;try{const p=JSON.parse(raw);if(p.type!=='Announcement'&&cmCanViewPost(p))posts.push(p);}catch(e){}}
-  const usernames=new Set();
-  posts.forEach(p=>{if(p.author)usernames.add(p.author);if(p.sharedFrom?.author)usernames.add(p.sharedFrom.author);(p.comments||[]).forEach(c=>c.author&&usernames.add(c.author));});
-  cmHomeInfoMap=await buildUserInfoMap(usernames);
-  posts.sort((a,b)=>{const aa=!!cmHomeInfoMap[a.author]?.isAdmin,bb=!!cmHomeInfoMap[b.author]?.isAdmin;if(aa!==bb)return aa?-1:1;return (b.time||0)-(a.time||0);});
-  cmHomePostsCache=posts;
-  cmRenderHomePage();
-  cmLoadVideosPreview();
+  try {
+    const [friendsRaw, keys] = await Promise.all([
+      storageGet(friendsKey(currentUser.username),true).catch(()=>null),
+      storageListKeys('post:',true)
+    ]);
+    try { cmHomeFriends=friendsRaw?JSON.parse(friendsRaw):[]; } catch(e) { cmHomeFriends=[]; }
+    const bannerEl=document.getElementById('friendsBanner');
+    if(bannerEl) bannerEl.innerHTML=cmHomeFriends.length<5?`<div class="friends-banner">Add more friends! You have ${cmHomeFriends.length} friend${cmHomeFriends.length===1?'':'s'}. Add at least 5 for a better experience. <a onclick="switchTab('friendsPage')">Find Friends</a></div>`:'';
+    if(!keys.length){cmRenderHomePage();return;}
+    const rawPosts=await Promise.all(keys.map(k=>storageGet(k,true).catch(()=>null)));
+    const posts=[];
+    for(const raw of rawPosts){if(!raw)continue;try{const p=JSON.parse(raw);if(p.type!=='Announcement'&&cmCanViewPost(p))posts.push(p);}catch(e){}}
+    posts.sort((a,b)=>(b.time||0)-(a.time||0));
+    cmHomePostsCache=posts;
+    // Show real post content first; profile decoration loads afterward so a slow network
+    // does not leave the entire home feed stuck on “Loading posts...”.
+    cmRenderHomePage();
+    cmLoadVideosPreview().catch(()=>{});
+    const usernames=new Set();
+    posts.forEach(p=>{if(p.author)usernames.add(p.author);if(p.sharedFrom?.author)usernames.add(p.sharedFrom.author);(p.comments||[]).forEach(c=>c.author&&usernames.add(c.author));});
+    try {
+      const infoMap=await buildUserInfoMap(usernames);
+      cmHomeInfoMap=infoMap||{};
+      posts.sort((a,b)=>{const aa=!!cmHomeInfoMap[a.author]?.isAdmin,bb=!!cmHomeInfoMap[b.author]?.isAdmin;if(aa!==bb)return aa?-1:1;return (b.time||0)-(a.time||0);});
+      cmHomePostsCache=posts;
+      cmRenderHomePage();
+    } catch(e) {
+      // Keep the already-rendered posts visible even if profile decoration cannot load.
+    }
+  } catch(e) {
+    listEl.innerHTML='<div class="empty-feed">Could not load posts. <button type="button" onclick="loadHome()">Retry</button></div>';
+  }
 }
 
 /* Wall posts on a profile page - shows only that person's own posts */
@@ -7178,48 +7234,39 @@ async function submitStatusFromBook(){
 }
 
 async function loadStatusbookPage(){
-  const listEl = document.getElementById('statusbookList');
-  const input = document.getElementById('statusBookInput');
-  if (input) input.value = currentUser.status || '';
-  listEl.innerHTML = '<div class="empty-feed">Loading statuses...</div>';
-
-  const userKeys = await storageListKeys('user:', true);
-  const rawUsers = await Promise.all(userKeys.map(uk => storageGet(uk, true)));
-  const entries = [];
-  await Promise.all(rawUsers.map(async (raw, i) => {
-    if (!raw) return;
-    let u; try { u = JSON.parse(raw); } catch(e) { return; }
-    if (u.status && !isStatusActive(u)) {
-      // 24 hours are up - clear it out so it never resurfaces.
-      u.status = ''; u.statusUpdatedAt = null;
-      await storageSet(userKeys[i], JSON.stringify(u), true);
-      if (currentUser && u.username && u.username.toLowerCase() === currentUser.username.toLowerCase()) {
-        currentUser.status = ''; currentUser.statusUpdatedAt = null;
+  const listEl=document.getElementById('statusbookList');
+  const input=document.getElementById('statusBookInput');
+  if(!listEl||!currentUser)return;
+  if(input)input.value=currentUser.status||'';
+  listEl.innerHTML='<div class="empty-feed">Loading statuses...</div>';
+  try {
+    const userKeys=await storageListKeys('user:',true);
+    const rawUsers=await Promise.all(userKeys.map(uk=>storageGet(uk,true).catch(()=>null)));
+    const entries=[];
+    const expiredWrites=[];
+    rawUsers.forEach((raw,i)=>{
+      if(!raw)return;
+      let u;try{u=JSON.parse(raw);}catch(e){return;}
+      if(u.status&&!isStatusActive(u)){
+        u.status='';u.statusUpdatedAt=null;
+        expiredWrites.push(storageSet(userKeys[i],JSON.stringify(u),true).catch(()=>null));
+        if(u.username&&u.username.toLowerCase()===currentUser.username.toLowerCase()){currentUser.status='';currentUser.statusUpdatedAt=null;}
+        return;
       }
-      return;
-    }
-    if (u.status) entries.push(u);
-  }));
-  if (!entries.length) { listEl.innerHTML = '<div class="empty-feed">No statuses yet. Be the first to post one!</div>'; return; }
-  entries.sort((a, b) => (b.statusUpdatedAt || 0) - (a.statusUpdatedAt || 0));
-
-  listEl.innerHTML = entries.map(u => {
-    const initials = ((u.firstName||'?')[0] + (u.lastName||'?')[0]).toUpperCase();
-    const uname = (u.username||'').replace(/'/g,"\\'");
-    const when = u.statusUpdatedAt ? new Date(u.statusUpdatedAt).toLocaleString() : '';
-    const canDelete = currentUser && (currentUser.username.toLowerCase() === (u.username||'').toLowerCase() || isAdminUser(currentUser));
-    return `<div class="post-card">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-          <div style="cursor:pointer;margin-right:0;" onclick="viewProfile('${uname}')">${avatarHtml(u.firstName, u.lastName, u.profilePic, 'avatar')}</div>
-          <div class="post-author" style="cursor:pointer;margin-bottom:0;" onclick="viewProfile('${uname}')">${displayNameWithNickname(u.firstName + ' ' + u.lastName, u.nickname)} ${roleBadgeHtml(u)}</div>
-        </div>
-        ${canDelete ? `<span title="Delete status" style="cursor:pointer;color:#d32f2f;font-size:16px;" onclick="deleteStatus('${uname}')">🗑</span>` : ''}
-      </div>
-      <div class="post-text">${escapeHtml(u.status)}</div>
-      <div class="post-time">${when} &middot; disappears 24h after posting</div>
-    </div>`;
-  }).join('');
+      if(u.status)entries.push(u);
+    });
+    await Promise.all(expiredWrites);
+    if(!entries.length){listEl.innerHTML='<div class="empty-feed">No statuses yet. Be the first to post one!</div>';return;}
+    entries.sort((a,b)=>(b.statusUpdatedAt||0)-(a.statusUpdatedAt||0));
+    listEl.innerHTML=entries.map(u=>{
+      const uname=String(u.username||'').replace(/'/g,"\\'");
+      const when=u.statusUpdatedAt?new Date(u.statusUpdatedAt).toLocaleString():'';
+      const canDelete=currentUser&&(currentUser.username.toLowerCase()===String(u.username||'').toLowerCase()||isAdminUser(currentUser));
+      return `<div class="post-card"><div style="display:flex;justify-content:space-between;align-items:flex-start;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;"><div style="cursor:pointer;margin-right:0;" onclick="viewProfile('${uname}')">${avatarHtml(u.firstName,u.lastName,u.profilePic,'avatar')}</div><div class="post-author" style="cursor:pointer;margin-bottom:0;" onclick="viewProfile('${uname}')">${displayNameWithNickname((u.firstName||'')+' '+(u.lastName||''),u.nickname)} ${roleBadgeHtml(u)}</div></div>${canDelete?`<span title="Delete status" style="cursor:pointer;color:#d32f2f;font-size:16px;" onclick="deleteStatus('${uname}')">🗑</span>`:''}</div><div class="post-text">${escapeHtml(u.status)}</div><div class="post-time">${when} · disappears 24h after posting</div></div>`;
+    }).join('');
+  } catch(e) {
+    listEl.innerHTML='<div class="empty-feed">Statuses could not load. Check your connection and <button type="button" onclick="loadStatusbookPage()">Retry</button>.</div>';
+  }
 }
 
 /* 30-day self-edit cooldown; admins are exempt entirely */
@@ -7752,55 +7799,53 @@ function changeFriendsPage(delta){
 }
 
 async function searchPeople(){
-  const q = document.getElementById('peopleSearch').value.trim().toLowerCase();
-  const resultsEl = document.getElementById('peopleResults');
-  resultsEl.innerHTML = '<div class="empty-feed">Searching...</div>';
-  const keys = await storageListKeys('user:', true);
-  const myFriendsRaw = await storageGet(friendsKey(currentUser.username), true);
-  const myFriends = myFriendsRaw ? JSON.parse(myFriendsRaw) : [];
-
-  const matches = [];
-  const rawUsers = await Promise.all(keys.map(k => storageGet(k, true)));
-  for (const raw of rawUsers) {
-    if (!raw) continue;
-    let u; try { u = JSON.parse(raw); } catch(e) { continue; }
-    if (u.username.toLowerCase() === currentUser.username.toLowerCase()) continue;
-    const hay = `${u.username} ${u.firstName} ${u.lastName}`.toLowerCase();
-    if (!q || hay.includes(q)) matches.push(u);
-  }
-  if (!matches.length) { resultsEl.innerHTML = '<div class="empty-feed">No people found.</div>'; return; }
-  const incomingRaw = await storageGet(requestsKey(currentUser.username), true);
-  const incoming = incomingRaw ? JSON.parse(incomingRaw).map(r => r.from) : [];
-  const outgoingRaw = await storageGet(sentRequestsKey(currentUser.username), true);
-  const outgoing = outgoingRaw ? JSON.parse(outgoingRaw) : [];
-
-  resultsEl.innerHTML = matches.slice(0, 30).map(u => {
-    const isFriend = myFriends.includes(u.username);
-    const theyRequestedMe = incoming.includes(u.username);
-    const iRequestedThem = outgoing.includes(u.username);
-    const initials = ((u.firstName||'?')[0] + (u.lastName||'?')[0]).toUpperCase();
-    const uname = u.username.replace(/'/g,"\\'");
-    let btnHtml;
-    if (isFriend) {
-      btnHtml = `<button disabled>Friends</button>`;
-    } else if (theyRequestedMe) {
-      btnHtml = `<button onclick="acceptRequest('${uname}', this)">Accept Request</button>`;
-    } else if (iRequestedThem) {
-      btnHtml = `<button disabled>Requested</button>`;
-    } else {
-      btnHtml = `<button onclick="sendFriendRequest('${uname}', this)">Add Friend</button>`;
+  const input=document.getElementById('peopleSearch');
+  const q=(input?.value||'').trim().toLowerCase();
+  const resultsEl=document.getElementById('peopleResults');
+  if(!resultsEl)return;
+  resultsEl.innerHTML='<div class="empty-feed">Searching...</div>';
+  try {
+    const [myFriendsRaw,incomingRaw,outgoingRaw]=await Promise.all([
+      storageGet(friendsKey(currentUser.username),true).catch(()=>null),
+      storageGet(requestsKey(currentUser.username),true).catch(()=>null),
+      storageGet(sentRequestsKey(currentUser.username),true).catch(()=>null)
+    ]);
+    const myFriends=myFriendsRaw?JSON.parse(myFriendsRaw):[];
+    const incoming=incomingRaw?JSON.parse(incomingRaw).map(r=>r.from):[];
+    const outgoing=outgoingRaw?JSON.parse(outgoingRaw):[];
+    let matches=[];
+    // Exact username lookup is fast and avoids downloading every account for a direct search.
+    if(q && /^[a-z0-9_.-]{2,64}$/.test(q)){
+      const email=await storageGet(usernameKey(q),true).catch(()=>null);
+      if(email){const raw=await storageGet(userKey(email),true).catch(()=>null);if(raw){try{const u=JSON.parse(raw);if(u.username && u.username.toLowerCase()!==currentUser.username.toLowerCase())matches.push(u);}catch(e){}}}
     }
-    return `
-      <div class="user-result">
-        ${avatarHtml(u.firstName, u.lastName, u.profilePic, 'avatar')}
-        <div class="info">
-          <div class="name" style="cursor:pointer;" onclick="viewProfile('${uname}')">${displayNameWithNickname(u.firstName + ' ' + u.lastName, u.nickname)} ${roleBadgeHtml(u)}</div>
-          <div class="uname">@${escapeHtml(u.username)}</div>
-        </div>
-        ${btnHtml}
-      </div>
-    `;
-  }).join('');
+    if(!matches.length){
+      const keys=await storageListKeys('user:',true);
+      const rawUsers=await Promise.all(keys.map(k=>storageGet(k,true).catch(()=>null)));
+      for(const raw of rawUsers){
+        if(!raw)continue;
+        let u;try{u=JSON.parse(raw);}catch(e){continue;}
+        if(String(u.username||'').toLowerCase()===currentUser.username.toLowerCase())continue;
+        const hay=`${u.username||''} ${u.firstName||''} ${u.lastName||''}`.toLowerCase();
+        if(!q||hay.includes(q))matches.push(u);
+      }
+    }
+    if(!matches.length){resultsEl.innerHTML='<div class="empty-feed">No people found.</div>';return;}
+    resultsEl.innerHTML=matches.slice(0,30).map(u=>{
+      const uname=String(u.username||'').replace(/'/g,"\\'");
+      const isFriend=myFriends.some(x=>String(x).toLowerCase()===String(u.username).toLowerCase());
+      const theyRequestedMe=incoming.some(x=>String(x).toLowerCase()===String(u.username).toLowerCase());
+      const iRequestedThem=outgoing.some(x=>String(x).toLowerCase()===String(u.username).toLowerCase());
+      let btnHtml;
+      if(isFriend)btnHtml='<button disabled>Friends</button>';
+      else if(theyRequestedMe)btnHtml=`<button onclick="acceptRequest('${uname}', this)">Accept Request</button>`;
+      else if(iRequestedThem)btnHtml='<button disabled>Requested</button>';
+      else btnHtml=`<button onclick="sendFriendRequest('${uname}', this)">Add Friend</button>`;
+      return `<div class="user-result">${avatarHtml(u.firstName,u.lastName,u.profilePic,'avatar')}<div class="info"><div class="name" style="cursor:pointer;" onclick="viewProfile('${uname}')">${displayNameWithNickname((u.firstName||'')+' '+(u.lastName||''),u.nickname)} ${roleBadgeHtml(u)}</div><div class="uname">@${escapeHtml(u.username||'')}</div></div>${btnHtml}</div>`;
+    }).join('');
+  } catch(e) {
+    resultsEl.innerHTML='<div class="empty-feed">Search could not finish. Check your connection and <button type="button" onclick="searchPeople()">try again</button>.</div>';
+  }
 }
 
 async function sendFriendRequest(otherUsername, btnEl){
@@ -7955,6 +8000,8 @@ async function loadNotifications(){
   if (notifs.length !== before) await storageSet(notifsKey(currentUser.username), JSON.stringify(notifs), true);
   if (!notifs.length) {
     listEl.innerHTML = '<div class="empty-feed">No notifications yet.</div>';
+    const countEl=document.getElementById('notifCount'); if(countEl) countEl.textContent='All caught up';
+    refreshBadges();
     return;
   }
   notifs.sort((a, b) => b.time - a.time);
@@ -8003,7 +8050,10 @@ async function loadNotifications(){
     } else {
       text = 'Notification';
     }
+    const originLabel = ({message:'MESSAGE',virtual_gift:'GIFT',friend_request:'FRIEND REQUEST',friend_accept:'FRIENDS',like:'LIKE',comment:'COMMENT',reaction:'REACTION',story_view:'STATUS / STORY VIEW',mention:'MENTION',announcement:'ANNOUNCEMENT',system:'SYSTEM',welcome:'WELCOME',coins_topup:'COINS'})[n.type] || 'NOTIFICATION';
+    const originName = n.fromName || n.from || n.sourceName || '';
     return `<div class="notif-item ${n.read ? '' : 'unread'}">
+      <div class="notif-origin">${originLabel}${originName ? ' · '+escapeHtml(originName) : ''}</div>
       <div class="notif-text">${text}</div>
       <div class="notif-time">${timeAgo(n.time)}</div>
       ${actions}
@@ -8017,32 +8067,40 @@ async function loadNotifications(){
 }
 
 /* ---------------- UNREAD BADGES ---------------- */
-async function hasUnreadMessages(){
-  const raw = await storageGet(friendsKey(currentUser.username), true);
-  const friends = raw ? JSON.parse(raw) : [];
-  const results = await Promise.all(friends.map(async (f) => {
-    const key = chatKey(currentUser.username, f);
-    const msgRaw = await storageGet(key, true);
-    const msgs = msgRaw ? JSON.parse(msgRaw) : [];
-    if (!msgs.length) return false;
-    const seenRaw = await storageGet(seenCountKey(currentUser.username, key), true);
-    const seen = seenRaw ? parseInt(seenRaw, 10) : 0;
-    const last = msgs[msgs.length - 1];
-    return msgs.length > seen && last.from !== currentUser.username;
-  }));
-  return results.some(Boolean);
+async function getUnreadMessageCount(){
+  if(!currentUser)return 0;
+  try{
+    const raw=await storageGet(friendsKey(currentUser.username),true);
+    const friends=raw?JSON.parse(raw):[];
+    const counts=await Promise.all(friends.map(async f=>{
+      try{
+        const key=chatKey(currentUser.username,f);
+        const msgRaw=await storageGet(key,true);
+        const msgs=msgRaw?JSON.parse(msgRaw):[];
+        const seenRaw=await storageGet(seenCountKey(currentUser.username,key),true);
+        const seen=seenRaw?Math.max(0,parseInt(seenRaw,10)||0):0;
+        return msgs.slice(seen).filter(m=>m&&m.from!==currentUser.username).length;
+      }catch(_){return 0;}
+    }));
+    return counts.reduce((sum,n)=>sum+n,0);
+  }catch(_){return 0;}
 }
-async function hasUnreadNotifs(){
-  const raw = await storageGet(notifsKey(currentUser.username), true);
-  const notifs = raw ? JSON.parse(raw) : [];
-  return notifs.some(n => !n.read);
+async function hasUnreadMessages(){return (await getUnreadMessageCount())>0;}
+async function getUnreadNotificationCount(){
+  if(!currentUser)return 0;
+  try{const raw=await storageGet(notifsKey(currentUser.username),true);const notifs=raw?JSON.parse(raw):[];return Array.isArray(notifs)?notifs.filter(n=>!n.read).length:0;}catch(_){return 0;}
 }
+async function hasUnreadNotifs(){return (await getUnreadNotificationCount())>0;}
 async function refreshBadges(){
-  if (!currentUser) return;
-  const msgDot = document.getElementById('msgDot');
-  const notifDot = document.getElementById('notifDot');
-  if (msgDot) msgDot.classList.toggle('show', await hasUnreadMessages());
-  if (notifDot) notifDot.classList.toggle('show', await hasUnreadNotifs());
+  if(!currentUser){['msgCountBadge','notifCountBadge'].forEach(id=>{const el=document.getElementById(id);if(el){el.classList.remove('is-visible');el.textContent='0';}});return;}
+  const [messageCount,notificationCount]=await Promise.all([getUnreadMessageCount(),getUnreadNotificationCount()]);
+  const msgBadge=document.getElementById('msgCountBadge');
+  const notifBadge=document.getElementById('notifCountBadge');
+  if(msgBadge){msgBadge.textContent=messageCount>99?'99+':String(messageCount);msgBadge.classList.toggle('is-visible',messageCount>0);msgBadge.setAttribute('aria-label',`${messageCount} unread message${messageCount===1?'':'s'}`);}
+  if(notifBadge){notifBadge.textContent=notificationCount>99?'99+':String(notificationCount);notifBadge.classList.toggle('is-visible',notificationCount>0);notifBadge.setAttribute('aria-label',`${notificationCount} unread notification${notificationCount===1?'':'s'}`);}
+  const msgDot=document.getElementById('msgDot'),notifDot=document.getElementById('notifDot');
+  if(msgDot)msgDot.classList.toggle('show',messageCount>0);
+  if(notifDot)notifDot.classList.toggle('show',notificationCount>0);
 }
 
 /* ---------------- PRESENCE / ONLINE COUNT ----------------
