@@ -6473,8 +6473,14 @@ function renderPostCard(p, infoMap){
 
   return `
     <div class="post-card" data-post-id="${escapeHtml(p.id)}" style="${p.color ? `border-left:4px solid ${p.color};` : ''}">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-        <div class="post-author" style="cursor:pointer;${p.color ? `color:${p.color};` : ''}" onclick="viewProfile('${authorUname}')"><span style="${nameEffectStyle(authorInfo)}">${displayNameWithNickname(p.authorName || p.author, authorInfo.nickname)}</span> ${roleBadgeHtml(authorInfo)} <span style="color:#aaa;font-weight:400;">@${escapeHtml(p.author)}</span><br>${levelBadgeHtml(authorInfo.followerCount)}</div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+        <div style="display:flex;align-items:flex-start;gap:9px;min-width:0;">
+          <span role="link" tabindex="0" aria-label="View @${escapeHtml(p.author)} profile" style="cursor:pointer;flex-shrink:0;" onclick="viewProfile('${authorUname}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();viewProfile('${authorUname}')}" >${avatarHtml(authorInfo.firstName || String(p.authorName || p.author || '?').split(' ')[0], authorInfo.lastName || String(p.authorName || '').split(' ').slice(1).join(' '), authorInfo.profilePic, 'avatar')}</span>
+          <div style="min-width:0;">
+            <div class="post-author" style="cursor:pointer;${p.color ? `color:${p.color};` : ''}" onclick="viewProfile('${authorUname}')"><span style="${nameEffectStyle(authorInfo)}">${displayNameWithNickname(p.authorName || p.author, authorInfo.nickname)}</span> ${roleBadgeHtml(authorInfo)} <span style="color:#aaa;font-weight:400;">@${escapeHtml(p.author)}</span><br>${levelBadgeHtml(authorInfo.followerCount)}</div>
+            <div class="post-time" title="${p.time ? new Date(p.time).toLocaleString() : ''}">${p.time ? timeAgo(p.time) : 'Time unavailable'}</div>
+          </div>
+        </div>
         ${canDelete ? `<span title="Delete post" style="cursor:pointer;color:#d32f2f;font-size:16px;" onclick="deletePost('${p.id}')">🗑</span>` : ''}
       </div>
       ${p.type === 'Shared Post' ? '<div style="font-size:12.5px;color:#888;margin-bottom:4px;">shared a post</div>' : ''}
@@ -6486,7 +6492,6 @@ function renderPostCard(p, infoMap){
       ${p.video ? `<div class="cm-video-card" style="margin-top:8px;"><video controls playsinline preload="metadata" src="${p.video}"></video><div style="font-size:11.5px;color:#777;margin-top:5px;">🎬 Video · Posted by @${escapeHtml(p.author||'')}</div></div>` : ''}
       ${pollBlock}
       ${sharedBlock}
-      <div class="post-time">${timeAgo(p.time)}</div>
       <div style="display:flex;gap:16px;margin-top:8px;padding-top:8px;border-top:1px solid #f0f0f0;font-size:13.5px;">
         <span style="cursor:pointer;color:${iLiked ? '#e8622d' : '#555'};font-weight:${iLiked ? '600' : '400'};" onclick="toggleLike('${p.id}')">${iLiked ? '♥' : '♡'} Like${likes.length ? ' (' + likes.length + ')' : ''}</span>
         <span role="button" tabindex="0" style="cursor:pointer;color:#555;" onclick="cmFocusPostComment('${p.id}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();cmFocusPostComment('${p.id}')}">💬 Comment${comments.length ? ' (' + comments.length + ')' : ''}</span>
@@ -7869,162 +7874,72 @@ async function searchPeople(){
   }
 }
 
+async function cmFriendApi(path, payload){
+  if(!firebaseAuth || !firebaseAuth.currentUser || firebaseAuth.currentUser.isAnonymous) throw new Error('Please sign in again.');
+  const token=await firebaseAuth.currentUser.getIdToken();
+  const response=await fetch(RECAPTCHA_BACKEND_URL.replace(/\/$/,'')+path,{
+    method:'POST',headers:{'Authorization':'Bearer '+token,'Content-Type':'application/json'},
+    body:JSON.stringify(payload||{}),cache:'no-store'
+  });
+  const data=await response.json().catch(()=>({}));
+  if(!response.ok || data.ok!==true) throw new Error(data.error || ('Request failed ('+response.status+')'));
+  return data;
+}
 async function sendFriendRequest(otherUsername, btnEl){
   if(!currentUser || !currentUser.username){ alert('Please log in to add friends.'); return; }
   const from=String(currentUser.username).trim();
   const to=String(otherUsername||'').trim();
   if(!to || to.toLowerCase()===from.toLowerCase()){ alert('You cannot add your own account.'); return; }
-  if (await isBlockedEitherWay(from, to)) {
-    alert("You can't send a friend request to this person.");
-    return;
-  }
+  if (await isBlockedEitherWay(from, to)) { alert("You can't send a friend request to this person."); return; }
   if (btnEl) { btnEl.disabled = true; btnEl.textContent = 'Sending...'; }
   showLoading(true);
-  let requestSaved=false;
   try {
-    const [theirReqRaw,mySentRaw,myFriendsRaw,theirFriendsRaw]=await Promise.all([
-      storageGet(requestsKey(to), true),
-      storageGet(sentRequestsKey(from), true),
-      storageGet(friendsKey(from), true),
-      storageGet(friendsKey(to), true)
-    ]);
-    const theirReqs=theirReqRaw?JSON.parse(theirReqRaw):[];
-    const mySent=mySentRaw?JSON.parse(mySentRaw):[];
-    const myFriends=myFriendsRaw?JSON.parse(myFriendsRaw):[];
-    const theirFriends=theirFriendsRaw?JSON.parse(theirFriendsRaw):[];
-    if(myFriends.some(x=>String(x).toLowerCase()===to.toLowerCase()) || theirFriends.some(x=>String(x).toLowerCase()===from.toLowerCase())){
-      if(btnEl){btnEl.textContent='Friends';btnEl.disabled=true;} return;
+    const result=await cmFriendApi('/friends/request',{username:to});
+    if(btnEl){btnEl.textContent=result.status==='friends'?'Friends':'Requested';btnEl.disabled=true;}
+    if(result.status==='incoming_request_exists'){
+      if(btnEl){btnEl.textContent='Accept Request';btnEl.disabled=false;}
+      alert('This person has already sent you a request. Open Notifications and accept it.');
+      return;
     }
-    const hasIncoming=theirReqs.some(r=>String(r?.from||'').toLowerCase()===from.toLowerCase());
-    const hasSent=mySent.some(x=>String(x).toLowerCase()===to.toLowerCase());
-    if(hasIncoming && hasSent){if(btnEl){btnEl.textContent='Requested';btnEl.disabled=true;}return;}
-    // Repair either half of an interrupted prior attempt instead of returning an error or creating duplicates.
-    if(!hasIncoming){theirReqs.push({from,time:Date.now()});await storageSet(requestsKey(to),JSON.stringify(theirReqs),true);}
-    requestSaved=true;
-    if(!hasSent){mySent.push(to);await storageSet(sentRequestsKey(from),JSON.stringify(mySent),true);}
-    // Notification delivery is best-effort; it must not turn a successfully saved request into a false failure.
-    try{
-      const notifRaw=await storageGet(notifsKey(to),true);
-      const notifs=notifRaw?JSON.parse(notifRaw):[];
-      if(!notifs.some(n=>n?.type==='friend_request'&&String(n?.from||'').toLowerCase()===from.toLowerCase()&&!n?.handled)){
-        notifs.push({id:Date.now()+'-'+Math.random().toString(36).slice(2,8),type:'friend_request',from,fromName:((currentUser.firstName||'')+' '+(currentUser.lastName||'')).trim(),time:Date.now(),read:false,handled:false});
-        await storageSet(notifsKey(to),JSON.stringify(notifs),true);
-      }
-    }catch(notifError){console.warn('Friend request saved but notification delivery failed.',notifError);}
-    try{await awardSocialActionCoins('follow',to);}catch(coinError){console.warn('Friend request saved; optional coin reward was not recorded.',coinError);}
-    if(btnEl){btnEl.textContent='Requested';btnEl.disabled=true;}
-  } catch (e) {
-    if (btnEl) { btnEl.disabled = false; btnEl.textContent = requestSaved ? 'Retry sync' : 'Add Friend'; }
-    alert(requestSaved ? 'Your request was saved, but syncing the sent-request list failed. Tap again to retry.' : 'Could not send friend request right now. Please try again.');
-  } finally {
-    showLoading(false);
-  }
+    try{await refreshBadges();}catch(_){}
+  } catch(e) {
+    if(btnEl){btnEl.disabled=false;btnEl.textContent='Add Friend';}
+    const errors={user_not_found:'This account could not be found. Refresh the page and try again.',incoming_request_exists:'This person has already sent you a request. Open Notifications and accept it.',user_blocked:"You can't send a friend request to this person.",profile_username_missing:'Your profile is still syncing. Refresh once and try again.'};
+    alert(errors[e.message] || ('Could not send friend request: '+String(e.message||'network error')+'. Please retry.'));
+  } finally { showLoading(false); }
 }
-
 async function acceptRequest(otherUsername, btnEl){
   if (!currentUser || !currentUser.username) { alert('Please log in first.'); return; }
-  const me = String(currentUser.username).trim();
-  const requestedName = String(otherUsername || '').trim();
-  if (!requestedName) { alert('This friend request has no username. Refresh Notifications and try again.'); return; }
-  if (btnEl) { btnEl.disabled = true; btnEl.textContent = 'Accepting...'; }
+  const requestedName=String(otherUsername||'').trim();
+  if(!requestedName){alert('This friend request has no username. Refresh Notifications and try again.');return;}
+  if(btnEl){btnEl.disabled=true;btnEl.textContent='Accepting...';}
   showLoading(true);
-  try {
-    // Read all current records together to reduce network round trips and avoid
-    // using a display name or differently-cased username as a storage key.
-    const [myReqRaw, theirSentRaw, myRaw, theirRaw, myNotifRaw] = await Promise.all([
-      storageGet(requestsKey(me)),
-      storageGet(sentRequestsKey(requestedName)),
-      storageGet(friendsKey(me)),
-      storageGet(friendsKey(requestedName)),
-      storageGet(notifsKey(me))
-    ]);
-    let myReqs = myReqRaw ? JSON.parse(myReqRaw) : [];
-    let theirSent = theirSentRaw ? JSON.parse(theirSentRaw) : [];
-    const mine = myRaw ? JSON.parse(myRaw) : [];
-    const theirs = theirRaw ? JSON.parse(theirRaw) : [];
-    let myNotifs = myNotifRaw ? JSON.parse(myNotifRaw) : [];
-    if (!Array.isArray(myReqs) || !Array.isArray(theirSent) || !Array.isArray(mine) || !Array.isArray(theirs) || !Array.isArray(myNotifs)) {
-      throw new Error('Friend data is invalid. Refresh the page and try again.');
-    }
-    // Prefer the canonical sender name from the actual pending request/notification.
-    const pending = myReqs.find(r => String(r?.from || '').trim().toLowerCase() === requestedName.toLowerCase());
-    const notification = myNotifs.find(n => n?.type === 'friend_request' && String(n?.from || '').trim().toLowerCase() === requestedName.toLowerCase() && !n?.handled);
-    const sender = String(pending?.from || notification?.from || requestedName).trim();
-    if (sender.toLowerCase() === me.toLowerCase()) throw new Error('You cannot accept a request from your own account.');
-
-    // Make both friend lists consistent first. Friend-list writes are idempotent,
-    // so retrying after a slow connection will not create duplicate friends.
-    if (!mine.some(u => String(u || '').toLowerCase() === sender.toLowerCase())) mine.push(sender);
-    if (!theirs.some(u => String(u || '').toLowerCase() === me.toLowerCase())) theirs.push(me);
-    await Promise.all([
-      storageSet(friendsKey(me), JSON.stringify(mine)),
-      storageSet(friendsKey(sender), JSON.stringify(theirs))
-    ]);
-
-    // Then clear both sides of the pending request and update the notification.
-    myReqs = myReqs.filter(r => String(r?.from || '').trim().toLowerCase() !== sender.toLowerCase());
-    theirSent = theirSent.filter(u => String(u || '').trim().toLowerCase() !== me.toLowerCase());
-    myNotifs = myNotifs.map(n => n?.type === 'friend_request' && String(n?.from || '').trim().toLowerCase() === sender.toLowerCase()
-      ? { ...n, handled: true, read: true, acceptedAt: Date.now() } : n);
-    await Promise.all([
-      storageSet(requestsKey(me), JSON.stringify(myReqs)),
-      storageSet(sentRequestsKey(sender), JSON.stringify(theirSent)),
-      storageSet(notifsKey(me), JSON.stringify(myNotifs))
-    ]);
-
-    if (btnEl) { btnEl.textContent = 'Friends'; btnEl.disabled = true; }
-    await Promise.all([loadNotifications().catch(() => {}), refreshBadges().catch(() => {})]);
-    if (typeof searchPeople === 'function') { try { await searchPeople(); } catch (_) {} }
-  } catch (e) {
-    console.error('Chat Me accept friend request failed:', e);
-    if (btnEl) { btnEl.disabled = false; btnEl.textContent = 'Accept Request'; }
-    const message = String(e?.message || 'Network error');
-    alert('Could not finish accepting this request: ' + message + '. Please refresh and try again.');
-  } finally {
-    showLoading(false);
-  }
+  try{
+    await cmFriendApi('/friends/accept',{username:requestedName});
+    if(btnEl){btnEl.textContent='Friends';btnEl.disabled=true;}
+    await Promise.all([loadNotifications().catch(()=>{}),refreshBadges().catch(()=>{})]);
+    if(typeof searchPeople==='function'){try{await searchPeople();}catch(_){}}
+    if(typeof loadMyFriendsList==='function'){try{await loadMyFriendsList();}catch(_){}}
+  }catch(e){
+    console.error('Chat Me accept friend request failed:',e);
+    if(btnEl){btnEl.disabled=false;btnEl.textContent='Accept Request';}
+    const errors={request_not_found:'The pending request could not be found. Refresh Notifications; if it still appears, ask the sender to send it again.',user_not_found:'The sender account could not be found.',profile_username_missing:'Your profile is still syncing. Refresh once and try again.'};
+    alert(errors[e.message] || ('Could not accept friend request: '+String(e.message||'network error')+'. Please retry.'));
+  }finally{showLoading(false);}
 }
 
 async function declineRequest(otherUsername, notifId){
+  if(!currentUser || !currentUser.username){alert('Please log in first.');return;}
   showLoading(true);
-  try {
-    const myReqRaw = await storageGet(requestsKey(currentUser.username), true);
-    let myReqs = myReqRaw ? JSON.parse(myReqRaw) : [];
-    myReqs = myReqs.filter(r => r.from !== otherUsername);
-    await storageSet(requestsKey(currentUser.username), JSON.stringify(myReqs), true);
-
-    const theirSentRaw = await storageGet(sentRequestsKey(otherUsername), true);
-    let theirSent = theirSentRaw ? JSON.parse(theirSentRaw) : [];
-    theirSent = theirSent.filter(u => u !== currentUser.username);
-    await storageSet(sentRequestsKey(otherUsername), JSON.stringify(theirSent), true);
-
-    const myNotifRaw = await storageGet(notifsKey(currentUser.username), true);
-    let myNotifs = myNotifRaw ? JSON.parse(myNotifRaw) : [];
-    myNotifs = myNotifs.map(n => (n.id === notifId) ? { ...n, handled: true, read: true } : n);
-    await storageSet(notifsKey(currentUser.username), JSON.stringify(myNotifs), true);
-
-    loadNotifications();
-    refreshBadges();
-  } catch (e) {
-    alert('Could not decline the request right now. Please try again.');
-  } finally {
-    showLoading(false);
-  }
+  try{
+    await cmFriendApi('/friends/decline',{username:String(otherUsername||'').trim()});
+    await Promise.all([loadNotifications().catch(()=>{}),refreshBadges().catch(()=>{})]);
+  }catch(e){
+    console.error('Chat Me decline friend request failed:',e);
+    alert('Could not decline friend request: '+String(e.message||'network error')+'. Please retry.');
+  }finally{showLoading(false);}
 }
 
-/* ---------------- NOTIFICATIONS ---------------- */
-let cmNotificationFilter = 'all';
-function cmNotificationCategory(type){
-  if(['friend_request','friend_accept'].includes(type)) return 'friends';
-  if(['message','virtual_gift'].includes(type)) return 'messages';
-  if(['like','comment','reaction','story_view','mention'].includes(type)) return 'social';
-  return 'system';
-}
-function setNotificationFilter(filter){
-  cmNotificationFilter=filter||'all';
-  document.querySelectorAll('[data-notif-filter]').forEach(btn=>{const active=btn.getAttribute('data-notif-filter')===cmNotificationFilter;btn.style.background=active?'#2b6ee0':'#eee';btn.style.color=active?'#fff':'#333';});
-  loadNotifications();
-}
 async function markAllNotificationsRead(){
   if(!currentUser)return;
   const raw=await storageGet(notifsKey(currentUser.username),true);const notifs=raw?JSON.parse(raw):[];if(!notifs.length)return;
@@ -8144,6 +8059,13 @@ async function refreshBadges(){
   const msgDot=document.getElementById('msgDot'),notifDot=document.getElementById('notifDot');
   if(msgDot)msgDot.classList.toggle('show',messageCount>0);
   if(notifDot)notifDot.classList.toggle('show',notificationCount>0);
+}
+// Keep the red alert badge current when a friend request arrives in another tab/account.
+if (!window.__chatMeBadgeRefreshInstalled) {
+  window.__chatMeBadgeRefreshInstalled = true;
+  window.addEventListener('focus', () => { refreshBadges().catch(()=>{}); });
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) refreshBadges().catch(()=>{}); });
+  window.setInterval(() => { if (currentUser && !document.hidden) refreshBadges().catch(()=>{}); }, 15000);
 }
 
 /* ---------------- PRESENCE / ONLINE COUNT ----------------
